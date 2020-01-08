@@ -1,0 +1,193 @@
+fastlane_require 'dotenv'
+
+platform :ios do
+
+
+  lane :enterprise do
+
+    setup_enterprise_app_signing(keychain_name)
+    bundle_identifier = "com.applicaster.ent.#{ENV["bundle_identifier"]}"
+
+    username = "#{ENV['APPLE_DEV_ENT_USER']}"
+    team_id = "#{ENV['APPLE_DEV_ENT_TEAM_ID']}"
+    team_name = "#{ENV['APPLE_DEV_ENT_TEAM_NAME']}"
+
+    prepare_enterprise_app(username,
+      team_id,
+      team_name,
+      project_name, 
+      project_scheme, 
+      bundle_identifier)
+
+    # get provisioning profiles specifiers
+    main_prov_profile_specifier = "#{ENV["#{bundle_identifier}_PROFILE_UDID"]}"
+
+    # notifications_bundle_identifier = "#{ENV['notifications_bundle_identifier']}"
+    # notifications_prov_profile_specifier = "#{ENV["#{notifications_bundle_identifier}_PROFILE_UDID"]}"
+
+    # get identifiers
+    identifier = get_info_plist_value(path: "./#{project_scheme}/Info.plist", key: "CFBundleIdentifier")
+    identifier_notifications = ENV['identifier_notifications']
+
+    build_path = "#{ENV['PWD']}/build"
+    gym(
+      workspace: "#{project_name}.xcworkspace",
+      scheme: project_scheme,
+      configuration: build_configuration,
+      include_bitcode: true,
+      include_symbols: true,
+      output_directory: "CircleArtifacts/Enterprise",
+      buildlog_path: "CircleArtifacts/Enterprise",
+      output_name: "#{project_scheme}-Enterprise",
+      build_path: build_path,
+      derived_data_path: build_path,
+      xcargs: "RELEASE_SWIFT_OPTIMIZATION_LEVEL='-Onone' RELEASE_COPY_PHASE_STRIP=NO DEBUG_ENABLED_GCC='DEBUG=1' DEBUG_ENABLED_SWIFT='-DDEBUG' DEBUG_ENABLED_SCRIPTS='Debug' PROVISIONING_PROFILE='#{main_prov_profile_specifier}' DEBUG_INFORMATION_FORMAT='dwarf-with-dsym'",
+      export_method: "enterprise",
+      export_team_id: team_id,
+      export_options: {
+                  compileBitcode: false,
+                  provisioningProfiles: {
+                    identifier => "#{main_prov_profile_specifier}",
+                    # identifier_notifications => "#{notifications_prov_profile_specifier}"
+                  }
+      }
+    )
+
+    copy_artifacts(
+			target_path: "CircleArtifacts/Enterprise",
+			artifacts: [
+			 "~/Library/Logs/gym/#{project_scheme}-#{project_scheme}.log"
+			]
+    )
+    
+    # upload to ms app center
+    upload_application(bundle_identifier, 
+      "Enterprise",
+      "debug")
+
+    # delete temp keychain
+    delete_keychain(name: keychain_name)
+  end
+
+  def prepare_enterprise_app(username,
+     team_id, 
+     team_name,
+     project_name, 
+     project_scheme,
+     bundle_identifier)
+    
+    # update ms_app_center app secret 
+    update_app_secret(bundle_identifier)
+
+    #update firebase configuration
+    firebase_add_configuration_file("enterprise")
+
+    dev_portal_app_name = ENV['bundle_identifier']
+    
+    # update app identifier to the enterprise one
+    update_info_plist(
+      xcodeproj: "#{project_name}.xcodeproj",
+      plist_path: "#{project_scheme}/Info.plist",
+      app_identifier: bundle_identifier
+    )
+    # update project team identifier for all targets
+    update_project_team(
+      path: ENV["project_path"],
+      teamid: team_id
+    )
+    # create main app on developer portal with new identifier
+    create_app_on_dev_portal(username,
+      team_id,
+      dev_portal_app_name,
+      bundle_identifier,
+      "1")
+    
+    # create and save the push notifications certificate in build artifacts
+    create_push_certificate(username,
+      team_id,
+      team_name,
+      bundle_identifier,
+      ENV['accounts_account_id'])
+
+    # create provisioning profile for the main app
+    create_provisioning_profile(username,
+      team_id,
+      team_name,
+      bundle_identifier)
+
+    # prepare app extensions
+    # prepare_enterprise_app_extensions("#{username}", "#{team_id}", "#{team_name}", "#{project_name}", "#{project_scheme}", "#{bundle_identifier}")
+
+    # add debug ribbon
+    # add_debug_ribbon_to_app_icon
+  end
+
+  def setup_enterprise_app_signing(keychain_name)
+    credentials_dir="#{ENV['PWD']}/Zapp-Signing/Enterprise/"
+    distribution_key_filename="dist.p12"
+
+    create_temp_keychain(keychain_name, keychain_password)
+    import_certificate(
+      certificate_path: "#{credentials_dir}#{distribution_key_filename}",
+      certificate_password: ENV['KEY_PASSWORD'],
+      keychain_name: keychain_name,
+      keychain_password: keychain_password
+    )
+    sh("bundle exec fastlane fastlane-credentials add --username #{ENV['APPLE_DEV_ENT_USER']} --password #{ENV['APPLE_DEV_ENT_PASS']}")
+    ENV['FASTLANE_PASSWORD']=ENV['APPLE_DEV_ENT_PASS']
+  end
+  # def prepare_enterprise_app_extensions(username, team_id, team_name, project_name, project_scheme, bundle_identifier)
+  #   prepare_enterprise_app_notification_extension(username, team_id, team_name, project_name, project_scheme, bundle_identifier)
+  # end
+
+  # def prepare_enterprise_app_notification_extension(username, team_id, team_name, project_name, project_scheme, bundle_identifier)
+  #   notifications_target_name = "NotificationServiceExtension"
+  #   notifications_bundle_identifier = "#{bundle_identifier}.#{notifications_target_name}"
+
+  #   # getting the indication if extension is enabled
+  #   notification_service_entension_enabled = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :SupportedAppExtensions:NOTIFICATION_SERVICE_EXTENSION:enterprise_enabled\" #{ENV['PWD']}/#{project_scheme}/Customization/FeaturesCustomization.plist 2>/dev/null | grep -c true)")
+
+  #   if notification_service_entension_enabled.to_i() > 0
+  #     # print notification extension enabled
+  #     sh("echo 'Push Notification extension enabled'")
+
+  #     # update app identifier, versions of the notification extension
+  #     update_target_info_plist_values(project_name, project_scheme, notifications_target_name, notifications_bundle_identifier)
+
+  #     # save app identifier of the notification extension
+  #     ENV['identifier_notifications'] = get_info_plist_value(path: "./#{notifications_target_name}/Info.plist", key: "CFBundleIdentifier")
+  #     ENV['notifications_bundle_identifier'] = notifications_bundle_identifier
+  #     ENV['release_build_configuration'] = "Release"
+
+  #     # create app for the notifications
+  #     create_app_on_dev_portal("#{username}", "#{team_id}", "#{ENV["app_name_notifications"]}", "#{notifications_bundle_identifier}", "2")
+  #     # create group for app and notification extension
+  #     sh("bundle exec fastlane produce group -g group.#{bundle_identifier} -n '#{ENV['bundle_identifier']} Group' -u #{username} ")
+  #     # add the app and the notification extension to the created group
+  #     sh("bundle exec fastlane produce associate_group group.#{bundle_identifier} -a #{bundle_identifier} -u #{username} ")
+  #     sh("bundle exec fastlane produce associate_group group.#{bundle_identifier} -a #{notifications_bundle_identifier} -u #{username} -i 1")
+  #     # create provisioning profile for the notifications app
+  #     create_provisioning_profile("#{username}", "#{team_id}", "#{team_name}", "#{notifications_bundle_identifier}")
+  #     # add group to entitlements
+  #     update_group_identifiers("#{project_name}", "#{project_scheme}", "Release", ["group.#{bundle_identifier}"])
+  #     update_group_identifiers("#{notifications_target_name}", "Release", ["group.#{bundle_identifier}"])
+  #     # change app groups support on project file
+  #     change_system_capability("com.apple.ApplicationGroups.iOS", 0, 1)
+
+  #   else
+  #     # print notification extension disabled
+  #     sh("echo 'Push Notification extension disabled'")
+  #     # remove extension from build dependency and scripts step
+  #     remove_app_extensions_from_project("#{project_name}", "#{project_scheme}", "#{notifications_target_name}")
+  #     # remove app groups from project entitlements
+  #     update_group_identifiers("#{project_name}", "#{project_scheme}", "Release", [])
+  #     # set temp identifier for notification extension
+  #     ENV['identifier_notifications'] = "notification.extension.disabled"
+  #   end
+  # end
+
+  # def add_debug_ribbon_to_app_icon
+  #   sh("sh #{ENV['PWD']}/Zapp-Scripts/add-debug-ribbon-to-app-icon.sh #{ENV['PWD']}")
+  # end
+
+end

@@ -1,0 +1,169 @@
+fastlane_require 'dotenv'
+fastlane_require 'spaceship'
+
+platform :ios do
+	
+
+	lane :store do
+		setup_store_app_signing(keychain_name)
+
+		prepare_store_app(project_name,
+			project_scheme,
+			ENV["bundle_identifier"])
+
+		# get provisioning profiles specifiers
+		main_prov_profile_specifier = ENV["STORE_PROVISIONING_PROFILE_UUID"]
+		notifications_prov_profile_specifier = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :SupportedAppExtensions:NOTIFICATION_SERVICE_EXTENSION:provisioning_profile_uuid\" #{ENV['PWD']}/#{project_scheme}/Customization/FeaturesCustomization.plist 2>/dev/null) | tr -d '\040\011\012\015'")
+
+		# get identifiers
+		identifier = get_info_plist_value(path: "./#{project_scheme}/Info.plist", key: "CFBundleIdentifier")
+		identifier_notifications = ENV['identifier_notifications']
+
+		build_path = "#{ENV['PWD']}/build"
+
+		unlock_keychain( 
+			path: keychain_name,
+			password: keychain_password
+		)
+
+		build_app(
+		  clean: true,
+		  workspace: "#{project_name}.xcworkspace",
+		  scheme: project_scheme,
+		  configuration: build_configuration,
+		  include_bitcode: true,
+		  include_symbols: true,
+		  output_directory: "CircleArtifacts/Store",
+		  buildlog_path: "CircleArtifacts/Store",
+		  output_name: "#{project_scheme}-Store",
+		  build_path: build_path,
+		  derived_data_path: build_path,
+		  xcargs: "DEVELOPMENT_TEAM='#{ENV['STORE_TEAM_ID']}' PROVISIONING_PROFILE_SPECIFIER='#{main_prov_profile_specifier}'",
+		  export_team_id: ENV['STORE_CODE_SIGNING_TEAM_ID'],
+		  export_xcargs: "-allowProvisionUpdates", 
+		  export_method: "app-store",
+		  export_options: {
+			compileBitcode: true,
+			provisioningProfiles: {
+			  identifier => main_prov_profile_specifier,
+			#   identifier_notifications => "#{notifications_prov_profile_specifier}"
+			}
+		  }
+		)
+		
+		copy_artifacts(
+			target_path: "CircleArtifacts/Store",
+			artifacts: [
+			 "Credentials/dist.mobileprovision",
+			 "Credentials/dist.p12"
+			]
+		)
+
+		upload_to_testflight(
+			username: username,
+			apple_id: ENV['itunes_app_id'],
+			ipa: "CircleArtifacts/Store/#{ENV['PROJECT_NAME']}-Store.ipa",
+			itc_provider: ENV['STORE_ITC_PROVIDER'],
+			team_name: team_name,
+			skip_waiting_for_build_processing: true,
+			app_platform: "appletvos"
+		)
+
+		# upload to ms app center
+		upload_application(bundle_identifier, 
+			"Store",
+			 "release")
+
+		delete_keychain(name: keychain_name)
+
+	end
+
+	def setup_store_app_signing(keychain_name)
+		keychain_password = "circle"
+
+		credentials_dir="#{ENV['PWD']}/Credentials/"
+		provisioning_profile_filename="dist.mobileprovision"
+		distribution_key_filename="dist.p12"
+
+		# create new dir for files
+		sh("mkdir -p \"#{credentials_dir}\"")
+		# download p12 and provisioning profile
+		sh("curl -sL \"#{ENV['provisioning_profile_url']}\" --output \"#{credentials_dir}#{provisioning_profile_filename}\"")
+		sh("curl -sL \"#{ENV['distribution_key_url']}\" --output \"#{credentials_dir}#{distribution_key_filename}\"")
+		# fetch values
+
+		ENV['STORE_TEAM_ID'] = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:com.apple.developer.team-identifier' /dev/stdin <<< $(security cms -D -i \"#{credentials_dir}#{provisioning_profile_filename}\")) | tr -d '\040\011\012\015'")
+		ENV['STORE_TEAM_NAME'] = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :TeamName' /dev/stdin <<< $(security cms -D -i \"#{credentials_dir}#{provisioning_profile_filename}\")) | tr -d '\011\012\015'")
+		ENV['STORE_PROVISIONING_PROFILE_UUID'] = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :UUID' /dev/stdin <<< $(security cms -D -i \"#{credentials_dir}#{provisioning_profile_filename}\")) | tr -d '\040\011\012\015'")
+		# install provisioning profile
+		sh("mkdir -p ~/Library/MobileDevice/'Provisioning Profiles'")
+		sh("cp #{credentials_dir}#{provisioning_profile_filename} ~/Library/MobileDevice/'Provisioning Profiles'/#{ENV['STORE_PROVISIONING_PROFILE_UUID']}.mobileprovision")
+		# fetch itc_provider
+		sh("echo 'Fetching iTunesConnect Team Short name for itc_provider parameter'")
+		sh("xcrun altool --list-providers -u #{ENV['itunes_connect_user']} -p #{ENV['itunes_connect_password']} > #{ENV['PWD']}/itc_provider.txt")
+		sh("sed -i -e 's/#{ENV['STORE_TEAM_NAME']} /replaceprovname/g' #{ENV['PWD']}/itc_provider.txt")
+		ENV['STORE_ITC_PROVIDER'] = sh("awk -v pattern=\"replaceprovname\" 'match($0, pattern) {f=$2} END {print f}' #{ENV['PWD']}/itc_provider.txt")		
+		sh("echo 'Fetched value for itc_provider: #{ENV['STORE_ITC_PROVIDER']}'")
+
+		create_temp_keychain(keychain_name, keychain_password)
+
+		import_certificate(
+		certificate_path: "#{credentials_dir}#{distribution_key_filename}",
+		certificate_password: ENV['distribution_key_password'],
+		keychain_name: keychain_name,
+		keychain_password: keychain_password
+		)
+
+		sh("bundle exec fastlane fastlane-credentials add --username #{ENV['itunes_connect_user']} --password #{ENV['itunes_connect_password']}")
+		ENV['FASTLANE_PASSWORD']=ENV['itunes_connect_password']
+	end
+
+	def prepare_store_app(project_name, project_scheme, bundle_identifier)
+	
+		# update ms_app_center app secret
+		updateAppSecret("#{bundle_identifier}")
+			
+		# update firebase configuration
+		firebase_add_configuration_file("production")
+		
+		# add support for push notifications
+		change_system_capability("com.apple.Push", 0, 1)
+		# add AccessWiFi if needed
+		add_wifi_system_capability_if_needed(project_name, project_scheme)
+
+		# prepare_store_app_extensions(project_name, project_scheme, bundle_identifier)
+  end
+
+#   def prepare_store_app_extensions(project_name, project_scheme, bundle_identifier)
+#     prepare_store_app_notification_extension(project_name, project_scheme, bundle_identifier)
+#   end
+
+#   def prepare_store_app_notification_extension(project_name, project_scheme, bundle_identifier)
+#     notifications_target_name = "NotificationServiceExtension"
+#     notification_service_entension_enabled = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :SupportedAppExtensions:NOTIFICATION_SERVICE_EXTENSION:store_enabled\" #{ENV['PWD']}/#{project_scheme}/Customization/FeaturesCustomization.plist 2>/dev/null | grep -c true)")
+
+#     if notification_service_entension_enabled.to_i() > 0
+#       sh("echo 'Push Notification extension enabled'")
+
+#       # save app identifier of the notification extension
+#       ENV['identifier_notifications'] = get_info_plist_value(path: "./#{notifications_target_name}/Info.plist", key: "CFBundleIdentifier")
+#       # change app groups support on project file
+#       change_system_capability("com.apple.ApplicationGroups.iOS", 0, 1)
+#     else
+#       # notification extension disabled
+#       sh("echo 'Push Notification extension disabled'")
+#       # remove extension from build dependency and scripts step
+#       remove_app_extensions_from_project("#{project_name}", "#{project_scheme}", "#{notifications_target_name}")
+#       # set temp identifier for notification extension
+#       ENV['identifier_notifications'] = "notification.extension.disabled"
+
+#     end
+#   end
+
+  def add_wifi_system_capability_if_needed(project_name, project_target)
+    requires_wifi_capability = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :com.apple.developer.networking.wifi-info\" #{ENV['PWD']}/#{project_target}/#{project_target}-Release.entitlements 2>/dev/null | grep -c true)")
+    if requires_wifi_capability.to_i() > 0
+      change_system_capability("com.apple.AccessWiFi", 0, 1)
+    end
+  end
+end

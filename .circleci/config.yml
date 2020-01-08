@@ -1,0 +1,241 @@
+version: 2
+notify:
+  webhooks:
+    - url: https://zapp.applicaster.com/callbacks/build_status/circleci_builds
+jobs:
+  build:
+    macos:
+      xcode: "11.2.1"
+    shell: /bin/bash --login -eo pipefail
+    environment:
+      GENERAL_CACHE_KEY: "ZappApple_Cache_1.0.0"
+      PROJECT_NAME: "ZappApple"
+      SCRIPTS_FOLDER: "Scripts"
+      BUILD_PATH: ~/build_debug
+      ZAPPTOOL_VERSION: "3.6.1"
+
+      #fastlane variables
+      LC_ALL: "en_US.UTF-8"
+      LANG: "en_US.UTF-8"
+
+    working_directory: ~/ZappApple
+    steps:
+      #Hack general caching until circle does not support global env variables
+      - run: echo "$GENERAL_CACHE_KEY" > ~/_caching_file
+      - run: echo "$ZAPPTOOL_VERSION" > ~/_zappToolVersion
+
+      - run:
+          name: Ruby - version
+          command: ruby -v
+
+      # Prepere Git and Submodules
+      - restore_cache:
+          keys:
+            - GIT-{{ checksum "~/_caching_file" }}-{{ .Branch }}-{{ .Revision }}
+            - GIT-{{ checksum "~/_caching_file" }}-{{ .Branch }}-
+            - GIT-{{ checksum "~/_caching_file" }}-
+
+      - run:
+          name: Fetch tags
+          command: |
+            if [ -n "$CIRCLE_TAG" ]; then 
+              git fetch --tags -f
+            else
+              echo "Skipping fetch tags"
+            fi
+
+      - checkout
+
+      - save_cache:
+          name: Git - save cache
+          key: GIT-{{ checksum "~/_caching_file" }}-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - ".git"
+
+      - restore_cache:
+          keys:
+            - ZappTool-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
+
+      - run:
+          name: ZappTool - Download
+          command: |
+            if [ ! -d "${HOME}/ZappTool" ]; then
+              echo "Installing ZappTool"
+              curl -L "https://dl.bintray.com/applicaster-ltd/pods/ZappTool_v${ZAPPTOOL_VERSION}.zip" > "${HOME}/ZappTool.zip"
+              mkdir ${HOME}/ZappTool
+              unzip -o "${HOME}/ZappTool.zip" -d "${HOME}/ZappTool"
+              rm -rf "${HOME}/ZappTool.zip"
+            else
+              echo "ZappTool was cached"
+            fi
+
+      - save_cache:
+          name: ZappTool - save cache
+          key: ZappTool-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
+          paths:
+            - "${HOME}/ZappTool"
+
+      - run:
+          name: ZappTool - version
+          command: "${HOME}/ZappTool/ZappTool -v"
+
+      # Prepare Bundler
+      - restore_cache:
+          name: Bundler - restore cache
+          key: Bundler-{{ checksum "~/_caching_file" }}-{{ checksum "Gemfile.lock" }}
+
+      - run:
+          name: Bundler - update dependencies
+          command: bundle check --path=.bundle || bundle install --path=.bundle
+
+      - save_cache:
+          name: Bundler - save cache
+          key: Bundler-{{ checksum "~/_caching_file" }}-{{ checksum "Gemfile.lock" }}
+          paths:
+            - /Users/distiller/.rubies/ruby-2.4.2/lib/ruby/gems/2.4.0/gems
+            - ./.bundle
+
+      # Login NPM
+      - run:
+          name: NPM login
+          command: npx npm-shell-login
+
+      - restore_cache:
+          name: Restore npm dependencies
+          key: YARN-{{ checksum "~/_caching_file" }}-{{ checksum "yarn.lock" }}
+
+      - run:
+          name: ZappTool - prepare application environment
+          command: |
+            if [ "$bundle_identifier" ];
+            then 
+              "${HOME}/ZappTool/ZappTool"
+            else 
+              yarn
+            fi
+
+      - save_cache:
+          name: Saving NPM dependencies
+          key: YARN-{{ checksum "~/_caching_file" }}-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
+
+      # Restore Cocoapods cache, save cache on lower level, after pod install
+      - restore_cache:
+          keys:
+            - CocoaPods-{{ checksum "~/_caching_file" }}-{{ .Branch }}-{{ .Revision }}
+            - CocoaPods-{{ checksum "~/_caching_file" }}-{{ .Branch }}-
+            - CocoaPods-{{ checksum "~/_caching_file" }}-
+
+      - run:
+          name: CocoaPods - version
+          command: bundle exec pod --version
+
+      # Pod install
+      - run:
+          name: CocoaPods - install default dependencies
+          command: bundle exec pod update
+
+      # Cache CocoaPods
+      - save_cache:
+          name: CocoaPods - save cache
+          key: CocoaPods-{{ checksum "~/_caching_file" }}-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - "~/.cocoapods/repos/cocoapods-"
+
+      # Set Xcode version
+      - run:
+          name: Current Xcode version
+          command: /usr/bin/xcodebuild -version
+
+      # Print Xcode location
+      - run:
+          name: Xcode installed location
+          command: xcode-select -p
+
+      - deploy:
+          name: Building Zapp-App - appStore build
+          command: |
+            if [ -z "$distribution_key_url" ]; then
+              echo "No Distribution Key. Store version will be skipped."
+            else
+              bundle exec fastlane ios store
+            fi
+
+      - deploy:
+          name: Building Zapp-App - Enterprise build
+          command: |
+            if [ -z "$bundle_identifier" ]; then
+              echo "Bundle identifier NOT set! Enterprise Build will be skipped"
+            else
+              echo "\n-- Building Zapp-App - Enterprise Build --"
+              bundle exec fastlane ios enterprise
+            fi
+
+      - deploy:
+          name: Building development project
+          command: |
+            if [ "$build_dev_project" = true ]; then
+              # compress the app
+              env_commit=$(git rev-parse HEAD)
+              epoch_time=$(date +%s)
+              zipped_project_file_name="${epoch_time}_${env_commit}.zip"
+
+              # using zip
+              echo; echo
+              echo "Compressing using zip..."
+              zip -rq "${zipped_project_file_name}" -@r < "$(pwd)/dev_project_whitelist.txt"
+
+              bundle exec rake zapp_sdks:upload_dev_project["$(pwd)/${zipped_project_file_name}"]
+            else
+              echo "Building standard app, not for external development environment! Step will be skipped"
+            fi
+
+      - run:
+          name: Publishing builds to Zapp
+          command: |
+            if [ -z "$bundle_identifier" ]; then
+              echo "Bundle identifier NOT set! Publishing builds to Zapp not relevant"
+            else
+              bundle exec rake publish_to_zapp:update_zapp_version
+            fi
+
+      # Temporary removed until will not be fully prepared
+      # - deploy:
+      #     name: Building Zapp-App - Tests
+      #     command: |
+      #       if [ -z "$bundle_identifier" ]; then
+      #         echo "Test will be started"
+      #         bundle exec fastlane ios test
+      #       fi
+
+      - deploy:
+          name: Creating Zapp SDK
+          command: |
+            if [ "$triggered_by" = "zapp" ];
+            then
+             echo "Skipping SDK creation"
+             else
+             if [ -z "$CIRCLE_TAG" ];
+             then
+              echo "no tag passing branch name"
+              version=$CIRCLE_BRANCH
+             else
+              version=$CIRCLE_TAG
+             fi
+             
+             bundle exec rake zapp_sdks:create[tvos,$version,$CIRCLE_PROJECT_REPONAME]
+             bundle exec rake zapp_sdks:publish_changelog[tvos,$version]
+             fi
+
+      - store_artifacts:
+          path: ./CircleArtifacts
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /^[0-9]+[.][0-9]+[.][0-9]+$/

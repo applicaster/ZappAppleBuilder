@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="fastlane.lanes">
+    
+    
+    
+      
+      <testcase classname="fastlane.lanes" name="00: sudo pip install awscli" time="5.250827">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="01: create_keychain" time="0.068918">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="02: import_certificate" time="0.113466">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="03: bundle exec fastlane fastlane-credentials add --username dev_ci@applicaster.com --password anySunday123!" time="0.983648">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="04: update_info_plist" time="0.028954">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="05: update_project_team" time="0.204985">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="06: produce" time="3.17893">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="07: echo Update for service AWEQ28MY3E completed successfully" time="0.005961">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="08: get_push_certificate" time="2.487261">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="09: bundle exec rake upload_enterprise_push:upload_certificate[5ae06cef8fba0f00084bd3c6,com.applicaster.submit.test,/Users/antonkononenko/Work/tvOS-test2/CircleArtifacts,apns.p12]" time="1.240989">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="10: sigh" time="7.587141">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="11: echo 'Deleting com.applicaster.ent.com.applicaster.submit.test prov profile 1570725157, status: Invalid'" time="0.008434">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="12: get_info_plist_value" time="0.005634">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="13: gym" time="97.77476">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="14: copy_artifacts" time="0.005188">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="15: ls .." time="0.012641">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="16: aws --region us-east-1 s3 sync ../CircleArtifacts/Enterprise s3://assets-production.applicaster.com/zapp/accounts/5ae06cef8fba0f00084bd3c6/apps/com.applicaster.ent.com.applicaster.submit.test/apple_store/2.11.0/tvos --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers --delete" time="27.605244">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="17: delete_keychain" time="0.02706">
+        
+      </testcase>
+    
+  </testsuite>
+</testsuites>

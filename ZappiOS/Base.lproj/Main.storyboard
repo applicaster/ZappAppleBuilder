@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MNz-qc-FrR">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Splash View Controller-->
+        <scene sceneID="qJS-uQ-Foz">
+            <objects>
+                <viewController id="0DP-ll-oQ8" customClass="SplashViewController" customModule="ZappApple" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="csR-v2-Z4N">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aHl-qI-OxH" userLabel="Splash Image View">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0P4-cU-uBl" userLabel="Player Container View">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="QC2-iX-xSg" userLabel="Loading View">
+                                <rect key="frame" x="188.5" y="775" width="37" height="37"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ao-F6-6yB" userLabel="Error Label">
+                                <rect key="frame" x="35" y="842" width="344" height="0.0"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" id="Hfa-JY-Fds"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="3ao-F6-6yB" firstAttribute="leading" secondItem="NFU-xl-cda" secondAttribute="leading" constant="35" id="6Rp-UQ-waP"/>
+                            <constraint firstItem="0P4-cU-uBl" firstAttribute="leading" secondItem="csR-v2-Z4N" secondAttribute="leading" id="9Pn-mw-YvA"/>
+                            <constraint firstItem="aHl-qI-OxH" firstAttribute="top" secondItem="csR-v2-Z4N" secondAttribute="top" id="FN3-k1-9gu"/>
+                            <constraint firstAttribute="bottom" secondItem="0P4-cU-uBl" secondAttribute="bottom" id="J28-dr-yx5"/>
+                            <constraint firstItem="NFU-xl-cda" firstAttribute="trailing" secondItem="3ao-F6-6yB" secondAttribute="trailing" constant="35" id="WX5-9n-ZAh"/>
+                            <constraint firstAttribute="trailing" secondItem="0P4-cU-uBl" secondAttribute="trailing" id="XLQ-cP-2RI"/>
+                            <constraint firstItem="0P4-cU-uBl" firstAttribute="top" secondItem="csR-v2-Z4N" secondAttribute="top" id="b2k-FE-2dD"/>
+                            <constraint firstItem="NFU-xl-cda" firstAttribute="bottom" secondItem="3ao-F6-6yB" secondAttribute="bottom" constant="20" id="dTe-IY-A0f"/>
+                            <constraint firstAttribute="bottom" secondItem="aHl-qI-OxH" secondAttribute="bottom" id="mgF-ek-Xtb"/>
+                            <constraint firstItem="QC2-iX-xSg" firstAttribute="centerX" secondItem="NFU-xl-cda" secondAttribute="centerX" id="rNg-ip-GPk"/>
+                            <constraint firstAttribute="trailing" secondItem="aHl-qI-OxH" secondAttribute="trailing" id="sBt-Qi-BS9"/>
+                            <constraint firstItem="NFU-xl-cda" firstAttribute="bottom" secondItem="QC2-iX-xSg" secondAttribute="bottom" constant="50" id="vIW-Ak-uBg"/>
+                            <constraint firstItem="aHl-qI-OxH" firstAttribute="leading" secondItem="csR-v2-Z4N" secondAttribute="leading" id="xle-dC-hbS"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="NFU-xl-cda"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="ubE-ay-oUH"/>
+                    <connections>
+                        <outlet property="errorLabel" destination="3ao-F6-6yB" id="wxG-Jq-PYK"/>
+                        <outlet property="imageView" destination="aHl-qI-OxH" id="590-Uh-BNy"/>
+                        <outlet property="loadingView" destination="QC2-iX-xSg" id="Blr-zJ-6Q4"/>
+                        <outlet property="playerContainer" destination="0P4-cU-uBl" id="mAY-wz-Dts"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="B7q-vI-e2H" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-325" y="-441"/>
+        </scene>
+        <!--Root View Controller-->
+        <scene sceneID="shK-BO-yAC">
+            <objects>
+                <viewController id="MNz-qc-FrR" customClass="RootViewController" customModule="ZappApple" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CTt-XE-Q43">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L8u-0u-rdo" userLabel="Splash View Container">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <connections>
+                                    <segue destination="0DP-ll-oQ8" kind="embed" id="Uoj-be-nAQ"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tpr-na-yaF" userLabel="User Interface Layer Container">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="L8u-0u-rdo" secondAttribute="bottom" id="0hX-OX-9c9"/>
+                            <constraint firstItem="Tpr-na-yaF" firstAttribute="leading" secondItem="CTt-XE-Q43" secondAttribute="leading" id="5Qb-DH-lRL"/>
+                            <constraint firstItem="L8u-0u-rdo" firstAttribute="top" secondItem="CTt-XE-Q43" secondAttribute="top" id="8vh-kv-6kY"/>
+                            <constraint firstAttribute="bottom" secondItem="Tpr-na-yaF" secondAttribute="bottom" id="Mky-pD-hOc"/>
+                            <constraint firstItem="L8u-0u-rdo" firstAttribute="leading" secondItem="CTt-XE-Q43" secondAttribute="leading" id="W6W-kl-m9F"/>
+                            <constraint firstItem="Tpr-na-yaF" firstAttribute="top" secondItem="CTt-XE-Q43" secondAttribute="top" id="XsY-Ne-hhl"/>
+                            <constraint firstAttribute="trailing" secondItem="L8u-0u-rdo" secondAttribute="trailing" id="YeT-Od-hs2"/>
+                            <constraint firstItem="Tpr-na-yaF" firstAttribute="trailing" secondItem="CTt-XE-Q43" secondAttribute="trailing" id="nAB-N2-BX6"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="e4J-wm-6Ur"/>
+                    </view>
+                    <connections>
+                        <outlet property="splashScreenContainerView" destination="L8u-0u-rdo" id="1Ca-A2-Sat"/>
+                        <outlet property="userInterfaceLayerContainerView" destination="Tpr-na-yaF" id="gQS-GB-YRj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="btZ-1e-e35" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1146.376811594203" y="-441.29464285714283"/>
+        </scene>
+    </scenes>
+</document>

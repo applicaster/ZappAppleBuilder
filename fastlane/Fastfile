@@ -1,0 +1,9 @@
+require 'spaceship'
+require "json"
+
+import "FaslaneUpload.rb"
+import "EnvironmentHelper.rb"
+import "FastfileBase"
+import "FastfileTest"
+import "FastfileEnterprise"
+import "FastfileStore"
