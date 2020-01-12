@@ -16,9 +16,6 @@
 		407851C523C60AC9006E4EAC /* AppDelegateBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407851C323C60AC9006E4EAC /* AppDelegateBase.swift */; };
 		40C4C3942343CBA000C9B07D /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C4C3932343CBA000C9B07D /* dummy.swift */; };
 		40E4650D2344F3C9002D16E7 /* CoreSpotlight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40E4650C2344F3C9002D16E7 /* CoreSpotlight.framework */; };
-		40E4651A2344FBF8002D16E7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40E465182344FBF8002D16E7 /* Main.storyboard */; };
-		40E4651C2344FBF9002D16E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40E4651B2344FBF9002D16E7 /* Assets.xcassets */; };
-		40E465342344FE02002D16E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4077CA73219B654C007471DC /* AppDelegate.swift */; };
 		40E46536234500A6002D16E7 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40E46535234500A6002D16E7 /* StoreKit.framework */; };
 		40E46538234500B1002D16E7 /* CoreSpotlight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40E46537234500B1002D16E7 /* CoreSpotlight.framework */; };
 		40E4655C23453FC6002D16E7 /* ApplicationCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40423B30219EF73E00ADAB6E /* ApplicationCredentials.swift */; };
@@ -49,7 +46,6 @@
 		40423B30219EF73E00ADAB6E /* ApplicationCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCredentials.swift; sourceTree = "<group>"; };
 		40423B34219F4E4200ADAB6E /* ZappStyles.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ZappStyles.json; sourceTree = "<group>"; };
 		4077CA70219B654C007471DC /* ZappTvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZappTvOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4077CA73219B654C007471DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4077CA78219B654C007471DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4077CA7A219B654E007471DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4077CA7C219B654E007471DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -60,14 +56,8 @@
 		40C4C3932343CBA000C9B07D /* dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dummy.swift; sourceTree = "<group>"; };
 		40E4650C2344F3C9002D16E7 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
 		40E465122344FBF8002D16E7 /* ZappIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZappIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		40E465192344FBF8002D16E7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		40E4651B2344FBF9002D16E7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		40E465202344FBF9002D16E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		40E465332344FDD2002D16E7 /* ZappiOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZappiOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		40E46535234500A6002D16E7 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.4.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		40E46537234500B1002D16E7 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.4.sdk/System/Library/Frameworks/CoreSpotlight.framework; sourceTree = DEVELOPER_DIR; };
-		40E46539234505BF002D16E7 /* ZappiOS-Release.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "ZappiOS-Release.entitlements"; sourceTree = "<group>"; };
-		40E465702346489D002D16E7 /* ZappiOS-Debug.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "ZappiOS-Debug.entitlements"; sourceTree = "<group>"; };
 		40E46571234648E3002D16E7 /* ZappTvOS-Debug.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "ZappTvOS-Debug.entitlements"; sourceTree = "<group>"; };
 		40E4657223465D1A002D16E7 /* FeaturesCustomization.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FeaturesCustomization.plist; sourceTree = "<group>"; };
 		49979598D1F33FD69D9B3B34 /* Pods-ZappAppleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZappAppleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZappAppleTests/Pods-ZappAppleTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -133,7 +123,6 @@
 			isa = PBXGroup;
 			children = (
 				40E465252344FC40002D16E7 /* ZappApple */,
-				40E465132344FBF8002D16E7 /* ZappiOS */,
 				4077CA72219B654C007471DC /* ZappTvOS */,
 				4077CA84219B654E007471DC /* ZappAppleTests */,
 				4077CA71219B654C007471DC /* Products */,
@@ -174,20 +163,6 @@
 				40C4C3922343CBA000C9B07D /* ZappAppleTests-Bridging-Header.h */,
 			);
 			path = ZappAppleTests;
-			sourceTree = "<group>";
-		};
-		40E465132344FBF8002D16E7 /* ZappiOS */ = {
-			isa = PBXGroup;
-			children = (
-				4077CA73219B654C007471DC /* AppDelegate.swift */,
-				40E465332344FDD2002D16E7 /* ZappiOS-Bridging-Header.h */,
-				40E46539234505BF002D16E7 /* ZappiOS-Release.entitlements */,
-				40E465702346489D002D16E7 /* ZappiOS-Debug.entitlements */,
-				40E465182344FBF8002D16E7 /* Main.storyboard */,
-				40E4651B2344FBF9002D16E7 /* Assets.xcassets */,
-				40E465202344FBF9002D16E7 /* Info.plist */,
-			);
-			path = ZappiOS;
 			sourceTree = "<group>";
 		};
 		40E465252344FC40002D16E7 /* ZappApple */ = {
@@ -358,8 +333,6 @@
 			files = (
 				40E4655D23453FF5002D16E7 /* ZappStyles.json in Resources */,
 				40E4657423465D1A002D16E7 /* FeaturesCustomization.plist in Resources */,
-				40E4651C2344FBF9002D16E7 /* Assets.xcassets in Resources */,
-				40E4651A2344FBF8002D16E7 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -558,7 +531,6 @@
 			files = (
 				40E4655C23453FC6002D16E7 /* ApplicationCredentials.swift in Sources */,
 				407851C523C60AC9006E4EAC /* AppDelegateBase.swift in Sources */,
-				40E465342344FE02002D16E7 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -577,14 +549,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				4077CA78219B654C007471DC /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		40E465182344FBF8002D16E7 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				40E465192344FBF8002D16E7 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
