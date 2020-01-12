@@ -59,6 +59,7 @@
 		1D30F6BB23CB2CE800DDD86F /* AppDelegateBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegateBase.swift; sourceTree = "<group>"; };
 		1D30F6C123CB2D5F00DDD86F /* ZappiOS-Debug.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "ZappiOS-Debug.entitlements"; sourceTree = "<group>"; };
 		1D30F6C223CB2D5F00DDD86F /* ZappiOS-Release.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "ZappiOS-Release.entitlements"; sourceTree = "<group>"; };
+		1D30F71623CB4D5100DDD86F /* ZappiOS-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZappiOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		48BCB8F0F692A4D55E8D12E9 /* Pods_ZappiOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZappiOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		64287BEDF68DCEE157F26C6E /* Pods-ZappiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZappiOS.debug.xcconfig"; path = "Target Support Files/Pods-ZappiOS/Pods-ZappiOS.debug.xcconfig"; sourceTree = "<group>"; };
 		9DE1E4F2BB238AD9FBF3544E /* Pods-ZappiOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZappiOSTests.release.xcconfig"; path = "Target Support Files/Pods-ZappiOSTests/Pods-ZappiOSTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -123,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				1D30F6C023CB2D3C00DDD86F /* Entitlements */,
+				1D30F71623CB4D5100DDD86F /* ZappiOS-Bridging-Header.h */,
 				1D30F68A23CB298000DDD86F /* Assets.xcassets */,
 				1D30F68123CB297F00DDD86F /* AppDelegate.swift */,
 				1D30F68723CB297F00DDD86F /* Main.storyboard */,
@@ -554,7 +556,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -609,7 +611,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

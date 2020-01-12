@@ -8,10 +8,16 @@ const readdirAsync = promisify(readdir);
 const readFileAsync = promisify(readFile);
 const writeFileAsync = promisify(writeFile);
 
-const REPO_ROOT = resolve(__dirname, "..");
+const REPO_IOS_ROOT = resolve(__dirname, "../ZappiOS");
+const REPO_TVOS_ROOT = resolve(__dirname, "../ZappTvOS");
 
-const REACT_NATIVE_INSTALL_FOLDER = resolve(
-  REPO_ROOT,
+const IOS_REACT_NATIVE_INSTALL_FOLDER = resolve(
+  REPO_IOS_ROOT,
+  "./node_modules/react-native"
+);
+
+const TVOS_REACT_NATIVE_INSTALL_FOLDER = resolve(
+  REPO_TVOS_ROOT,
   "./node_modules/react-native"
 );
 
@@ -46,8 +52,8 @@ function prepareReactPodspec(file) {
   return fileLines.join(BREAK_LINE);
 }
 
-async function processFile({ filePath, operation, args }) {
-  const fullFilePath = resolve(REACT_NATIVE_INSTALL_FOLDER, filePath);
+async function processFile(react_native_install_folder, { filePath, operation, args }) {
+  const fullFilePath = resolve(react_native_install_folder, filePath);
   console.log(`processing ${fullFilePath}`);
   console.log(`performing ${operation.name} with ${inspect(args)} \n`);
 
@@ -109,7 +115,9 @@ const FILES_TO_PATCH = [
 
 async function run() {
   console.log("-| Patching react native |-");
-  FILES_TO_PATCH.forEach(async fileToPatch => await processFile(fileToPatch));
+  FILES_TO_PATCH.forEach(async fileToPatch => await processFile(IOS_REACT_NATIVE_INSTALL_FOLDER, fileToPatch));
+  FILES_TO_PATCH.forEach(async fileToPatch => await processFile(TVOS_REACT_NATIVE_INSTALL_FOLDER, fileToPatch));
+
 }
 
 run();

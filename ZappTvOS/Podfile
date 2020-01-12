@@ -1,6 +1,6 @@
 # Uncomment the next line to define a global platform for your project
 require 'resolv-replace'
-install! 'cocoapods', :deterministic_uuids => false
+install! 'cocoapods', :deterministic_uuids => false, :preserve_pod_file_structure => true
 use_frameworks!
 
 source 'git@github.com:applicaster/CocoaPods.git'
@@ -15,7 +15,7 @@ pre_install do |installer|
 	Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
 end
 
-puts("\n\nCocoaPods preparing for platform: iOS\n\n")
+puts("\n\nCocoaPods preparing for platform: tvOS\n\n")
 
 def shared_pods
     pod 'ZappPlugins', :git => 'https://github.com/applicaster/ZappPlugins-iOS', :tag => '11.3.0'
@@ -31,8 +31,9 @@ def shared_pods
 
 end
 
-target 'ZappiOS' do
-  platform :ios, '10.0'
+target 'ZappTvOS' do
+  platform :tvos, '11.0'
+
   pod 'React', :path => './node_modules/react-native', :subspecs => [
     'Core',
     'CxxBridge',
@@ -45,12 +46,15 @@ target 'ZappiOS' do
     'RCTSettings',
     'RCTText',
     'RCTWebSocket',
-    'RCTActionSheet'
+    'tvOS',
   ]
+
   shared_pods
 end
 
-target 'ZappiOSTests' do
+
+
+target 'ZappTvOSTests' do
   platform :ios, '10.0'
   inherit! :search_paths
 end
