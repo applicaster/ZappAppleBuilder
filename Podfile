@@ -1,6 +1,6 @@
 # Uncomment the next line to define a global platform for your project
 require 'resolv-replace'
-install! 'cocoapods', :deterministic_uuids => false
+install! 'cocoapods', :deterministic_uuids => false, :preserve_pod_file_structure => true
 use_frameworks!
 
 source 'git@github.com:applicaster/CocoaPods.git'
@@ -8,12 +8,8 @@ source 'git@github.com:applicaster/CocoaPods-Private.git'
 source 'https://cdn.cocoapods.org/'
 
 # Zaptool sources - Do not remove or change.
-source 'git@github.com:applicaster/ZappGeneralPluginGoogleIMA-iOS.git'
-source 'git@github.com:applicaster/ZappGeneralPluginGoogleIMA-iOS.git'
-source 'git@github.com:applicaster/ZappGeneralPluginGoogleIMA-iOS.git'
-source 'git@github.com:applicaster/ZappGeneralPluginGoogleIMA-iOS.git'
-source 'git@github.com:applicaster/ZappGeneralPluginGoogleIMA-iOS.git'
-source 'git@github.com:applicaster/ZappGeneralPluginGoogleIMA-iOS.git'
+
+
 
 def read_build_params_for_type()
   filename = "./build_params"
@@ -35,8 +31,8 @@ puts("\n\nCocoaPods preparing for platform: #{isAppleTv ? "tvOS" : "iOS"}\n\n")
 
 def shared_pods
     pod 'ZappPlugins', :git => 'https://github.com/applicaster/ZappPlugins-iOS', :tag => '11.3.0'
-    pod 'ZappCore', :git => 'https://github.com/applicaster/AppleApplicasterFrameworks.git', :tag => '2020.12.3.19-1-7'
-    pod 'ZappApple', :git => 'https://github.com/applicaster/AppleApplicasterFrameworks.git', :tag => '2020.12.3.19-1-7'
+    pod 'ZappCore', :git => 'https://github.com/applicaster/AppleApplicasterFrameworks.git'
+    pod 'ZappApple', :git => 'https://github.com/applicaster/AppleApplicasterFrameworks.git'
     pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
     pod 'yoga', :path => './node_modules/react-native/ReactCommon/yoga'
     pod 'DoubleConversion', :podspec => './node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
@@ -44,7 +40,7 @@ def shared_pods
     pod 'Folly', :podspec => './node_modules/react-native/third-party-podspecs/Folly.podspec'
 
     # Zaptool pods - Do not remove or change.
-
+    
 end
 
 if isAppleTv
