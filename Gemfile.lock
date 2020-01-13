@@ -1,3 +1,9 @@
+GIT
+  remote: git@github.com:applicaster/fastlane-plugin-altool.git
+  revision: d35df4eb298f814e57e0959a328f63ea0ae4c47e
+  specs:
+    fastlane-plugin-altool (1.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -239,6 +245,7 @@ PLATFORMS
 DEPENDENCIES
   cocoapods (= 1.8.4)
   fastlane (= 2.133.0)
+  fastlane-plugin-altool!
   fastlane-plugin-appcenter
   zapp_sdk_tasks (= 0.4.1)
 
