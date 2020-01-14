@@ -25,6 +25,8 @@ default.profraw
 ZappiOS/ZappiOS/Info.plist
 ZappiOS/ZappiOS/Assets.xcassets/
 ZappiOS/ZappiOS/Customization/
+ZappiOS/quick_brick/
+
 
 ZappTvOS/ZappTvOS/Info.plist
 ZappTvOS/ZappTvOS/Assets.xcassets/
