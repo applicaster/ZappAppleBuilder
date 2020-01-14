@@ -22,15 +22,15 @@ DerivedData
 default.profraw
 
 #
-ZappiOS/Info.plist
-ZappiOS/Assets.xcassets/
-ZappiOS/Customization/
+ZappiOS/ZappiOS/Info.plist
+ZappiOS/ZappiOS/Assets.xcassets/
+ZappiOS/ZappiOS/Customization/
 
-ZappTvOS/Info.plist
-ZappTvOS/Assets.xcassets/
-ZappTvOS/Customization/
+ZappTvOS/ZappTvOS/Info.plist
+ZappTvOS/ZappTvOS/Assets.xcassets/
+ZappTvOS/ZappTvOS/Customization/
 
-ZappiOS/Resources/
+ZappiOS/ZappiOS/Resources/
 
 quick_brick/*
 
