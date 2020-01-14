@@ -8,20 +8,15 @@ const readdirAsync = promisify(readdir);
 const readFileAsync = promisify(readFile);
 const writeFileAsync = promisify(writeFile);
 
-const REPO_IOS_ROOT = resolve(__dirname, "../ZappiOS");
-const REPO_TVOS_ROOT = resolve(__dirname, "../ZappTvOS");
-
-const IOS_REACT_NATIVE_INSTALL_FOLDER = resolve(
-  REPO_IOS_ROOT,
-  "./node_modules/react-native"
-);
-
-const TVOS_REACT_NATIVE_INSTALL_FOLDER = resolve(
-  REPO_TVOS_ROOT,
-  "./node_modules/react-native"
-);
-
 const BREAK_LINE = "\n";
+
+function react_native_install_folder(target) {
+  const repo_root = resolve(__dirname, "../"+target);
+  return resolve(
+    repo_root,
+    "./node_modules/react-native"
+  )
+}
 
 function replaceStringInFile(file, { lookUpString, correctString }) {
   return file
@@ -114,9 +109,13 @@ const FILES_TO_PATCH = [
 ];
 
 async function run() {
+  var platform_install_folder = process.argv.slice(2);
+
   console.log("-| Patching react native |-");
-  FILES_TO_PATCH.forEach(async fileToPatch => await processFile(IOS_REACT_NATIVE_INSTALL_FOLDER, fileToPatch));
-  FILES_TO_PATCH.forEach(async fileToPatch => await processFile(TVOS_REACT_NATIVE_INSTALL_FOLDER, fileToPatch));
+  console.log("-| for: " + platform_install_folder + " |-");
+
+  FILES_TO_PATCH.forEach(async fileToPatch => await processFile(react_native_install_folder(platform_install_folder), fileToPatch));
+
 
 }
 
