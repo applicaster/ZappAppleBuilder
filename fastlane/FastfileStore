@@ -2,7 +2,7 @@ fastlane_require 'dotenv'
 fastlane_require 'spaceship'
 
 platform :ios do
-	
+
 
 	lane :store do
 		setup_store_app_signing(keychain_name)
@@ -21,7 +21,7 @@ platform :ios do
 
 		build_path = "#{ENV['PWD']}/build"
 
-		unlock_keychain( 
+		unlock_keychain(
 			path: keychain_name,
 			password: keychain_password
 		)
@@ -40,7 +40,7 @@ platform :ios do
 		  derived_data_path: build_path,
 		  xcargs: "DEVELOPMENT_TEAM='#{ENV['STORE_TEAM_ID']}' PROVISIONING_PROFILE_SPECIFIER='#{main_prov_profile_specifier}'",
 		  export_team_id: ENV['STORE_CODE_SIGNING_TEAM_ID'],
-		  export_xcargs: "-allowProvisionUpdates", 
+		  export_xcargs: "-allowProvisionUpdates",
 		  export_method: "app-store",
 		  export_options: {
 			compileBitcode: true,
@@ -50,7 +50,7 @@ platform :ios do
 			}
 		  }
 		)
-		
+
 		copy_artifacts(
 			target_path: "CircleArtifacts/Store",
 			artifacts: [
@@ -70,7 +70,7 @@ platform :ios do
 		)
 
 		# upload to ms app center
-		upload_application(bundle_identifier, 
+		upload_application(bundle_identifier,
 			"Store",
 			 "release")
 
@@ -102,10 +102,10 @@ platform :ios do
 		sh("echo 'Fetching iTunesConnect Team Short name for itc_provider parameter'")
 		sh("xcrun altool --list-providers -u #{ENV['itunes_connect_user']} -p #{ENV['itunes_connect_password']} > #{ENV['PWD']}/itc_provider.txt")
 		sh("sed -i -e 's/#{ENV['STORE_TEAM_NAME']} /replaceprovname/g' #{ENV['PWD']}/itc_provider.txt")
-		ENV['STORE_ITC_PROVIDER'] = sh("awk -v pattern=\"replaceprovname\" 'match($0, pattern) {f=$2} END {print f}' #{ENV['PWD']}/itc_provider.txt")		
+		ENV['STORE_ITC_PROVIDER'] = sh("awk -v pattern=\"replaceprovname\" 'match($0, pattern) {f=$2} END {print f}' #{ENV['PWD']}/itc_provider.txt")
 		sh("echo 'Fetched value for itc_provider: #{ENV['STORE_ITC_PROVIDER']}'")
 
-		create_temp_keychain(keychain_name, keychain_password)
+		create_temp_keychain()
 
 		import_certificate(
 		certificate_path: "#{credentials_dir}#{distribution_key_filename}",
@@ -119,13 +119,13 @@ platform :ios do
 	end
 
 	def prepare_store_app(project_name, project_scheme, bundle_identifier)
-	
+
 		# update ms_app_center app secret
 		updateAppSecret("#{bundle_identifier}")
-			
+
 		# update firebase configuration
 		firebase_add_configuration_file("production")
-		
+
 		# add support for push notifications
 		change_system_capability("com.apple.Push", 0, 1)
 		# add AccessWiFi if needed
