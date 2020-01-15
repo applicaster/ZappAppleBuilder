@@ -47,7 +47,7 @@ if isAppleTv
 
 
   target 'ZappTvOS' do
-    platform :tvos, '10.0'
+    platform :tvos, '11.0'
 
     pod 'React', :path => './node_modules/react-native', :subspecs => [
       'Core',
