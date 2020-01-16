@@ -193,9 +193,9 @@ jobs:
               epoch_time=$(date +%s)
               zipped_project_file_name="${epoch_time}_${env_commit}.zip"
 
-              target = "ios"
+              target="ios"
               if [ "$device_target" = apple_tv ]; then
-                target = "tvos"
+                target="tvos"
               fi
 
               # using zip
