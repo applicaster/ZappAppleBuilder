@@ -117,7 +117,7 @@ jobs:
             then
               "${HOME}/ZappTool/ZappTool"
             else
-              cd $targetFolder && yarn
+              yarn
             fi
             cd ..
 
