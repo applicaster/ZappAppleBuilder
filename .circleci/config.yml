@@ -102,7 +102,7 @@ jobs:
 
       - restore_cache:
           name: Restore npm dependencies
-          key: YARN-{{ checksum "~/_caching_file" }}-{{ checksum "yarn.lock" }}
+          key: YARN-{{ checksum "~/_caching_file" }}-{{ checksum "${"$device_target" = "apple_tv" ? echo "ZappTvOS" : echo "ZappiOS"}/yarn.lock" }}
 
       - run:
           name: ZappTool - prepare application environment
@@ -113,16 +113,14 @@ jobs:
               if [ "$device_target" = apple_tv ]; then
                 targetFolder = "ZappTvOS"
               fi
-              cd $targetFolder
-              "${HOME}/ZappTool/ZappTool"
-              cd ..
+              cd $targetFolder && "${HOME}/ZappTool/ZappTool" && cd ..
             else
               yarn
             fi
 
       - save_cache:
           name: Saving NPM dependencies
-          key: YARN-{{ checksum "~/_caching_file" }}-{{ checksum "yarn.lock" }}
+          key: YARN-{{ checksum "~/_caching_file" }}-{{ checksum "${"$device_target" = "apple_tv" ? echo "ZappTvOS" : echo "ZappiOS"}/yarn.lock" }}
           paths:
             - ./node_modules
 
