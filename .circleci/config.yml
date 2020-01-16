@@ -138,7 +138,12 @@ jobs:
       # Pod install
       - run:
           name: CocoaPods - install default dependencies
-          command: bundle exec pod update
+          command: |
+            targetFolder = "ZappiOS"
+            if [ "$device_target" = apple_tv ]; then
+              targetFolder = "ZappTvOS"
+            fi
+            cd $targetFolder && bundle exec pod update && cd ..
 
       # Cache CocoaPods
       - save_cache:
