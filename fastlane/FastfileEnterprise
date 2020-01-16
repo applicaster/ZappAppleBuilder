@@ -28,7 +28,14 @@ platform :ios do
       output_name: "#{project_scheme}-Enterprise",
       build_path: build_path,
       derived_data_path: build_path,
-      xcargs: "RELEASE_SWIFT_OPTIMIZATION_LEVEL='-Onone' RELEASE_COPY_PHASE_STRIP=NO DEBUG_ENABLED_GCC='DEBUG=1' DEBUG_ENABLED_SWIFT='-DDEBUG' DEBUG_ENABLED_SCRIPTS='Debug' PROVISIONING_PROFILE='#{main_prov_profile_specifier}' DEBUG_INFORMATION_FORMAT='dwarf-with-dsym'",
+      xcargs: "RELEASE_SWIFT_OPTIMIZATION_LEVEL='-Onone' "\
+              "RELEASE_COPY_PHASE_STRIP=NO "\
+              "DEBUG_ENABLED_GCC='DEBUG=1' "\
+              "DEBUG_ENABLED_SWIFT='-DDEBUG' "\
+              "DEBUG_ENABLED_SCRIPTS='Debug' "\
+              "PROVISIONING_PROFILE='#{main_prov_profile_specifier}' "\
+              "NOTIFICATION_EXTENSION_PROV_PROFILE_SPECIFIER='#{notifications_prov_profile_specifier}' "\
+              "DEBUG_INFORMATION_FORMAT='dwarf-with-dsym'",
       export_method: "enterprise",
       export_team_id: enterprise_team_id,
       export_options: {
@@ -70,11 +77,13 @@ platform :ios do
       plist_path: project_info_plist_inner_path,
       app_identifier: enterprise_app_bundle_identifier
     )
+
     # update project team identifier for all targets
     update_project_team(
       path: xcodeproj_path,
       teamid: enterprise_team_id
     )
+    
     # create main app on developer portal with new identifier
     create_app_on_dev_portal(
       enterprise_username,
@@ -127,13 +136,15 @@ platform :ios do
   def prepare_enterprise_app_notification_extension()
     # getting the indication if extension is enabled
     notification_service_entension_enabled = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :SupportedAppExtensions:NOTIFICATION_SERVICE_EXTENSION:enterprise_enabled\" #{ENV['PWD']}/ZappApple/Customization/FeaturesCustomization.plist 2>/dev/null | grep -c true)")
-
     if notification_service_entension_enabled.to_i() > 0
       # print notification extension enabled
       sh("echo 'Push Notification extension enabled'")
 
       # update app identifier, versions of the notification extension
-      update_target_info_plist_values(notifications_target_name, enterprise_app_notifications_bundle_identifier)
+      update_target_info_plist_values(
+        notifications_target_name,
+        enterprise_app_notifications_bundle_identifier
+      )
 
       # create app for the notifications
       create_app_on_dev_portal(
@@ -144,10 +155,10 @@ platform :ios do
         "2"
       )
       # create group for app and notification extension
-      sh("bundle exec fastlane produce group -g group.#{enterprise_app_bundle_identifier} -n '#{ENV['bundle_identifier']} Group' -u #{enterprise_username} ")
+      sh("bundle exec fastlane produce group -g #{enterprise_app_group_name} -n '#{ENV['bundle_identifier']} Group' -u #{enterprise_username} ")
       # add the app and the notification extension to the created group
-      sh("bundle exec fastlane produce associate_group group.#{enterprise_app_bundle_identifier} -a #{enterprise_app_bundle_identifier} -u #{enterprise_username} ")
-      sh("bundle exec fastlane produce associate_group group.#{enterprise_app_bundle_identifier} -a #{enterprise_app_notifications_bundle_identifier} -u #{enterprise_username} -i 1")
+      sh("bundle exec fastlane produce associate_group #{enterprise_app_group_name} -a #{enterprise_app_bundle_identifier} -u #{enterprise_username} ")
+      sh("bundle exec fastlane produce associate_group #{enterprise_app_group_name} -a #{enterprise_app_notifications_bundle_identifier} -u #{enterprise_username} -i 1")
       # create provisioning profile for the notifications app
       create_provisioning_profile(
         enterprise_username,
@@ -159,13 +170,13 @@ platform :ios do
       update_group_identifiers(
         "#{project_name}",
         "Release",
-        ["group.#{bundle_identifier}"]
+        ["#{enterprise_app_group_name}"]
       )
 
       update_group_identifiers(
         "#{notifications_target_name}",
         "Release",
-        ["group.#{bundle_identifier}"]
+        ["#{enterprise_app_group_name}"]
       )
       # change app groups support on project file
       change_system_capability(
@@ -225,6 +236,10 @@ platform :ios do
 
   def enterprise_app_devportal_notifications_app_name
       "#{enterprise_app_devportal_app_name}.notifications"
+  end
+
+  def enterprise_app_group_name
+      "group.#{enterprise_app_bundle_identifier}"
   end
 
   def notifications_target_name

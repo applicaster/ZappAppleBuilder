@@ -30,12 +30,10 @@ platform :ios do
         associated_domains: "on",
         data_protection: "complete",
         in_app_purchase: "on",
-        push_notification: "on"
+        push_notification: "on",
+        access_wifi: "on"
       }
     )
-
-    # update custom service on dev portal => add AccessWiFi
-    custom_update_service(username, team_id, app_bundle, "AWEQ28MY3E")
 
   end
 
@@ -70,7 +68,7 @@ platform :ios do
   end
 
   def change_system_capability(capability, old_value, new_value)
-      project = "#{xcodeproj_path}"
+      project = "#{xcodeproj_path}/project.pbxproj"
       regex = /(#{capability} = {\s+enabled\s=\s)#{old_value}(;\s+};)/
       substitue = %Q(\\1#{new_value}\\2)
       new_content = File.read(project).gsub!(regex, substitue)
@@ -99,17 +97,30 @@ platform :ios do
 
   def update_target_info_plist_values(target_name, target_bundle_identifier)
     # update app identifier, versions of the extension
-    bundle_version = get_info_plist_value(path: project_info_plist_inner_path, key: "CFBundleVersion")
-    bundle_short_version = get_info_plist_value(path: project_info_plist_inner_path, key: "CFBundleShortVersionString")
+    bundle_version = get_info_plist_value(
+      path: project_info_plist_path,
+      key: "CFBundleVersion"
+    )
+    bundle_short_version = get_info_plist_value(
+      path: project_info_plist_path,
+      key: "CFBundleShortVersionString"
+    )
     update_info_plist(
       xcodeproj: xcodeproj_path,
       plist_path: "#{target_name}/Info.plist",
       block: lambda do |plist|
         plist['CFBundleVersion'] = bundle_version
         plist['CFBundleShortVersionString'] = bundle_short_version
-        plist['CFBundleIdentifier'] = "#{target_bundle_identifier}"
       end
     )
+
+    # update app identifier to the enterprise one
+    update_app_identifier(
+      xcodeproj: xcodeproj_path,
+      plist_path: "#{target_name}/Info.plist",
+      app_identifier: target_bundle_identifier
+    )
+
   end
 
   def custom_update_service(username, team_id, app_bundle, service_id)
