@@ -1,5 +1,5 @@
 {
-  "name": "QuickBrick-tvOS",
+  "name": "ZappAppleBuilder",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -31,7 +31,7 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/applicaster/QuickBrick-tvOS/issues"
+    "url": "https://github.com/applicaster/ZappAppleBuilder/issues"
   },
-  "homepage": "https://github.com/applicaster/QuickBrick-tvOS#readme"
+  "homepage": "https://github.com/applicaster/ZappAppleBuilder#readme"
 }
