@@ -116,7 +116,7 @@ platform :ios do
 		ENV['FASTLANE_PASSWORD']=store_password
 	end
 
-	def prepare_store_app(project_name, project_scheme, bundle_identifier)
+	def prepare_store_app()
 
 		# update ms_app_center app secret
 		ms_app_center_update_app_secret("#{bundle_identifier}")
@@ -141,7 +141,7 @@ platform :ios do
     prepare_store_app_notification_extension()
   end
 
-  def prepare_store_app_notification_extension(project_name, project_scheme, bundle_identifier)
+  def prepare_store_app_notification_extension()
     notification_service_entension_enabled = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :SupportedAppExtensions:NOTIFICATION_SERVICE_EXTENSION:store_enabled\" #{customizations_folder_path}/FeaturesCustomization.plist 2>/dev/null | grep -c true)")
 
     if notification_service_entension_enabled.to_i() > 0
@@ -214,7 +214,7 @@ platform :ios do
 	end
 
 	def store_app_notifications_provisioning_profile_uuid
-		sh("echo $(/usr/libexec/PlistBuddy -c \"Print :SupportedAppExtensions:NOTIFICATION_SERVICE_EXTENSION:provisioning_profile_uuid\" #{customizations_folder_path}/Customization/FeaturesCustomization.plist 2>/dev/null) | tr -d '\040\011\012\015'")
+		sh("echo $(/usr/libexec/PlistBuddy -c \"Print :SupportedAppExtensions:NOTIFICATION_SERVICE_EXTENSION:provisioning_profile_uuid\" #{customizations_folder_path}/FeaturesCustomization.plist 2>/dev/null) | tr -d '\040\011\012\015'")
 	end
 
 end
