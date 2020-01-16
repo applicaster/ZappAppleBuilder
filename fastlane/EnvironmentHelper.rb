@@ -112,5 +112,5 @@
     end
 
     def notification_service_extension_info_plist_path
-        "#{project_path}/#{notifications_target_name}/Info.plist"
+        "#{project_path}/#{notification_service_extension_target_name}/Info.plist"
     end
