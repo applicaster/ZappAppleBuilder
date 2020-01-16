@@ -1,4 +1,6 @@
 # Uncomment the next line to define a global platform for your project
+platform :tvos, '10.0'
+
 require 'resolv-replace'
 install! 'cocoapods', :deterministic_uuids => false, :preserve_pod_file_structure => true
 use_frameworks!
@@ -8,7 +10,6 @@ source 'git@github.com:applicaster/CocoaPods-Private.git'
 source 'https://cdn.cocoapods.org/'
 
 # Zaptool sources - Do not remove or change.
-
 
 pre_install do |installer|
 	# workaround for https://github.com/CocoaPods/CocoaPods/issues/3289
@@ -32,7 +33,6 @@ def shared_pods
 end
 
 target 'ZappTvOS' do
-  platform :tvos, '10.0'
 
   pod 'React', :path => './node_modules/react-native', :subspecs => [
     'Core',
@@ -52,10 +52,7 @@ target 'ZappTvOS' do
   shared_pods
 end
 
-
-
 target 'ZappTvOSTests' do
-  platform :tvos, '10.0'
   inherit! :search_paths
 end
 

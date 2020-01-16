@@ -1,4 +1,6 @@
 # Uncomment the next line to define a global platform for your project
+platform :ios, '10.0'
+
 require 'resolv-replace'
 install! 'cocoapods', :deterministic_uuids => false
 use_frameworks!
@@ -32,7 +34,6 @@ def shared_pods
 end
 
 target 'ZappiOS' do
-  platform :ios, '10.0'
   pod 'React', :path => './node_modules/react-native', :subspecs => [
     'Core',
     'CxxBridge',
@@ -51,7 +52,6 @@ target 'ZappiOS' do
 end
 
 target 'ZappiOSTests' do
-  platform :ios, '10.0'
   inherit! :search_paths
 end
 
