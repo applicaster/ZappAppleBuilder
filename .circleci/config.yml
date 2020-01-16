@@ -107,16 +107,19 @@ jobs:
       - run:
           name: ZappTool - prepare application environment
           command: |
+            targetFolder="ZappiOS"
+            if [ "$device_target" = apple_tv ]; then
+              targetFolder="ZappTvOS"
+            fi
+
+            cd $targetFolder
             if [ "$bundle_identifier" ];
             then
-              targetFolder = "ZappiOS"
-              if [ "$device_target" = apple_tv ]; then
-                targetFolder = "ZappTvOS"
-              fi
-              cd $targetFolder && "${HOME}/ZappTool/ZappTool" && cd ..
+              "${HOME}/ZappTool/ZappTool"
             else
-              yarn
+              cd $targetFolder && yarn
             fi
+            cd ..
 
       - save_cache:
           name: Saving NPM dependencies
