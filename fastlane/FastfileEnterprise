@@ -67,7 +67,7 @@ platform :ios do
   def prepare_enterprise_app()
 
     # update ms_app_center app secret
-    update_app_secret(enterprise_app_bundle_identifier)
+    ms_app_center_update_app_secret(enterprise_app_bundle_identifier)
 
     #update firebase configuration
     firebase_add_configuration_file("enterprise")
@@ -126,7 +126,7 @@ platform :ios do
       keychain_name: keychain_name,
       keychain_password: keychain_password
     )
-    sh("bundle exec fastlane fastlane-credentials add --username #{enterprise_username} --password #{enterprise_password}")
+    sh("bundle exec fastlane fastlane-credentials add --username #{enterprise_username} --password '#{enterprise_password}'")
     ENV['FASTLANE_PASSWORD']=ENV['APPLE_DEV_ENT_PASS']
   end
 
