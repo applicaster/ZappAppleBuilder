@@ -47,6 +47,9 @@ platform :ios do
       }
     )
 
+    # delete temp keychain
+    delete_keychain(name: keychain_name)
+
     copy_artifacts(
 			target_path: "CircleArtifacts/Enterprise",
 			artifacts: [
@@ -57,10 +60,8 @@ platform :ios do
     # upload to ms app center
     upload_application(bundle_identifier,
       "Enterprise",
-      "debug")
-
-    # delete temp keychain
-    delete_keychain(name: keychain_name)
+      "debug"
+    )
   end
 
   def prepare_enterprise_app()
@@ -83,7 +84,7 @@ platform :ios do
       path: xcodeproj_path,
       teamid: enterprise_team_id
     )
-    
+
     # create main app on developer portal with new identifier
     create_app_on_dev_portal(
       enterprise_username,
@@ -135,7 +136,7 @@ platform :ios do
 
   def prepare_enterprise_app_notification_extension()
     # getting the indication if extension is enabled
-    notification_service_entension_enabled = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :SupportedAppExtensions:NOTIFICATION_SERVICE_EXTENSION:enterprise_enabled\" #{ENV['PWD']}/ZappApple/Customization/FeaturesCustomization.plist 2>/dev/null | grep -c true)")
+    notification_service_entension_enabled = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :SupportedAppExtensions:NOTIFICATION_SERVICE_EXTENSION:enterprise_enabled\" #{customizations_folder_path}/FeaturesCustomization.plist 2>/dev/null | grep -c true)")
     if notification_service_entension_enabled.to_i() > 0
       # print notification extension enabled
       sh("echo 'Push Notification extension enabled'")
@@ -240,10 +241,6 @@ platform :ios do
 
   def enterprise_app_group_name
       "group.#{enterprise_app_bundle_identifier}"
-  end
-
-  def notifications_target_name
-      "NotificationServiceExtension"
   end
 
   def enterprise_app_notifications_bundle_identifier

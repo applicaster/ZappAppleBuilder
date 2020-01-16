@@ -63,6 +63,10 @@
         "#{project_name}"
     end
 
+    def customizations_folder_path
+        "#{ENV['PWD']}/ZappApple/Customization"
+    end
+
     def project_path
         "#{ENV['PWD']}/#{project_folder_name}"
     end
@@ -90,6 +94,23 @@
     def bundle_identifier
         ENV['bundle_identifier']
     end
+
     def app_name_notifications
         "#{bundle_identifier}.notification"
+    end
+
+    def distribution_distribution_provisioning_profile_filename
+      "dist.mobileprovision"
+    end
+
+    def distribution_certificate_filename
+      "dist.p12"
+    end
+
+    def notifications_target_name
+        "NotificationServiceExtension"
+    end
+
+    def notifications_extensions_info_plist_path
+        "#{project_path}/#{notifications_target_name}/Info.plist"
     end

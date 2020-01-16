@@ -184,7 +184,7 @@ platform :ios do
   def ms_app_center_update_app_secret(bundle_identifier)
     ms_app_center_app_secret = ms_app_center_read_value_from_file(bundle_identifier, "appsecret")
 
-    sh("/usr/libexec/PlistBuddy -c \"Set MSAppCenterAppSecret #{ms_app_center_app_secret}\" #{ENV['PWD']}/ZappApple/Customization/FeaturesCustomization.plist")
+    sh("/usr/libexec/PlistBuddy -c \"Set MSAppCenterAppSecret #{ms_app_center_app_secret}\" #{customizations_folder_path}/FeaturesCustomization.plist")
     puts "MS App Center app secret #{ms_app_center_app_secret} was updated successfully for bundle identifier: #{bundle_identifier}"
 
     # add appcenter url scheme to the app
