@@ -124,6 +124,13 @@ platform :ios do
 		# update firebase configuration
 		firebase_add_configuration_file("production")
 
+		# update app identifier to the enterprise one
+		update_app_identifier(
+			xcodeproj: xcodeproj_path,
+			plist_path: project_info_plist_inner_path,
+			app_identifier: bundle_identifier
+		)
+
 		# add support for push notifications
 		change_system_capability(
 			"com.apple.Push",
@@ -146,6 +153,12 @@ platform :ios do
 
     if notification_service_entension_enabled.to_i() > 0
       sh("echo 'Push Notification extension enabled'")
+
+			# update app identifier, versions of the notification extension
+			update_target_info_plist_values(
+				notification_service_extension_target_name,
+				store_app_notifications_bundle_identifier
+			)
 
       # save app identifier of the notification extension
       ENV['identifier_notifications'] = get_info_plist_value(path: "#{notification_service_extension_info_plist_path}", key: "CFBundleIdentifier")
@@ -180,10 +193,6 @@ platform :ios do
     end
   end
 
-	def store_app_notifications_bundle_identifier
-			"#{bundle_identifier}.#{notification_service_extension_target_name}"
-	end
-
 	def store_username
 		"#{ENV['itunes_connect_user']}"
 	end
@@ -211,6 +220,10 @@ platform :ios do
 
 	def store_app_provisioning_profile_uuid
 		"#{ENV['STORE_PROVISIONING_PROFILE_UUID']}"
+	end
+
+	def store_app_notifications_bundle_identifier
+			"#{bundle_identifier}.#{notification_service_extension_target_name}"
 	end
 
 	def store_app_notifications_provisioning_profile_uuid
