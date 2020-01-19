@@ -22,15 +22,17 @@ DerivedData
 default.profraw
 
 #
-ZappiOS/Info.plist
-ZappiOS/Assets.xcassets/
-ZappiOS/Customization/
+ZappiOS/ZappiOS/Info.plist
+ZappiOS/ZappiOS/Assets.xcassets/
+ZappiOS/ZappiOS/Customization/
+ZappiOS/quick_brick/
 
-ZappTvOS/Info.plist
-ZappTvOS/Assets.xcassets/
-ZappTvOS/Customization/
 
-ZappiOS/Resources/
+ZappTvOS/ZappTvOS/Info.plist
+ZappTvOS/ZappTvOS/Assets.xcassets/
+ZappTvOS/ZappTvOS/Customization/
+
+ZappiOS/ZappiOS/Resources/
 
 quick_brick/*
 
@@ -50,5 +52,3 @@ Pods/**
 node_modules
 packages/**/node_modules
 packages/development-app
-
-ios/

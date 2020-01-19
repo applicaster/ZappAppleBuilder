@@ -1,6 +1,8 @@
 #!/bin/sh
 IFS=$'\n'
 CURRENT_DIR=$1
+PROJECT_NAME=$2
+PROJECT_PLATFORM=$3
 
 # install for icon ribbon
 brew install ImageMagick
@@ -8,8 +10,11 @@ brew install ImageMagick
 RIBBON_IMAGE_DIR="${CURRENT_DIR}/Scripts/Resources"
 ORIG_RIBBON_IMAGE="${RIBBON_IMAGE_DIR}/debug-icon-ribbon.png"
 RESIZED_RIBBON_IMAGE="$RIBBON_IMAGE_DIR/debug-icon-ribbon-resized.png"
-TARGET_PATH="${CURRENT_DIR}/Zapp-AppAssets.xcassets/App Icon & Top Shelf Image.brandassets/App Icon.imagestack/Layer5.imagestacklayer/Content.imageset"
-
+if [[ $PROJECT_PLATFORM == "tvos" ]]; then
+  TARGET_PATH="${CURRENT_DIR}/${PROJECT_NAME}/${PROJECT_NAME}/Assets.xcassets/App Icon & Top Shelf Image.brandassets/App Icon.imagestack/Layer5.imagestacklayer/Content.imageset"
+else
+  TARGET_PATH="${CURRENT_DIR}/${PROJECT_NAME}/${PROJECT_NAME}/Assets.xcassets/AppIcon.appiconset"
+fi
 apply_on_images(){
   PATTERN=$1
   find ${TARGET_PATH} -name "${PATTERN}" | while read line ;

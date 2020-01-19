@@ -8,14 +8,15 @@ const readdirAsync = promisify(readdir);
 const readFileAsync = promisify(readFile);
 const writeFileAsync = promisify(writeFile);
 
-const REPO_ROOT = resolve(__dirname, "..");
-
-const REACT_NATIVE_INSTALL_FOLDER = resolve(
-  REPO_ROOT,
-  "./node_modules/react-native"
-);
-
 const BREAK_LINE = "\n";
+
+function react_native_install_folder(target) {
+  const repo_root = resolve(__dirname, "../"+target);
+  return resolve(
+    repo_root,
+    "./node_modules/react-native"
+  )
+}
 
 function replaceStringInFile(file, { lookUpString, correctString }) {
   return file
@@ -46,8 +47,8 @@ function prepareReactPodspec(file) {
   return fileLines.join(BREAK_LINE);
 }
 
-async function processFile({ filePath, operation, args }) {
-  const fullFilePath = resolve(REACT_NATIVE_INSTALL_FOLDER, filePath);
+async function processFile(react_native_install_folder, { filePath, operation, args }) {
+  const fullFilePath = resolve(react_native_install_folder, filePath);
   console.log(`processing ${fullFilePath}`);
   console.log(`performing ${operation.name} with ${inspect(args)} \n`);
 
@@ -108,8 +109,14 @@ const FILES_TO_PATCH = [
 ];
 
 async function run() {
+  var platform_install_folder = process.argv.slice(2);
+
   console.log("-| Patching react native |-");
-  FILES_TO_PATCH.forEach(async fileToPatch => await processFile(fileToPatch));
+  console.log("-| for: " + platform_install_folder + " |-");
+
+  FILES_TO_PATCH.forEach(async fileToPatch => await processFile(react_native_install_folder(platform_install_folder), fileToPatch));
+
+
 }
 
 run();

@@ -1,13 +1,21 @@
 
-    def isTvOS 
-        ENV["device_target"] == "apple_tv" ? true : false
-    end
-
     def device_target
         ENV["device_target"]
     end
 
-    def version_name 
+    def platform_name
+        device_target == "apple_tv" ? "tvos" : "ios"
+    end
+
+    def isTvOS
+        device_target == "apple_tv" ? true : false
+    end
+
+    def appCenterDeviceIdentifier
+        "#{platform_name}"
+    end
+
+    def version_name
         ENV["version_name"]
     end
 
@@ -15,13 +23,9 @@
         ENV["build_version"]
     end
 
-    def store 
+    def store
         ENV["store"]
     end
-
-    def appCenterDeviceIdentifier 
-        ENV["device_target"] == "apple_tv" ? "tvos" : "ios"
-    end 
 
     def accountsAccountId
         ENV["accounts_account_id"]
@@ -35,42 +39,78 @@
         ENV["AWS_REGION"]
     end
 
-    def project_scheme
-        ENV["device_target"] == "apple_tv" ? "ZappTvOS" : "ZappiOS"
-    end
-
-    def build_configuration 
+    def build_configuration
         "Release"
     end
 
-    def project_name 
-        ENV["project_name"]
-    end
-    
-    def keychain_name 
+    def keychain_name
         "zapp-apple-build.keychain"
     end
 
-    def keychain_password 
+    def keychain_password
         "circle"
     end
 
-    def project_name 
-        "ZappApple"
+    def project_name
+        device_target == "apple_tv" ? "ZappTvOS" : "ZappiOS"
     end
 
-    def project_path 
-        "#{ENV['PWD']}/#{ENV['project_name']}.xcodeproj"
+    def project_folder_name
+        "#{project_name}"
     end
 
-    def project_folder
-        ENV['PWD']
+    def project_scheme
+        "#{project_name}"
     end
 
-    def app_name_notifications 
-        "#{ENV['bundle_identifier']}.notification"
-    end 
+    def customizations_folder_path
+        "#{ENV['PWD']}/ZappApple/Customization"
+    end
 
-    def app_name 
+    def project_path
+        "#{ENV['PWD']}/#{project_folder_name}"
+    end
+
+    def xcodeproj_path
+        "#{project_path}/#{project_name}.xcodeproj"
+    end
+
+    def xcworkspace_relative_path
+        "#{project_folder_name}/#{project_name}.xcworkspace"
+    end
+
+    def project_info_plist_inner_path
+        "#{project_name}/Info.plist"
+    end
+
+    def project_info_plist_path
+        "#{project_path}/#{project_info_plist_inner_path}"
+    end
+
+    def app_name
         ENV['app_name']
-    end 
+    end
+
+    def bundle_identifier
+        ENV['bundle_identifier']
+    end
+
+    def app_name_notifications
+        "#{bundle_identifier}.notification"
+    end
+
+    def distribution_provisioning_profile_filename
+      "dist.mobileprovision"
+    end
+
+    def distribution_certificate_filename
+      "dist.p12"
+    end
+
+    def notification_service_extension_target_name
+        "NotificationServiceExtension"
+    end
+
+    def notification_service_extension_info_plist_path
+        "#{project_path}/#{notification_service_extension_target_name}/Info.plist"
+    end

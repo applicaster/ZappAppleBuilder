@@ -18,7 +18,7 @@ jobs:
       LC_ALL: "en_US.UTF-8"
       LANG: "en_US.UTF-8"
 
-    working_directory: ~/ZappApple
+    working_directory: ~/ZappAppleBuilder
     steps:
       #Hack general caching until circle does not support global env variables
       - run: echo "$GENERAL_CACHE_KEY" > ~/_caching_file
@@ -38,7 +38,7 @@ jobs:
       - run:
           name: Fetch tags
           command: |
-            if [ -n "$CIRCLE_TAG" ]; then 
+            if [ -n "$CIRCLE_TAG" ]; then
               git fetch --tags -f
             else
               echo "Skipping fetch tags"
@@ -102,21 +102,28 @@ jobs:
 
       - restore_cache:
           name: Restore npm dependencies
-          key: YARN-{{ checksum "~/_caching_file" }}-{{ checksum "yarn.lock" }}
+          key: YARN-{{ checksum "~/_caching_file" }}-{{ checksum "ZappiOS/yarn.lock" }}
 
       - run:
           name: ZappTool - prepare application environment
           command: |
+            targetFolder="ZappiOS"
+            if [ "$device_target" = apple_tv ]; then
+              targetFolder="ZappTvOS"
+            fi
+
+            cd $targetFolder
             if [ "$bundle_identifier" ];
-            then 
+            then
               "${HOME}/ZappTool/ZappTool"
-            else 
+            else
               yarn
             fi
+            cd ..
 
       - save_cache:
           name: Saving NPM dependencies
-          key: YARN-{{ checksum "~/_caching_file" }}-{{ checksum "yarn.lock" }}
+          key: YARN-{{ checksum "~/_caching_file" }}-{{ checksum "ZappiOS/yarn.lock" }}
           paths:
             - ./node_modules
 
@@ -134,7 +141,12 @@ jobs:
       # Pod install
       - run:
           name: CocoaPods - install default dependencies
-          command: bundle exec pod update
+          command: |
+            targetFolder="ZappiOS"
+            if [ "$device_target" = apple_tv ]; then
+              targetFolder="ZappTvOS"
+            fi
+            cd $targetFolder && bundle exec pod update && cd ..
 
       # Cache CocoaPods
       - save_cache:
@@ -181,10 +193,15 @@ jobs:
               epoch_time=$(date +%s)
               zipped_project_file_name="${epoch_time}_${env_commit}.zip"
 
+              target="ios"
+              if [ "$device_target" = apple_tv ]; then
+                target="tvos"
+              fi
+
               # using zip
               echo; echo
               echo "Compressing using zip..."
-              zip -rq "${zipped_project_file_name}" -@r < "$(pwd)/dev_project_whitelist.txt"
+              zip -rq "${zipped_project_file_name}" -@r < "$(pwd)/dev_project_whitelist_$(target).txt"
 
               bundle exec rake zapp_sdks:upload_dev_project["$(pwd)/${zipped_project_file_name}"]
             else
@@ -223,7 +240,7 @@ jobs:
              else
               version=$CIRCLE_TAG
              fi
-             
+
              bundle exec rake zapp_sdks:create[tvos,$version,$CIRCLE_PROJECT_REPONAME]
              bundle exec rake zapp_sdks:publish_changelog[tvos,$version]
              fi
