@@ -36,6 +36,7 @@ platform :ios do
 		  build_path: build_path,
 		  derived_data_path: build_path,
 		  xcargs: "DEVELOPMENT_TEAM='#{store_team_id}' "\
+							"-UseModernBuildSystem=NO "\
 							"NOTIFICATION_EXTENSION_PROV_PROFILE_SPECIFIER='#{notifications_prov_profile_specifier}' "\
 							"DEBUG_INFORMATION_FORMAT='dwarf-with-dsym' "\
 							"PROVISIONING_PROFILE_SPECIFIER='#{main_prov_profile_specifier}'",
