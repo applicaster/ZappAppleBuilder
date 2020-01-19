@@ -12,7 +12,7 @@ jobs:
       PROJECT_NAME: "ZappApple"
       SCRIPTS_FOLDER: "Scripts"
       BUILD_PATH: ~/build_debug
-      ZAPPTOOL_VERSION: "3.8.1"
+      ZAPPTOOL_VERSION: "3.8.2"
 
       #fastlane variables
       LC_ALL: "en_US.UTF-8"

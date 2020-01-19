@@ -124,7 +124,7 @@ platform :ios do
 		# update firebase configuration
 		firebase_add_configuration_file("production")
 
-		# update app identifier to the enterprise one
+		# update app identifier to the store one
 		update_app_identifier(
 			xcodeproj: xcodeproj_path,
 			plist_path: project_info_plist_inner_path,
