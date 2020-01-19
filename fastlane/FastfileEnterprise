@@ -143,7 +143,7 @@ platform :ios do
 
       # update app identifier, versions of the notification extension
       update_target_info_plist_values(
-        notifications_target_name,
+        notification_service_extension_target_name,
         enterprise_app_notifications_bundle_identifier
       )
 
@@ -190,7 +190,7 @@ platform :ios do
       sh("echo 'Push Notification extension disabled'")
       # remove extension from build dependency and scripts step
       remove_app_extensions_from_project(
-        notifications_target_name
+        notification_service_extension_target_name
       )
       # remove app groups from project entitlements
       update_group_identifiers("#{project_name}", "Release", [])
@@ -244,7 +244,7 @@ platform :ios do
   end
 
   def enterprise_app_notifications_bundle_identifier
-      "#{enterprise_app_bundle_identifier}.#{notifications_target_name}"
+      "#{enterprise_app_bundle_identifier}.#{notification_service_extension_target_name}"
   end
 
 end
