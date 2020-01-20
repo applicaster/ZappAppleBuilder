@@ -67,6 +67,10 @@
         "#{ENV['PWD']}/ZappApple/Customization"
     end
 
+    def circle_artifacts_folder_path
+        "#{ENV['PWD']}/CircleArtifacts"
+    end
+
     def project_path
         "#{ENV['PWD']}/#{project_folder_name}"
     end
