@@ -2,7 +2,7 @@
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-FILE_CONTENT="${DIR}/../ZappTvOS/Customization/ApplicationCredentials.swift"
+FILE_CONTENT="${DIR}/../ZappApple/Customization/ApplicationCredentials.swift"
 RUN_PACKAGER=0
 
 while IFS='' read -r line || [[ -n "$line" ]]; do
