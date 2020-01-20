@@ -90,7 +90,7 @@ jobs:
 
       - run:
           name: Bundler - update dependencies
-          command: bundle check --path=.bundle || bundle install --path=.bundle
+          command: bundle check --path=.bundle || bundle update --path=.bundle || bundle install --path=.bundle
 
       - save_cache:
           name: Bundler - save cache
