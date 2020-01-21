@@ -95,6 +95,16 @@ platform :ios do
     )
   end
 
+  def reset_to_bundle_identifier_placeholder
+    update_info_plist(
+      xcodeproj: xcodeproj_path,
+      plist_path: project_info_plist_inner_path,
+      block: lambda do |plist|
+        plist['CFBundleIdentifier'] = "$(PRODUCT_BUNDLE_IDENTIFIER)"
+      end
+    )
+  end
+
   def update_target_info_plist_values(target_name, target_bundle_identifier)
     # update app identifier, versions of the extension
     bundle_version = get_info_plist_value(

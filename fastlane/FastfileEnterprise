@@ -74,6 +74,7 @@ platform :ios do
     firebase_add_configuration_file("enterprise")
 
     # update app identifier to the enterprise one
+    reset_to_bundle_identifier_placeholder
     update_app_identifier(
       xcodeproj: xcodeproj_path,
       plist_path: project_info_plist_inner_path,
