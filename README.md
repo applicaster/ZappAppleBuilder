@@ -1,17 +1,25 @@
-# Zapp-tvOS
+# ZappAppleBuilder
 
 ## Prerequisites
 
 - `Xcode >= 11.2.1`
-- `Cocoapods >= 1.4.x` and its prerequisites, see [Zapp-iOS prerequisites section](https://github.com/applicaster/zapp-ios)
-- `git submodule update --init --recursive` - update SubModules
-- `brew upgrade zapptool` - get latest zapptool version
+- `Cocoapods >= 1.8.4` and its prerequisites, see [Zapp-iOS prerequisites section](https://github.com/applicaster/zapp-ios)
+- `Zapptool >= 3.8.3`
 
-## How to run the app on the simulator
+## Zapptool update (2 options)
+ 1. Get latest version of 3.8.X 
+ - `brew install -v https://raw.githubusercontent.com/applicaster/homebrew-tap/master/zapptool/zapptool@3.8.rb`
+ 2. Get specific version 
+ - `curl -L "https://dl.bintray.com/applicaster-ltd/pods/ZappTool_v3.8.3.zip`
 
-- run `yarn` to install dependencies
-- run `zapptool -vi {{APP_VERSION_ID}} -pu -rn localhost:8081`
-- run `yarn zapplicaster:prepare -a <app_version_id>` to prepare the workspace
+## Bundler updates
+- `bundle update` should be called from the root folder
+
+## How to run the app on the simulator for both iOS and tvOS
+- switch to relevant platform folder
+- run `zapptool -vi {{APP_VERSION_ID}} -ubi -pu -rn localhost:8081`
+(Zapptool will call `yarn` and `pod update` and will get the project ready to use)
+
 - at this stage, you can either open xcode, launch the simulator manually and run `yarn start` to start the react-native packager, or run `yarn start:ios` to start the simulator without opening xcode
 
 ## How to build & run locally from the Xcode perspective
