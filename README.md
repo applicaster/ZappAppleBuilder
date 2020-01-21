@@ -24,7 +24,7 @@
 
 ## How to build & run locally from the Xcode perspective
 
-- Check that the [https://github.com/applicaster/ZappAppleBuilder#prerequisites](Prerequisites) are met
+- Check that the Prerequisites are met
 - Locate the `APP_VERSION_ID` in Zapp (platform - Apple TV, SDK - >= 6.0.0)
 - `zapptool -vi {{APP_VERSION_ID}} -ubi -pu -rn localhost:8081`
 - For tvOS `open ZappTvOS.xcworkspace` located in ZappTvOS folder - not `.xcodeproj`!
