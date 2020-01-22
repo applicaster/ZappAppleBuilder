@@ -41,7 +41,6 @@ platform :ios do
 							"DEBUG_INFORMATION_FORMAT='dwarf-with-dsym' "\
 							"PROVISIONING_PROFILE_SPECIFIER='#{main_prov_profile_specifier}'",
 		  export_team_id: store_team_id,
-		  export_xcargs: "-allowProvisionUpdates",
 		  export_method: "app-store",
 		  export_options: {
 				compileBitcode: true,
