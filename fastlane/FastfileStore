@@ -67,7 +67,7 @@ platform :ios do
         altool_username: "#{store_username}",
         altool_password: "#{store_password}",
         altool_app_type: "appletvos",
-        altool_ipa_path: "CircleArtifacts/#{project_scheme}-Store.ipa",
+        altool_ipa_path: "CircleArtifacts/Store/#{project_scheme}-Store.ipa",
         altool_output_format: "xml",
       )
     }
