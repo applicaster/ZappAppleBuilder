@@ -31,6 +31,8 @@
 	<string>1</string>
 	<key>FacebookDisplayName</key>
 	<string></string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fb-messenger-api</string>
@@ -61,6 +63,24 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>The app uses Bluetooth connectivity in order to detect video casting devices during playback.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>The app uses Bluetooth connectivity in order to detect video casting devices during playback.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>The app uses the calendar in order to add reminders for TV events.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>The app uses the camera to share photos</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Your current location will be used to enable location based push notifications.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Your current location will be used to enable location based push notifications.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your current location will be used to enable location based push notifications.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>The app uses the microphone in order to share video recordings.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>The app uses the Photo library so you can share (by choosing to) photos on live events or save photos to your library.</string>
 	<key>TwitterKey</key>
 	<string></string>
 	<key>TwitterSecret</key>
@@ -86,6 +106,11 @@
 			</array>
 		</dict>
 	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchImages~ipad</key>
 	<array>
 		<dict>
@@ -105,8 +130,10 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIRequiresFullScreen</key>
+	<true/>
 	<key>UIStatusBarStyle</key>
-	<string>UIStatusBarStyleLightContent</string>
+	<string>UIStatusBarStyleDefault</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -120,5 +147,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
 </dict>
 </plist>
