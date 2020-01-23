@@ -267,9 +267,9 @@
 				1D30F67A23CB297F00DDD86F /* Sources */,
 				1D30F67B23CB297F00DDD86F /* Frameworks */,
 				1D30F67C23CB297F00DDD86F /* Resources */,
+				1D3FE37823D8C495002B5E30 /* Copy App Resources */,
 				98084FA0981C9CFDEFCDDA79 /* [CP] Embed Pods Frameworks */,
 				776F1B4BBF70BACD1B9DCC54 /* [CP] Copy Pods Resources */,
-				1D3FE37823D8C495002B5E30 /* Copy App Resources */,
 				1D30F6C323CB469100DDD86F /* Run xcode fix */,
 				1D30F6C423CB46CE00DDD86F /* Run React Native Packager */,
 			);
