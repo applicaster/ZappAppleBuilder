@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@applicaster/quick-brick-native-apple": "2.2.1-rc.3",
+    "@applicaster/quick-brick-native-apple": "2.3.0-rc.1d821051",
     "react": "^16.8.0",
     "react-native": "0.59.10"
   },
   "private": true,
   "devDependencies": {
-    "@applicaster/zapplicaster-cli": "2.3.0-rc.1d821051"
+    "@applicaster/zapplicaster-cli": "2.2.0"
   },
   "scripts": {
     "patch:react": "node ./../Scripts/react-native-patch.js \"ZappiOS\"",
