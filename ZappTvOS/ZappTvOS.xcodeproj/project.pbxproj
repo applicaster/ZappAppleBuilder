@@ -97,6 +97,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D2640A523D9E85E000BCD54 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		1D30F6C523CB484500DDD86F = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +111,7 @@
 				1D30F6D023CB484500DDD86F /* ZappTvOS */,
 				1D30F6E523CB484600DDD86F /* ZappTvOSTests */,
 				1D30F6F023CB484600DDD86F /* ZappTvOSUITests */,
+				1D2640A523D9E85E000BCD54 /* Resources */,
 				1D30F6CF23CB484500DDD86F /* Products */,
 				1D30F71823CB4DD900DDD86F /* Frameworks */,
 				A954768BF99F7BCF26A1891E /* Pods */,
@@ -350,7 +358,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"resources_folder_orig: ${SRCROOT}/ZappiOS/Resources/\" \necho \"resources_folder_target: ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\ncp -r \"${SRCROOT}/ZappiOS/Resources/\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\n";
+			shellScript = "echo \"resources_folder_orig: ${SRCROOT}/${PRODUCT_NAME}/Resources/\" \necho \"resources_folder_target: ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\ncp -r \"${SRCROOT}/${PRODUCT_NAME}/Resources/\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\n";
 		};
 		5D2E215B3AAE6B7B507E4BD1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

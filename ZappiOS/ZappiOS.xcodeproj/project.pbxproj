@@ -132,6 +132,14 @@
 			path = Entitlements;
 			sourceTree = "<group>";
 		};
+		1D26409223D9E7E4000BCD54 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			path = ZappiOS/Resources;
+			sourceTree = "<group>";
+		};
 		1D30F67523CB297F00DDD86F = {
 			isa = PBXGroup;
 			children = (
@@ -139,6 +147,7 @@
 				1D30F68023CB297F00DDD86F /* ZappiOS */,
 				1D30F69723CB298000DDD86F /* ZappiOSTests */,
 				1D30F6A223CB298000DDD86F /* ZappiOSUITests */,
+				1D26409223D9E7E4000BCD54 /* Resources */,
 				1D18FB6623CFB6F00018D15E /* NotificationServiceExtension */,
 				1D30F67F23CB297F00DDD86F /* Products */,
 				1D30F6B123CB299E00DDD86F /* Frameworks */,
@@ -267,9 +276,9 @@
 				1D30F67A23CB297F00DDD86F /* Sources */,
 				1D30F67B23CB297F00DDD86F /* Frameworks */,
 				1D30F67C23CB297F00DDD86F /* Resources */,
-				1D3FE37823D8C495002B5E30 /* Copy App Resources */,
 				98084FA0981C9CFDEFCDDA79 /* [CP] Embed Pods Frameworks */,
 				776F1B4BBF70BACD1B9DCC54 /* [CP] Copy Pods Resources */,
+				1D3FE37823D8C495002B5E30 /* Copy App Resources */,
 				1D30F6C323CB469100DDD86F /* Run xcode fix */,
 				1D30F6C423CB46CE00DDD86F /* Run React Native Packager */,
 			);
@@ -476,7 +485,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"resources_folder_orig: ${SRCROOT}/ZappiOS/Resources/\" \necho \"resources_folder_target: ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\ncp -r \"${SRCROOT}/ZappiOS/Resources/\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\n";
+			shellScript = "echo \"resources_folder_orig: ${SRCROOT}/${PRODUCT_NAME}/Resources/\" \necho \"resources_folder_target: ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\ncp -r \"${SRCROOT}/${PRODUCT_NAME}/Resources/\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\n";
 		};
 		7555E51D690404557FF08046 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
