@@ -476,7 +476,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cp -r \"${SRCROOT}/ZappiOS/Resources/\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\n";
+			shellScript = "echo \"resources_folder_orig: ${SRCROOT}/ZappiOS/Resources/\" \necho \"resources_folder_target: ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\ncp -r \"${SRCROOT}/ZappiOS/Resources/\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\n";
 		};
 		7555E51D690404557FF08046 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
