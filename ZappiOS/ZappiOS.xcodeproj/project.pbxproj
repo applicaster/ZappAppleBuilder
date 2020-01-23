@@ -485,7 +485,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"resources_folder_orig: ${SRCROOT}/${PRODUCT_NAME}/Resources/\" \necho \"resources_folder_target: ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\ncp -r \"${SRCROOT}/${PRODUCT_NAME}/Resources/\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\n";
+			shellScript = "echo \"resources_folder_orig: ${SRCROOT}/${PRODUCT_NAME}/Resources/\" \necho \"resources_folder_target: ${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ncp -r \"${SRCROOT}/${PRODUCT_NAME}/Resources/\" \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n";
 		};
 		7555E51D690404557FF08046 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -621,9 +621,10 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				NOTIFICATION_EXTENSION_PROV_PROFILE_SPECIFIER = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.applicaster.ent.com.applicaster.submit.test.NotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "$(NOTIFICATION_EXTENSION_PROV_PROFILE_SPECIFIER)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -643,9 +644,10 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				NOTIFICATION_EXTENSION_PROV_PROFILE_SPECIFIER = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.applicaster.ent.com.applicaster.submit.test.NotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "$(NOTIFICATION_EXTENSION_PROV_PROFILE_SPECIFIER)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -659,7 +661,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -710,6 +712,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -720,7 +723,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -764,6 +767,7 @@
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -783,11 +787,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MAIN_PROV_PROFILE_SPECIFIER = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.applicaster.ZappiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "$(MAIN_PROV_PROFILE_SPECIFIER)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ZappiOS/ZappiOS-Bridging-Header.h";
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -800,17 +804,18 @@
 				CODE_SIGN_ENTITLEMENTS = "ZappiOS/Entitlements/ZappiOS-Release.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ZappiOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MAIN_PROV_PROFILE_SPECIFIER = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.applicaster.ZappiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "$(MAIN_PROV_PROFILE_SPECIFIER)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ZappiOS/ZappiOS-Bridging-Header.h";
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
