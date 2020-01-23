@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-platform :tvos, '10.0'
+platform :tvos, '11.0'
 
 require 'resolv-replace'
 install! 'cocoapods', :deterministic_uuids => false, :preserve_pod_file_structure => true
