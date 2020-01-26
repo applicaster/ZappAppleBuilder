@@ -598,7 +598,7 @@
 			baseConfigurationReference = B27DA20C4D160A1131BD931C /* Pods-ZappTvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
-				CODE_SIGN_ENTITLEMENTS = "ZappTvOS/EntitlementsZappTvOS-Debug.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "ZappTvOS/Entitlements/ZappTvOS-Debug.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				INFOPLIST_FILE = ZappTvOS/Info.plist;
@@ -618,7 +618,7 @@
 			baseConfigurationReference = 3301FF33BDA80198AEC2A9B1 /* Pods-ZappTvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
-				CODE_SIGN_ENTITLEMENTS = "ZappTvOS/EntitlementsZappTvOS-Release.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "ZappTvOS/Entitlements/ZappTvOS-Release.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				INFOPLIST_FILE = ZappTvOS/Info.plist;
