@@ -12,7 +12,6 @@ import React
 import UIKit
 import ZappApple
 import ZappCore
-
 public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnectorProtocol, AppDelegateProtocol {
     public var connectorInstance: FacadeConnector? {
         return rootViewController?.facadeConnector
@@ -38,6 +37,8 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
     public func application(_ application: UIApplication,
                             didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+//        FirebaseApp.configure()
+//        RNFirebaseNotifications.configure()
         self.launchOptions = launchOptions
         rootViewController = window?.rootViewController as? RootViewController
         rootViewController?.appDelegate = self
@@ -48,79 +49,13 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         return true
     }
 
-    public func handleDelayedUrlSchemeCallIfNeeded() {
+    public func handleDelayedEventsIfNeeded() {
         if let rootViewController = rootViewController,
             rootViewController.appReadyForUse,
             let url = urlSchemeUrl {
             _ = application(UIApplication.shared,
                             open: url,
                             options: urlSchemeOptions ?? [:])
-        }
-    }
-
-    public func handleDelayedPushNotificationIfNeeded() {
-        if let rootViewController = rootViewController,
-            rootViewController.appReadyForUse,
-            let remoteUserInfo = remoteUserInfo {
-            application(UIApplication.shared,
-                        didReceiveRemoteNotification: remoteUserInfo) { _ in }
-        }
-    }
-
-    public func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        func getLink(userInfo: [AnyHashable: Any]) -> String? {
-            if let url = userInfo["url"] as? String {
-                return url
-            } else if let url = userInfo["^d"] as? String {
-                return url
-            } else if let url = userInfo["^u"] as? String {
-                return url
-            }
-            return nil
-        }
-
-        if let rootViewController = rootViewController,
-            rootViewController.appReadyForUse == false {
-            remoteUserInfo = userInfo
-        } else if let userInfo = remoteUserInfo,
-            let urlString = getLink(userInfo: userInfo),
-            let url = URL(string: urlString) {
-            remoteUserInfo = nil
-            UIApplication.shared.open(url,
-                                      options: [:],
-                                      completionHandler: nil)
-        }
-    }
-
-    public func applicationWillResignActive(_ application: UIApplication) {
-        UIApplication.shared.applicationIconBadgeNumber = 0
-    }
-
-    public func application(_ application: UIApplication,
-                            didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        rootViewController?.identityClient.registerForPushNotification(with: deviceToken)
-        rootViewController?.pluginsManager.push.registerDeviceToken(data: deviceToken)
-    }
-
-    public func application(_ application: UIApplication,
-                            didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        debugPrint(error.localizedDescription)
-    }
-
-    public func application(_ app: UIApplication,
-                            open url: URL,
-                            options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        if let rootViewController = rootViewController,
-            rootViewController.appReadyForUse == false {
-            urlSchemeUrl = url
-            urlSchemeOptions = options
-            return true
-        } else {
-            urlSchemeUrl = nil
-            urlSchemeOptions = nil
-            return uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(app,
-                                                                                       open: url,
-                                                                                       options: options) ?? true
         }
     }
 
@@ -158,5 +93,22 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
                 ZappStorageKeys.pluginConfigurationUrl: kPluginConfigurationsUrl,
                 ZappStorageKeys.riversUrl: kRiversUrl,
         ]
+    }
+
+    public func application(_ app: UIApplication,
+                            open url: URL,
+                            options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        if let rootViewController = rootViewController,
+            rootViewController.appReadyForUse == false {
+            urlSchemeUrl = url
+            urlSchemeOptions = options
+            return true
+        } else {
+            urlSchemeUrl = nil
+            urlSchemeOptions = nil
+            return uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(app,
+                                                                                       open: url,
+                                                                                       options: options) ?? true
+        }
     }
 }
