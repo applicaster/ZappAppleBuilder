@@ -28,9 +28,10 @@
 ## How to build Quick Brick & run locally from the Xcode perspective
 
 - Check that the Prerequisites are met
+- prepare your quick brick app and start the react-native packager
 - Locate the `APP_VERSION_ID` in Zapp (platform - Apple TV, SDK - >= 6.0.0)
 - `zapptool -vi {{APP_VERSION_ID}} -pu -rn localhost:8081`
 - For tvOS `open ZappTvOS.xcworkspace` located in ZappTvOS folder - not `.xcodeproj`!
 - For iOS `open ZappiOS.xcworkspace` located in ZappiOS folder - not `.xcodeproj`!
 - Build & run on some (iPhone / Apple TV) Simulator
-- `yarn start` - start react-native dev server
+
