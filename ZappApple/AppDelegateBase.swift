@@ -10,9 +10,8 @@ import Foundation
 
 import React
 import UIKit
-import ZappCore
 import ZappApple
-
+import ZappCore
 public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnectorProtocol, AppDelegateProtocol {
     public var connectorInstance: FacadeConnector? {
         return rootViewController?.facadeConnector
@@ -26,17 +25,20 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         rootViewController?.userInterfaceLayer
     }()
 
-    lazy public var uiLayerPluginApplicationDelegate = {
+    public lazy var uiLayerPluginApplicationDelegate = {
         uiLayerPlugin as? UserInterfaceLayerApplicationDelegate
     }()
 
     public var rootViewController: RootViewController?
 
     public var launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    public var remoteUserInfo: [AnyHashable: Any]?
 
     public func application(_ application: UIApplication,
-                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+                            didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+//        FirebaseApp.configure()
+//        RNFirebaseNotifications.configure()
         self.launchOptions = launchOptions
         rootViewController = window?.rootViewController as? RootViewController
         rootViewController?.appDelegate = self
@@ -46,7 +48,8 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
                                                       localStorage: defaultStorageParams)
         return true
     }
-    public func handleDelayedUrlSchemeCallIfNeeded() {
+
+    public func handleDelayedEventsIfNeeded() {
         if let rootViewController = rootViewController,
             rootViewController.appReadyForUse,
             let url = urlSchemeUrl {
@@ -56,26 +59,9 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         }
     }
 
-    public func application(_ app: UIApplication,
-                     open url: URL,
-                     options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        if let rootViewController = rootViewController,
-            rootViewController.appReadyForUse == false {
-            urlSchemeUrl = url
-            urlSchemeOptions = options
-            return true
-        } else {
-            urlSchemeUrl = nil
-            urlSchemeOptions = nil
-            return uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(app,
-                                                                                       open: url,
-                                                                                       options: options) ?? true
-        }
-    }
-
     public func application(_ application: UIApplication,
-                     continue userActivity: NSUserActivity,
-                     restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+                            continue userActivity: NSUserActivity,
+                            restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         return uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(application, continue: userActivity, restorationHandler: restorationHandler) ?? true
     }
 
@@ -105,7 +91,24 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
                 ZappStorageKeys.stylesUrl: kStylesUrl,
                 ZappStorageKeys.remoteConfigurationUrl: kRemoteConfigurationUrl,
                 ZappStorageKeys.pluginConfigurationUrl: kPluginConfigurationsUrl,
-                ZappStorageKeys.riversUrl: kRiversUrl
+                ZappStorageKeys.riversUrl: kRiversUrl,
         ]
+    }
+
+    public func application(_ app: UIApplication,
+                            open url: URL,
+                            options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        if let rootViewController = rootViewController,
+            rootViewController.appReadyForUse == false {
+            urlSchemeUrl = url
+            urlSchemeOptions = options
+            return true
+        } else {
+            urlSchemeUrl = nil
+            urlSchemeOptions = nil
+            return uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(app,
+                                                                                       open: url,
+                                                                                       options: options) ?? true
+        }
     }
 }
