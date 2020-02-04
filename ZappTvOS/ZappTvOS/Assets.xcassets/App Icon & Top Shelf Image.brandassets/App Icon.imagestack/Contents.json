@@ -1,13 +1,19 @@
 {
   "layers" : [
     {
-      "filename" : "Front.imagestacklayer"
+      "filename" : "Layer5.imagestacklayer"
     },
     {
-      "filename" : "Middle.imagestacklayer"
+      "filename" : "Layer4.imagestacklayer"
     },
     {
-      "filename" : "Back.imagestacklayer"
+      "filename" : "Layer3.imagestacklayer"
+    },
+    {
+      "filename" : "Layer2.imagestacklayer"
+    },
+    {
+      "filename" : "Layer1.imagestacklayer"
     }
   ],
   "info" : {
