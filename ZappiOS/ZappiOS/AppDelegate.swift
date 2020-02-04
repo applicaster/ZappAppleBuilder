@@ -77,7 +77,6 @@ class AppDelegate: AppDelegateBase {
 
     public func application(_ application: UIApplication,
                             didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        rootViewController?.identityClient.registerForPushNotification(with: deviceToken)
         rootViewController?.pluginsManager.push.registerDeviceToken(data: deviceToken)
     }
 
