@@ -12,7 +12,7 @@ jobs:
       PROJECT_NAME: "ZappApple"
       SCRIPTS_FOLDER: "Scripts"
       BUILD_PATH: ~/build_debug
-      ZAPPTOOL_VERSION: "3.8.4"
+      ZAPPTOOL_VERSION: "3.8.7"
 
       #fastlane variables
       LC_ALL: "en_US.UTF-8"
@@ -91,8 +91,8 @@ jobs:
       - run:
           name: Bundler - update dependencies
           command: |
-              gem install bundler
-              bundle check --path=.bundle || bundle install --path=.bundle
+            gem install bundler
+            bundle check --path=.bundle || bundle install --path=.bundle
 
       - save_cache:
           name: Bundler - save cache
