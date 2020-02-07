@@ -19,8 +19,8 @@ end
 puts("\n\nCocoaPods preparing for platform: tvOS\n\n")
 
 def shared_pods
-    pod 'ZappCore', :git => 'https://github.com/applicaster/AppleApplicasterFrameworks.git', :tag => '2020.2.4.19-2-2'
-    pod 'ZappApple', :git => 'https://github.com/applicaster/AppleApplicasterFrameworks.git', :tag => '2020.2.4.19-2-2'
+    pod 'ZappCore', :git => 'https://github.com/applicaster/AppleApplicasterFrameworks.git', :tag => '2020.2.7.11-2-9'
+    pod 'ZappApple', :git => 'https://github.com/applicaster/AppleApplicasterFrameworks.git', :tag => '2020.2.7.11-2-9'
     pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
     pod 'yoga', :path => './node_modules/react-native/ReactCommon/yoga'
     pod 'DoubleConversion', :podspec => './node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
@@ -28,7 +28,9 @@ def shared_pods
     pod 'Folly', :podspec => './node_modules/react-native/third-party-podspecs/Folly.podspec'
 
     # Zaptool pods - Do not remove or change.
-
+    pod 'DefaultPlayer', :path => './quick_brick/node_modules/@applicaster/zapp-react-native-default-player/ios/DefaultPlayer.podspec'
+    pod 'ZappGoogleAnalytics', :path => './node_modules/@applicaster/google-analytics-web-based-apple/ZappGoogleAnalytics.podspec'
+    pod 'ZappGoogleInteractiveMediaAds', :path => './node_modules/@applicaster/quick-brick-google-ima-apple/ZappGoogleInteractiveMediaAds.podspec'
 end
 
 target 'ZappTvOS' do
