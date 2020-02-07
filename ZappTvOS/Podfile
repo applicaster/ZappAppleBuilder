@@ -28,9 +28,7 @@ def shared_pods
     pod 'Folly', :podspec => './node_modules/react-native/third-party-podspecs/Folly.podspec'
 
     # Zaptool pods - Do not remove or change.
-    pod 'DefaultPlayer', :path => './quick_brick/node_modules/@applicaster/zapp-react-native-default-player/ios/DefaultPlayer.podspec'
-    pod 'ZappGoogleAnalytics', :path => './node_modules/@applicaster/google-analytics-web-based-apple/ZappGoogleAnalytics.podspec'
-    pod 'ZappGoogleInteractiveMediaAds', :path => './node_modules/@applicaster/quick-brick-google-ima-apple/ZappGoogleInteractiveMediaAds.podspec'
+    
 end
 
 target 'ZappTvOS' do
