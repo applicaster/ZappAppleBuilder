@@ -56,7 +56,6 @@ class AppDelegate: AppDelegateBase {
     public func application(_ application: UIApplication,
                             didReceiveRemoteNotification userInfo: [AnyHashable: Any],
                             fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        print("Anton123 I am here \(userInfo)")
         if let rootController = rootController,
             rootController.appReadyForUse == false {
             remoteUserInfo = userInfo
