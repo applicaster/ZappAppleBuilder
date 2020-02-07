@@ -29,8 +29,8 @@ class AppDelegate: AppDelegateBase {
 
     public override func handleDelayedEventsIfNeeded() {
         super.handleDelayedEventsIfNeeded()
-        if let rootViewController = rootViewController,
-            rootViewController.appReadyForUse,
+        if let rootController = rootController,
+            rootController.appReadyForUse,
             let remoteUserInfo = remoteUserInfo {
             application(UIApplication.shared,
                         didReceiveRemoteNotification: remoteUserInfo) { _ in }
@@ -57,8 +57,8 @@ class AppDelegate: AppDelegateBase {
                             didReceiveRemoteNotification userInfo: [AnyHashable: Any],
                             fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         print("Anton123 I am here \(userInfo)")
-        if let rootViewController = rootViewController,
-            rootViewController.appReadyForUse == false {
+        if let rootController = rootController,
+            rootController.appReadyForUse == false {
             remoteUserInfo = userInfo
         } else if let userInfo = remoteUserInfo,
             let urlString = getLink(userInfo: userInfo),
@@ -77,7 +77,7 @@ class AppDelegate: AppDelegateBase {
 
     public func application(_ application: UIApplication,
                             didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        rootViewController?.pluginsManager.push.registerDeviceToken(data: deviceToken)
+        rootController?.pluginsManager.push.registerDeviceToken(data: deviceToken)
     }
 
     public func application(_ application: UIApplication,
