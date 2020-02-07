@@ -2,7 +2,7 @@
 platform :ios, '10.0'
 
 require 'resolv-replace'
-install! 'cocoapods', :deterministic_uuids => false
+install! 'cocoapods', :deterministic_uuids => false, :preserve_pod_file_structure => true
 use_frameworks!
 
 source 'git@github.com:applicaster/CocoaPods.git'

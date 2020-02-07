@@ -77,7 +77,7 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
                 ZappStorageKeys.apiSecretKey: kApplicasterSecretKey,
                 ZappStorageKeys.broadcasterId: kBroadcasterId,
                 ZappStorageKeys.bucketId: kBucketId,
-                ZappStorageKeys.uuid: IdentityClient.deviceID ?? "",
+                ZappStorageKeys.uuid: UUIDManager.deviceID,
                 ZappStorageKeys.languageCode: NSLocale.current.languageCode ?? "",
                 ZappStorageKeys.regionCode: NSLocale.current.regionCode ?? "",
                 ZappStorageKeys.deviceType: kDeviceTarget,

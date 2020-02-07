@@ -223,6 +223,7 @@
 				1D30F6CC23CB484500DDD86F /* Resources */,
 				D54776718E2F6C491E84E9E6 /* [CP] Embed Pods Frameworks */,
 				1D3FE37923D8C557002B5E30 /* Copy App Resources */,
+				403A829623ECC21600AE3002 /* Run Xcode Fix */,
 			);
 			buildRules = (
 			);
@@ -359,6 +360,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "echo \"resources_folder_orig: ${SRCROOT}/${PRODUCT_NAME}/Resources/\" \necho \"resources_folder_target: ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\ncp -r \"${SRCROOT}/${PRODUCT_NAME}/Resources/\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\"\n";
+		};
+		403A829623ECC21600AE3002 /* Run Xcode Fix */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Xcode Fix";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This fix must be removed after Xcode 10 fix will be release by apple\n# Prevent clearing project cache after user changes any line of code in dev pods\nfind \"${SRCROOT}/Pods\" -type f -name *frameworks.sh -exec bash -c \"touch \\\"{}\\\"\" \\;\n";
 		};
 		5D2E215B3AAE6B7B507E4BD1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
