@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '10.0'
+platform :ios, '11.0'
 
 require 'resolv-replace'
 install! 'cocoapods', :deterministic_uuids => false, :preserve_pod_file_structure => true
@@ -20,8 +20,8 @@ end
 puts("\n\nCocoaPods preparing for platform: iOS\n\n")
 
 def shared_pods
-    pod 'ZappCore', :git => 'https://github.com/applicaster/AppleApplicasterFrameworks.git', :tag => '2020.2.10.13-2-4'
-    pod 'ZappApple', :git => 'https://github.com/applicaster/AppleApplicasterFrameworks.git', :tag => '2020.2.10.13-2-4'
+    pod 'ZappCore', :git => 'https://github.com/applicaster/AppleApplicasterFrameworks.git', :tag => '2020.2.10.17-2-4'
+    pod 'ZappApple', :git => 'https://github.com/applicaster/AppleApplicasterFrameworks.git', :tag => '2020.2.10.17-2-4'
     pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
     pod 'yoga', :path => './node_modules/react-native/ReactCommon/yoga'
     pod 'DoubleConversion', :podspec => './node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
