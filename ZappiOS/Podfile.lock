@@ -12,7 +12,7 @@ PODS:
   - QuickBrickApple (1.1.0):
     - React
     - ZappCore
-  - ReachabilitySwift (4.3.0)
+  - ReachabilitySwift (5.0.0)
   - React (0.59.10):
     - React/Core (= 0.59.10)
   - React/Core (0.59.10):
@@ -67,13 +67,11 @@ PODS:
     - React/fishhook
     - React/RCTBlob
   - yoga (0.59.10.React)
-  - ZappApple (0.1.0):
+  - ZappApple (0.4.0):
     - AppCenter/Distribute (= 2.5.3)
-    - ReachabilitySwift (= 4.3.0)
+    - ReachabilitySwift (= 5.0.0)
     - ZappCore
-  - ZappCore (0.6.0)
-  - ZappPlugins (11.3.0):
-    - ZappCore
+  - ZappCore (0.7.0)
 
 DEPENDENCIES:
   - DoubleConversion (from `./node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
@@ -93,12 +91,11 @@ DEPENDENCIES:
   - React/RCTText (from `./node_modules/react-native`)
   - React/RCTWebSocket (from `./node_modules/react-native`)
   - yoga (from `./node_modules/react-native/ReactCommon/yoga`)
-  - ZappApple (from `https://github.com/applicaster/AppleApplicasterFrameworks.git`, tag `2020.12.3.19-1-7`)
-  - ZappCore (from `https://github.com/applicaster/AppleApplicasterFrameworks.git`, tag `2020.12.3.19-1-7`)
-  - ZappPlugins (from `https://github.com/applicaster/ZappPlugins-iOS`, tag `11.3.0`)
+  - ZappApple (from `/Users/antonkononenko/Work3/AppleFrameworks/ZappApple.podspec`)
+  - ZappCore (from `/Users/antonkononenko/Work3/AppleFrameworks/ZappCore.podspec`)
 
 SPEC REPOS:
-  https://cdn.cocoapods.org/:
+  trunk:
     - AppCenter
     - boost-for-react-native
     - ReachabilitySwift
@@ -117,25 +114,9 @@ EXTERNAL SOURCES:
   yoga:
     :path: "./node_modules/react-native/ReactCommon/yoga"
   ZappApple:
-    :git: https://github.com/applicaster/AppleApplicasterFrameworks.git
-    :tag: 2020.12.3.19-1-7
+    :path: "/Users/antonkononenko/Work3/AppleFrameworks/ZappApple.podspec"
   ZappCore:
-    :git: https://github.com/applicaster/AppleApplicasterFrameworks.git
-    :tag: 2020.12.3.19-1-7
-  ZappPlugins:
-    :git: https://github.com/applicaster/ZappPlugins-iOS
-    :tag: 11.3.0
-
-CHECKOUT OPTIONS:
-  ZappApple:
-    :git: https://github.com/applicaster/AppleApplicasterFrameworks.git
-    :tag: 2020.12.3.19-1-7
-  ZappCore:
-    :git: https://github.com/applicaster/AppleApplicasterFrameworks.git
-    :tag: 2020.12.3.19-1-7
-  ZappPlugins:
-    :git: https://github.com/applicaster/ZappPlugins-iOS
-    :tag: 11.3.0
+    :path: "/Users/antonkononenko/Work3/AppleFrameworks/ZappCore.podspec"
 
 SPEC CHECKSUMS:
   AppCenter: 765ff38c4d360fc5ec61b61a8be24d74cd6d4d83
@@ -143,14 +124,13 @@ SPEC CHECKSUMS:
   DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
   Folly: de497beb10f102453a1afa9edbf8cf8a251890de
   glog: aefd1eb5dda2ab95ba0938556f34b98e2da3a60d
-  QuickBrickApple: f3afa99cbeac9c480716ef21b4726c079877b52b
-  ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
-  React: 36d0768f9e93be2473b37e7fa64f92c1d5341eef
+  QuickBrickApple: c16c031101a90431b04b753406bed6bc40c33fdb
+  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
+  React: 4e3f5b96a6da3aea5499edb40ac7afb511bb666a
   yoga: 684513b14b03201579ba3cee20218c9d1298b0cc
-  ZappApple: 762682c8deb5e6548e3a0e9c7c43bfed6bbb0df1
-  ZappCore: 313dd00d65aacc4546cb545b351278636ecb9a19
-  ZappPlugins: 2539b0c96a5d392cf54e875eda15f6c981f7e2e3
+  ZappApple: e41172cb8f23e943a8d0bcca87b862df8e60012c
+  ZappCore: 6652d6eab09e6c4721dea925d668e5cde1892532
 
-PODFILE CHECKSUM: 98a26940a7ce7f52c5b774a8318ce364c27f5c74
+PODFILE CHECKSUM: d1eddda224b0e61677c265c6736e707f656de160
 
 COCOAPODS: 1.8.4
