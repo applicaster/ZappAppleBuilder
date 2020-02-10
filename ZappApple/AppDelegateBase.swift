@@ -14,7 +14,7 @@ import ZappApple
 import ZappCore
 public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnectorProtocol, AppDelegateProtocol {
     public var connectorInstance: FacadeConnector? {
-        return rootViewController?.facadeConnector
+        return rootController?.facadeConnector
     }
 
     public var window: UIWindow?
@@ -22,14 +22,14 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
     var urlSchemeOptions: [UIApplication.OpenURLOptionsKey: Any]?
 
     lazy var uiLayerPlugin = {
-        rootViewController?.userInterfaceLayer
+        rootController?.userInterfaceLayer
     }()
 
     public lazy var uiLayerPluginApplicationDelegate = {
         uiLayerPlugin as? UserInterfaceLayerApplicationDelegate
     }()
 
-    public var rootViewController: RootViewController?
+    public var rootController: RootController?
 
     public var launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     public var remoteUserInfo: [AnyHashable: Any]?
@@ -40,18 +40,20 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
 //        FirebaseApp.configure()
 //        RNFirebaseNotifications.configure()
         self.launchOptions = launchOptions
-        rootViewController = window?.rootViewController as? RootViewController
-        rootViewController?.appDelegate = self
 
         let defaultStorageParams = storagesDefaultParams()
         StorageInitialization.initializeDefaultValues(sessionStorage: defaultStorageParams,
                                                       localStorage: defaultStorageParams)
+
+        rootController = RootController()
+        rootController?.appDelegate = self
+
         return true
     }
 
     public func handleDelayedEventsIfNeeded() {
-        if let rootViewController = rootViewController,
-            rootViewController.appReadyForUse,
+        if let rootController = rootController,
+            rootController.appReadyForUse,
             let url = urlSchemeUrl {
             _ = application(UIApplication.shared,
                             open: url,
@@ -62,7 +64,9 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
     public func application(_ application: UIApplication,
                             continue userActivity: NSUserActivity,
                             restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-        return uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(application, continue: userActivity, restorationHandler: restorationHandler) ?? true
+        return uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(application,
+                                                                                   continue: userActivity,
+                                                                                   restorationHandler: restorationHandler) ?? true
     }
 
     func storagesDefaultParams() -> [String: String] {
@@ -98,8 +102,8 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
     public func application(_ app: UIApplication,
                             open url: URL,
                             options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        if let rootViewController = rootViewController,
-            rootViewController.appReadyForUse == false {
+        if let rootController = rootController,
+            rootController.appReadyForUse == false {
             urlSchemeUrl = url
             urlSchemeOptions = options
             return true
