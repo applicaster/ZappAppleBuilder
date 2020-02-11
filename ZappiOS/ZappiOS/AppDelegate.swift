@@ -38,19 +38,7 @@ class AppDelegate: AppDelegateBase {
     }
 
     public func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
-
         print(userInfo)
-    }
-
-    func getLink(userInfo: [AnyHashable: Any]) -> String? {
-        if let url = userInfo["url"] as? String {
-            return url
-        } else if let url = userInfo["^d"] as? String {
-            return url
-        } else if let url = userInfo["^u"] as? String {
-            return url
-        }
-        return nil
     }
 
     public func application(_ application: UIApplication,
@@ -59,28 +47,32 @@ class AppDelegate: AppDelegateBase {
         if let rootController = rootController,
             rootController.appReadyForUse == false {
             remoteUserInfo = userInfo
-        } else if let userInfo = remoteUserInfo,
-            let urlString = getLink(userInfo: userInfo),
-            let url = URL(string: urlString) {
+            completionHandler(UIBackgroundFetchResult.newData)
+        } else {
+            uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(application,
+                                                                                   didReceiveRemoteNotification: userInfo,
+                                                                                   fetchCompletionHandler: completionHandler)
             remoteUserInfo = nil
-            UIApplication.shared.open(url,
-                                      options: [:],
-                                      completionHandler: nil)
+
         }
-        completionHandler(UIBackgroundFetchResult.newData)
+        //TODO: Pass logic
     }
 
     public func applicationWillResignActive(_ application: UIApplication) {
-        UIApplication.shared.applicationIconBadgeNumber = 0
+        uiLayerPluginApplicationDelegate?.applicationDelegate?.applicationWillResignActive?(application)
     }
 
     public func application(_ application: UIApplication,
                             didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         rootController?.pluginsManager.push.registerDeviceToken(data: deviceToken)
+        uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(application,
+                                                                            didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
     }
 
     public func application(_ application: UIApplication,
                             didFailToRegisterForRemoteNotificationsWithError error: Error) {
         debugPrint(error.localizedDescription)
+        uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(application,
+                                                                            didFailToRegisterForRemoteNotificationsWithError: error)
     }
 }
