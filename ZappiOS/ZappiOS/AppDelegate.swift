@@ -37,7 +37,8 @@ class AppDelegate: AppDelegateBase {
         }
     }
 
-    public func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+    public func application(_ application: UIApplication,
+                            didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
         print(userInfo)
     }
 
