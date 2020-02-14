@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@applicaster/quick-brick-native-apple": "2.2.1-rc.14",
+    "@applicaster/quick-brick-native-apple": "2.2.1-rc.22",
     "react": "^16.8.0",
     "react-native": "0.59.10"
   },
