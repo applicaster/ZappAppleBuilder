@@ -489,7 +489,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\ncp -r \"${SRCROOT}/quick_brick/assets/ios/\" \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n\ncp -r \"${SRCROOT}/${PRODUCT_NAME}/Resources/\" \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n";
+			shellScript = "# Remove not needed resources\nfind \"${SRCROOT}/quick_brick/assets/ios\" -type f -name 'Default-*.png' -delete\nfind \"${SRCROOT}/${PRODUCT_NAME}/Resources\" -type f -name 'Default-L*.png' -delete\n# Copy resourses to app\ncp -r \"${SRCROOT}/quick_brick/assets/ios/\" \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ncp -r \"${SRCROOT}/${PRODUCT_NAME}/Resources/\" \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n";
 		};
 		7555E51D690404557FF08046 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
