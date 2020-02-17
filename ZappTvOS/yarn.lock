@@ -36,10 +36,10 @@
     redux "^3.7.2"
     url "^0.11.0"
 
-"@applicaster/quick-brick-native-apple@2.2.1-rc.22":
-  version "2.2.1-rc.22"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-native-apple/-/quick-brick-native-apple-2.2.1-rc.22.tgz#fc935edb238a68f680cd713da6c5656f2a89cf77"
-  integrity sha512-SUGyqYnQmUIEamicPxmNHaxbMv90DrnYkaD2Ze5UGOYRfcNcLk7K/3J1es3Wdepimc18/wk9E12X5G6/5qzREA==
+"@applicaster/quick-brick-native-apple@2.2.1-rc.24":
+  version "2.2.1-rc.24"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-native-apple/-/quick-brick-native-apple-2.2.1-rc.24.tgz#7ac42fb47892b52060333216b803356f3986b144"
+  integrity sha512-nrU0seCTqbQWJHTz1iZ0Flq+tqlVlPUEB7bn8Q5uYmt8N7NclwdTi0e8JnKhYyiHy5i2IqgskFSd2H1sSfAg/w==
 
 "@applicaster/zapp-pipes-dev-kit@^1.4.1":
   version "1.4.1"
