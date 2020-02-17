@@ -5,14 +5,14 @@ notify:
 jobs:
   build:
     macos:
-      xcode: "11.2.1"
+      xcode: "11.3.1"
     shell: /bin/bash --login -eo pipefail
     environment:
       GENERAL_CACHE_KEY: "ZappApple_Cache_1.0.1"
       PROJECT_NAME: "ZappApple"
       SCRIPTS_FOLDER: "Scripts"
       BUILD_PATH: ~/build_debug
-      ZAPPTOOL_VERSION: "3.9.0"
+      ZAPPTOOL_VERSION: "3.9.1"
 
       #fastlane variables
       LC_ALL: "en_US.UTF-8"
