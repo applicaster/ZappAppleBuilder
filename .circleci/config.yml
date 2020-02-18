@@ -13,6 +13,7 @@ jobs:
       SCRIPTS_FOLDER: "Scripts"
       BUILD_PATH: ~/build_debug
       ZAPPTOOL_VERSION: "3.9.1"
+      HOMEBREW_NO_AUTO_UPDATE: "1"
 
       #fastlane variables
       LC_ALL: "en_US.UTF-8"
