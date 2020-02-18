@@ -95,6 +95,13 @@ platform :ios do
     )
   end
 
+  def remove_key_from_entitlements(target, build_type, key)
+    file_path = "#{project_path}/#{target}/Entitlements/#{target}-#{build_type}.entitlements"
+
+    sh("echo $(/usr/libexec/PlistBuddy -c \"Delete :#{key}\" #{file_path} 2>/dev/null)")
+  end
+
+
   def reset_to_bundle_identifier_placeholder
     update_info_plist(
       xcodeproj: xcodeproj_path,
