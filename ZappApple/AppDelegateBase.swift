@@ -76,7 +76,7 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
                 ZappStorageKeys.versionName: kVersionName,
                 ZappStorageKeys.accountId: kAPAccountId,
                 ZappStorageKeys.accountsAccountId: kAccountsAccountID,
-                ZappStorageKeys.platform: ZappStorageKeys.iOS,
+                ZappStorageKeys.platform: ZappStorageKeys.tvOS,
                 ZappStorageKeys.buildVersion: kBuildVersion,
                 ZappStorageKeys.apiSecretKey: kApplicasterSecretKey,
                 ZappStorageKeys.broadcasterId: kBroadcasterId,
