@@ -7,7 +7,6 @@ platform :ios do
     setup_enterprise_app_signing()
     prepare_enterprise_app()
 
-
     # get identifiers
     identifier = enterprise_app_bundle_identifier
     identifier_notifications = enterprise_app_notifications_bundle_identifier
@@ -72,6 +71,9 @@ platform :ios do
 
     #update firebase configuration
     firebase_add_configuration_file("enterprise")
+
+    #delete spotlight subscription entitlements if exists
+    remove_key_from_entitlements("#{project_name}", "Release", "com.apple.smoot.subscriptionservice")
 
     # update app identifier to the enterprise one
     reset_to_bundle_identifier_placeholder

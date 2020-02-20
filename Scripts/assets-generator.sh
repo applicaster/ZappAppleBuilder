@@ -107,7 +107,7 @@ info 'Clearing Source Image File ...'
 info 'Clearing Complete.'
 
 info 'Moving Launch Images to LaunchImage folder ...'
-files='Default@2x Default-568h@2x Default-667h Default-736h Default-812h'
+files='Default@2x Default-568h@2x Default-667h Default-736h Default-812h Default-896h@2x Default-1242h@3x'
 for file in $files
 do
   if [ -e "$DST_PATH_RESOURCES/$file.png" ]
