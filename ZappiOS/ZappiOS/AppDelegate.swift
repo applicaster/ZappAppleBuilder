@@ -56,7 +56,6 @@ class AppDelegate: AppDelegateBase {
             remoteUserInfo = nil
 
         }
-        //TODO: Pass logic
     }
 
     public func applicationWillResignActive(_ application: UIApplication) {
