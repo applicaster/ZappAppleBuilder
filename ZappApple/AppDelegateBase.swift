@@ -122,7 +122,10 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
             urlSchemeUrl = nil
             urlSchemeOptions = nil
             
-            if UrlSchemeHandler.handle(app, open: url, options: options) {
+            if UrlSchemeHandler.handle(with: rootController,
+                                       application: app,
+                                       open: url,
+                                       options: options) {
                 return true
             }
             else {
