@@ -121,6 +121,7 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         } else {
             urlSchemeUrl = nil
             urlSchemeOptions = nil
+            rootController?.pluginsManager.analytics.trackURL(url: url)
             
             if UrlSchemeHandler.handle(with: rootController,
                                        application: app,
