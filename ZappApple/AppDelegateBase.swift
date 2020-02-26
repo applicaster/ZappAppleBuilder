@@ -121,9 +121,15 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         } else {
             urlSchemeUrl = nil
             urlSchemeOptions = nil
-            return uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(app,
+            
+            if UrlSchemeHandler.handle(app, open: url, options: options) {
+                return true
+            }
+            else {
+                return uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(app,
                                                                                        open: url,
                                                                                        options: options) ?? true
+            }
         }
     }
 }
