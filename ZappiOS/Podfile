@@ -25,7 +25,7 @@ def shared_pods
     pod 'ZappPushPluginsSDK', '= 11.0.1'
 
     pod 'ZappCore', '= 0.8.3'
-    pod 'ZappApple', '= 0.6.7'
+    pod 'ZappApple', '= 0.6.8'
     pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
     pod 'yoga', :path => './node_modules/react-native/ReactCommon/yoga'
     pod 'DoubleConversion', :podspec => './node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
