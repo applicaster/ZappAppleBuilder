@@ -2,7 +2,7 @@
 source 'https://rubygems.org'
 
 gem 'fastlane', '= 2.140.0'
-gem 'cocoapods', '= 1.8.4'
+gem 'cocoapods', '= 1.9.0'
 
 # Zapp SDK creation process
 gem 'zapp_sdk_tasks', '= 0.5.0'
