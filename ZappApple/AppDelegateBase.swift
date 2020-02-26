@@ -62,9 +62,22 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
     public func application(_ application: UIApplication,
                             continue userActivity: NSUserActivity,
                             restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-        return uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(application,
-                                                                                   continue: userActivity,
-                                                                                   restorationHandler: restorationHandler) ?? true
+        
+        //implement continue user activity hooks flow or fallback to react
+        if rootController?.pluginsManager.hasHooksForContinuingUserActivity() == true {
+            rootController?.pluginsManager.hookOnContinuingUserActivity(userActivity: userActivity,
+                                                                        hooksPlugins: nil,
+                                                                        completion: {
+                //do nothing special on completion
+            })
+            return true
+        }
+        else {
+            return uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(application,
+                                                                                       continue: userActivity,
+                                                                                       restorationHandler: restorationHandler) ?? true
+        }
+        
     }
 
     func storagesDefaultParams() -> [String: String] {
@@ -108,12 +121,19 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         } else {
             urlSchemeUrl = nil
             urlSchemeOptions = nil
-            
             rootController?.pluginsManager.analytics.trackURL(url: url)
-
-            return uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(app,
+            
+            if UrlSchemeHandler.handle(with: rootController,
+                                       application: app,
+                                       open: url,
+                                       options: options) {
+                return true
+            }
+            else {
+                return uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(app,
                                                                                        open: url,
                                                                                        options: options) ?? true
+            }
         }
     }
 }
