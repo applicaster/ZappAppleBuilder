@@ -58,7 +58,7 @@ platform :ios do
     )
 
     # upload to ms app center
-    upload_application(bundle_identifier,
+    upload_application(identifier,
       "Enterprise",
       "debug"
     )
