@@ -1,2 +1,3 @@
 ZappApple/
 ZappTvOS/
+Scripts/
