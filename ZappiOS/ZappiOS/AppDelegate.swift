@@ -14,15 +14,14 @@ import ZappCore
 
 @UIApplicationMain
 class AppDelegate: AppDelegateBase {
-    var distributionHandler: MsAppCenterDistributionHandler?
+    var appCenterHandeler = MsAppCenterHandler()
 
     override func application(_ application: UIApplication,
                               didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let retVal = super.application(application,
                                        didFinishLaunchingWithOptions: launchOptions)
-        // Init ms app center distribution from app level
-        distributionHandler = MsAppCenterDistributionHandler()
-        distributionHandler?.configure()
+        // Init ms app center
+        appCenterHandeler.configure()
 
         return retVal
     }
