@@ -20,7 +20,7 @@ puts("\n\nCocoaPods preparing for platform: tvOS\n\n")
 
 def shared_pods
     pod 'ZappCore', '= 0.8.5'
-    pod 'ZappApple', '= 0.6.12'
+    pod 'ZappApple', '= 0.6.13'
     pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
     pod 'yoga', :path => './node_modules/react-native/ReactCommon/yoga'
     pod 'DoubleConversion', :podspec => './node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
