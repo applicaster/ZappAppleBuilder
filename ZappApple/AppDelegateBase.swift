@@ -81,13 +81,17 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
     }
 
     func storagesDefaultParams() -> [String: String] {
+        var platform = ZappStorageKeys.iOS
+        #if os(tvOS)
+            platform = ZappStorageKeys.tvOS
+        #endif
         return [ZappStorageKeys.bundleIdentifier: kBundleIdentifier,
                 ZappStorageKeys.applicationName: kAppName,
                 ZappStorageKeys.versionId: kVersionId,
                 ZappStorageKeys.versionName: kVersionName,
                 ZappStorageKeys.accountId: kAPAccountId,
                 ZappStorageKeys.accountsAccountId: kAccountsAccountID,
-                ZappStorageKeys.platform: ZappStorageKeys.tvOS,
+                ZappStorageKeys.platform: platform,
                 ZappStorageKeys.buildVersion: kBuildVersion,
                 ZappStorageKeys.apiSecretKey: kApplicasterSecretKey,
                 ZappStorageKeys.broadcasterId: kBroadcasterId,
