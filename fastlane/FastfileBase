@@ -254,21 +254,21 @@ platform :ios do
     )
 
     # save uploaded app info to file for future use
-    save_build_params_for_type(bundle_identifier, build_type, ms_app_center_app_secret)
+    save_build_params_for_type(bundle_identifier, build_type, ms_app_center_app_name, ms_app_center_app_secret)
 
   end
 
-  def save_build_params_for_type(bundle_identifier, build_type, app_secret)
+  def save_build_params_for_type(bundle_identifier, build_type, app_name, app_secret)
     folder_name = "#{ENV['PWD']}/.ms_app_center"
     filename = "#{folder_name}/#{build_type}_upload_params.json"
-    hash = build_params_hash_for_type(bundle_identifier, build_type, app_secret)
+    hash = build_params_hash_for_type(bundle_identifier, build_type, app_name, app_secret)
     Dir.mkdir(folder_name) unless File.exists?(folder_name)
     File.open(filename,"w") do |f|
        f.write(hash.to_json)
     end
   end
 
-  def build_params_hash_for_type(bundle_identifier, build_type, app_secret)
+  def build_params_hash_for_type(bundle_identifier, build_type, app_name, app_secret)
     if isTvOS
       time = Time.new
       s3DestinationPathParams = s3_upload_path(bundle_identifier)
@@ -283,6 +283,8 @@ platform :ios do
         uploaded_at: release_info["uploaded_at"],
         download_url: release_info["download_url"],
         install_url: release_info["install_url"],
+        id: release_info["id"],
+        app_name: app_name,
         app_secret: app_secret
       }
     end
