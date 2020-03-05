@@ -1,5 +1,54 @@
 # Changelog
 
+### Minimum OS supported: iOS 11, tvOS 11
+
+### React Native version: 0.59.10
+
+### QuickBrick version: [2.2.0](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#220-2019-12-20)
+
+## [20.0.0](https://github.com/applicaster/ZappAppleBuilder.git/tree/20.0.0) (2019-3-6)
+
+[Full Changelog](https://github.com/applicaster/Zapp-tvOS/tree/20.0.0)
+
+### Dependencies
+
+- ZappCore: 0.8.6
+- ZappApple: 0.6.15
+- (iOS) ZappPlugins: 11.6.1
+- (iOS) ZappPushPluginsSDK: 11.0.1
+- (iOS) ZappAnalyticsPluginsSDK: 11.0.0
+
+### Features
+
+**iOS application support!**
+**General**
+
+- Add Google Services template for Firebase plugins [#12](https://github.com/applicaster/ZappAppleBuilder/pull/12)([kononenkoAnton](https://github.com/kononenkoAnton))
+- (iOS) Add store releases for Fastlane [#2](https://github.com/applicaster/ZappAppleBuilder/pull/2)([kononenkoAnton](https://github.com/kononenkoAnton))
+- Split project on iOS and tvOS [#3](https://github.com/applicaster/ZappAppleBuilder/pull/3)([alexzchut](https://github.com/alexzchut))
+- (iOS) Add support latest localsplash images [#15](https://github.com/applicaster/ZappAppleBuilder/pull/15)([alexzchut](https://github.com/alexzchut))
+- Add support of universal links from user activity hooks [#21](https://github.com/applicaster/ZappAppleBuilder/pull/21)([alexzchut](https://github.com/alexzchut))
+- URL Handler to reset UUID of device [#22](https://github.com/applicaster/ZappAppleBuilder/pull/21)([alexzchut](https://github.com/alexzchut))
+- Resolve React Native bug that causing spam inside xCode console [#24](https://github.com/applicaster/ZappAppleBuilder/pull/24)([kononenkoAnton](https://github.com/kononenkoAnton))
+- Fix developer project path for iOS and tvOS [#25](https://github.com/applicaster/ZappAppleBuilder/pull/25)([kononenkoAnton](https://github.com/kononenkoAnton))
+- Add Firebase helper to invoke after application finish launch [#29](https://github.com/applicaster/ZappAppleBuilder/pull/29)([kononenkoAnton](https://github.com/kononenkoAnton))
+- Add MSAppCenter helper to invoke after application finish launch [#30](https://github.com/applicaster/ZappAppleBuilder/pull/30)([kononenkoAnton](https://github.com/kononenkoAnton))
+- Add Audience implementation [#31](https://github.com/applicaster/ZappAppleBuilder/pull/31)([kononenkoAnton](https://github.com/kononenkoAnton))
+- Remove code AIS code [#9](https://github.com/applicaster/ZappAppleBuilder/pull/9)([kononenkoAnton](https://github.com/kononenkoAnton))
+
+**(iOS) Push Notification**
+
+- Add general implementation of Push Notifications [#6](https://github.com/applicaster/ZappAppleBuilder/pull/6)([kononenkoAnton](https://github.com/kononenkoAnton))
+- Add support of legacy push plugins that use ZappPushPluginsSDK base file [#17](https://github.com/applicaster/ZappAppleBuilder/pull/17)([kononenkoAnton](https://github.com/kononenkoAnton))
+
+**Analytics**
+
+- Add support of legacy analytics plugins that use ZappAnalyticsPluginsSDK base file [#23](https://github.com/applicaster/ZappAppleBuilder/pull/23)([kononenkoAnton](https://github.com/kononenkoAnton))
+
+**UIFramework**
+
+- Refactor code to provide UIFramework root view controller structure[#11](https://github.com/applicaster/ZappAppleBuilder/pull/11)([kononenkoAnton](https://github.com/kononenkoAnton))
+
 ### Minimum OS supported: tvOS 10
 
 ### React Native version: 0.59.10
