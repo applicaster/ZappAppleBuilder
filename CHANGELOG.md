@@ -1,6 +1,6 @@
 # Changelog
 
-### Minimum OS supported: iOS 11, tvOS 11
+### Minimum OS supported: iOS 11
 
 ## SDK supports only UI Framework: QuickBrick
 
@@ -10,7 +10,7 @@
 
 ## [20.0.0](https://github.com/applicaster/ZappAppleBuilder.git/tree/20.0.0) (2019-3-6)
 
-[Full Changelog](https://github.com/applicaster/Zapp-tvOS/tree/20.0.0)
+[Full Changelog](https://github.com/applicaster/ZappAppleBuilder.git/tree/20.0.0)
 
 ### Dependencies
 
