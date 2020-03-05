@@ -21,6 +21,7 @@
 ### Features
 
 **iOS application support!**
+
 **General**
 
 - Add Google Services template for Firebase plugins [#12](https://github.com/applicaster/ZappAppleBuilder/pull/12)([kononenkoAnton](https://github.com/kononenkoAnton))
