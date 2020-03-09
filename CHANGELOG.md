@@ -4,11 +4,11 @@
 
 ## SDK supports only UI Framework: QuickBrick
 
-### QuickBrick version: [2.2.0](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#220-2019-12-20)
+### QuickBrick version: [2.3.0](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#2020-03-09)
 
 ### React Native version: 0.59.10
 
-## [20.0.0](https://github.com/applicaster/ZappAppleBuilder.git/tree/20.0.0) (2019-3-6)
+## [20.0.0](https://github.com/applicaster/ZappAppleBuilder.git/tree/20.0.0) (2019-3-9)
 
 [Full Changelog](https://github.com/applicaster/ZappAppleBuilder.git/tree/20.0.0)
 
