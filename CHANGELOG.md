@@ -1,6 +1,6 @@
 # Changelog
 
-### Minimum OS supported: iOS 11
+### Minimum OS supported: iOS: 11, tvOS: 11
 
 ## SDK supports only UI Framework: QuickBrick
 
@@ -8,17 +8,21 @@
 
 ### React Native version: 0.59.10
 
-## [20.0.0](https://github.com/applicaster/ZappAppleBuilder.git/tree/20.0.0) (2019-3-9)
+## [iOS:20.0.0](https://github.com/applicaster/ZappAppleBuilder.git/tree/20.0.0) (2019-3-9)
 
 [Full Changelog](https://github.com/applicaster/ZappAppleBuilder.git/tree/20.0.0)
+
+## [tvOS:14.0.0](https://github.com/applicaster/ZappAppleBuilder.git/tree/14.0.0) (2019-3-9)
+
+[Full Changelog](https://github.com/applicaster/ZappAppleBuilder.git/tree/14.0.0)
 
 ### Dependencies
 
 - [ZappCore](https://github.com/applicaster/ZappAppleBuilder): 0.8.6
 - [ZappApple](https://github.com/applicaster/ZappAppleBuilder): 0.6.15
-- [ZappPlugins](https://github.com/applicaster/ZappPlugins.2.0-iOS): 11.6.1
-- [ZappPushPluginsSDK](https://github.com/applicaster/ZappPushPluginsSDK-iOS): 11.0.1
-- [ZappAnalyticsPluginsSDK](https://github.com/applicaster/ZappAnalyticsPluginsSDK-iOS): 11.0.0
+- [(iOS) ZappPlugins](https://github.com/applicaster/ZappPlugins.2.0-iOS): 11.6.1
+- [(iOS) ZappPushPluginsSDK](https://github.com/applicaster/ZappPushPluginsSDK-iOS): 11.0.1
+- [(iOS) ZappAnalyticsPluginsSDK](https://github.com/applicaster/ZappAnalyticsPluginsSDK-iOS): 11.0.0
 
 ### Features
 
@@ -27,9 +31,9 @@
 - Deploy your application via Zapp for Debug, Release.
 - Support of the Plugins System.
   - Analytics
-  - Push Provider
   - Video Advertisment
-  - Error Monitoring
+  - (iOS) Push Provider
+  - (iOS) Error Monitoring
 
 **General**
 
@@ -46,7 +50,7 @@
 - Add Audience implementation [#31](https://github.com/applicaster/ZappAppleBuilder/pull/31)([kononenkoAnton](https://github.com/kononenkoAnton))
 - Remove code AIS code [#9](https://github.com/applicaster/ZappAppleBuilder/pull/9)([kononenkoAnton](https://github.com/kononenkoAnton))
 
-**Push Notification**
+**(iOS) Push Notification**
 
 - Add general implementation of Push Notifications [#6](https://github.com/applicaster/ZappAppleBuilder/pull/6)([kononenkoAnton](https://github.com/kononenkoAnton))
 - Add support of legacy push plugins that use ZappPushPluginsSDK base file [#17](https://github.com/applicaster/ZappAppleBuilder/pull/17)([kononenkoAnton](https://github.com/kononenkoAnton))
