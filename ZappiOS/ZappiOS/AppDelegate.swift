@@ -14,22 +14,21 @@ import ZappCore
 
 @UIApplicationMain
 class AppDelegate: AppDelegateBase {
-    var appCenterHandeler = MsAppCenterHandler()
+    var appCenterHandler = MsAppCenterHandler()
 
     override func application(_ application: UIApplication,
                               didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let retVal = super.application(application,
                                        didFinishLaunchingWithOptions: launchOptions)
         // Init ms app center
-        appCenterHandeler.configure()
+        appCenterHandler.configure()
 
         return retVal
     }
 
     public override func handleDelayedEventsIfNeeded() {
         super.handleDelayedEventsIfNeeded()
-        if let rootController = rootController,
-            rootController.appReadyForUse,
+        if isApplicationReady,
             let remoteUserInfo = remoteUserInfo {
             application(UIApplication.shared,
                         didReceiveRemoteNotification: remoteUserInfo) { _ in }
@@ -44,16 +43,15 @@ class AppDelegate: AppDelegateBase {
     public func application(_ application: UIApplication,
                             didReceiveRemoteNotification userInfo: [AnyHashable: Any],
                             fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        if let rootController = rootController,
-            rootController.appReadyForUse == false {
+        if isApplicationReady {
+            remoteUserInfo = nil
+            uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(application,
+                                                                                didReceiveRemoteNotification: userInfo,
+                                                                                fetchCompletionHandler: completionHandler)
+
+        } else {
             remoteUserInfo = userInfo
             completionHandler(UIBackgroundFetchResult.newData)
-        } else {
-            uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(application,
-                                                                                   didReceiveRemoteNotification: userInfo,
-                                                                                   fetchCompletionHandler: completionHandler)
-            remoteUserInfo = nil
-
         }
     }
 

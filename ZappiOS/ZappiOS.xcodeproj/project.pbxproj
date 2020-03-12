@@ -21,6 +21,7 @@
 		1D30F6BD23CB2CE800DDD86F /* FeaturesCustomization.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D30F6B923CB2CE800DDD86F /* FeaturesCustomization.plist */; };
 		1D30F6BE23CB2CE800DDD86F /* ZappStyles.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D30F6BA23CB2CE800DDD86F /* ZappStyles.json */; };
 		1D30F6BF23CB2CE800DDD86F /* AppDelegateBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30F6BB23CB2CE800DDD86F /* AppDelegateBase.swift */; };
+		40CFCAD7241ACF99009D9118 /* AppDelegateBase+UNUserNotificationCenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CFCAD6241ACF99009D9118 /* AppDelegateBase+UNUserNotificationCenterDelegate.swift */; };
 		40EE124F2409CEED00B052C2 /* FirebaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EE124E2409CEED00B052C2 /* FirebaseHandler.swift */; };
 		40FB300923F1A69800B76AD0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40FB300823F1A69800B76AD0 /* GoogleService-Info.plist */; };
 		E31AC8E97D4DE6BA80EC66CA /* Pods_ZappiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A02EE186C5891938B20F9D34 /* Pods_ZappiOS.framework */; };
@@ -70,6 +71,7 @@
 		1D30F6C123CB2D5F00DDD86F /* ZappiOS-Debug.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "ZappiOS-Debug.entitlements"; sourceTree = "<group>"; };
 		1D30F6C223CB2D5F00DDD86F /* ZappiOS-Release.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "ZappiOS-Release.entitlements"; sourceTree = "<group>"; };
 		1D30F71623CB4D5100DDD86F /* ZappiOS-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZappiOS-Bridging-Header.h"; sourceTree = "<group>"; };
+		40CFCAD6241ACF99009D9118 /* AppDelegateBase+UNUserNotificationCenterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegateBase+UNUserNotificationCenterDelegate.swift"; sourceTree = "<group>"; };
 		40EE124E2409CEED00B052C2 /* FirebaseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHandler.swift; sourceTree = "<group>"; };
 		40FB300823F1A69800B76AD0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "ZappiOS/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		48BCB8F0F692A4D55E8D12E9 /* Pods_ZappiOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZappiOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -219,6 +221,7 @@
 				40EE124C2409CEED00B052C2 /* Helpers */,
 				1D30F6B723CB2CE800DDD86F /* Customization */,
 				1D30F6BB23CB2CE800DDD86F /* AppDelegateBase.swift */,
+				40CFCAD6241ACF99009D9118 /* AppDelegateBase+UNUserNotificationCenterDelegate.swift */,
 			);
 			name = ZappApple;
 			path = ../ZappApple;
@@ -583,6 +586,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D30F6BF23CB2CE800DDD86F /* AppDelegateBase.swift in Sources */,
+				40CFCAD7241ACF99009D9118 /* AppDelegateBase+UNUserNotificationCenterDelegate.swift in Sources */,
 				1D30F68223CB297F00DDD86F /* AppDelegate.swift in Sources */,
 				1D30F6BC23CB2CE800DDD86F /* ApplicationCredentials.swift in Sources */,
 				40EE124F2409CEED00B052C2 /* FirebaseHandler.swift in Sources */,
