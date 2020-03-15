@@ -21,6 +21,7 @@
 		1D30F6BD23CB2CE800DDD86F /* FeaturesCustomization.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D30F6B923CB2CE800DDD86F /* FeaturesCustomization.plist */; };
 		1D30F6BE23CB2CE800DDD86F /* ZappStyles.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D30F6BA23CB2CE800DDD86F /* ZappStyles.json */; };
 		1D30F6BF23CB2CE800DDD86F /* AppDelegateBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30F6BB23CB2CE800DDD86F /* AppDelegateBase.swift */; };
+		1DD19CBE241E7C4B00D77827 /* NotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 1D18FB6523CFB6F00018D15E /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		40EE124F2409CEED00B052C2 /* FirebaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EE124E2409CEED00B052C2 /* FirebaseHandler.swift */; };
 		40FB300923F1A69800B76AD0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40FB300823F1A69800B76AD0 /* GoogleService-Info.plist */; };
 		E31AC8E97D4DE6BA80EC66CA /* Pods_ZappiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A02EE186C5891938B20F9D34 /* Pods_ZappiOS.framework */; };
@@ -41,7 +42,28 @@
 			remoteGlobalIDString = 1D30F67D23CB297F00DDD86F;
 			remoteInfo = ZappiOS;
 		};
+		1DD19CBB241E7AC300D77827 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1D30F67623CB297F00DDD86F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1D18FB6423CFB6F00018D15E;
+			remoteInfo = NotificationServiceExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1DD19CBD241E7B3200D77827 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				1DD19CBE241E7C4B00D77827 /* NotificationServiceExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1D18FB6523CFB6F00018D15E /* NotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -302,11 +324,13 @@
 				98084FA0981C9CFDEFCDDA79 /* [CP] Embed Pods Frameworks */,
 				776F1B4BBF70BACD1B9DCC54 /* [CP] Copy Pods Resources */,
 				1D30F6C323CB469100DDD86F /* Run xcode fix */,
+				1DD19CBD241E7B3200D77827 /* Embed App Extensions */,
 				1D30F6C423CB46CE00DDD86F /* Run React Native Packager */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				1DD19CBC241E7AC300D77827 /* PBXTargetDependency */,
 			);
 			name = ZappiOS;
 			productName = ZappiOS;
