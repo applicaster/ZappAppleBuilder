@@ -10,8 +10,6 @@ import UserNotifications
 
 #if AIRSHIP_EXTENSIONS_ENABLED
     // do nothing
-#elseif FIREBASE_EXTENSIONS_ENABLED
-    // do nothing
 #else
 extension NotificationService {
     /// Helper function to extract Attachments from an userInfo object
