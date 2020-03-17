@@ -17,38 +17,44 @@ extension NotificationService {
     /// - Attribute userInfo: The user info extracted from the notification,
     ///                       which should contain one of the available keys to create
     ///                       a rich push notification.
-    public func attachmentsFor(_ userInfo: [AnyHashable: Any]) -> [UNNotificationAttachment] {
+    public func getAttachments(for userInfo: [AnyHashable: Any], completion: @escaping ([UNNotificationAttachment]) -> Void) {
+        let uniqueString = ProcessInfo.processInfo.globallyUniqueString
+        var attachments:[UNNotificationAttachment] = []
+        
         if let attachmentURLString = userInfo["image-url-png"] as? String {
             guard let attachmentURL = URL(string: attachmentURLString),
                 let imageData = try? Data(contentsOf: attachmentURL),
-                let attachment = self.save("image.png", data: imageData, options: nil) else {
-                    return []
+                let attachment = self.save("\(uniqueString).png", data: imageData, options: nil) else {
+                    completion(attachments)
+                    return
             }
-            return [attachment]
+            attachments.append(attachment)
         }
         else if let attachmentURLString = userInfo["image-url-jpg"] as? String {
             guard let attachmentURL = URL(string: attachmentURLString),
                 let imageData = try? Data(contentsOf: attachmentURL),
-                let attachment = self.save("image.jpg", data: imageData, options: nil) else {
-                    return []
-            }
-            return [attachment]
+                let attachment = self.save("\(uniqueString).jpg", data: imageData, options: nil) else {
+                    completion(attachments)
+                    return            }
+            attachments.append(attachment)
         }
         else if let attachmentURLString = userInfo["image-url-gif"] as? String {
             guard let attachmentURL = URL(string: attachmentURLString),
                 let imageData = try? Data(contentsOf: attachmentURL),
-                let attachment = self.save("image.gif", data: imageData, options: nil) else {
-                    return []
+                let attachment = self.save("\(uniqueString).gif", data: imageData, options: nil) else {
+                    completion(attachments)
+                    return
             }
-            return [attachment]
+            attachments.append(attachment)
         }
         else if let attachmentURLString = userInfo["attachment-url"] as? String {
             guard let attachmentURL = URL(string: attachmentURLString),
                 let imageData = try? Data(contentsOf: attachmentURL),
                 let attachment = self.save(attachmentURL.lastPathComponent, data: imageData, options: nil) else {
-                    return []
+                    completion(attachments)
+                    return
             }
-            return [attachment]
+            attachments.append(attachment)
         }
         else if let attachment = userInfo["com.urbanairship.media_attachment"] as? [AnyHashable: Any],
             let attachmentURLarray = attachment["url"] as? [String],
@@ -56,12 +62,13 @@ extension NotificationService {
             guard let attachmentURL = URL(string: attachmentURLString),
                 let imageData = try? Data(contentsOf: attachmentURL),
                 let attachment = self.save(attachmentURL.lastPathComponent, data: imageData, options: nil) else {
-                    return []
+                    completion(attachments)
+                    return
             }
-            return [attachment]
+            attachments.append(attachment)
         }
 
-        return []
+        completion(attachments)
     }
 
     /// Save data object onto disk and return an optional attachment linked to this path.

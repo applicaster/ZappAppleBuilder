@@ -17,6 +17,11 @@ class NotificationService: UAMediaAttachmentExtension {
 
 #else
 
+#if FIREBASE_EXTENSIONS_ENABLED
+import Firebase
+#endif
+
+//default implementation
 class NotificationService: UNNotificationServiceExtension {
 
     var contentHandler: ((UNNotificationContent) -> Void)?
@@ -30,23 +35,25 @@ class NotificationService: UNNotificationServiceExtension {
             return
         }
 
-        // Modify the notification content here...
-        content.title = "\(content.title) [1]"
-
-        DispatchQueue.main.async { [weak self] in
-            let userInfo: [AnyHashable: Any] = request.content.userInfo
-            content.attachments = self?.attachmentsFor(userInfo) ?? []
-            guard let copy = self?.bestAttemptContent else {
-                return
+        #if FIREBASE_EXTENSIONS_ENABLED
+        Messaging.serviceExtension().populateNotificationContent(content,withContentHandler: contentHandler)
+        #else
+        
+        self.getAttachments(for: content.userInfo) { (attachments) in
+            content.attachments = attachments
+            
+            DispatchQueue.main.async {
+                contentHandler(content)
             }
-            contentHandler(copy)
         }
+        
+        #endif
     }
     
     override func serviceExtensionTimeWillExpire() {
         // Called just before the extension will be terminated by the system.
         // Use this as an opportunity to deliver your "best attempt" at modified content, otherwise the original push payload will be used.
-        if let contentHandler = contentHandler, let bestAttemptContent =  bestAttemptContent {
+        if let contentHandler = contentHandler, let bestAttemptContent = bestAttemptContent {
             contentHandler(bestAttemptContent)
         }
     }
