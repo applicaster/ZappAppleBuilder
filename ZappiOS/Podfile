@@ -59,6 +59,10 @@ target 'ZappiOSTests' do
   inherit! :search_paths
 end
 
+target 'NotificationServiceExtension' do
+    # Zaptool notification service extension pods - Do not remove or change.
+		
+end
 
 post_install do |installer|
     installer.pods_project.targets.each do |target|
