@@ -707,7 +707,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				NOTIFICATION_EXTENSION_PROV_PROFILE_SPECIFIER = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.applicaster.ent.com.applicaster.submit.test.NotificationServiceExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.applicaster.ZappiOS.NotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "$(NOTIFICATION_EXTENSION_PROV_PROFILE_SPECIFIER)";
 				SKIP_INSTALL = YES;
@@ -731,7 +731,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				NOTIFICATION_EXTENSION_PROV_PROFILE_SPECIFIER = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.applicaster.ent.com.applicaster.submit.test.NotificationServiceExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.applicaster.ZappiOS.NotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "$(NOTIFICATION_EXTENSION_PROV_PROFILE_SPECIFIER)";
 				SKIP_INSTALL = YES;
