@@ -179,10 +179,10 @@ platform :ios do
       )
 
       # update app identifier for to the notification extension
-      reset_to_bundle_identifier_placeholder(xcodeproj_path, notification_service_extension_info_plist_path)
+      reset_to_bundle_identifier_placeholder(xcodeproj_path, notification_service_extension_info_plist_inner_path)
       update_app_identifier(
         xcodeproj: xcodeproj_path,
-        plist_path: notification_service_extension_info_plist_path,
+        plist_path: notification_service_extension_info_plist_inner_path,
         app_identifier: enterprise_app_notifications_bundle_identifier
       )
 
