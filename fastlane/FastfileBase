@@ -102,10 +102,10 @@ platform :ios do
   end
 
 
-  def reset_to_bundle_identifier_placeholder
+  def reset_to_bundle_identifier_placeholder(proj_path, info_plist_path)
     update_info_plist(
-      xcodeproj: xcodeproj_path,
-      plist_path: project_info_plist_inner_path,
+      xcodeproj: proj_path,
+      plist_path: info_plist_path,
       block: lambda do |plist|
         plist['CFBundleIdentifier'] = "$(PRODUCT_BUNDLE_IDENTIFIER)"
       end
