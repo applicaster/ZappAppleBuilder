@@ -179,7 +179,7 @@ platform :ios do
       )
 
       update_group_identifiers(
-        "#{notifications_target_name}",
+        "#{notification_service_extension_target_name}",
         "Release",
         ["#{enterprise_app_group_name}"]
       )
