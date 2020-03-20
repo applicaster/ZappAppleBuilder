@@ -26,8 +26,8 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         rootController?.userInterfaceLayer
     }()
 
-    public lazy var uiLayerPluginApplicationDelegate = {
-        uiLayerPlugin as? UserInterfaceLayerApplicationDelegate
+    public lazy var uiLayerPluginDelegate = {
+        uiLayerPlugin as? UserInterfaceLayerDelegate
     }()
 
     public var rootController: RootController?
@@ -41,6 +41,12 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         self.launchOptions = launchOptions
 
         UNUserNotificationCenter.current().delegate = self
+//        UNUserNotificationCenter.current().setNotificationCategories([UNNotificationCategory(identifier: "Default-Category",
+//                                                                                             actions: [UNNotificationAction(identifier: "Test",
+//                                                                                                                            title: "Test",
+//                                                                                                                            options: [])],
+//                                                                                             intentIdentifiers: [],
+//                                                                                             options: [.customDismissAction])])
         let defaultStorageParams = storagesDefaultParams()
         StorageInitialization.initializeDefaultValues(sessionStorage: defaultStorageParams,
                                                       localStorage: defaultStorageParams)
@@ -78,9 +84,9 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
             })
             return true
         } else {
-            return uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(application,
-                                                                                       continue: userActivity,
-                                                                                       restorationHandler: restorationHandler) ?? true
+            return uiLayerPluginDelegate?.applicationDelegate?.application?(application,
+                                                                            continue: userActivity,
+                                                                            restorationHandler: restorationHandler) ?? true
         }
     }
 
@@ -140,9 +146,9 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
                                        options: options) {
                 return true
             } else {
-                return uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(app,
-                                                                                           open: url,
-                                                                                           options: options) ?? true
+                return uiLayerPluginDelegate?.applicationDelegate?.application?(app,
+                                                                                open: url,
+                                                                                options: options) ?? true
             }
 
         } else {

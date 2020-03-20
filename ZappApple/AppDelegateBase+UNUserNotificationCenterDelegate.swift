@@ -13,9 +13,9 @@ extension AppDelegateBase: UNUserNotificationCenterDelegate {
     public func userNotificationCenter(_ center: UNUserNotificationCenter,
                                        willPresent notification: UNNotification,
                                        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        rootController?.localNotificationManager.userNotificationCenter(center,
-                                                                        willPresent: notification,
-                                                                        withCompletionHandler: completionHandler)
+        uiLayerPluginDelegate?.userNotificationCenterDelegate?.userNotificationCenter?(center,
+                                                                                       willPresent: notification,
+                                                                                       withCompletionHandler: completionHandler)
     }
 
     public func userNotificationCenter(_ center: UNUserNotificationCenter,
@@ -23,9 +23,11 @@ extension AppDelegateBase: UNUserNotificationCenterDelegate {
                                        withCompletionHandler completionHandler: @escaping () -> Void) {
         if isApplicationReady {
             localNotificatioResponse = nil
-            rootController?.localNotificationManager.userNotificationCenter(center,
-                                                                            didReceive: response,
-                                                                            withCompletionHandler: completionHandler)
+            NotificationCenter.default.post(name: .kLocalNotificationRecievedNotification,
+                                            object: response)
+            uiLayerPluginDelegate?.userNotificationCenterDelegate?.userNotificationCenter?(center,
+                                                                                           didReceive: response,
+                                                                                           withCompletionHandler: completionHandler)
         } else {
             localNotificatioResponse = response
             completionHandler()

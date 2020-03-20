@@ -45,9 +45,9 @@ class AppDelegate: AppDelegateBase {
                             fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         if isApplicationReady {
             remoteUserInfo = nil
-            uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(application,
-                                                                                didReceiveRemoteNotification: userInfo,
-                                                                                fetchCompletionHandler: completionHandler)
+            uiLayerPluginDelegate?.applicationDelegate?.application?(application,
+                                                                     didReceiveRemoteNotification: userInfo,
+                                                                     fetchCompletionHandler: completionHandler)
 
         } else {
             remoteUserInfo = userInfo
@@ -56,20 +56,20 @@ class AppDelegate: AppDelegateBase {
     }
 
     public func applicationWillResignActive(_ application: UIApplication) {
-        uiLayerPluginApplicationDelegate?.applicationDelegate?.applicationWillResignActive?(application)
+        uiLayerPluginDelegate?.applicationDelegate?.applicationWillResignActive?(application)
     }
 
     public func application(_ application: UIApplication,
                             didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         rootController?.pluginsManager.push.registerDeviceToken(data: deviceToken)
-        uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(application,
-                                                                            didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
+        uiLayerPluginDelegate?.applicationDelegate?.application?(application,
+                                                                 didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
     }
 
     public func application(_ application: UIApplication,
                             didFailToRegisterForRemoteNotificationsWithError error: Error) {
         debugPrint(error.localizedDescription)
-        uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(application,
-                                                                            didFailToRegisterForRemoteNotificationsWithError: error)
+        uiLayerPluginDelegate?.applicationDelegate?.application?(application,
+                                                                 didFailToRegisterForRemoteNotificationsWithError: error)
     }
 }
