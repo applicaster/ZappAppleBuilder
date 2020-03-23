@@ -20,7 +20,6 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
     public var window: UIWindow?
     var urlSchemeUrl: URL?
     var urlSchemeOptions: [UIApplication.OpenURLOptionsKey: Any]?
-    var localNotificatioResponse: UNNotificationResponse?
 
     lazy var uiLayerPlugin = {
         rootController?.userInterfaceLayer
@@ -40,8 +39,6 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         // Override point for customization after application launch.
         self.launchOptions = launchOptions
 
-        UNUserNotificationCenter.current().delegate = self
-
         let defaultStorageParams = storagesDefaultParams()
         StorageInitialization.initializeDefaultValues(sessionStorage: defaultStorageParams,
                                                       localStorage: defaultStorageParams)
@@ -51,6 +48,10 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
 
         return true
     }
+    
+    public func applicationDidBecomeActive(_ application: UIApplication) {
+         UIApplication.shared.applicationIconBadgeNumber = 0
+     }
 
     public func handleDelayedEventsIfNeeded() {
         if isApplicationReady {
@@ -58,11 +59,6 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
                 _ = application(UIApplication.shared,
                                 open: url,
                                 options: urlSchemeOptions ?? [:])
-            }
-            if let localNotificatioResponse = localNotificatioResponse {
-                userNotificationCenter(UNUserNotificationCenter.current(), didReceive: localNotificatioResponse) {
-                    // do nothing special on completion
-                }
             }
         }
     }
