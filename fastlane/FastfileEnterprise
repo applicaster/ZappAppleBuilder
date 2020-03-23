@@ -76,7 +76,7 @@ platform :ios do
     remove_key_from_entitlements("#{project_name}", "Release", "com.apple.smoot.subscriptionservice")
 
     # update app identifier to the enterprise one
-    reset_to_bundle_identifier_placeholder
+    reset_to_bundle_identifier_placeholder(xcodeproj_path, project_info_plist_inner_path)
     update_app_identifier(
       xcodeproj: xcodeproj_path,
       plist_path: project_info_plist_inner_path,
@@ -178,8 +178,16 @@ platform :ios do
         ["#{enterprise_app_group_name}"]
       )
 
+      # update app identifier for to the notification extension
+      reset_to_bundle_identifier_placeholder(xcodeproj_path, notification_service_extension_info_plist_inner_path)
+      update_app_identifier(
+        xcodeproj: xcodeproj_path,
+        plist_path: notification_service_extension_info_plist_inner_path,
+        app_identifier: enterprise_app_notifications_bundle_identifier
+      )
+
       update_group_identifiers(
-        "#{notifications_target_name}",
+        "#{notification_service_extension_target_name}",
         "Release",
         ["#{enterprise_app_group_name}"]
       )
