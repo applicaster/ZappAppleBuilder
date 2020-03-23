@@ -41,12 +41,7 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         self.launchOptions = launchOptions
 
         UNUserNotificationCenter.current().delegate = self
-//        UNUserNotificationCenter.current().setNotificationCategories([UNNotificationCategory(identifier: "Default-Category",
-//                                                                                             actions: [UNNotificationAction(identifier: "Test",
-//                                                                                                                            title: "Test",
-//                                                                                                                            options: [])],
-//                                                                                             intentIdentifiers: [],
-//                                                                                             options: [.customDismissAction])])
+
         let defaultStorageParams = storagesDefaultParams()
         StorageInitialization.initializeDefaultValues(sessionStorage: defaultStorageParams,
                                                       localStorage: defaultStorageParams)
