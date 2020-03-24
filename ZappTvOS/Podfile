@@ -19,8 +19,8 @@ end
 puts("\n\nCocoaPods preparing for platform: tvOS\n\n")
 
 def shared_pods
-    pod 'ZappCore', '= 0.8.6'
-    pod 'ZappApple', '= 0.6.15'
+    pod 'ZappCore', '= 0.9.3'
+    pod 'ZappApple', '= 0.7.3'
     pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
     pod 'yoga', :path => './node_modules/react-native/ReactCommon/yoga'
     pod 'DoubleConversion', :podspec => './node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
@@ -28,7 +28,7 @@ def shared_pods
     pod 'Folly', :podspec => './node_modules/react-native/third-party-podspecs/Folly.podspec'
 
     # Zaptool pods - Do not remove or change.
-    pod 'DefaultPlayer', :path => '/Users/antonkononenko/Work3/QuickBrick/plugins/zapp-react-native-default-player/ios/DefaultPlayer.podspec'
+
 end
 
 target 'ZappTvOS' do

@@ -3,7 +3,7 @@
 //  ZappApple
 //
 //  Created by Anton Kononenko on 1/8/20.
-//  Copyright © 2020 Anton Kononenko. All rights reserved.
+//  Copyright © 2020 Applicaster Ltd.. All rights reserved.
 //
 
 import Foundation
@@ -25,8 +25,8 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         rootController?.userInterfaceLayer
     }()
 
-    public lazy var uiLayerPluginApplicationDelegate = {
-        uiLayerPlugin as? UserInterfaceLayerApplicationDelegate
+    public lazy var uiLayerPluginDelegate = {
+        uiLayerPlugin as? UserInterfaceLayerDelegate
     }()
 
     public var rootController: RootController?
@@ -48,36 +48,37 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
 
         return true
     }
+    
+    public func applicationDidBecomeActive(_ application: UIApplication) {
+         UIApplication.shared.applicationIconBadgeNumber = 0
+     }
 
     public func handleDelayedEventsIfNeeded() {
-        if let rootController = rootController,
-            rootController.appReadyForUse,
-            let url = urlSchemeUrl {
-            _ = application(UIApplication.shared,
-                            open: url,
-                            options: urlSchemeOptions ?? [:])
+        if isApplicationReady {
+            if let url = urlSchemeUrl {
+                _ = application(UIApplication.shared,
+                                open: url,
+                                options: urlSchemeOptions ?? [:])
+            }
         }
     }
 
     public func application(_ application: UIApplication,
                             continue userActivity: NSUserActivity,
                             restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-        
-        //implement continue user activity hooks flow or fallback to react
+        // implement continue user activity hooks flow or fallback to react
         if rootController?.pluginsManager.hasHooksForContinuingUserActivity() == true {
             rootController?.pluginsManager.hookOnContinuingUserActivity(userActivity: userActivity,
                                                                         hooksPlugins: nil,
                                                                         completion: {
-                //do nothing special on completion
+                                                                            // do nothing special on completion
             })
             return true
+        } else {
+            return uiLayerPluginDelegate?.applicationDelegate?.application?(application,
+                                                                            continue: userActivity,
+                                                                            restorationHandler: restorationHandler) ?? true
         }
-        else {
-            return uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(application,
-                                                                                       continue: userActivity,
-                                                                                       restorationHandler: restorationHandler) ?? true
-        }
-        
     }
 
     func storagesDefaultParams() -> [String: String] {
@@ -114,30 +115,37 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         ]
     }
 
+    var isApplicationReady: Bool {
+        if let rootController = rootController,
+            rootController.appReadyForUse == false {
+            return false
+        }
+        return true
+    }
+
     public func application(_ app: UIApplication,
                             open url: URL,
                             options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        if let rootController = rootController,
-            rootController.appReadyForUse == false {
-            urlSchemeUrl = url
-            urlSchemeOptions = options
-            return true
-        } else {
+        if isApplicationReady {
             urlSchemeUrl = nil
             urlSchemeOptions = nil
             rootController?.pluginsManager.analytics.trackURL(url: url)
-            
+
             if UrlSchemeHandler.handle(with: rootController,
                                        application: app,
                                        open: url,
                                        options: options) {
                 return true
+            } else {
+                return uiLayerPluginDelegate?.applicationDelegate?.application?(app,
+                                                                                open: url,
+                                                                                options: options) ?? true
             }
-            else {
-                return uiLayerPluginApplicationDelegate?.applicationDelegate?.application?(app,
-                                                                                       open: url,
-                                                                                       options: options) ?? true
-            }
+
+        } else {
+            urlSchemeUrl = url
+            urlSchemeOptions = options
+            return true
         }
     }
 }

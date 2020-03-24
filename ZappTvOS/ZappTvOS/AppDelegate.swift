@@ -13,4 +13,13 @@ import ZappCore
 
 @UIApplicationMain
 class AppDelegate: AppDelegateBase {
+    override func application(_ application: UIApplication,
+                              didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        let retVal = super.application(application,
+                                       didFinishLaunchingWithOptions: launchOptions)
+
+        UNUserNotificationCenter.current().delegate = self
+
+        return retVal
+    }
 }
