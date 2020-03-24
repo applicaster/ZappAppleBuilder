@@ -112,6 +112,7 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
                 ZappStorageKeys.remoteConfigurationUrl: kRemoteConfigurationUrl,
                 ZappStorageKeys.pluginConfigurationUrl: kPluginConfigurationsUrl,
                 ZappStorageKeys.riversUrl: kRiversUrl,
+                ZappStorageKeys.appFamilyId: kAppFamilyId
         ]
     }
 
