@@ -20,13 +20,13 @@ end
 puts("\n\nCocoaPods preparing for platform: iOS\n\n")
 
 def shared_pods
-    # This frameworks added to support backwards compatibility 
+    # This frameworks added to support backwards compatibility
     pod 'ZappPlugins', '= 11.6.1'
     pod 'ZappPushPluginsSDK', '= 11.0.1'
     pod 'ZappAnalyticsPluginsSDK', '= 11.0.0'
 
     pod 'ZappCore', '= 0.9.3'
-    pod 'ZappApple', '= 0.7.4'
+    pod 'ZappApple', '= 0.7.5'
     pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
     pod 'yoga', :path => './node_modules/react-native/ReactCommon/yoga'
     pod 'DoubleConversion', :podspec => './node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
@@ -61,7 +61,7 @@ end
 
 target 'NotificationServiceExtension' do
     # Zaptool notification service extension pods - Do not remove or change.
-		
+
 end
 
 post_install do |installer|
