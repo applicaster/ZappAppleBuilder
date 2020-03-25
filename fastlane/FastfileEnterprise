@@ -74,6 +74,8 @@ platform :ios do
 
     #delete spotlight subscription entitlements if exists
     remove_key_from_entitlements("#{project_name}", "Release", "com.apple.smoot.subscriptionservice")
+    #delete sso entitlements if exists
+    remove_key_from_entitlements("#{project_name}", "Release", "com.apple.developer.video-subscriber-single-sign-on")
 
     # update app identifier to the enterprise one
     reset_to_bundle_identifier_placeholder(xcodeproj_path, project_info_plist_inner_path)
