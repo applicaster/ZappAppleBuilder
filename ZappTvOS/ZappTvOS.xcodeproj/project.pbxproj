@@ -247,7 +247,6 @@
 				D54776718E2F6C491E84E9E6 /* [CP] Embed Pods Frameworks */,
 				1D3FE37923D8C557002B5E30 /* Copy App Resources */,
 				403A829623ECC21600AE3002 /* Run Xcode Fix */,
-				46E3A35B24A8FFA7A5B1A0B9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -403,23 +402,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# This fix must be removed after Xcode 10 fix will be release by apple\n# Prevent clearing project cache after user changes any line of code in dev pods\nfind \"${SRCROOT}/Pods\" -type f -name *frameworks.sh -exec bash -c \"touch \\\"{}\\\"\" \\;\n";
-		};
-		46E3A35B24A8FFA7A5B1A0B9 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ZappTvOS/Pods-ZappTvOS-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ZappTvOS/Pods-ZappTvOS-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ZappTvOS/Pods-ZappTvOS-resources.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		5D2E215B3AAE6B7B507E4BD1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

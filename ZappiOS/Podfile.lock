@@ -1,6 +1,8 @@
 PODS:
-  - AppCenter/Core (2.5.3)
-  - AppCenter/Distribute (2.5.3):
+  - AppCenter/Analytics (3.0.0):
+    - AppCenter/Core
+  - AppCenter/Core (3.0.0)
+  - AppCenter/Distribute (3.0.0):
     - AppCenter/Core
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
@@ -69,11 +71,12 @@ PODS:
   - yoga (0.59.10.React)
   - ZappAnalyticsPluginsSDK (11.0.0):
     - ZappPlugins
-  - ZappApple (0.6.12):
-    - AppCenter/Distribute (= 2.5.3)
+  - ZappApple (0.7.5):
+    - AppCenter/Analytics (= 3.0.0)
+    - AppCenter/Distribute (= 3.0.0)
     - ReachabilitySwift (= 5.0.0)
     - ZappCore
-  - ZappCore (0.8.5)
+  - ZappCore (0.9.3)
   - ZappPlugins (11.6.1):
     - ZappCore
   - ZappPushPluginsSDK (11.0.1):
@@ -99,8 +102,8 @@ DEPENDENCIES:
   - React/RCTWebSocket (from `./node_modules/react-native`)
   - yoga (from `./node_modules/react-native/ReactCommon/yoga`)
   - ZappAnalyticsPluginsSDK (= 11.0.0)
-  - ZappApple (= 0.6.12)
-  - ZappCore (= 0.8.5)
+  - ZappApple (= 0.7.5)
+  - ZappCore (= 0.9.3)
   - ZappPlugins (= 11.6.1)
   - ZappPushPluginsSDK (= 11.0.1)
 
@@ -131,7 +134,7 @@ EXTERNAL SOURCES:
     :path: "./node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  AppCenter: 765ff38c4d360fc5ec61b61a8be24d74cd6d4d83
+  AppCenter: 7a0bbe928d07467ac8b2d7f6f2a675872a6471d8
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
   Folly: de497beb10f102453a1afa9edbf8cf8a251890de
@@ -141,11 +144,11 @@ SPEC CHECKSUMS:
   React: 4e3f5b96a6da3aea5499edb40ac7afb511bb666a
   yoga: 684513b14b03201579ba3cee20218c9d1298b0cc
   ZappAnalyticsPluginsSDK: 0b33b53031e6c1a3c32b4ff25fb63d6e78d8380f
-  ZappApple: 5dc9014a1a284c03d184f7fae91b296db606ed1e
-  ZappCore: 55e3088d66fe9a25823f908e7fe73ec12599101b
+  ZappApple: 08c8705ace9a0278355a59958b239220ffc5cb8a
+  ZappCore: 724f40e9e68f0d89e142740cddac2eb034825160
   ZappPlugins: 3df39f7ee3dcf864361297e0226d8bc8fa238ad4
   ZappPushPluginsSDK: 8d4e0402d2ebb94974aa88807885db70d6d976e4
 
-PODFILE CHECKSUM: 591606d32eb3d67acea6789cae06286ad24cd360
+PODFILE CHECKSUM: 3f0b532ee2d352d5e2a5c17d667d76efc8d4963a
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.0

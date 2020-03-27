@@ -10,7 +10,7 @@
   },
   "private": true,
   "devDependencies": {
-    "@applicaster/zapplicaster-cli": "2.3.0"
+    "@applicaster/zapplicaster-cli": "2.3.1-rc.9"
   },
   "scripts": {
     "patch:react": "node ./../Scripts/react-native-patch.js \"ZappTvOS\"",
