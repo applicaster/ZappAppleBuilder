@@ -92,6 +92,7 @@ jobs:
       - run:
           name: Bundler - update dependencies
           command: |
+            sudo apt-get install libssl-dev
             gem install bundler
             bundle check --path=.bundle || bundle install --path=.bundle
 
