@@ -66,11 +66,12 @@ PODS:
     - glog
     - React/Core
   - yoga (0.59.10.React)
-  - ZappApple (0.6.12):
-    - AppCenter/Distribute (= 2.5.3)
+  - ZappApple (0.7.5):
+    - AppCenter/Analytics (= 3.0.0)
+    - AppCenter/Distribute (= 3.0.0)
     - ReachabilitySwift (= 5.0.0)
     - ZappCore
-  - ZappCore (0.8.5)
+  - ZappCore (0.9.3)
 
 DEPENDENCIES:
   - DoubleConversion (from `./node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
@@ -90,8 +91,8 @@ DEPENDENCIES:
   - React/RCTWebSocket (from `./node_modules/react-native`)
   - React/tvOS (from `./node_modules/react-native`)
   - yoga (from `./node_modules/react-native/ReactCommon/yoga`)
-  - ZappApple (= 0.6.12)
-  - ZappCore (= 0.8.5)
+  - ZappApple (= 0.7.5)
+  - ZappCore (= 0.9.3)
 
 SPEC REPOS:
   "git@github.com:applicaster/CocoaPods.git":
@@ -124,9 +125,9 @@ SPEC CHECKSUMS:
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   React: 4e3f5b96a6da3aea5499edb40ac7afb511bb666a
   yoga: 684513b14b03201579ba3cee20218c9d1298b0cc
-  ZappApple: 5dc9014a1a284c03d184f7fae91b296db606ed1e
-  ZappCore: 55e3088d66fe9a25823f908e7fe73ec12599101b
+  ZappApple: 08c8705ace9a0278355a59958b239220ffc5cb8a
+  ZappCore: 724f40e9e68f0d89e142740cddac2eb034825160
 
-PODFILE CHECKSUM: f55a3e6ab1762d436ffbe1b3a9049af378532225
+PODFILE CHECKSUM: 9ee265d717161dbdb90b69363bd41a667d6c6c5a
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.0
