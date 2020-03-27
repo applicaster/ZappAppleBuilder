@@ -1,11 +1,11 @@
-version: 2
+version: 2.1
 notify:
   webhooks:
     - url: https://zapp.applicaster.com/callbacks/build_status/circleci_builds
 jobs:
   build:
     macos:
-      xcode: "11.2.1"
+      xcode: "11.4.0"
     shell: /bin/bash --login -eo pipefail
     environment:
       GENERAL_CACHE_KEY: "ZappApple_Cache_1.0.1"
