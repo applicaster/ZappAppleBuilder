@@ -34,13 +34,14 @@
 ### Features
 
 - Add support rich Push Notification Extension [#37](https://github.com/applicaster/ZappAppleBuilder/pull/37) ([alexzchut](https://github.com/alexzchut))
-- Add suppot Local Notification support [#38](https://github.com/applicaster/ZappAppleBuilder/pull/38)   ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Add support Local Notification support [#38](https://github.com/applicaster/ZappAppleBuilder/pull/38)   ([kononenkoAnton](https://github.com/kononenkoAnton))
 - Pass new key to Session Storage `app_family_id` [#39](https://github.com/applicaster/ZappAppleBuilder/pull/39) ([kononenkoAnton](https://github.com/kononenkoAnton))
 - Bump new zapptool version `3.9.6` [#40](https://github.com/applicaster/ZappAppleBuilder/pull/40)([kononenkoAnton](https://github.com/kononenkoAnton))
 - Enable status bar can be controlled from Java Script Side [#42](https://github.com/applicaster/ZappAppleBuilder/pull/42) ([f-roland](https://github.com/f-roland))
 - Remove custom entitlements for enterprise builds, that cause build fail [#45](https://github.com/applicaster/ZappAppleBuilder/pull/45) ([alexzchut](https://github.com/alexzchut))
 - Bump CocoaPods version CocoaPods 1.9.1 [#46](https://github.com/applicaster/ZappAppleBuilder/pull/46) ([kononenkoAnton](https://github.com/kononenkoAnton))
 - Migrate project to support xCode 11.4.0 [#47](https://github.com/applicaster/ZappAppleBuilder/pull/47)([kononenkoAnton](https://github.com/kononenkoAnton))
+- Bump fastlane to 2.144.0 [kononenkoAnton](https://github.com/kononenkoAnton))
 
 
 
