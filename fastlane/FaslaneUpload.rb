@@ -12,6 +12,7 @@ platform :ios do
         unless ENV['bundle_identifier'].to_s.strip.empty?          
             if isTvOS
                 puts("Installing S3 AWS")
+                sh("sudo easy_install pip")
                 sh("sudo pip install awscli")
             else 
                 puts("Fetching App Center identifiers ms_app_center:fetch_identifiers[#{ENV['bundle_identifier']}]")
