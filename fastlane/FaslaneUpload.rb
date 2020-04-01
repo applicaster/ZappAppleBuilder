@@ -12,8 +12,10 @@ platform :ios do
         unless ENV['bundle_identifier'].to_s.strip.empty?          
             if isTvOS
                 puts("Installing S3 AWS")
-                sh("sudo easy_install pip")
-                sh("sudo pip install awscli")
+                sh("curl 'https://s3.amazonaws.com/aws-cli/awscli-bundle.zip' -o 'awscli-bundle.zip'")
+                sh("unzip awscli-bundle.zip")
+                sh("sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws")
+                sh ("aws --version")
             else 
                 puts("Fetching App Center identifiers ms_app_center:fetch_identifiers[#{ENV['bundle_identifier']}]")
                 sh("bundle exec rake ms_app_center:fetch_identifiers[#{ENV['bundle_identifier']}]")
