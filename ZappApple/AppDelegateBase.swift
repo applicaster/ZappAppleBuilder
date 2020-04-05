@@ -12,6 +12,7 @@ import React
 import UIKit
 import ZappApple
 import ZappCore
+
 public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnectorProtocol, AppDelegateProtocol {
     public var connectorInstance: FacadeConnector? {
         return rootController?.facadeConnector

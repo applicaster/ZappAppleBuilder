@@ -8,6 +8,7 @@
 
 import Foundation
 import UserNotifications
+import UIKit
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     public func userNotificationCenter(_ center: UNUserNotificationCenter,
@@ -22,14 +23,22 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                        didReceive response: UNNotificationResponse,
                                        withCompletionHandler completionHandler: @escaping () -> Void) {
         if isApplicationReady {
-            localNotificatioResponse = nil
+            localNotificationResponse = nil
             NotificationCenter.default.post(name: .kLocalNotificationRecievedNotification,
                                             object: response)
+            
+            //update badge number by adding notification badge to application current badge
+            var badgeNumber = UIApplication.shared.applicationIconBadgeNumber
+            if let countToAdd = response.notification.request.content.badge {
+                badgeNumber += Int(truncating: countToAdd)
+                UIApplication.shared.applicationIconBadgeNumber = badgeNumber
+            }
+            
             uiLayerPluginDelegate?.userNotificationCenterDelegate?.userNotificationCenter?(center,
                                                                                            didReceive: response,
                                                                                            withCompletionHandler: completionHandler)
         } else {
-            localNotificatioResponse = response
+            localNotificationResponse = response
             completionHandler()
         }
     }

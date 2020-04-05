@@ -16,7 +16,7 @@ import ZappCore
 class AppDelegate: AppDelegateBase {
     var appCenterHandler = MsAppCenterHandler()
 
-    var localNotificatioResponse: UNNotificationResponse?
+    var localNotificationResponse: UNNotificationResponse?
 
     override func application(_ application: UIApplication,
                               didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -38,9 +38,9 @@ class AppDelegate: AppDelegateBase {
             application(UIApplication.shared,
                         didReceiveRemoteNotification: remoteUserInfo) { _ in }
         }
-        if let localNotificatioResponse = localNotificatioResponse {
+        if let localNotificationResponse = localNotificationResponse {
             userNotificationCenter(UNUserNotificationCenter.current(),
-                                   didReceive: localNotificatioResponse) {
+                                   didReceive: localNotificationResponse) {
                 // do nothing special on completion
             }
         }
