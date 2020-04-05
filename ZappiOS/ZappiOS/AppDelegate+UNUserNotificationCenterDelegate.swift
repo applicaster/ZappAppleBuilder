@@ -27,12 +27,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             NotificationCenter.default.post(name: .kLocalNotificationRecievedNotification,
                                             object: response)
             
-            //update badge number by adding notification badge to application current badge
-            var badgeNumber = UIApplication.shared.applicationIconBadgeNumber
-            if let countToAdd = response.notification.request.content.badge {
-                badgeNumber += Int(truncating: countToAdd)
-                UIApplication.shared.applicationIconBadgeNumber = badgeNumber
-            }
+            updateApplicationBadgeNumber(with: response.notification.request.content)
             
             uiLayerPluginDelegate?.userNotificationCenterDelegate?.userNotificationCenter?(center,
                                                                                            didReceive: response,
@@ -40,6 +35,15 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         } else {
             localNotificationResponse = response
             completionHandler()
+        }
+    }
+    
+    fileprivate func updateApplicationBadgeNumber(with content: UNNotificationContent) {
+        //update badge number by adding notification badge to application current badge
+        var badgeNumber = UIApplication.shared.applicationIconBadgeNumber
+        if let countToAdd = content.badge {
+            badgeNumber += Int(truncating: countToAdd)
+            UIApplication.shared.applicationIconBadgeNumber = badgeNumber
         }
     }
 }
