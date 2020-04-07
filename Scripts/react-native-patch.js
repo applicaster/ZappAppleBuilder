@@ -105,7 +105,15 @@ const FILES_TO_PATCH = [
       correctString:
         "  NSData *imgData = UIImageJPEGRepresentation(image, 1.0);\n  CGFloat bytes = [imgData length];"
     }
-  }
+  },
+  {
+    filePath: "./Libraries/Text/TextInput/RCTBaseTextInputView.m",
+    operation: replaceStringInFile,
+    args: {
+      lookUpString: "  if (shouldFallbackToBareTextComparison) {",
+      correctString: "  #if TARGET_OS_TV\n    shouldFallbackToBareTextComparison = YES;\n  #endif\n  if (shouldFallbackToBareTextComparison) {"
+    }
+  },
 ];
 
 async function run() {
