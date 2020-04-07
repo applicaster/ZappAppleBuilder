@@ -48,10 +48,10 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
 
         return true
     }
-    
+
     public func applicationDidBecomeActive(_ application: UIApplication) {
-         UIApplication.shared.applicationIconBadgeNumber = 0
-     }
+        UIApplication.shared.applicationIconBadgeNumber = 0
+    }
 
     public func handleDelayedEventsIfNeeded() {
         if isApplicationReady {
@@ -112,7 +112,8 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
                 ZappStorageKeys.remoteConfigurationUrl: kRemoteConfigurationUrl,
                 ZappStorageKeys.pluginConfigurationUrl: kPluginConfigurationsUrl,
                 ZappStorageKeys.riversUrl: kRiversUrl,
-                ZappStorageKeys.appFamilyId: kAppFamilyId
+                ZappStorageKeys.appFamilyId: kAppFamilyId,
+                ZappStorageKeys.store: kStore,
         ]
     }
 
