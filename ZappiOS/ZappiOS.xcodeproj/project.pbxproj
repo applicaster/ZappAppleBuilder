@@ -21,7 +21,11 @@
 		1D30F6BD23CB2CE800DDD86F /* FeaturesCustomization.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D30F6B923CB2CE800DDD86F /* FeaturesCustomization.plist */; };
 		1D30F6BE23CB2CE800DDD86F /* ZappStyles.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D30F6BA23CB2CE800DDD86F /* ZappStyles.json */; };
 		1D30F6BF23CB2CE800DDD86F /* AppDelegateBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30F6BB23CB2CE800DDD86F /* AppDelegateBase.swift */; };
+		1DD19CBE241E7C4B00D77827 /* NotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 1D18FB6523CFB6F00018D15E /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4054F78724291A0B00CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4054F78624291A0B00CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift */; };
+		40EE124F2409CEED00B052C2 /* FirebaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EE124E2409CEED00B052C2 /* FirebaseHandler.swift */; };
 		40FB300923F1A69800B76AD0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40FB300823F1A69800B76AD0 /* GoogleService-Info.plist */; };
+		BCF3D27DA6DDD347E776E326 /* Pods_NotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0465E6BC9CB29C5CE647130 /* Pods_NotificationServiceExtension.framework */; };
 		E31AC8E97D4DE6BA80EC66CA /* Pods_ZappiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A02EE186C5891938B20F9D34 /* Pods_ZappiOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -40,9 +44,31 @@
 			remoteGlobalIDString = 1D30F67D23CB297F00DDD86F;
 			remoteInfo = ZappiOS;
 		};
+		1DD7294B2420BB5400DAC4B4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1D30F67623CB297F00DDD86F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1D18FB6423CFB6F00018D15E;
+			remoteInfo = NotificationServiceExtension;
+		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		1DD19CBD241E7B3200D77827 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				1DD19CBE241E7C4B00D77827 /* NotificationServiceExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		02DA1D072AF84F692D5B222C /* Pods-NotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-NotificationServiceExtension/Pods-NotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
 		1D18FB6523CFB6F00018D15E /* NotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D18FB6723CFB6F00018D15E /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		1D18FB6923CFB6F00018D15E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -69,11 +95,15 @@
 		1D30F6C123CB2D5F00DDD86F /* ZappiOS-Debug.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "ZappiOS-Debug.entitlements"; sourceTree = "<group>"; };
 		1D30F6C223CB2D5F00DDD86F /* ZappiOS-Release.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "ZappiOS-Release.entitlements"; sourceTree = "<group>"; };
 		1D30F71623CB4D5100DDD86F /* ZappiOS-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZappiOS-Bridging-Header.h"; sourceTree = "<group>"; };
+		4054F78624291A0B00CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+UNUserNotificationCenterDelegate.swift"; sourceTree = "<group>"; };
+		40EE124E2409CEED00B052C2 /* FirebaseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHandler.swift; sourceTree = "<group>"; };
 		40FB300823F1A69800B76AD0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "ZappiOS/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		48BCB8F0F692A4D55E8D12E9 /* Pods_ZappiOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZappiOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		64287BEDF68DCEE157F26C6E /* Pods-ZappiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZappiOS.debug.xcconfig"; path = "Target Support Files/Pods-ZappiOS/Pods-ZappiOS.debug.xcconfig"; sourceTree = "<group>"; };
+		921EE6DFD8C836B3E72DEEF7 /* Pods-NotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-NotificationServiceExtension/Pods-NotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		9DE1E4F2BB238AD9FBF3544E /* Pods-ZappiOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZappiOSTests.release.xcconfig"; path = "Target Support Files/Pods-ZappiOSTests/Pods-ZappiOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		A02EE186C5891938B20F9D34 /* Pods_ZappiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZappiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0465E6BC9CB29C5CE647130 /* Pods_NotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9C5D8DDDBA59C5D9F3C5B4B /* Pods-ZappiOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZappiOSTests.debug.xcconfig"; path = "Target Support Files/Pods-ZappiOSTests/Pods-ZappiOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B3D8A83C14589D0BC983D218 /* Pods-ZappiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZappiOS.release.xcconfig"; path = "Target Support Files/Pods-ZappiOS/Pods-ZappiOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -83,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCF3D27DA6DDD347E776E326 /* Pods_NotificationServiceExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +207,7 @@
 				1D30F71623CB4D5100DDD86F /* ZappiOS-Bridging-Header.h */,
 				1D30F68A23CB298000DDD86F /* Assets.xcassets */,
 				1D30F68123CB297F00DDD86F /* AppDelegate.swift */,
+				4054F78624291A0B00CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift */,
 				1D30F68723CB297F00DDD86F /* Main.storyboard */,
 				1D30F68F23CB298000DDD86F /* Info.plist */,
 			);
@@ -207,6 +239,7 @@
 				1D30F6B223CB299E00DDD86F /* CoreSpotlight.framework */,
 				A02EE186C5891938B20F9D34 /* Pods_ZappiOS.framework */,
 				48BCB8F0F692A4D55E8D12E9 /* Pods_ZappiOSTests.framework */,
+				A0465E6BC9CB29C5CE647130 /* Pods_NotificationServiceExtension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -214,6 +247,7 @@
 		1D30F6B623CB2CE800DDD86F /* ZappApple */ = {
 			isa = PBXGroup;
 			children = (
+				40EE124C2409CEED00B052C2 /* Helpers */,
 				1D30F6B723CB2CE800DDD86F /* Customization */,
 				1D30F6BB23CB2CE800DDD86F /* AppDelegateBase.swift */,
 			);
@@ -240,6 +274,22 @@
 			path = Entitlements;
 			sourceTree = "<group>";
 		};
+		40EE124C2409CEED00B052C2 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				40EE124D2409CEED00B052C2 /* FirebaseHandler */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		40EE124D2409CEED00B052C2 /* FirebaseHandler */ = {
+			isa = PBXGroup;
+			children = (
+				40EE124E2409CEED00B052C2 /* FirebaseHandler.swift */,
+			);
+			path = FirebaseHandler;
+			sourceTree = "<group>";
+		};
 		962909C6860707622DAEC497 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,6 +297,8 @@
 				B3D8A83C14589D0BC983D218 /* Pods-ZappiOS.release.xcconfig */,
 				A9C5D8DDDBA59C5D9F3C5B4B /* Pods-ZappiOSTests.debug.xcconfig */,
 				9DE1E4F2BB238AD9FBF3544E /* Pods-ZappiOSTests.release.xcconfig */,
+				921EE6DFD8C836B3E72DEEF7 /* Pods-NotificationServiceExtension.debug.xcconfig */,
+				02DA1D072AF84F692D5B222C /* Pods-NotificationServiceExtension.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -258,6 +310,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D18FB7023CFB6F00018D15E /* Build configuration list for PBXNativeTarget "NotificationServiceExtension" */;
 			buildPhases = (
+				4BD0D54AEBDE78FF4EA4E19D /* [CP] Check Pods Manifest.lock */,
 				1D18FB6123CFB6F00018D15E /* Sources */,
 				1D18FB6223CFB6F00018D15E /* Frameworks */,
 				1D18FB6323CFB6F00018D15E /* Resources */,
@@ -283,11 +336,13 @@
 				98084FA0981C9CFDEFCDDA79 /* [CP] Embed Pods Frameworks */,
 				776F1B4BBF70BACD1B9DCC54 /* [CP] Copy Pods Resources */,
 				1D30F6C323CB469100DDD86F /* Run xcode fix */,
+				1DD19CBD241E7B3200D77827 /* Embed App Extensions */,
 				1D30F6C423CB46CE00DDD86F /* Run React Native Packager */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				1DD7294C2420BB5400DAC4B4 /* PBXTargetDependency */,
 			);
 			name = ZappiOS;
 			productName = ZappiOS;
@@ -491,6 +546,28 @@
 			shellPath = /bin/sh;
 			shellScript = "# Remove not needed resources\nfind \"${SRCROOT}/quick_brick/assets/ios\" -type f -name 'Default-*.png' -delete\nfind \"${SRCROOT}/${PRODUCT_NAME}/Resources\" -type f -name 'Default-L*.png' -delete\n# Copy resourses to app\ncp -r \"${SRCROOT}/quick_brick/assets/ios/\" \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ncp -r \"${SRCROOT}/${PRODUCT_NAME}/Resources/\" \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n";
 		};
+		4BD0D54AEBDE78FF4EA4E19D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NotificationServiceExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		7555E51D690404557FF08046 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -566,6 +643,8 @@
 				1D30F6BF23CB2CE800DDD86F /* AppDelegateBase.swift in Sources */,
 				1D30F68223CB297F00DDD86F /* AppDelegate.swift in Sources */,
 				1D30F6BC23CB2CE800DDD86F /* ApplicationCredentials.swift in Sources */,
+				4054F78724291A0B00CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift in Sources */,
+				40EE124F2409CEED00B052C2 /* FirebaseHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,6 +677,11 @@
 			target = 1D30F67D23CB297F00DDD86F /* ZappiOS */;
 			targetProxy = 1D30F6A023CB298000DDD86F /* PBXContainerItemProxy */;
 		};
+		1DD7294C2420BB5400DAC4B4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1D18FB6423CFB6F00018D15E /* NotificationServiceExtension */;
+			targetProxy = 1DD7294B2420BB5400DAC4B4 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -614,6 +698,7 @@
 /* Begin XCBuildConfiguration section */
 		1D18FB6E23CFB6F00018D15E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 921EE6DFD8C836B3E72DEEF7 /* Pods-NotificationServiceExtension.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
@@ -626,7 +711,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				NOTIFICATION_EXTENSION_PROV_PROFILE_SPECIFIER = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.applicaster.ent.com.applicaster.submit.test.NotificationServiceExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.applicaster.ZappiOS.NotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "$(NOTIFICATION_EXTENSION_PROV_PROFILE_SPECIFIER)";
 				SKIP_INSTALL = YES;
@@ -637,6 +722,7 @@
 		};
 		1D18FB6F23CFB6F00018D15E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 02DA1D072AF84F692D5B222C /* Pods-NotificationServiceExtension.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
@@ -649,7 +735,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				NOTIFICATION_EXTENSION_PROV_PROFILE_SPECIFIER = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.applicaster.ent.com.applicaster.submit.test.NotificationServiceExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.applicaster.ZappiOS.NotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "$(NOTIFICATION_EXTENSION_PROV_PROFILE_SPECIFIER)";
 				SKIP_INSTALL = YES;

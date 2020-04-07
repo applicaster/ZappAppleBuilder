@@ -15,9 +15,10 @@
 		1D30F70F23CB4D3A00DDD86F /* ApplicationCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30F70B23CB4D3A00DDD86F /* ApplicationCredentials.swift */; };
 		1D30F71023CB4D3A00DDD86F /* FeaturesCustomization.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D30F70C23CB4D3A00DDD86F /* FeaturesCustomization.plist */; };
 		1D30F71123CB4D3A00DDD86F /* ZappStyles.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D30F70D23CB4D3A00DDD86F /* ZappStyles.json */; };
-		1D30F71223CB4D3A00DDD86F /* AppDelegateBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30F70E23CB4D3A00DDD86F /* AppDelegateBase.swift */; };
-		1D30F71A23CB4DD900DDD86F /* CoreSpotlight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30F71923CB4DD900DDD86F /* CoreSpotlight.framework */; };
 		1D30F71C23CB4DDF00DDD86F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30F71B23CB4DDF00DDD86F /* StoreKit.framework */; };
+		4054F781242918F700CAA312 /* AppDelegateBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4054F780242918F700CAA312 /* AppDelegateBase.swift */; };
+		4054F7832429190700CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4054F7822429190700CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift */; };
+		40EE124B2409CEBF00B052C2 /* FirebaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EE124A2409CEBF00B052C2 /* FirebaseHandler.swift */; };
 		40FB300723F1A66E00B76AD0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40FB300623F1A66E00B76AD0 /* GoogleService-Info.plist */; };
 		86C01E8AF70AD8997CD152EB /* Pods_ZappTvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB005AE2709D82F9CA97690 /* Pods_ZappTvOS.framework */; };
 		DFC1C12D4C40BE0D5F32CC4C /* Pods_ZappTvOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C7AD5B881DD110B8E92DF8E /* Pods_ZappTvOSTests.framework */; };
@@ -55,7 +56,6 @@
 		1D30F70B23CB4D3A00DDD86F /* ApplicationCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationCredentials.swift; sourceTree = "<group>"; };
 		1D30F70C23CB4D3A00DDD86F /* FeaturesCustomization.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FeaturesCustomization.plist; sourceTree = "<group>"; };
 		1D30F70D23CB4D3A00DDD86F /* ZappStyles.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ZappStyles.json; sourceTree = "<group>"; };
-		1D30F70E23CB4D3A00DDD86F /* AppDelegateBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegateBase.swift; sourceTree = "<group>"; };
 		1D30F71423CB4D4100DDD86F /* ZappTvOS-Debug.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "ZappTvOS-Debug.entitlements"; sourceTree = "<group>"; };
 		1D30F71523CB4D4100DDD86F /* ZappTvOS-Release.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "ZappTvOS-Release.entitlements"; sourceTree = "<group>"; };
 		1D30F71723CB4D5D00DDD86F /* ZappTvOS-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZappTvOS-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -64,6 +64,9 @@
 		2AB005AE2709D82F9CA97690 /* Pods_ZappTvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZappTvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3301FF33BDA80198AEC2A9B1 /* Pods-ZappTvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZappTvOS.release.xcconfig"; path = "Target Support Files/Pods-ZappTvOS/Pods-ZappTvOS.release.xcconfig"; sourceTree = "<group>"; };
 		3EF6DB1E6EE4D4F63F7828F8 /* Pods-ZappTvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZappTvOSTests.release.xcconfig"; path = "Target Support Files/Pods-ZappTvOSTests/Pods-ZappTvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		4054F780242918F700CAA312 /* AppDelegateBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegateBase.swift; sourceTree = "<group>"; };
+		4054F7822429190700CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+UNUserNotificationCenterDelegate.swift"; sourceTree = "<group>"; };
+		40EE124A2409CEBF00B052C2 /* FirebaseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHandler.swift; sourceTree = "<group>"; };
 		40FB300623F1A66E00B76AD0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "ZappTvOS/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		7C7AD5B881DD110B8E92DF8E /* Pods_ZappTvOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZappTvOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7E1C17D0C67AAF55BAE250A /* Pods-ZappTvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZappTvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-ZappTvOSTests/Pods-ZappTvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -75,7 +78,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D30F71A23CB4DD900DDD86F /* CoreSpotlight.framework in Frameworks */,
 				1D30F71C23CB4DDF00DDD86F /* StoreKit.framework in Frameworks */,
 				86C01E8AF70AD8997CD152EB /* Pods_ZappTvOS.framework in Frameworks */,
 			);
@@ -138,6 +140,7 @@
 				1D30F71723CB4D5D00DDD86F /* ZappTvOS-Bridging-Header.h */,
 				1D30F6D823CB484500DDD86F /* Assets.xcassets */,
 				1D30F6D123CB484500DDD86F /* AppDelegate.swift */,
+				4054F7822429190700CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift */,
 				1D30F6D523CB484500DDD86F /* Main.storyboard */,
 				1D30F6DD23CB484500DDD86F /* Info.plist */,
 			);
@@ -165,8 +168,9 @@
 		1D30F70923CB4D3A00DDD86F /* ZappApple */ = {
 			isa = PBXGroup;
 			children = (
+				4054F780242918F700CAA312 /* AppDelegateBase.swift */,
+				40EE12482409CEBF00B052C2 /* Helpers */,
 				1D30F70A23CB4D3A00DDD86F /* Customization */,
-				1D30F70E23CB4D3A00DDD86F /* AppDelegateBase.swift */,
 			);
 			name = ZappApple;
 			path = ../ZappApple;
@@ -200,6 +204,22 @@
 				7C7AD5B881DD110B8E92DF8E /* Pods_ZappTvOSTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		40EE12482409CEBF00B052C2 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				40EE12492409CEBF00B052C2 /* FirebaseHandler */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		40EE12492409CEBF00B052C2 /* FirebaseHandler */ = {
+			isa = PBXGroup;
+			children = (
+				40EE124A2409CEBF00B052C2 /* FirebaseHandler.swift */,
+			);
+			path = FirebaseHandler;
 			sourceTree = "<group>";
 		};
 		A954768BF99F7BCF26A1891E /* Pods */ = {
@@ -451,9 +471,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D30F71223CB4D3A00DDD86F /* AppDelegateBase.swift in Sources */,
 				1D30F6D223CB484500DDD86F /* AppDelegate.swift in Sources */,
+				4054F7832429190700CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift in Sources */,
 				1D30F70F23CB4D3A00DDD86F /* ApplicationCredentials.swift in Sources */,
+				40EE124B2409CEBF00B052C2 /* FirebaseHandler.swift in Sources */,
+				4054F781242918F700CAA312 /* AppDelegateBase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,7 +6,7 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
-  - QuickBrickApple (1.1.0):
+  - QuickBrickApple (1.2.0):
     - React
     - ZappCore
   - ReachabilitySwift (5.0.0)
@@ -66,11 +66,12 @@ PODS:
     - glog
     - React/Core
   - yoga (0.59.10.React)
-  - ZappApple (0.4.0):
-    - AppCenter/Distribute (= 2.5.3)
+  - ZappApple (0.7.5):
+    - AppCenter/Analytics (= 3.0.0)
+    - AppCenter/Distribute (= 3.0.0)
     - ReachabilitySwift (= 5.0.0)
     - ZappCore
-  - ZappCore (0.7.0)
+  - ZappCore (0.9.3)
 
 DEPENDENCIES:
   - DoubleConversion (from `./node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
@@ -90,10 +91,13 @@ DEPENDENCIES:
   - React/RCTWebSocket (from `./node_modules/react-native`)
   - React/tvOS (from `./node_modules/react-native`)
   - yoga (from `./node_modules/react-native/ReactCommon/yoga`)
-  - ZappApple (from `/Users/antonkononenko/Work3/AppleFrameworks/ZappApple.podspec`)
-  - ZappCore (from `/Users/antonkononenko/Work3/AppleFrameworks/ZappCore.podspec`)
+  - ZappApple (= 0.7.5)
+  - ZappCore (= 0.9.3)
 
 SPEC REPOS:
+  "git@github.com:applicaster/CocoaPods.git":
+    - ZappApple
+    - ZappCore
   trunk:
     - boost-for-react-native
     - ReachabilitySwift
@@ -111,23 +115,19 @@ EXTERNAL SOURCES:
     :path: "./node_modules/react-native"
   yoga:
     :path: "./node_modules/react-native/ReactCommon/yoga"
-  ZappApple:
-    :path: "/Users/antonkononenko/Work3/AppleFrameworks/ZappApple.podspec"
-  ZappCore:
-    :path: "/Users/antonkononenko/Work3/AppleFrameworks/ZappCore.podspec"
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
   Folly: de497beb10f102453a1afa9edbf8cf8a251890de
   glog: aefd1eb5dda2ab95ba0938556f34b98e2da3a60d
-  QuickBrickApple: c16c031101a90431b04b753406bed6bc40c33fdb
+  QuickBrickApple: a0e69b81761c0e267c8dfdd268a9c20fff904967
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
-  React: 2d48d37d44bb4e92124b0a5d6c2e1a1333d6f6e2
+  React: 4e3f5b96a6da3aea5499edb40ac7afb511bb666a
   yoga: 684513b14b03201579ba3cee20218c9d1298b0cc
-  ZappApple: e41172cb8f23e943a8d0bcca87b862df8e60012c
-  ZappCore: 6652d6eab09e6c4721dea925d668e5cde1892532
+  ZappApple: 08c8705ace9a0278355a59958b239220ffc5cb8a
+  ZappCore: 724f40e9e68f0d89e142740cddac2eb034825160
 
-PODFILE CHECKSUM: 552af28f1d29ad6252e78ca5cd39bee52cd4ae3a
+PODFILE CHECKSUM: 9ee265d717161dbdb90b69363bd41a667d6c6c5a
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.0

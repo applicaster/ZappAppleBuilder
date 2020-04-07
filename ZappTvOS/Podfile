@@ -19,8 +19,8 @@ end
 puts("\n\nCocoaPods preparing for platform: tvOS\n\n")
 
 def shared_pods
-    pod 'ZappCore', :git => 'https://github.com/applicaster/AppleApplicasterFrameworks.git', :tag => '2020.2.14.19-2-9'
-    pod 'ZappApple', :git => 'https://github.com/applicaster/AppleApplicasterFrameworks.git', :tag => '2020.2.14.19-2-9'
+    pod 'ZappCore', '= 0.9.5'
+    pod 'ZappApple', '= 0.7.8'
     pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
     pod 'yoga', :path => './node_modules/react-native/ReactCommon/yoga'
     pod 'DoubleConversion', :podspec => './node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'

@@ -1,18 +1,18 @@
-version: 2
+version: 2.1
 notify:
   webhooks:
     - url: https://zapp.applicaster.com/callbacks/build_status/circleci_builds
 jobs:
   build:
     macos:
-      xcode: "11.2.1"
+      xcode: "11.4.0"
     shell: /bin/bash --login -eo pipefail
     environment:
       GENERAL_CACHE_KEY: "ZappApple_Cache_1.0.1"
       PROJECT_NAME: "ZappApple"
       SCRIPTS_FOLDER: "Scripts"
       BUILD_PATH: ~/build_debug
-      ZAPPTOOL_VERSION: "3.9.1"
+      ZAPPTOOL_VERSION: "3.9.7"
       HOMEBREW_NO_AUTO_UPDATE: "1"
 
       #fastlane variables
@@ -27,7 +27,7 @@ jobs:
 
       - run:
           name: Set Ruby Version
-          command: echo 'chruby ruby-2.6.5' >> ~/.bash_profile
+          command: echo 'chruby ruby-2.5.7' >> ~/.bash_profile
 
       - run:
           name: Ruby - version
@@ -56,6 +56,17 @@ jobs:
           key: GIT-{{ checksum "~/_caching_file" }}-{{ .Branch }}-{{ .Revision }}
           paths:
             - ".git"
+
+      - run:
+          name: install node@12.0.0
+          command: |
+            set +e         
+            touch $BASH_ENV    
+            curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash
+            echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
+            echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+            echo nvm install 12.0.0 >> $BASH_ENV
+            echo nvm alias default 12.0.0 >> $BASH_ENV
 
       - restore_cache:
           keys:
@@ -208,7 +219,7 @@ jobs:
               # using zip
               echo; echo
               echo "Compressing using zip..."
-              zip -rq "${zipped_project_file_name}" -@r < "$(pwd)/dev_project_whitelist_$(target).txt"
+              zip -rq "${zipped_project_file_name}" -@r < "$(pwd)/dev_project_whitelist_${target}.txt"
 
               bundle exec rake zapp_sdks:upload_dev_project["$(pwd)/${zipped_project_file_name}"]
             else
