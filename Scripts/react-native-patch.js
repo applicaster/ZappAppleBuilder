@@ -11,18 +11,15 @@ const writeFileAsync = promisify(writeFile);
 const BREAK_LINE = "\n";
 
 function react_native_install_folder(target) {
-  const repo_root = resolve(__dirname, "../"+target);
-  return resolve(
-    repo_root,
-    "./node_modules/react-native"
-  )
+  const repo_root = resolve(__dirname, "../" + target);
+  return resolve(repo_root, "./node_modules/react-native");
 }
 
 function replaceStringInFile(file, { lookUpString, correctString }) {
   return file
     .toString()
     .split(BREAK_LINE)
-    .map(line =>
+    .map((line) =>
       line.includes(lookUpString)
         ? line.replace(lookUpString, correctString)
         : line
@@ -33,11 +30,13 @@ function replaceStringInFile(file, { lookUpString, correctString }) {
 function prepareReactPodspec(file) {
   const args = {
     lookUpString: `ss.source_files         = "React/**/RCTTV*.{h,m}"`,
-    correctString: `ss.source_files         = "React/**/RCTTV*.{h,m}"\n      ss.dependency             "DoubleConversion" \n      ss.dependency             "glog"\n      ss.compiler_flags       = folly_compiler_flags`
+    correctString: `ss.source_files         = "React/**/RCTTV*.{h,m}"\n      ss.dependency             "DoubleConversion" \n      ss.dependency             "glog"\n      ss.compiler_flags       = folly_compiler_flags`,
   };
   const updatedFile = replaceStringInFile(file, args);
   const fileLines = updatedFile.toString().split(BREAK_LINE);
-  const ssIndex = fileLines.findIndex(l => l.includes("ss.tvos.exclude_files"));
+  const ssIndex = fileLines.findIndex((l) =>
+    l.includes("ss.tvos.exclude_files")
+  );
   fileLines.splice(
     ssIndex + 1,
     0,
@@ -47,7 +46,10 @@ function prepareReactPodspec(file) {
   return fileLines.join(BREAK_LINE);
 }
 
-async function processFile(react_native_install_folder, { filePath, operation, args }) {
+async function processFile(
+  react_native_install_folder,
+  { filePath, operation, args }
+) {
   const fullFilePath = resolve(react_native_install_folder, filePath);
   console.log(`processing ${fullFilePath}`);
   console.log(`performing ${operation.name} with ${inspect(args)} \n`);
@@ -72,29 +74,29 @@ const FILES_TO_PATCH = [
     operation: replaceStringInFile,
     args: {
       lookUpString: "#import <WebKit/WebKit.h>",
-      correctString: ""
-    }
+      correctString: "",
+    },
   },
-  {
-    filePath: "./React.podspec",
-    operation: prepareReactPodspec
-  },
+  // {
+  //   filePath: "./React.podspec",
+  //   operation: prepareReactPodspec
+  // },
   {
     filePath: "./React/Views/RCTTVView.m",
     operation: replaceStringInFile,
     args: {
       lookUpString:
         "    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{",
-      correctString: "    dispatch_async(dispatch_get_main_queue(), ^{"
-    }
+      correctString: "    dispatch_async(dispatch_get_main_queue(), ^{",
+    },
   },
   {
     filePath: "./React/Base/RCTBridgeModule.h",
     operation: replaceStringInFile,
     args: {
       lookUpString: "  RCT_EXPORT_MODULE(js_name)",
-      correctString: `  RCT_EXPORT_MODULE_NO_LOAD(js_name, objc_name)\n\n#define RCT_EXPORT_MODULE_NO_LOAD(js_name, objc_name) \\\nRCT_EXTERN void RCTRegisterModule(Class); \\\n+ (NSString *)moduleName { return @#js_name; } \\\n__attribute__((constructor)) static void \RCT_CONCAT(initialize_, objc_name)() { RCTRegisterModule([objc_name class]); }\n\n`
-    }
+      correctString: `  RCT_EXPORT_MODULE_NO_LOAD(js_name, objc_name)\n\n#define RCT_EXPORT_MODULE_NO_LOAD(js_name, objc_name) \\\nRCT_EXTERN void RCTRegisterModule(Class); \\\n+ (NSString *)moduleName { return @#js_name; } \\\n__attribute__((constructor)) static void \RCT_CONCAT(initialize_, objc_name)() { RCTRegisterModule([objc_name class]); }\n\n`,
+    },
   },
   {
     filePath: "./Libraries/Image/RCTImageCache.m",
@@ -103,16 +105,17 @@ const FILES_TO_PATCH = [
       lookUpString:
         "  CGFloat bytes = image.size.width * image.size.height * image.scale * image.scale * 4;",
       correctString:
-        "  NSData *imgData = UIImageJPEGRepresentation(image, 1.0);\n  CGFloat bytes = [imgData length];"
-    }
+        "  NSData *imgData = UIImageJPEGRepresentation(image, 1.0);\n  CGFloat bytes = [imgData length];",
+    },
   },
   {
     filePath: "./Libraries/Text/TextInput/RCTBaseTextInputView.m",
     operation: replaceStringInFile,
     args: {
       lookUpString: "  if (shouldFallbackToBareTextComparison) {",
-      correctString: "  #if TARGET_OS_TV\n    shouldFallbackToBareTextComparison = YES;\n  #endif\n  if (shouldFallbackToBareTextComparison) {"
-    }
+      correctString:
+        "  #if TARGET_OS_TV\n    shouldFallbackToBareTextComparison = YES;\n  #endif\n  if (shouldFallbackToBareTextComparison) {",
+    },
   },
 ];
 
@@ -120,11 +123,15 @@ async function run() {
   var platform_install_folder = process.argv.slice(2);
 
   console.log("-| Patching react native |-");
-  console.log("-| for: " + platform_install_folder + " |-");
+  console.log("-| for: " + platform_install_folder + " |-");
 
-  FILES_TO_PATCH.forEach(async fileToPatch => await processFile(react_native_install_folder(platform_install_folder), fileToPatch));
-
-
+  FILES_TO_PATCH.forEach(
+    async (fileToPatch) =>
+      await processFile(
+        react_native_install_folder(platform_install_folder),
+        fileToPatch
+      )
+  );
 }
 
 run();
