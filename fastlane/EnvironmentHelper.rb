@@ -122,3 +122,7 @@
     def notification_service_extension_info_plist_inner_path
         "#{notification_service_extension_target_name}/Info.plist"
     end
+
+    def s3_hostname
+      ENV["s3_hostname"]
+    end

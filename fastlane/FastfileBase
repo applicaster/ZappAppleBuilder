@@ -201,8 +201,7 @@ platform :ios do
   def ms_app_center_update_app_secret(bundle_identifier)
     ms_app_center_app_secret = ms_app_center_read_value_from_file(bundle_identifier, "appsecret")
 
-    sh("/usr/libexec/PlistBuddy -c \"Set MSAppCenterAppSecret #{ms_app_center_app_secret}\" #{customizations_folder_path}/FeaturesCustomization.plist")
-    puts "MS App Center app secret #{ms_app_center_app_secret} was updated successfully for bundle identifier: #{bundle_identifier}"
+    update_features_customization("MSAppCenterAppSecret", ms_app_center_app_secret)
 
     # add appcenter url scheme to the app
     update_url_schemes(
@@ -211,6 +210,17 @@ platform :ios do
         schemes + ["appcenter-#{ms_app_center_app_secret}"]
       end
     )
+    puts "MS App Center app secret #{ms_app_center_app_secret} was updated successfully for bundle identifier: #{bundle_identifier}"
+  end
+
+  def update_features_customization(param_name, param_value)
+    sh("/usr/libexec/PlistBuddy -c \"Set #{param_name} #{param_value}\" #{customizations_folder_path}/FeaturesCustomization.plist")
+    puts "#{param_name} value was updated successfully in FeaturesCustomization.plist"
+
+  end
+
+  def update_parameters_in_feature_optimization_json
+    update_features_customization("S3Hostname", s3_hostname)
   end
 
   def ms_app_center_read_value_from_file(bundle_identifier, type)

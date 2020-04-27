@@ -117,6 +117,8 @@ platform :ios do
 	end
 
 	def prepare_store_app()
+		# update app base parameters in FeaturesCustomization.json
+		update_parameters_in_feature_optimization_json()
 
 		# update ms_app_center app secret
 		ms_app_center_update_app_secret("#{bundle_identifier}")

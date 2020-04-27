@@ -12,6 +12,7 @@ import React
 import UIKit
 import ZappApple
 import ZappCore
+
 public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnectorProtocol, AppDelegateProtocol {
     public var connectorInstance: FacadeConnector? {
         return rootController?.facadeConnector
@@ -107,11 +108,11 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
                 ZappStorageKeys.riversConfigurationId: kRiversConfigurationId,
                 ZappStorageKeys.sdkVersion: kSdkVersion,
                 ZappStorageKeys.isRtl: kIsRTL ? "true" : "false",
-                ZappStorageKeys.assetsUrl: kAssetsUrl,
-                ZappStorageKeys.stylesUrl: kStylesUrl,
-                ZappStorageKeys.remoteConfigurationUrl: kRemoteConfigurationUrl,
-                ZappStorageKeys.pluginConfigurationUrl: kPluginConfigurationsUrl,
-                ZappStorageKeys.riversUrl: kRiversUrl,
+                ZappStorageKeys.assetsUrl: kAssetsUrl.replaceUrlHost(to: FeaturesCustomization.s3Hostname()),
+                ZappStorageKeys.stylesUrl: kStylesUrl.replaceUrlHost(to: FeaturesCustomization.s3Hostname()),
+                ZappStorageKeys.remoteConfigurationUrl: kRemoteConfigurationUrl.replaceUrlHost(to: FeaturesCustomization.s3Hostname()),
+                ZappStorageKeys.pluginConfigurationUrl: kPluginConfigurationsUrl.replaceUrlHost(to: FeaturesCustomization.s3Hostname()),
+                ZappStorageKeys.riversUrl: kRiversUrl.replaceUrlHost(to: FeaturesCustomization.s3Hostname()),
                 ZappStorageKeys.appFamilyId: kAppFamilyId,
                 ZappStorageKeys.store: kStore,
         ]
