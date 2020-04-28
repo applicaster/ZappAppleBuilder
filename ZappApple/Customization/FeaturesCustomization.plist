@@ -4,5 +4,7 @@
 <dict>
 	<key>MSAppCenterAppSecret</key>
 	<string></string>
+	<key>S3Hostname</key>
+	<string></string>
 </dict>
 </plist>
