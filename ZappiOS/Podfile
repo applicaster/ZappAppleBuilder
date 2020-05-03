@@ -25,7 +25,7 @@ def shared_pods
     pod 'ZappPushPluginsSDK', '= 11.0.1'
     pod 'ZappAnalyticsPluginsSDK', '= 11.0.0'
 
-    pod 'ZappCore', '= 0.9.11'
+    pod 'ZappCore', '= 0.9.12'
     pod 'ZappApple', '= 0.7.16'
     pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
     pod 'yoga', :path => './node_modules/react-native/ReactCommon/yoga'
