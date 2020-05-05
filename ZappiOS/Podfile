@@ -21,11 +21,11 @@ puts("\n\nCocoaPods preparing for platform: iOS\n\n")
 
 def shared_pods
     # This frameworks added to support backwards compatibility
-    pod 'ZappPlugins', '= 11.6.1'
+    pod 'ZappPlugins', '= 11.6.6'
     pod 'ZappPushPluginsSDK', '= 11.0.1'
     pod 'ZappAnalyticsPluginsSDK', '= 11.0.0'
 
-    pod 'ZappCore', '= 0.9.13'
+    pod 'ZappCore', '= 0.9.14'
     pod 'ZappApple', '= 0.7.16'
     pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
     pod 'yoga', :path => './node_modules/react-native/ReactCommon/yoga'
