@@ -77,10 +77,6 @@ const FILES_TO_PATCH = [
       correctString: "",
     },
   },
-  // {
-  //   filePath: "./React.podspec",
-  //   operation: prepareReactPodspec
-  // },
   {
     filePath: "./React/Views/RCTTVView.m",
     operation: replaceStringInFile,
