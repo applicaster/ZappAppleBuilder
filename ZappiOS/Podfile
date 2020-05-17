@@ -25,8 +25,8 @@ def shared_pods
     pod 'ZappPlugins', '= 11.6.6'
     pod 'ZappPushPluginsSDK', '= 11.0.1'
     pod 'ZappAnalyticsPluginsSDK', '= 11.0.0'
-    pod 'ZappCore', '= 0.9.15'
-    pod 'ZappApple', '= 0.7.17'
+    pod 'ZappCore', '= 0.9.16'
+    pod 'ZappApple', '= 0.7.18'
     pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
     pod 'FBLazyVector', :path => "./node_modules/react-native/Libraries/FBLazyVector"
     pod 'FBReactNativeSpec', :path => "./node_modules/react-native/Libraries/FBReactNativeSpec"
