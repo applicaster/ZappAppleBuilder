@@ -1,13 +1,14 @@
 {
-  "description": "",
-  "private": true,
+  "name": "ZappAppleBuilder",
   "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/applicaster/ZappAppleBuilder/issues"
   },
-  "main": "index.js",
   "homepage": "https://github.com/applicaster/ZappAppleBuilder#readme",
   "keywords": [],
   "scripts": {
@@ -30,7 +31,6 @@
   "devDependencies": {
     "@applicaster/zapplicaster-cli": "3.1.0-rc.a6944dee"
   },
-  "name": "ZappAppleBuilder",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/applicaster/ZappAppleBuilder.git"
