@@ -28,10 +28,10 @@ def shared_pods
     pod 'ZappCore', '= 0.9.16'
     pod 'ZappApple', '= 0.7.18'
     pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
-    pod 'FBLazyVector', :path => "./node_modules/react-native/Libraries/FBLazyVector"
-    pod 'FBReactNativeSpec', :path => "./node_modules/react-native/Libraries/FBReactNativeSpec"
-    pod 'RCTRequired', :path => "./node_modules/react-native/Libraries/RCTRequired"
-    pod 'RCTTypeSafety', :path => "./node_modules/react-native/Libraries/TypeSafety"
+    pod 'FBLazyVector', :path => './node_modules/react-native/Libraries/FBLazyVector'
+    pod 'FBReactNativeSpec', :path => './node_modules/react-native/Libraries/FBReactNativeSpec'
+    pod 'RCTRequired', :path => './node_modules/react-native/Libraries/RCTRequired'
+    pod 'RCTTypeSafety', :path => './node_modules/react-native/Libraries/TypeSafety'
     pod 'React', :path => './node_modules/react-native/'
     pod 'React-Core', :path => './node_modules/react-native/'
     pod 'React-CoreModules', :path => './node_modules/react-native/React/CoreModules'
