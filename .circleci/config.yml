@@ -12,7 +12,7 @@ jobs:
       PROJECT_NAME: "ZappApple"
       SCRIPTS_FOLDER: "Scripts"
       BUILD_PATH: ~/build_debug
-      ZAPPTOOL_VERSION: "3.9.7"
+      ZAPPTOOL_VERSION: "3.9.8"
       HOMEBREW_NO_AUTO_UPDATE: "1"
 
       #fastlane variables
@@ -60,8 +60,8 @@ jobs:
       - run:
           name: install node@12.0.0
           command: |
-            set +e         
-            touch $BASH_ENV    
+            set +e
+            touch $BASH_ENV
             curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash
             echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
             echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
