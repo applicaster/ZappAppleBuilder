@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@applicaster/quick-brick-native-apple": "2.4.0-rc.0a104f29",
+    "@applicaster/quick-brick-native-apple": "3.0.1",
     "react": "^16.8.0",
     "react-native": "0.59.10"
   },
   "private": true,
   "devDependencies": {
-    "@applicaster/zapplicaster-cli": "2.3.1-rc.9"
+    "@applicaster/zapplicaster-cli": "3.0.1"
   },
   "scripts": {
     "patch:react": "node ./../Scripts/react-native-patch.js \"ZappTvOS\"",
