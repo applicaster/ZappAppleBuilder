@@ -8,9 +8,9 @@
 
 ### React Native version: 0.59.10
 
-## [iOS:20.1.0](https://github.com/applicaster/ZappAppleBuilder.git/tree/20.0.0) (2019-5-19)
+## [iOS:20.1.1](https://github.com/applicaster/ZappAppleBuilder.git/tree/20.1.1) (2019-5-19)
 
-[Full Changelog](https://github.com/applicaster/ZappAppleBuilder.git/tree/20.0.0)
+[Full Changelog](https://github.com/applicaster/ZappAppleBuilder.git/tree/20.1.1)
 
 ## [iOS:20.0.0](https://github.com/applicaster/ZappAppleBuilder.git/tree/20.0.0) (2019-3-9)
 
