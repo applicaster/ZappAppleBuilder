@@ -94,11 +94,6 @@ class AppDelegate: AppDelegateBase {
     }
 
     private func initializeFlipper(with application: UIApplication) {
-
-        #if FB_SONARKIT_ENABLED
-        print("3333")
-        #endif
-
         #if DEBUG && targetEnvironment(simulator)
             #if FB_SONARKIT_ENABLED
                 let client = FlipperClient.shared()
