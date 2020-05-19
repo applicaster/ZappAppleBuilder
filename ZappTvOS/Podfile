@@ -1,6 +1,7 @@
 # Uncomment the next line to define a global platform for your project
 platform :tvos, '11.0'
 require_relative './node_modules/@react-native-community/cli-platform-ios/native_modules'
+require_relative '../scripts/autolink.rb'
 
 require 'resolv-replace'
 install! 'cocoapods', :deterministic_uuids => false, :preserve_pod_file_structure => true
@@ -23,41 +24,14 @@ def shared_pods
     pod 'ZappCore', '= 0.9.16'
     pod 'ZappApple', '= 0.7.18'
     pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
-    pod 'FBLazyVector', :path => './node_modules/react-native-tvos/Libraries/FBLazyVector'
-    pod 'FBReactNativeSpec', :path => './node_modules/react-native-tvos/Libraries/FBReactNativeSpec'
-    pod 'RCTRequired', :path => './node_modules/react-native-tvos/Libraries/RCTRequired'
-    pod 'RCTTypeSafety', :path => './node_modules/react-native-tvos/Libraries/TypeSafety'
-    pod 'React', :path => './node_modules/react-native-tvos/'
-    pod 'React-Core', :path => './node_modules/react-native-tvos/'
-    pod 'React-CoreModules', :path => './node_modules/react-native-tvos/React/CoreModules'
-    pod 'React-Core/DevSupport', :path => './node_modules/react-native-tvos/'
-    pod 'React-RCTActionSheet', :path => './node_modules/react-native-tvos/Libraries/ActionSheetIOS'
-    pod 'React-RCTAnimation', :path => './node_modules/react-native-tvos/Libraries/NativeAnimation'
-    pod 'React-RCTBlob', :path => './node_modules/react-native-tvos/Libraries/Blob'
-    pod 'React-RCTImage', :path => './node_modules/react-native-tvos/Libraries/Image'
-    pod 'React-RCTLinking', :path => './node_modules/react-native-tvos/Libraries/LinkingIOS'
-    pod 'React-RCTNetwork', :path => './node_modules/react-native-tvos/Libraries/Network'
-    pod 'React-RCTSettings', :path => './node_modules/react-native-tvos/Libraries/Settings'
-    pod 'React-RCTText', :path => './node_modules/react-native-tvos/Libraries/Text'
-    pod 'React-RCTVibration', :path => './node_modules/react-native-tvos/Libraries/Vibration'
-    pod 'React-Core/RCTWebSocket', :path => './node_modules/react-native-tvos/'
-    pod 'React-cxxreact', :path => './node_modules/react-native-tvos/ReactCommon/cxxreact'
-    pod 'React-jsi', :path => './node_modules/react-native-tvos/ReactCommon/jsi'
-    pod 'React-jsiexecutor', :path => './node_modules/react-native-tvos/ReactCommon/jsiexecutor'
-    pod 'React-jsinspector', :path => './node_modules/react-native-tvos/ReactCommon/jsinspector'
-    pod 'Yoga', :path => './node_modules/react-native-tvos/ReactCommon/yoga', :modular_headers => true
-    pod 'ReactCommon/callinvoker', :path => './node_modules/react-native-tvos/ReactCommon'
-    pod 'ReactCommon/turbomodule/core', :path => './node_modules/react-native-tvos/ReactCommon'
-    pod 'DoubleConversion', :podspec => './node_modules/react-native-tvos/third-party-podspecs/DoubleConversion.podspec'
-    pod 'glog', :podspec => './node_modules/react-native-tvos/third-party-podspecs/glog.podspec'
-    pod 'Folly', :podspec => './node_modules/react-native-tvos/third-party-podspecs/Folly.podspec'
-
     # Zaptool pods - Do not remove or change.
-		
+
 end
 
 target 'ZappTvOS' do
   shared_pods
+	use_react_native!(path: "./node_modules/react-native-tvos")
+
 
 end
 
