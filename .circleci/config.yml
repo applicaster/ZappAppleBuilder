@@ -40,14 +40,14 @@ jobs:
             - GIT-{{ checksum "~/_caching_file" }}-{{ .Branch }}-
             - GIT-{{ checksum "~/_caching_file" }}-
 
-      - run:
-          name: Fetch tags
-          command: |
-            if [ -n "$CIRCLE_TAG" ]; then
-              git fetch --tags -f
-            else
-              echo "Skipping fetch tags"
-            fi
+      # - run:
+      #     name: Fetch tags
+      #     command: |
+      #       if [ -n "$CIRCLE_TAG" ]; then
+      #         git fetch --tags -f
+      #       else
+      #         echo "Skipping fetch tags"
+      #       fi
 
       - checkout
 
