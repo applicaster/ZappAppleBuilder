@@ -14,11 +14,9 @@
   "scripts": {
     "start": "cd quick_brick && yarn start",
     "run:ios": "node_modules/.bin/react-native run-ios --project-path . --scheme ZappTvOS --configuration Debug --simulator \"Apple TV\"",
-    "postinstall": "yarn patch:react",
     "start:ios": "yarn run:ios & yarn start",
     "quick-brick:build:tvos": "cd quick_brick && yarn build && cd .. && yarn copy:bundle:tvos",
     "quick-brick:prepare": "node_modules/.bin/zapplicaster-cli prepare -y",
-    "patch:react": "node ./../Scripts/react-native-patch.js \"ZappTvOS\"",
     "copy:bundle:tvos": "cp ./quick_brick/ios/main.* ./ZappTvOS/Resources",
     "reset": "rm -rf quick_brick/* quick_brick/.babelrc"
   },
