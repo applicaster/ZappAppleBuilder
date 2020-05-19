@@ -259,8 +259,8 @@ jobs:
               version=$CIRCLE_TAG
              fi
 
-             bundle exec rake zapp_sdks:create[tvos,$version,$CIRCLE_PROJECT_REPONAME]
-             bundle exec rake zapp_sdks:publish_changelog[tvos,$version]
+             bundle exec rake zapp_sdks:create[ios,$version,$CIRCLE_PROJECT_REPONAME]
+             bundle exec rake zapp_sdks:publish_changelog[ios,$version]
              fi
 
       - store_artifacts:
