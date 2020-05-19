@@ -12,11 +12,12 @@ import UIKit
 import ZappApple
 import ZappCore
 
-// #if DEBUG && TARGET_OS_SIMULATOR
-// #if FB_SONARKIT_ENABLED
-// import FlipperKit
-// #endif
-// #endif
+#if DEBUG && targetEnvironment(simulator)
+    #if FB_SONARKIT_ENABLED
+        import FlipperKit
+        import flipper_plugin_react_native_performance
+    #endif
+#endif
 
 @UIApplicationMain
 class AppDelegate: AppDelegateBase {
@@ -26,8 +27,8 @@ class AppDelegate: AppDelegateBase {
 
     override func application(_ application: UIApplication,
                               didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-//        initializeFlipper(with: application)
-        
+        initializeFlipper(with: application)
+
         let retVal = super.application(application,
                                        didFinishLaunchingWithOptions: launchOptions)
 
@@ -91,20 +92,25 @@ class AppDelegate: AppDelegateBase {
         uiLayerPluginDelegate?.applicationDelegate?.application?(application,
                                                                  didFailToRegisterForRemoteNotificationsWithError: error)
     }
-    
-    // private func initializeFlipper(with application: UIApplication) {
-    //   #if DEBUG && TARGET_OS_SIMULATOR
-    //   #if FB_SONARKIT_ENABLED
-    //     let client = FlipperClient.shared()
-    //     let layoutDescriptorMapper = SKDescriptorMapper(defaults: ())
-    //     FlipperKitLayoutComponentKitSupport.setUpWith(layoutDescriptorMapper)
-    //     client?.add(FlipperKitLayoutPlugin(rootNode: application, with: layoutDescriptorMapper!))
-    //     client?.add(FKUserDefaultsPlugin(suiteName: nil))
-    //     client?.add(FlipperKitReactPlugin())
-    //     client?.add(FlipperKitNetworkPlugin(networkAdapter: SKIOSNetworkAdapter()))
-    //     client?.add(FlipperReactPerformancePlugin.sharedInstance())
-    //     client?.start()
-    //   #endif
-    //   #endif
-    // }
+
+    private func initializeFlipper(with application: UIApplication) {
+
+        #if FB_SONARKIT_ENABLED
+        print("3333")
+        #endif
+
+        #if DEBUG && targetEnvironment(simulator)
+            #if FB_SONARKIT_ENABLED
+                let client = FlipperClient.shared()
+                let layoutDescriptorMapper = SKDescriptorMapper(defaults: ())
+                FlipperKitLayoutComponentKitSupport.setUpWith(layoutDescriptorMapper)
+                client?.add(FlipperKitLayoutPlugin(rootNode: application, with: layoutDescriptorMapper!))
+                client?.add(FKUserDefaultsPlugin(suiteName: nil))
+                client?.add(FlipperKitReactPlugin())
+                client?.add(FlipperKitNetworkPlugin(networkAdapter: SKIOSNetworkAdapter()))
+                client?.add(FlipperReactPerformancePlugin.sharedInstance())
+                client?.start()
+            #endif
+        #endif
+    }
 }
