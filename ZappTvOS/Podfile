@@ -1,7 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-load 'Flipper'
-
-platform :ios, '11.0'
+platform :tvos, '11.0'
 require_relative './node_modules/@react-native-community/cli-platform-ios/native_modules'
 
 require 'resolv-replace'
@@ -55,15 +53,12 @@ def shared_pods
     pod 'Folly', :podspec => './node_modules/react-native/third-party-podspecs/Folly.podspec'
 
     # Zaptool pods - Do not remove or change.
-
+    pod 'ZappGoogleAnalytics', :path => './node_modules/@applicaster/google-analytics-web-based-apple/ZappGoogleAnalytics.podspec'
 end
 
 target 'ZappTvOS' do
   shared_pods
   use_native_modules!
-
-  # Enables Flipper.
-  add_flipper_pods!
 end
 
 target 'ZappTvOSTests' do
@@ -72,8 +67,6 @@ end
 
 
 post_install do |installer|
-    flipper_post_install(installer)
-
     installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|
             config.build_settings['APPLICATION_TARGET'] = "ZappTvOS"
