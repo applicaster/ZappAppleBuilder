@@ -27,8 +27,7 @@
     "react-native-tvos": "0.62.2-0"
   },
   "devDependencies": {
-    "@applicaster/zapplicaster-cli": "3.1.0-rc.a6944dee",
-    "flipper-plugin-react-native-performance": "^0.4.3"
+    "@applicaster/zapplicaster-cli": "3.1.0-rc.a6944dee"
   },
   "repository": {
     "type": "git",
