@@ -51,7 +51,7 @@
        end
    end
  end
-
+ 
 
 # Post Install processing for Flipper
 def flipper_post_install(installer)
