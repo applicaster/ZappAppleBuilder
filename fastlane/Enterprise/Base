@@ -1,0 +1,13 @@
+import "../FastfileBase"
+
+def base_setup_enterprise_app_signing(username, password, fastlane_password)
+  create_temp_keychain()
+  import_certificate(
+    certificate_path: enterprise_credentials_path,
+    certificate_password: ENV['KEY_PASSWORD'],
+    keychain_name: keychain_name,
+    keychain_password: keychain_password
+  )
+  sh("bundle exec fastlane fastlane-credentials add --username #{username} --password '#{password}'")
+  ENV['FASTLANE_PASSWORD']=fastlane_password
+end

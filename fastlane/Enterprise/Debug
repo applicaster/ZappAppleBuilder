@@ -1,8 +1,10 @@
+import "Enterprise/Base"
+
 fastlane_require 'dotenv'
 
 platform :ios do
 
-  lane :enterprise do
+  lane :enterprise_debug do
 
     setup_enterprise_app_signing()
     prepare_enterprise_app()
@@ -127,15 +129,11 @@ platform :ios do
   end
 
   def setup_enterprise_app_signing()
-    create_temp_keychain()
-    import_certificate(
-      certificate_path: enterprise_credentials_path,
-      certificate_password: ENV['KEY_PASSWORD'],
-      keychain_name: keychain_name,
-      keychain_password: keychain_password
+    base_setup_enterprise_app_signing(
+      enterprise_username,
+      enterprise_password,
+      ENV['APPLE_DEV_ENT_PASS']
     )
-    sh("bundle exec fastlane fastlane-credentials add --username #{enterprise_username} --password '#{enterprise_password}'")
-    ENV['FASTLANE_PASSWORD']=ENV['APPLE_DEV_ENT_PASS']
   end
 
   def prepare_enterprise_app_extensions()
