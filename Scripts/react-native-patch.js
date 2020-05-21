@@ -10,9 +10,9 @@ const writeFileAsync = promisify(writeFile);
 
 const BREAK_LINE = "\n";
 
-function react_native_install_folder(target) {
+function react_native_install_folder(target, react_native_folder) {
   const repo_root = resolve(__dirname, "../" + target);
-  return resolve(repo_root, "./node_modules/react-native");
+  return resolve(repo_root, "./node_modules/"+react_native_folder);
 }
 
 function replaceStringInFile(file, { lookUpString, correctString }) {
@@ -68,7 +68,7 @@ async function processFile(
   }
 }
 
-const FILES_TO_PATCH = [
+const IOS_FILES_TO_PATCH = [
   {
     filePath: "./React/Base/RCTConvert.h",
     operation: replaceStringInFile,
@@ -115,19 +115,74 @@ const FILES_TO_PATCH = [
   },
 ];
 
+const TVOS_FILES_TO_PATCH = [
+  {
+    filePath: "./React/CoreModules/RCTDevMenu.h",
+    operation: replaceStringInFile,
+    args: {
+      lookUpString: "RCT_EXTERN NSString *const RCTShowDevMenuNotification;",
+      correctString:
+        "static NSString *const RCTShowDevMenuNotification = @\"RCTShowDevMenuNotification\";",
+    },
+  },
+  {
+    filePath: "./React/CoreModules/RCTDevMenu.mm",
+    operation: replaceStringInFile,
+    args: {
+      lookUpString: "NSString *const RCTShowDevMenuNotification = @\"RCTShowDevMenuNotification\";",
+      correctString:
+        "",
+    },
+  },
+  {
+    filePath: "./React/CoreModules/RCTTVNavigationEventEmitter.h",
+    operation: replaceStringInFile,
+    args: {
+      lookUpString: "RCT_EXTERN NSString *const RCTTVNavigationEventNotification;",
+      correctString:
+        "static NSString *const RCTTVNavigationEventNotification = @\"RCTTVNavigationEventNotification\";",
+    },
+  },
+  {
+    filePath: "./React/CoreModules/RCTTVNavigationEventEmitter.mm",
+    operation: replaceStringInFile,
+    args: {
+      lookUpString: "NSString *const RCTTVNavigationEventNotification = @\"RCTTVNavigationEventNotification\";",
+      correctString:
+        "",
+    },
+  },
+]
 async function run() {
   var platform_install_folder = process.argv.slice(2);
 
   console.log("-| Patching react native |-");
   console.log("-| for: " + platform_install_folder + " |-");
 
-  FILES_TO_PATCH.forEach(
-    async (fileToPatch) =>
-      await processFile(
-        react_native_install_folder(platform_install_folder),
-        fileToPatch
-      )
-  );
+  switch(String(platform_install_folder)) {
+    case "ZappiOS":
+      var react_native_folder = "react-native"
+      IOS_FILES_TO_PATCH.forEach(
+        async (fileToPatch) =>
+          await processFile(
+            react_native_install_folder(platform_install_folder, react_native_folder),
+            fileToPatch
+          )
+      );
+      break;
+    case "ZappTvOS":
+      var react_native_folder = "react-native-tvos"
+      TVOS_FILES_TO_PATCH.forEach(
+        async (fileToPatch) =>
+          await processFile(
+            react_native_install_folder(platform_install_folder, react_native_folder),
+            fileToPatch
+          )
+      );
+      break;
+    default:
+      break;
+  }
 }
 
 run();
