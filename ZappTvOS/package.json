@@ -3,36 +3,35 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "dependencies": {
+    "@applicaster/quick-brick-native-apple": "3.0.1",
+    "react": "^16.8.0",
+    "react-native": "0.59.10"
+  },
   "private": true,
+  "devDependencies": {
+    "@applicaster/zapplicaster-cli": "3.0.1"
+  },
+  "scripts": {
+    "patch:react": "node ./../Scripts/react-native-patch.js \"ZappTvOS\"",
+    "postinstall": "yarn patch:react",
+    "reset": "rm -rf quick_brick/* quick_brick/.babelrc",
+    "start": "cd quick_brick && yarn start",
+    "run:ios": "node_modules/.bin/react-native run-ios --project-path . --scheme ZappTvOS --configuration Debug --simulator \"Apple TV\"",
+    "start:ios": "yarn run:ios & yarn start",
+    "quick-brick:build:tvos": "cd quick_brick && yarn build && cd .. && yarn copy:bundle:tvos",
+    "copy:bundle:tvos": "cp ./quick_brick/ios/main.* ./ZappTvOS/Resources",
+    "quick-brick:prepare": "node_modules/.bin/zapplicaster-cli prepare -y"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/applicaster/QuickBrick-tvOS.git"
+  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/applicaster/ZappAppleBuilder/issues"
   },
-  "homepage": "https://github.com/applicaster/ZappAppleBuilder#readme",
-  "keywords": [],
-  "scripts": {
-    "start": "cd quick_brick && yarn start",
-    "run:ios": "node_modules/.bin/react-native run-ios --project-path . --scheme ZappTvOS --configuration Debug --simulator \"Apple TV\"",
-    "postinstall": "yarn patch:react",
-    "start:ios": "yarn run:ios & yarn start",
-    "quick-brick:build:tvos": "cd quick_brick && yarn build:tvos && cd .. && yarn copy:bundle:tvos",
-    "quick-brick:prepare": "node_modules/.bin/zapplicaster-cli prepare -y",
-    "patch:react": "node ./../Scripts/react-native-patch.js \"ZappTvOS\"",
-    "copy:bundle:tvos": "cp ./quick_brick/ios/main.* ./ZappTvOS/Resources",
-    "reset": "rm -rf quick_brick/* quick_brick/.babelrc"
-  },
-  "dependencies": {
-    "@applicaster/quick-brick-native-apple": "3.1.0-rc.a6944dee",
-    "@react-native-community/cli-platform-ios": "^4.7.0",
-    "react": "16.11.0",
-    "react-native": "0.62.2"
-  },
-  "devDependencies": {
-    "@applicaster/zapplicaster-cli": "3.1.0-rc.a6944dee"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/applicaster/ZappAppleBuilder.git"
-  }
+  "homepage": "https://github.com/applicaster/ZappAppleBuilder#readme"
 }
