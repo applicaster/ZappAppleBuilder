@@ -18,18 +18,19 @@
     "start:ios": "yarn run:ios & yarn start",
     "quick-brick:build:tvos": "cd quick_brick && yarn build && cd .. && yarn copy:bundle:tvos",
     "quick-brick:prepare": "node_modules/.bin/zapplicaster-cli prepare -y",
-    "patch:react": "node ./../Scripts/react-native-patch-tvos.js \"ZappTvOS\"",
+    "patch:react": "node ./../Scripts/react-native-patch.js \"ZappTvOS\"",
     "copy:bundle:tvos": "cp ./quick_brick/ios/main.* ./ZappTvOS/Resources",
     "reset": "rm -rf quick_brick/* quick_brick/.babelrc"
   },
   "dependencies": {
-    "@applicaster/quick-brick-native-apple": "3.1.0-rc.a6944dee",
+    "@applicaster/quick-brick-native-apple": "3.1.0-rc.85641679",
     "@react-native-community/cli-platform-ios": "^4.7.0",
     "react": "16.11.0",
-    "react-native-tvos": "0.62.2-0"
+    "react-native-tvos": "0.62.2-0",
+    "react-native": "npm:react-native-tvos@0.62.2-0"
   },
   "devDependencies": {
-    "@applicaster/zapplicaster-cli": "3.1.0-rc.a6944dee"
+    "@applicaster/zapplicaster-cli": "3.1.0-rc.85641679"
   },
   "repository": {
     "type": "git",
