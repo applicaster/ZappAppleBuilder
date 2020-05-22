@@ -31,7 +31,7 @@ end
 target 'ZappTvOS' do
   shared_pods
 
-	use_react_native!(path: "./node_modules/react-native-tvos")
+	use_react_native!(path: "./node_modules/react-native")
 end
 
 target 'ZappTvOSTests' do
