@@ -12,7 +12,7 @@ jobs:
       PROJECT_NAME: "ZappApple"
       SCRIPTS_FOLDER: "Scripts"
       BUILD_PATH: ~/build_debug
-      ZAPPTOOL_VERSION: "3.9.7"
+      ZAPPTOOL_VERSION: "3.9.8"
       HOMEBREW_NO_AUTO_UPDATE: "1"
 
       #fastlane variables
