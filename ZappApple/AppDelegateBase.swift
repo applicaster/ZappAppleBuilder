@@ -12,6 +12,7 @@ import React
 import UIKit
 import ZappApple
 import ZappCore
+import DeviceKit
 
 public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnectorProtocol, AppDelegateProtocol {
     public var connectorInstance: FacadeConnector? {
@@ -104,6 +105,8 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
                 ZappStorageKeys.deviceType: kDeviceTarget,
                 ZappStorageKeys.deviceWidth: "\(UIScreen.main.bounds.width)",
                 ZappStorageKeys.deviceHeight: "\(UIScreen.main.bounds.height)",
+                ZappStorageKeys.deviceModel: Device.current.description,
+                ZappStorageKeys.deviceMake: Device.current.model ?? UIDevice.current.model,
                 ZappStorageKeys.reactNativePackagerRoot: kReactNativePackagerRoot ?? "",
                 ZappStorageKeys.riversConfigurationId: kRiversConfigurationId,
                 ZappStorageKeys.sdkVersion: kSdkVersion,
