@@ -6,6 +6,7 @@ jobs:
   build:
     macos:
       xcode: "11.4.0"
+    resource_class: large
     shell: /bin/bash --login -eo pipefail
     environment:
       GENERAL_CACHE_KEY: "ZappApple_Cache_1.0.1"
