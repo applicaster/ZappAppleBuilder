@@ -75,22 +75,6 @@
         "#{ENV['PWD']}/#{project_folder_name}"
     end
 
-    def xcodeproj_path
-        "#{project_path}/#{project_name}.xcodeproj"
-    end
-
-    def xcworkspace_relative_path
-        "#{project_folder_name}/#{project_name}.xcworkspace"
-    end
-
-    def project_info_plist_inner_path
-        "#{project_name}/Info.plist"
-    end
-
-    def project_info_plist_path
-        "#{project_path}/#{project_info_plist_inner_path}"
-    end
-
     def app_name
         ENV['app_name']
     end
@@ -109,18 +93,6 @@
 
     def distribution_certificate_filename
       "dist.p12"
-    end
-
-    def notification_service_extension_target_name
-        "NotificationServiceExtension"
-    end
-
-    def notification_service_extension_info_plist_path
-        "#{project_path}/#{notification_service_extension_target_name}/Info.plist"
-    end
-
-    def notification_service_extension_info_plist_inner_path
-        "#{notification_service_extension_target_name}/Info.plist"
     end
 
     def s3_hostname

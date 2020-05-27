@@ -1,6 +1,8 @@
 fastlane_require 'dotenv'
 fastlane_require 'spaceship'
 
+import "Base/Base.rb"
+
 platform :ios do
 
 	lane :store do
@@ -127,7 +129,7 @@ platform :ios do
 		firebase_add_configuration_file("production")
 
 		# update app identifier to the store one
-		reset_to_bundle_identifier_placeholder(xcodeproj_path, project_info_plist_inner_path)
+		info_plist_reset_to_bundle_identifier_placeholder(xcodeproj_path, project_info_plist_inner_path)
 		update_app_identifier(
 			xcodeproj: xcodeproj_path,
 			plist_path: project_info_plist_inner_path,
@@ -135,7 +137,7 @@ platform :ios do
 		)
 
 		# add support for push notifications
-		change_system_capability(
+		project_change_system_capability(
 			"com.apple.Push",
 			0,
 			1
@@ -158,7 +160,7 @@ platform :ios do
       sh("echo 'Push Notification extension enabled'")
 
 			# update app identifier, versions of the notification extension
-			update_target_info_plist_values(
+			info_plist_update_values(
 				notification_service_extension_target_name,
 				store_app_notifications_bundle_identifier
 			)
@@ -166,14 +168,14 @@ platform :ios do
       # save app identifier of the notification extension
       ENV['identifier_notifications'] = get_info_plist_value(path: "#{notification_service_extension_info_plist_path}", key: "CFBundleIdentifier")
       # change app groups support on project file
-      change_system_capability(
+      project_change_system_capability(
 				"com.apple.ApplicationGroups.iOS",
 				0,
 				1
 			)
 
 			# update app identifier for to the notification extension
-			reset_to_bundle_identifier_placeholder(xcodeproj_path, notification_service_extension_info_plist_inner_path)
+			info_plist_reset_to_bundle_identifier_placeholder(xcodeproj_path, notification_service_extension_info_plist_inner_path)
 			update_app_identifier(
 				xcodeproj: xcodeproj_path,
 				plist_path: notification_service_extension_info_plist_inner_path,
@@ -184,7 +186,7 @@ platform :ios do
       # notification extension disabled
       sh("echo 'Push Notification extension disabled'")
       # remove extension from build dependency and scripts step
-      remove_app_extensions_from_project(
+      app_extensions_remove_from_project(
 				"#{notification_service_extension_target_name}"
 			)
       # set temp identifier for notification extension
@@ -196,7 +198,7 @@ platform :ios do
   def add_wifi_system_capability_if_needed()
     requires_wifi_capability = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :com.apple.developer.networking.wifi-info\" #{project_path}/#{project_name}/Entitlements/#{project_name}-Release.entitlements 2>/dev/null | grep -c true)")
     if requires_wifi_capability.to_i() > 0
-      change_system_capability(
+      project_change_system_capability(
 				"com.apple.AccessWiFi",
 				0,
 				1
