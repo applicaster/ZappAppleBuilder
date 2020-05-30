@@ -54,7 +54,7 @@ platform :ios do
 
   def perform_post_build_procedures() {
 		base_ent_perform_post_build_procedures()
-		
+
     # upload to ms app center
     upload_application(identifier,
       "Enterprise",
@@ -138,29 +138,23 @@ platform :ios do
     prepare_enterprise_app_notification_content_extension()
   end
 
-  def prepare_enterprise_app_notification_content_extension() 
-    base_ent_app_extension_prepare(
+  def prepare_enterprise_app_notification_content_extension()
+    base_ent_debug_app_extension_prepare(
       notification_content_extension_key,
       notification_content_extension_target_name,
       enterprise_debug_app_devportal_notifications_app_name,
       enterprise_debug_app_notifications_content_extension_bundle_identifier,
-      base_ent_app_group_name,
-      notification_content_extension_info_plist_inner_path,
-      enterprise_debug_team_id,
-      enterprise_debug_team_name
+      notification_content_extension_info_plist_inner_path
     )
   end
 
   def prepare_enterprise_app_notification_service_extension()
-    base_ent_app_extension_prepare(
+    base_ent_debug_app_extension_prepare(
       notification_service_extension_key,
       notification_service_extension_target_name,
       enterprise_debug_app_devportal_notifications_app_name,
       enterprise_debug_app_notifications_service_extension_bundle_identifier,
-      base_ent_app_group_name,
-      notification_service_extension_info_plist_inner_path,
-      enterprise_debug_team_id,
-      enterprise_debug_team_name
+      notification_service_extension_info_plist_inner_path
     )
   end
 
@@ -196,12 +190,12 @@ platform :ios do
       "#{ENV['APPLE_DEV_ENT_TEAM_NAME']}"
   end
 
-  def enterprise_app_devportal_app_name
+  def enterprise_debug_app_devportal_app_name
       "#{ENV['bundle_identifier']}"
   end
 
   def enterprise_debug_app_devportal_notifications_app_name
-      "#{enterprise_app_devportal_app_name}.notifications"
+      "#{enterprise_debug_app_devportal_app_name}.notifications"
   end
 
   def enterprise_debug_app_notifications_service_extension_bundle_identifier

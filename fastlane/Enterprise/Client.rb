@@ -6,14 +6,14 @@ platform :ios do
 
 	lane :enterprise_client do
 
-		prepare_enterprise_app_signing()
-		prepare_enterprise_app_for_build()
+		prepare_client_enterprise_app_signing()
+		prepare_client_enterprise_app_for_build()
 
 		# get provisioning profiles specifiers
-		main_prov_profile_specifier = store_app_provisioning_profile_uuid
+		main_prov_profile_specifier = enterprise_client_app_provisioning_profile_uuid
 		notification_service_extension_prov_profile_specifier = app_extension_provisioning_profile_uuid(notification_service_extension_key)
 		notification_content_extension_prov_profile_specifier = app_extension_provisioning_profile_uuid(notification_content_extension_key)
-	
+
 		build_path = "#{ENV['PWD']}/build"
 		gym(
 			workspace: "#{xcworkspace_relative_path}",
@@ -26,12 +26,9 @@ platform :ios do
 			output_name: "#{project_scheme}-Enterprise",
 			build_path: build_path,
 			derived_data_path: build_path,
-			xcargs: "RELEASE_SWIFT_OPTIMIZATION_LEVEL='-Onone' "\
+			xcargs: "RELEASE_SWIFT_OPTIMIZATION_LEVEL='-O' "\
 					"-UseModernBuildSystem=NO "\
 					"RELEASE_COPY_PHASE_STRIP=NO "\
-					"DEBUG_ENABLED_GCC='DEBUG=1' "\
-					"DEBUG_ENABLED_SWIFT='-DDEBUG' "\
-					"DEBUG_ENABLED_SCRIPTS='Debug' "\
 					"PROVISIONING_PROFILE='#{main_prov_profile_specifier}' "\
 					"NOTIFICATION_SERVICE_EXTENSION_PROV_PROFILE_SPECIFIER='#{notification_service_extension_prov_profile_specifier}' "\
 					"NOTIFICATION_CONTENT_EXTENSION_PROV_PROFILE_SPECIFIER='#{notification_content_extension_prov_profile_specifier}' "\
@@ -53,7 +50,7 @@ platform :ios do
 
 	def perform_post_build_procedures() {
 		base_ent_perform_post_build_procedures()
-		
+
 		# upload to ms app center
 		upload_application(bundle_identifier,
 			"Enterprise",
@@ -61,7 +58,7 @@ platform :ios do
 		)
 	}
 
-	def prepare_enterprise_app_signing()
+	def prepare_client_enterprise_app_signing()
 
 		# create new dir for files
 		sh("mkdir -p \"#{enterprise_credentials_folder}\"")
@@ -83,14 +80,14 @@ platform :ios do
       		store_password,
       		store_password
 		)
-		
+
 		unlock_keychain(
 			path: keychain_name,
 			password: keychain_password
 		)
 	end
 
-	def prepare_enterprise_app_for_build()
+	def prepare_client_enterprise_app_for_build()
 		# update app base parameters in FeaturesCustomization.json
 		update_parameters_in_feature_optimization_json()
 
@@ -118,63 +115,92 @@ platform :ios do
 		# add AccessWiFi if needed
 		add_wifi_system_capability_if_needed()
 
-		prepare_store_app_extensions()
+		prepare_enterprise_app_extensions()
   	end
 
-	def prepare_store_app_extensions()
-		prepare_store_app_notification_extension()
+	def prepare_enterprise_app_extensions()
+		prepare_enterprise_app_notification_service_extension()
+		prepare_enterprise_app_notification_content_extension()
 	end
 
-	def prepare_store_app_notification_extension()
-		notification_service_entension_enabled = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :SupportedAppExtensions:NOTIFICATION_SERVICE_EXTENSION:store_enabled\" #{customizations_folder_path}/FeaturesCustomization.plist 2>/dev/null | grep -c true)")
 
-		if notification_service_entension_enabled.to_i() > 0
-		sh("echo 'Push Notification extension enabled'")
+	def prepare_enterprise_app_notification_service_extension()
+		extension_type = notification_service_extension_key
+		entension_enabled = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :SupportedAppExtensions:#{extension_type}:enterprise_enabled\" #{customizations_folder_path}/FeaturesCustomization.plist 2>/dev/null | grep -c true)")
+    	if entension_enabled.to_i() > 0
+			# print extension enabled
+			sh("echo '#{extension_type} enabled'")
 
-				# update app identifier, versions of the notification extension
-				info_plist_update_values(
-					notification_service_extension_target_name,
-					store_app_notifications_bundle_identifier
-				)
+			# update app identifier, versions of the notification extension
+			info_plist_update_values(
+				notification_service_extension_target_name,
+				notification_service_extension_bundle_identifier
+			)
 
-		# save app identifier of the notification extension
-		ENV['identifier_notifications'] = get_info_plist_value(path: "#{notification_service_extension_info_plist_path}", key: "CFBundleIdentifier")
-		# change app groups support on project file
-		project_change_system_capability(
-					"com.apple.ApplicationGroups.iOS",
-					0,
-					1
-				)
+			# save app identifier of the notification extension
+			ENV['identifier_notifications'] = get_info_plist_value(path: "#{notification_service_extension_info_plist_path}", key: "CFBundleIdentifier")
+			# change app groups support on project file
+			project_change_system_capability(
+				"com.apple.ApplicationGroups.iOS",
+				0,
+				1
+			)
 
-				# update app identifier for to the notification extension
-				info_plist_reset_to_bundle_identifier_placeholder(xcodeproj_path, notification_service_extension_info_plist_inner_path)
-				update_app_identifier(
-					xcodeproj: xcodeproj_path,
-					plist_path: notification_service_extension_info_plist_inner_path,
-					app_identifier: store_app_notifications_bundle_identifier
-				)
+			# update app identifier for to the notification extension
+			info_plist_reset_to_bundle_identifier_placeholder(xcodeproj_path, notification_service_extension_info_plist_inner_path)
+			update_app_identifier(
+				xcodeproj: xcodeproj_path,
+				plist_path: notification_service_extension_info_plist_inner_path,
+				app_identifier: notification_service_extension_bundle_identifier
+			)
 
 		else
-		# notification extension disabled
-		sh("echo 'Push Notification extension disabled'")
-		# remove extension from build dependency and scripts step
-		app_extensions_remove_from_project(
-					"#{notification_service_extension_target_name}"
-				)
-		# set temp identifier for notification extension
-		ENV['identifier_notifications'] = "notification.extension.disabled"
-
+			# notification extension disabled
+			sh("echo 'Push Notification extension disabled'")
+			# remove extension from build dependency and scripts step
+			app_extensions_remove_from_project(
+				"#{notification_service_extension_target_name}"
+			)
 		end
 	end
 
-	def add_wifi_system_capability_if_needed()
-		requires_wifi_capability = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :com.apple.developer.networking.wifi-info\" #{project_path}/#{project_name}/Entitlements/#{project_name}-Release.entitlements 2>/dev/null | grep -c true)")
-		if requires_wifi_capability.to_i() > 0
-		project_change_system_capability(
-					"com.apple.AccessWiFi",
-					0,
-					1
-				)
+	def prepare_enterprise_app_notification_content_extension()
+		extension_type = notification_content_extension_key
+		entension_enabled = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :SupportedAppExtensions:#{extension_type}:enterprise_enabled\" #{customizations_folder_path}/FeaturesCustomization.plist 2>/dev/null | grep -c true)")
+    	if entension_enabled.to_i() > 0
+			# print extension enabled
+			sh("echo '#{extension_type} enabled'")
+
+			# update app identifier, versions of the notification extension
+			info_plist_update_values(
+				notification_content_extension_target_name,
+				notification_content_extension_bundle_identifier
+			)
+
+			# save app identifier of the notification extension
+			ENV['identifier_notifications'] = get_info_plist_value(path: "#{notification_content_extension_info_plist_path}", key: "CFBundleIdentifier")
+			# change app groups support on project file
+			project_change_system_capability(
+				"com.apple.ApplicationGroups.iOS",
+				0,
+				1
+			)
+
+			# update app identifier for to the notification extension
+			info_plist_reset_to_bundle_identifier_placeholder(xcodeproj_path, notification_content_extension_info_plist_inner_path)
+			update_app_identifier(
+				xcodeproj: xcodeproj_path,
+				plist_path: notification_content_extension_info_plist_inner_path,
+				app_identifier: notification_content_extension_bundle_identifier
+			)
+
+		else
+			# notification extension disabled
+			sh("echo 'Push Notification extension disabled'")
+			# remove extension from build dependency and scripts step
+			app_extensions_remove_from_project(
+				"#{notification_content_extension_target_name}"
+			)
 		end
 	end
 
@@ -193,7 +219,7 @@ platform :ios do
 	def enterprise_client_team_id
 		"#{ENV['ENTERPRISE_CLIENT_TEAM_ID']}"
 	end
-  
+
 	def enterprise_client_team_name
 		"#{ENV['ENTERPRISE_CLIENT_TEAM_NAME']}"
 	end

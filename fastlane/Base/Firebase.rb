@@ -1,5 +1,5 @@
 
-import "../Base/Base.rb"
+import "Base/Base.rb"
 
 def firebase_add_configuration_file(configuration)
     base_folder = "#{project_path}/#{project_name}"

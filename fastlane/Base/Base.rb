@@ -1,7 +1,7 @@
-import "AppCenter.rb"
-import "AppEntensions.rb"
-import "Firebase.rb"
-import "S3.rb"
+import "Base/AppCenter.rb"
+import "Base/AppEntensions.rb"
+import "Base/Firebase.rb"
+import "Base/S3.rb"
 
 require 'dotenv'
 Dotenv.load
@@ -30,6 +30,17 @@ end
 
 def update_parameters_in_feature_optimization_json
   update_features_customization("S3Hostname", s3_hostname)
+end
+
+def add_wifi_system_capability_if_needed()
+  requires_wifi_capability = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :com.apple.developer.networking.wifi-info\" #{project_path}/#{project_name}/Entitlements/#{project_name}-Release.entitlements 2>/dev/null | grep -c true)")
+  if requires_wifi_capability.to_i() > 0
+    project_change_system_capability(
+      "com.apple.AccessWiFi",
+      0,
+      1
+    )
+  end
 end
 
 def capture_stream(stream)
