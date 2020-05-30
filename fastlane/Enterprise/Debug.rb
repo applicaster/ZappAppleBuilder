@@ -1,4 +1,4 @@
-import "Base.rb"
+import "Enterprise/Base/Base.rb"
 
 fastlane_require 'dotenv'
 
@@ -52,7 +52,7 @@ platform :ios do
 
   end
 
-  def perform_post_build_procedures() {
+  def perform_post_build_procedures() 
 		base_ent_perform_post_build_procedures()
 
     # upload to ms app center
@@ -60,7 +60,7 @@ platform :ios do
       "Enterprise",
       "debug"
     )
-	}
+	end
 
   def prepare_enterprise_app_for_build()
     # update app base parameters in FeaturesCustomization.json

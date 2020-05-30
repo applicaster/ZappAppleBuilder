@@ -1,4 +1,4 @@
-import "../Base/Base.rb"
+# import "Base/Base.rb"
 
 def base_ent_prepare_enterprise_app_signing(username, password, fastlane_password, certificate_path)
   create_temp_keychain()

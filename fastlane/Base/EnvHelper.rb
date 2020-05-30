@@ -1,4 +1,3 @@
-
     def device_target
         ENV["device_target"]
     end

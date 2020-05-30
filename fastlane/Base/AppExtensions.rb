@@ -1,4 +1,4 @@
-import "Base/Base.rb"
+# import "Base/Base.rb"
 
 def app_extensions_remove_from_project(target_name)
     app_extensions_update_zapp_app_target do |target|

@@ -1,5 +1,5 @@
 import "Base/AppCenter.rb"
-import "Base/AppEntensions.rb"
+import "Base/AppExtensions.rb"
 import "Base/Firebase.rb"
 import "Base/S3.rb"
 

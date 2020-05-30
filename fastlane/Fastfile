@@ -1,9 +1,9 @@
 require 'spaceship'
 require "json"
 
+import "Base/EnvHelper.rb"
 import "FaslaneUpload.rb"
-import "EnvironmentHelper.rb"
 import "FastfileTest"
 import "Enterprise/Client.rb"
-import "Enterprise/Local.rb"
+import "Enterprise/Debug.rb"
 import "FastfileStore"
