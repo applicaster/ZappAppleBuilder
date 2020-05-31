@@ -7,8 +7,8 @@ platform :ios do
 
   lane :enterprise_debug do
 
-    prepare_enterprise_app_signing()
-    prepare_enterprise_app_for_build()
+    prepare_enterprise_debug_app_signing()
+    prepare_enterprise_debug_app_for_build()
 
     # get provisioning profiles specifiers
     main_prov_profile_specifier = "#{ENV["#{enterprise_debug_app_bundle_identifier}_PROFILE_UDID"]}"
@@ -63,7 +63,7 @@ platform :ios do
     )
 	end
 
-  def prepare_enterprise_app_for_build()
+  def prepare_enterprise_debug_app_for_build()
     base_ent_prepare_enterprise_app_for_build()
 
     # update app base parameters in FeaturesCustomization.json
@@ -116,27 +116,27 @@ platform :ios do
     )
 
     # prepare app extensions
-    prepare_enterprise_app_extensions()
+    prepare_enterprise_debug_app_extensions()
 
     # add debug ribbon
     add_debug_ribbon_to_app_icon
   end
 
-  def prepare_enterprise_app_signing()
-    base_ent_prepare_enterprise_app_signing(
+  def prepare_enterprise_debug_app_signing()
+    base_ent_prepare_enterprise_debug_app_signing(
       enterprise_debug_username,
       enterprise_debug_password,
       ENV['APPLE_DEV_ENT_PASS'],
-      enterprise_debug_credentials_path
+      enterprise_debug_certificate_path
     )
   end
 
-	def prepare_enterprise_app_extensions()
-		prepare_enterprise_app_notification_content_extension()
-		prepare_enterprise_app_notification_service_extension()
+	def prepare_enterprise_debug_app_extensions()
+		prepare_enterprise_debug_app_notification_content_extension()
+		prepare_enterprise_debug_app_notification_service_extension()
 	end
 
-  def prepare_enterprise_app_notification_content_extension()
+  def prepare_enterprise_debug_app_notification_content_extension()
     base_ent_debug_app_extension_prepare(
       notification_content_extension_key,
       notification_content_extension_target_name,
@@ -147,7 +147,7 @@ platform :ios do
     )
   end
 
-  def prepare_enterprise_app_notification_service_extension()
+  def prepare_enterprise_debug_app_notification_service_extension()
     base_ent_debug_app_extension_prepare(
       notification_service_extension_key,
       notification_service_extension_target_name,
@@ -170,7 +170,7 @@ platform :ios do
       "#{enterprise_debug_app_bundle_prefix}#{ENV["bundle_identifier"]}"
   end
 
-  def enterprise_debug_credentials_path
+  def enterprise_debug_certificate_path
       "#{ENV['PWD']}/Zapp-Signing/Enterprise/dist.p12"
   end
 

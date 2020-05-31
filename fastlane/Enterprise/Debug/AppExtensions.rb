@@ -11,7 +11,7 @@ def base_ent_debug_app_extension_prepare(
     extension_info_plist_path
 
   )
-  build_type = base_ent_debug_build_type
+  build_type = "debug"
   # getting the indication if extension is enabled
   entension_enabled = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :SupportedAppExtensions:#{extension_type}:#{build_type}_enabled\" #{customizations_folder_path}/FeaturesCustomization.plist 2>/dev/null | grep -c true)")
   if entension_enabled.to_i() > 0

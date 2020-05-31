@@ -1,5 +1,5 @@
 
-def base_ent_prepare_enterprise_app_signing(username, password, fastlane_password, certificate_path)
+def base_ent_prepare_enterprise_debug_app_signing(username, password, fastlane_password, certificate_path)
   create_temp_keychain()
   import_certificate(
     certificate_path: certificate_path,

@@ -6,8 +6,8 @@ platform :ios do
 
 	lane :enterprise_client do
 
-		prepare_client_enterprise_app_signing()
-		prepare_client_enterprise_app_for_build()
+		prepare_enterprise_client_app_signing()
+		prepare_enterprise_client_app_for_build()
 
 		# get provisioning profiles specifiers
 		main_prov_profile_specifier = enterprise_client_app_provisioning_profile_uuid
@@ -56,7 +56,7 @@ platform :ios do
 		)
 	end
 
-	def prepare_client_enterprise_app_signing()
+	def prepare_enterprise_client_app_signing()
 
 		# create new dir for files
 		sh("mkdir -p \"#{enterprise_credentials_folder}\"")
@@ -73,10 +73,11 @@ platform :ios do
 		sh("mkdir -p ~/Library/MobileDevice/'Provisioning Profiles'")
 		sh("cp #{enterprise_credentials_folder}#{distribution_provisioning_profile_filename} ~/Library/MobileDevice/'Provisioning Profiles'/#{enterprise_client_app_provisioning_profile_uuid}.mobileprovision")
 
-		base_ent_prepare_enterprise_app_signing(
-      		store_username,
-      		store_password,
-      		store_password
+		base_ent_prepare_enterprise_debug_app_signing(
+			enterprise_client_username,
+			enterprise_client_password,
+			enterprise_client_password,
+			enterprise_client_certificate_path
 		)
 
 		unlock_keychain(
@@ -85,7 +86,7 @@ platform :ios do
 		)
 	end
 
-	def prepare_client_enterprise_app_for_build()
+	def prepare_enterprise_client_app_for_build()
 		base_ent_prepare_enterprise_app_for_build()
 
 		# update app base parameters in FeaturesCustomization.json
@@ -112,13 +113,10 @@ platform :ios do
 			1
 		)
 
-		# add AccessWiFi if needed
-		add_wifi_system_capability_if_needed()
-
-		prepare_enterprise_app_extensions()
+		prepare_enterprise_client_app_extensions()
   	end
 
-	def prepare_enterprise_app_extensions()
+	def prepare_enterprise_client_app_extensions()
 		build_type = "enterprise"
 		app_extensions_prepare_notification_extension(
 			build_type,
@@ -151,11 +149,23 @@ platform :ios do
 		"#{ENV['ENTERPRISE_CLIENT_PROVISIONING_PROFILE_UUID']}"
 	end
 
+	def enterprise_client_username
+		"#{ENV['enterprise_client_username']}"
+	end
+
+	def enterprise_client_password
+		"#{ENV['enterprise_client_password']}"
+	end
+
 	def enterprise_client_team_id
 		"#{ENV['ENTERPRISE_CLIENT_TEAM_ID']}"
 	end
 
 	def enterprise_client_team_name
 		"#{ENV['ENTERPRISE_CLIENT_TEAM_NAME']}"
+	end
+	
+	def enterprise_client_certificate_path
+		"#{enterprise_credentials_folder}#{distribution_certificate_filename}"
 	end
 end
