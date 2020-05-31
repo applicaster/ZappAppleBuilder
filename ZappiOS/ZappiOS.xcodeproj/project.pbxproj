@@ -61,8 +61,6 @@
 		1D68DC412483B16000844CB3 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D68DC402483B16000844CB3 /* UserNotificationsUI.framework */; };
 		1D68DC442483B16000844CB3 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D68DC432483B16000844CB3 /* NotificationViewController.swift */; };
 		1D68DC472483B16000844CB3 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D68DC452483B16000844CB3 /* MainInterface.storyboard */; };
-		1D68DC4B2483B16000844CB3 /* NotificationContentExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 1D68DC3D2483B16000844CB3 /* NotificationContentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		1DD19CBE241E7C4B00D77827 /* NotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 1D18FB6523CFB6F00018D15E /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4054F78724291A0B00CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4054F78624291A0B00CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift */; };
 		40EE124F2409CEED00B052C2 /* FirebaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EE124E2409CEED00B052C2 /* FirebaseHandler.swift */; };
 		40FB300923F1A69800B76AD0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40FB300823F1A69800B76AD0 /* GoogleService-Info.plist */; };
@@ -85,20 +83,6 @@
 			remoteGlobalIDString = 1D30F67D23CB297F00DDD86F;
 			remoteInfo = ZappiOS;
 		};
-		1D68DC492483B16000844CB3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1D30F67623CB297F00DDD86F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1D68DC3C2483B16000844CB3;
-			remoteInfo = NotificationContentExtension;
-		};
-		1DD7294B2420BB5400DAC4B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1D30F67623CB297F00DDD86F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1D18FB6423CFB6F00018D15E;
-			remoteInfo = NotificationServiceExtension;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -108,8 +92,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				1DD19CBE241E7C4B00D77827 /* NotificationServiceExtension.appex in Embed App Extensions */,
-				1D68DC4B2483B16000844CB3 /* NotificationContentExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -186,6 +168,8 @@
 		1D68DC432483B16000844CB3 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		1D68DC462483B16000844CB3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		1D68DC482483B16000844CB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D68DC532483D88100844CB3 /* NotificationContentExtension-Debug.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "NotificationContentExtension-Debug.entitlements"; sourceTree = "<group>"; };
+		1D68DC542483D88100844CB3 /* NotificationContentExtension-Release.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "NotificationContentExtension-Release.entitlements"; sourceTree = "<group>"; };
 		4054F78624291A0B00CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+UNUserNotificationCenterDelegate.swift"; sourceTree = "<group>"; };
 		40EE124E2409CEED00B052C2 /* FirebaseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHandler.swift; sourceTree = "<group>"; };
 		40FB300823F1A69800B76AD0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "ZappiOS/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -425,11 +409,21 @@
 		1D68DC422483B16000844CB3 /* NotificationContentExtension */ = {
 			isa = PBXGroup;
 			children = (
+				1D68DC522483D88100844CB3 /* Entitlements */,
 				1D68DC432483B16000844CB3 /* NotificationViewController.swift */,
 				1D68DC452483B16000844CB3 /* MainInterface.storyboard */,
 				1D68DC482483B16000844CB3 /* Info.plist */,
 			);
 			path = NotificationContentExtension;
+			sourceTree = "<group>";
+		};
+		1D68DC522483D88100844CB3 /* Entitlements */ = {
+			isa = PBXGroup;
+			children = (
+				1D68DC532483D88100844CB3 /* NotificationContentExtension-Debug.entitlements */,
+				1D68DC542483D88100844CB3 /* NotificationContentExtension-Release.entitlements */,
+			);
+			path = Entitlements;
 			sourceTree = "<group>";
 		};
 		40EE124C2409CEED00B052C2 /* Helpers */ = {
@@ -500,8 +494,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				1DD7294C2420BB5400DAC4B4 /* PBXTargetDependency */,
-				1D68DC4A2483B16000844CB3 /* PBXTargetDependency */,
 			);
 			name = ZappiOS;
 			productName = ZappiOS;
@@ -909,16 +901,6 @@
 			target = 1D30F67D23CB297F00DDD86F /* ZappiOS */;
 			targetProxy = 1D30F6A023CB298000DDD86F /* PBXContainerItemProxy */;
 		};
-		1D68DC4A2483B16000844CB3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 1D68DC3C2483B16000844CB3 /* NotificationContentExtension */;
-			targetProxy = 1D68DC492483B16000844CB3 /* PBXContainerItemProxy */;
-		};
-		1DD7294C2420BB5400DAC4B4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 1D18FB6423CFB6F00018D15E /* NotificationServiceExtension */;
-			targetProxy = 1DD7294B2420BB5400DAC4B4 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -945,6 +927,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 921EE6DFD8C836B3E72DEEF7 /* Pods-NotificationServiceExtension.debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "$(TARGET_NAME)/Entitlements/$(TARGET_NAME)-Debug.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
@@ -968,6 +951,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 02DA1D072AF84F692D5B222C /* Pods-NotificationServiceExtension.release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "$(TARGET_NAME)/Entitlements/$(TARGET_NAME)-Release.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
@@ -1254,6 +1238,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_ENTITLEMENTS = "$(TARGET_NAME)/Entitlements/$(TARGET_NAME)-Debug.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
@@ -1277,6 +1262,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_ENTITLEMENTS = "$(TARGET_NAME)/Entitlements/$(TARGET_NAME)-Release.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";

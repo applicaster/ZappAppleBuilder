@@ -57,14 +57,18 @@ def app_extensions_prepare_notification_extension(
             plist_path: extension_info_plist_inner_path,
             app_identifier: extension_bundle_identifier
         )
+
+        app_extensions_add_to_project(
+            "#{extension_target_name}"
+        )
     else
         # notification extension disabled
         sh("echo '#{extension_type} disabled'")
-        # remove extension from build dependency and scripts step
-        app_extensions_remove_from_project(
-            "#{extension_target_name}"
-        )
     end
+end
+
+def app_extensions_add_to_project(target_name)
+    sh("configure_extensions add #{xcodeproj_path} #{project_name} #{target_name}")
 end
 
 def app_extension_provisioning_profile_uuid(extension_type)
