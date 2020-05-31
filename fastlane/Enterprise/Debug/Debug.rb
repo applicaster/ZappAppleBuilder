@@ -1,4 +1,5 @@
 import "Enterprise/Base/Base.rb"
+import "Enterprise/Debug/AppExtensions.rb"
 
 fastlane_require 'dotenv'
 
@@ -10,7 +11,7 @@ platform :ios do
     prepare_enterprise_app_for_build()
 
     # get provisioning profiles specifiers
-    main_prov_profile_specifier = "#{ENV["#{identifier}_PROFILE_UDID"]}"
+    main_prov_profile_specifier = "#{ENV["#{enterprise_debug_app_bundle_identifier}_PROFILE_UDID"]}"
     notification_service_extension_prov_profile_specifier = "#{ENV["#{enterprise_debug_app_notifications_service_extension_bundle_identifier}_PROFILE_UDID"]}"
     notification_content_extension_prov_profile_specifier = "#{ENV["#{enterprise_debug_app_notifications_content_extension_bundle_identifier}_PROFILE_UDID"]}"
 
@@ -41,7 +42,7 @@ platform :ios do
       export_options: {
                   compileBitcode: false,
                   provisioningProfiles: {
-                    enterprise_app_bundle_identifier => "#{main_prov_profile_specifier}",
+                    enterprise_debug_app_bundle_identifier => "#{main_prov_profile_specifier}",
                     enterprise_debug_app_notifications_service_extension_bundle_identifier => "#{notification_service_extension_prov_profile_specifier}",
                     enterprise_debug_app_notifications_content_extension_bundle_identifier => "#{notification_content_extension_prov_profile_specifier}"
                   }
@@ -67,7 +68,7 @@ platform :ios do
     update_parameters_in_feature_optimization_json()
 
     # update ms_app_center app secret
-    ms_app_center_update_app_secret(enterprise_app_bundle_identifier)
+    ms_app_center_update_app_secret(enterprise_debug_app_bundle_identifier)
 
     #update firebase configuration
     firebase_add_configuration_file("enterprise")
@@ -82,7 +83,7 @@ platform :ios do
     update_app_identifier(
       xcodeproj: xcodeproj_path,
       plist_path: project_info_plist_inner_path,
-      app_identifier: enterprise_app_bundle_identifier
+      app_identifier: enterprise_debug_app_bundle_identifier
     )
 
     # update project team identifier for all targets
@@ -95,8 +96,8 @@ platform :ios do
     base_ent_create_app_on_dev_portal(
       enterprise_debug_username,
       enterprise_debug_team_id,
-      enterprise_app_devportal_app_name,
-      enterprise_app_bundle_identifier,
+      enterprise_debug_app_devportal_app_name,
+      enterprise_debug_app_bundle_identifier,
       "1"
     )
 
@@ -104,8 +105,8 @@ platform :ios do
     base_ent_create_push_certificate(
       enterprise_debug_username,
       enterprise_debug_team_id,
-      enterprise_app_devportal_app_name,
-      enterprise_app_bundle_identifier,
+      enterprise_debug_app_devportal_app_name,
+      enterprise_debug_app_bundle_identifier,
       accountsAccountId
     )
 
@@ -114,7 +115,7 @@ platform :ios do
       enterprise_debug_username,
       enterprise_debug_team_id,
       enterprise_debug_team_name,
-      enterprise_app_bundle_identifier
+      enterprise_debug_app_bundle_identifier
     )
 
     # prepare app extensions
@@ -162,12 +163,12 @@ platform :ios do
     sh("sh #{ENV['PWD']}/Scripts/add-debug-ribbon-to-app-icon.sh #{ENV['PWD']} #{project_name} #{platform_name}")
   end
 
-  def enterprise_app_bundle_prefix
+  def enterprise_debug_app_bundle_prefix
       "com.applicaster.ent."
   end
 
-  def enterprise_app_bundle_identifier
-      "#{enterprise_app_bundle_prefix}#{ENV["bundle_identifier"]}"
+  def enterprise_debug_app_bundle_identifier
+      "#{enterprise_debug_app_bundle_prefix}#{ENV["bundle_identifier"]}"
   end
 
   def enterprise_debug_credentials_path
@@ -199,10 +200,10 @@ platform :ios do
   end
 
   def enterprise_debug_app_notifications_service_extension_bundle_identifier
-      "#{enterprise_app_bundle_identifier}.#{notification_service_extension_target_name}"
+      "#{enterprise_debug_app_bundle_identifier}.#{notification_service_extension_target_name}"
   end
 
   def enterprise_debug_app_notifications_content_extension_bundle_identifier
-    "#{enterprise_app_bundle_identifier}.#{notification_content_extension_target_name}"
+    "#{enterprise_debug_app_bundle_identifier}.#{notification_content_extension_target_name}"
   end
 end

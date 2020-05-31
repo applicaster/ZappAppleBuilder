@@ -1,4 +1,3 @@
-# import "Base/Base.rb"
 
  def ms_app_center_read_value_from_file(bundle_identifier, type)
     folder_name = ".ms_app_center"

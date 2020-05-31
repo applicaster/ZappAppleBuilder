@@ -2,6 +2,8 @@ import "Base/AppCenter.rb"
 import "Base/AppExtensions.rb"
 import "Base/Firebase.rb"
 import "Base/S3.rb"
+import "Base/InfoPlist.rb"
+import "Base/Project.rb"
 
 require 'dotenv'
 Dotenv.load

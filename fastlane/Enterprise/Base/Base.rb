@@ -1,4 +1,3 @@
-# import "Base/Base.rb"
 
 def base_ent_prepare_enterprise_app_signing(username, password, fastlane_password, certificate_path)
   create_temp_keychain()
@@ -113,5 +112,5 @@ def base_ent_update_group_identifiers(target, build_type, groups)
 end
 
 def base_ent_app_group_name
-  "group.#{enterprise_app_bundle_identifier}"
+  "group.#{enterprise_debug_app_bundle_identifier}"
 end

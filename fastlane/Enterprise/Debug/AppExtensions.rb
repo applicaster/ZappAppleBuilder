@@ -30,7 +30,7 @@ def base_ent_debug_app_extension_prepare(
       sh("bundle exec fastlane produce group -g #{base_ent_app_group_name} -n '#{ENV['bundle_identifier']} Group' -u #{enterprise_debug_username} ")
 
       # add the app and the notification extension to the created group
-      sh("bundle exec fastlane produce associate_group #{base_ent_app_group_name} -a #{enterprise_app_bundle_identifier} -u #{enterprise_debug_username} ")
+      sh("bundle exec fastlane produce associate_group #{base_ent_app_group_name} -a #{enterprise_debug_app_bundle_identifier} -u #{enterprise_debug_username} ")
       sh("bundle exec fastlane produce associate_group #{base_ent_app_group_name} -a #{extension_bundle_identifier} -u #{enterprise_debug_username} -i 1")
       
       # create provisioning profile for the notifications app
