@@ -26,9 +26,7 @@ platform :ios do
 			output_name: "#{project_scheme}-Enterprise",
 			build_path: build_path,
 			derived_data_path: build_path,
-			xcargs: "RELEASE_SWIFT_OPTIMIZATION_LEVEL='-O' "\
-					"-UseModernBuildSystem=NO "\
-					"RELEASE_COPY_PHASE_STRIP=NO "\
+			xcargs: "-UseModernBuildSystem=NO "\
 					"PROVISIONING_PROFILE='#{main_prov_profile_specifier}' "\
 					"NOTIFICATION_SERVICE_EXTENSION_PROV_PROFILE_SPECIFIER='#{notification_service_extension_prov_profile_specifier}' "\
 					"NOTIFICATION_CONTENT_EXTENSION_PROV_PROFILE_SPECIFIER='#{notification_content_extension_prov_profile_specifier}' "\
@@ -36,12 +34,12 @@ platform :ios do
 			export_method: "enterprise",
 			export_team_id: enterprise_client_team_id,
 			export_options: {
-						compileBitcode: false,
-						provisioningProfiles: {
-						bundle_identifier => "#{main_prov_profile_specifier}",
-						notification_service_extension_bundle_identifier => "#{notification_service_extension_prov_profile_specifier}",
-						notification_content_extension_bundle_identifier => "#{notification_content_extension_prov_profile_specifier}"
-						}
+				compileBitcode: true,
+				provisioningProfiles: {
+				bundle_identifier => "#{main_prov_profile_specifier}",
+				notification_service_extension_bundle_identifier => "#{notification_service_extension_prov_profile_specifier}",
+				notification_content_extension_bundle_identifier => "#{notification_content_extension_prov_profile_specifier}"
+				}
 			}
 		)
 
@@ -121,89 +119,24 @@ platform :ios do
   	end
 
 	def prepare_enterprise_app_extensions()
-		prepare_enterprise_app_notification_service_extension()
-		prepare_enterprise_app_notification_content_extension()
-	end
+		build_type = "enterprise"
+		app_extensions_prepare_notification_extension(
+			build_type,
+			notification_service_extension_key,
+			notification_service_extension_target_name,
+			notification_service_extension_bundle_identifier,
+			notification_service_extension_info_plist_inner_path,
+			notification_service_extension_info_plist_path
+		)
 
-
-	def prepare_enterprise_app_notification_service_extension()
-		extension_type = notification_service_extension_key
-		entension_enabled = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :SupportedAppExtensions:#{extension_type}:enterprise_enabled\" #{customizations_folder_path}/FeaturesCustomization.plist 2>/dev/null | grep -c true)")
-    	if entension_enabled.to_i() > 0
-			# print extension enabled
-			sh("echo '#{extension_type} enabled'")
-
-			# update app identifier, versions of the notification extension
-			info_plist_update_values(
-				notification_service_extension_target_name,
-				notification_service_extension_bundle_identifier
-			)
-
-			# save app identifier of the notification extension
-			ENV['identifier_notifications'] = get_info_plist_value(path: "#{notification_service_extension_info_plist_path}", key: "CFBundleIdentifier")
-			# change app groups support on project file
-			project_change_system_capability(
-				"com.apple.ApplicationGroups.iOS",
-				0,
-				1
-			)
-
-			# update app identifier for to the notification extension
-			info_plist_reset_to_bundle_identifier_placeholder(xcodeproj_path, notification_service_extension_info_plist_inner_path)
-			update_app_identifier(
-				xcodeproj: xcodeproj_path,
-				plist_path: notification_service_extension_info_plist_inner_path,
-				app_identifier: notification_service_extension_bundle_identifier
-			)
-
-		else
-			# notification extension disabled
-			sh("echo 'Push Notification extension disabled'")
-			# remove extension from build dependency and scripts step
-			app_extensions_remove_from_project(
-				"#{notification_service_extension_target_name}"
-			)
-		end
-	end
-
-	def prepare_enterprise_app_notification_content_extension()
-		extension_type = notification_content_extension_key
-		entension_enabled = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :SupportedAppExtensions:#{extension_type}:enterprise_enabled\" #{customizations_folder_path}/FeaturesCustomization.plist 2>/dev/null | grep -c true)")
-    	if entension_enabled.to_i() > 0
-			# print extension enabled
-			sh("echo '#{extension_type} enabled'")
-
-			# update app identifier, versions of the notification extension
-			info_plist_update_values(
-				notification_content_extension_target_name,
-				notification_content_extension_bundle_identifier
-			)
-
-			# save app identifier of the notification extension
-			ENV['identifier_notifications'] = get_info_plist_value(path: "#{notification_content_extension_info_plist_path}", key: "CFBundleIdentifier")
-			# change app groups support on project file
-			project_change_system_capability(
-				"com.apple.ApplicationGroups.iOS",
-				0,
-				1
-			)
-
-			# update app identifier for to the notification extension
-			info_plist_reset_to_bundle_identifier_placeholder(xcodeproj_path, notification_content_extension_info_plist_inner_path)
-			update_app_identifier(
-				xcodeproj: xcodeproj_path,
-				plist_path: notification_content_extension_info_plist_inner_path,
-				app_identifier: notification_content_extension_bundle_identifier
-			)
-
-		else
-			# notification extension disabled
-			sh("echo 'Push Notification extension disabled'")
-			# remove extension from build dependency and scripts step
-			app_extensions_remove_from_project(
-				"#{notification_content_extension_target_name}"
-			)
-		end
+		app_extensions_prepare_notification_extension(
+			build_type,
+			notification_content_extension_key,
+			notification_content_extension_target_name,
+			notification_content_extension_bundle_identifier,
+			notification_content_extension_info_plist_inner_path,
+			notification_content_extension_info_plist_path
+		)
 	end
 
 	def enterprise_credentials_folder
@@ -211,11 +144,11 @@ platform :ios do
 	end
 
 	def enterprise_distribution_certificate_password
-	  "#{ENV['distribution_key_password']}"
+		"#{ENV['distribution_key_password']}"
 	end
 
 	def enterprise_client_app_provisioning_profile_uuid
-	  "#{ENV['ENTERPRISE_CLIENT_PROVISIONING_PROFILE_UUID']}"
+		"#{ENV['ENTERPRISE_CLIENT_PROVISIONING_PROFILE_UUID']}"
 	end
 
 	def enterprise_client_team_id

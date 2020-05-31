@@ -40,7 +40,7 @@ platform :ios do
       export_method: "enterprise",
       export_team_id: enterprise_debug_team_id,
       export_options: {
-        compileBitcode: false,
+        compileBitcode: true,
         provisioningProfiles: {
           enterprise_debug_app_bundle_identifier => "#{main_prov_profile_specifier}",
           enterprise_debug_app_notifications_service_extension_bundle_identifier => "#{notification_service_extension_prov_profile_specifier}",
@@ -131,10 +131,10 @@ platform :ios do
     )
   end
 
-  def prepare_enterprise_app_extensions()
-    prepare_enterprise_app_notification_service_extension()
-    prepare_enterprise_app_notification_content_extension()
-  end
+	def prepare_enterprise_app_extensions()
+		prepare_enterprise_app_notification_content_extension()
+		prepare_enterprise_app_notification_service_extension()
+	end
 
   def prepare_enterprise_app_notification_content_extension()
     base_ent_debug_app_extension_prepare(
@@ -142,7 +142,8 @@ platform :ios do
       notification_content_extension_target_name,
       enterprise_debug_app_devportal_notifications_app_name,
       enterprise_debug_app_notifications_content_extension_bundle_identifier,
-      notification_content_extension_info_plist_inner_path
+      notification_content_extension_info_plist_inner_path,
+      notification_content_extension_info_plist_path
     )
   end
 
@@ -152,7 +153,8 @@ platform :ios do
       notification_service_extension_target_name,
       enterprise_debug_app_devportal_notifications_app_name,
       enterprise_debug_app_notifications_service_extension_bundle_identifier,
-      notification_service_extension_info_plist_inner_path
+      notification_service_extension_info_plist_inner_path,
+      notification_service_extension_info_plist_path
     )
   end
 

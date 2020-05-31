@@ -7,16 +7,13 @@ platform :ios do
 
 	lane :store do
 
-		setup_store_app_signing()
-		prepare_store_app()
-
-		# get identifiers
-		identifier = bundle_identifier
-		identifier_notifications = store_app_notifications_bundle_identifier
+		prepare_store_app_signing()
+		prepare_store_app_for_build()
 
 		# get provisioning profiles specifiers
 		main_prov_profile_specifier = store_app_provisioning_profile_uuid
-		notifications_prov_profile_specifier = store_app_notifications_provisioning_profile_uuid
+		notification_service_extension_prov_profile_specifier = app_extension_provisioning_profile_uuid(notification_service_extension_key)
+		notification_content_extension_prov_profile_specifier = app_extension_provisioning_profile_uuid(notification_content_extension_key)
 
 		build_path = "#{ENV['PWD']}/build"
 
@@ -38,17 +35,19 @@ platform :ios do
 		  build_path: build_path,
 		  derived_data_path: build_path,
 		  xcargs: "DEVELOPMENT_TEAM='#{store_team_id}' "\
-							"-UseModernBuildSystem=NO "\
-							"NOTIFICATION_EXTENSION_PROV_PROFILE_SPECIFIER='#{notifications_prov_profile_specifier}' "\
-							"DEBUG_INFORMATION_FORMAT='dwarf-with-dsym' "\
-							"PROVISIONING_PROFILE_SPECIFIER='#{main_prov_profile_specifier}'",
+					"-UseModernBuildSystem=NO "\
+					"NOTIFICATION_SERVICE_EXTENSION_PROV_PROFILE_SPECIFIER='#{notification_service_extension_prov_profile_specifier}' "\
+					"NOTIFICATION_CONTENT_EXTENSION_PROV_PROFILE_SPECIFIER='#{notification_content_extension_prov_profile_specifier}' "\
+					"DEBUG_INFORMATION_FORMAT='dwarf-with-dsym' "\
+					"PROVISIONING_PROFILE_SPECIFIER='#{main_prov_profile_specifier}'",
 		  export_team_id: store_team_id,
 		  export_method: "app-store",
 		  export_options: {
 				compileBitcode: true,
 				provisioningProfiles: {
-			  	identifier => main_prov_profile_specifier,
-			  	identifier_notifications => "#{notifications_prov_profile_specifier}"
+					bundle_identifier => main_prov_profile_specifier,
+				  	notification_service_extension_bundle_identifier => "#{notification_service_extension_prov_profile_specifier}",
+				  	notification_content_extension_bundle_identifier => "#{notification_content_extension_prov_profile_specifier}"
 				}
 		  }
 		)
@@ -64,32 +63,30 @@ platform :ios do
 		)
 
 		puts("Starting app delivery to AppStoreConnect using altool")
-    deliver_output = capture_stream($stdout) {
-      altool(
-        altool_username: "#{store_username}",
-        altool_password: "#{store_password}",
-        altool_app_type: "appletvos",
-        altool_ipa_path: "CircleArtifacts/Store/#{project_scheme}-Store.ipa",
-        altool_output_format: "xml",
-      )
-    }
+		deliver_output = capture_stream($stdout) {
+			altool(
+				altool_username: "#{store_username}",
+				altool_password: "#{store_password}",
+				altool_app_type: "appletvos",
+				altool_ipa_path: "CircleArtifacts/Store/#{project_scheme}-Store.ipa",
+				altool_output_format: "xml",
+			)
+		}
 
+		# print deliver output
+		puts("Altool output: #{deliver_output}")
 
-    # print deliver output
-    puts("Altool output: #{deliver_output}")
-
-    # raise an error if the delover output has an error
-    raise RuntimeError, 'Error posting the app to the App Store Connect' if deliver_output.include?('ERROR ITMS-')
+		# raise an error if the delover output has an error
+		raise RuntimeError, 'Error posting the app to the App Store Connect' if deliver_output.include?('ERROR ITMS-')
 
 		# upload to ms app center
 		upload_application(bundle_identifier,
 			"Store",
-			"release")
-
+			"release"
+		)
 	end
 
-	def setup_store_app_signing()
-
+	def prepare_store_app_signing()
 		# create new dir for files
 		sh("mkdir -p \"#{store_credentials_folder}\"")
 		# download p12 and provisioning profile
@@ -118,7 +115,7 @@ platform :ios do
 		ENV['FASTLANE_PASSWORD']=store_password
 	end
 
-	def prepare_store_app()
+	def prepare_store_app_for_build()
 		# update app base parameters in FeaturesCustomization.json
 		update_parameters_in_feature_optimization_json()
 
@@ -147,64 +144,28 @@ platform :ios do
 		add_wifi_system_capability_if_needed()
 
 		prepare_store_app_extensions()
-  end
+  	end
 
-  def prepare_store_app_extensions()
-    prepare_store_app_notification_extension()
-  end
+	def prepare_store_app_extensions()
+		build_type = "store"
+		app_extensions_prepare_notification_extension(
+			build_type,
+			notification_service_extension_key,
+			notification_service_extension_target_name,
+			notification_service_extension_bundle_identifier,
+			notification_service_extension_info_plist_inner_path,
+			notification_service_extension_info_plist_path
+		)
 
-  def prepare_store_app_notification_extension()
-    notification_service_entension_enabled = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :SupportedAppExtensions:NOTIFICATION_SERVICE_EXTENSION:store_enabled\" #{customizations_folder_path}/FeaturesCustomization.plist 2>/dev/null | grep -c true)")
-
-    if notification_service_entension_enabled.to_i() > 0
-      sh("echo 'Push Notification extension enabled'")
-
-			# update app identifier, versions of the notification extension
-			info_plist_update_values(
-				notification_service_extension_target_name,
-				store_app_notifications_bundle_identifier
-			)
-
-      # save app identifier of the notification extension
-      ENV['identifier_notifications'] = get_info_plist_value(path: "#{notification_service_extension_info_plist_path}", key: "CFBundleIdentifier")
-      # change app groups support on project file
-      project_change_system_capability(
-				"com.apple.ApplicationGroups.iOS",
-				0,
-				1
-			)
-
-			# update app identifier for to the notification extension
-			info_plist_reset_to_bundle_identifier_placeholder(xcodeproj_path, notification_service_extension_info_plist_inner_path)
-			update_app_identifier(
-				xcodeproj: xcodeproj_path,
-				plist_path: notification_service_extension_info_plist_inner_path,
-				app_identifier: store_app_notifications_bundle_identifier
-			)
-
-    else
-      # notification extension disabled
-      sh("echo 'Push Notification extension disabled'")
-      # remove extension from build dependency and scripts step
-      app_extensions_remove_from_project(
-				"#{notification_service_extension_target_name}"
-			)
-      # set temp identifier for notification extension
-      ENV['identifier_notifications'] = "notification.extension.disabled"
-
-    end
-  end
-
-  def add_wifi_system_capability_if_needed()
-    requires_wifi_capability = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :com.apple.developer.networking.wifi-info\" #{project_path}/#{project_name}/Entitlements/#{project_name}-Release.entitlements 2>/dev/null | grep -c true)")
-    if requires_wifi_capability.to_i() > 0
-      project_change_system_capability(
-				"com.apple.AccessWiFi",
-				0,
-				1
-			)
-    end
-  end
+		app_extensions_prepare_notification_extension(
+			build_type,
+			notification_content_extension_key,
+			notification_content_extension_target_name,
+			notification_content_extension_bundle_identifier,
+			notification_content_extension_info_plist_inner_path,
+			notification_content_extension_info_plist_path
+		)
+	end
 
 	def store_username
 		"#{ENV['itunes_connect_user']}"
@@ -226,21 +187,12 @@ platform :ios do
 		"#{ENV['distribution_key_password']}"
 	end
 
-
 	def store_credentials_folder
 			"#{project_path}/Credentials/"
 	end
 
 	def store_app_provisioning_profile_uuid
 		"#{ENV['STORE_PROVISIONING_PROFILE_UUID']}"
-	end
-
-	def store_app_notifications_bundle_identifier
-			"#{bundle_identifier}.#{notification_service_extension_target_name}"
-	end
-
-	def store_app_notifications_provisioning_profile_uuid
-		sh("echo $(/usr/libexec/PlistBuddy -c \"Print :SupportedAppExtensions:NOTIFICATION_SERVICE_EXTENSION:provisioning_profile_uuid\" #{customizations_folder_path}/FeaturesCustomization.plist 2>/dev/null) | tr -d '\040\011\012\015'")
 	end
 
 end

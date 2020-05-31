@@ -117,3 +117,7 @@ def base_ent_prepare_enterprise_app_for_build
     #delete sso entitlements if exists
     remove_key_from_entitlements("#{project_name}", "Release", "com.apple.developer.video-subscriber-single-sign-on")
 end
+
+def base_ent_enterprise_build_type
+  "enterprise"
+end
