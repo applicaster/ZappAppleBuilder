@@ -1,5 +1,5 @@
 
-def info_plist_update_values(target_name, target_bundle_identifier)
+def info_plist_update_version_values(target_name, target_bundle_identifier)
     # update app identifier, versions of the extension
     bundle_version = get_info_plist_value(
       path: project_info_plist_path,

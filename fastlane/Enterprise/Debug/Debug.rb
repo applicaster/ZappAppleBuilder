@@ -5,6 +5,19 @@ fastlane_require 'dotenv'
 
 platform :ios do
 
+  lane :enterprise_debug_prepare_env do
+    unless ENV['APPLE_DEV_ENT_TEAM_NAME'].to_s.strip.empty? ||   
+      ENV['APPLE_DEV_ENT_TEAM_ID'].to_s.strip.empty? ||
+      ENV['APPLE_DEV_ENT_PASS'].to_s.strip.empty? ||
+      ENV['APPLE_DEV_ENT_USER'].to_s.strip.empty?
+        prepare_enterprise_debug_app_signing()
+        prepare_enterprise_debug_app_for_build()
+    else 
+      puts("Skipping the step, no required variables")
+  end
+    
+  end
+  
   lane :enterprise_debug do
 
     prepare_enterprise_debug_app_signing()
@@ -53,7 +66,7 @@ platform :ios do
 
   end
 
-  def perform_post_build_procedures() 
+  def perform_post_build_procedures()
 		base_ent_perform_post_build_procedures()
 
     # upload to ms app center
