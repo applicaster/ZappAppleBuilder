@@ -60,6 +60,10 @@ end
 
 target 'NotificationServiceExtension' do
     # Zaptool notification service extension pods - Do not remove or change.
+end
+
+target 'NotificationContentExtension' do
+    # Zaptool notification content extension pods - Do not remove or change.
 
 end
 
