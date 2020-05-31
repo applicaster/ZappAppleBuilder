@@ -1,26 +1,6 @@
 import "Base/Base.rb"
 
 platform :ios do
-    before_all do
-        device_family = ENV["device_target"]
-        ENV["DEVICE_FAMILY"] = "1,2"
-        if device_family == "iphone"
-        ENV["DEVICE_FAMILY"] = "1"
-        end
-        if device_family == "ipad"
-        ENV["DEVICE_FAMILY"] = "2"
-        end
-
-        unless ENV['bundle_identifier'].to_s.strip.empty?          
-            if isTvOS
-                puts("Installing S3 AWS")
-                sh("sudo pip install awscli")
-            end
-        else 
-            puts("Skipping the step, no bundle_identifier available.")
-        end
-    end
-
     def upload_application(bundle_identifier, distribute_type, build_configuration)
         if isTvOS 
             puts("Upload application to S3")

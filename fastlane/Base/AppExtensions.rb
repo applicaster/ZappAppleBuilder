@@ -4,10 +4,6 @@ def app_extensions_remove_from_project(target_name)
         target.dependencies.reject! do |dependency|
             dependency.target.name == "#{target_name}"
         end
-
-        target.build_phases.reject! do |phase|
-        phase.is_a?(Xcodeproj::Project::Object::PBXCopyFilesBuildPhase) && phase.name == "Embed App Extensions"
-        end
     end
 end
 

@@ -7,3 +7,11 @@ import "FastfileTest"
 import "Enterprise/Client.rb"
 import "Enterprise/Debug/Debug.rb"
 import "Store/Store.rb"
+
+platform :ios do
+    before_all do
+        base_set_device_family()
+        base_install_awscli_if_needed()
+        base_remove_app_extensions()
+    end
+end

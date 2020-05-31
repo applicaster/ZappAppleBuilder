@@ -10,8 +10,7 @@ platform :ios do
       prepare_enterprise_debug_app_for_build_project_only
     else 
       puts("Skipping the step, no required variables")
-  end
-    
+    end
   end
   
   lane :enterprise_debug do

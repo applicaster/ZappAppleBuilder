@@ -64,3 +64,33 @@ def capture_stream(stream)
     t.value # join and get the result of the thread
   end
 end
+
+def base_set_device_family()
+  puts("Setting device family param")
+
+  device_family = ENV["device_target"]
+      ENV["DEVICE_FAMILY"] = "1,2"
+  if device_family == "iphone"
+      ENV["DEVICE_FAMILY"] = "1"
+  end
+  if device_family == "ipad"
+      ENV["DEVICE_FAMILY"] = "2"
+  end
+end
+
+def base_install_awscli_if_needed()
+  puts("Installing S3 AWS if needed")
+
+  unless ENV['bundle_identifier'].to_s.strip.empty?          
+    if isTvOS
+        puts("Installing S3 AWS")
+        sh("sudo pip install awscli")
+    end
+  end
+end
+
+def base_remove_app_extensions() 
+  puts("Removing notifications extensions from project (needed for `pod install`")
+  app_extensions_remove_from_project(notification_content_extension_target_name)
+  app_extensions_remove_from_project(notification_service_extension_target_name)
+end

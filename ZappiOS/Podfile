@@ -84,27 +84,4 @@ post_install do |installer|
 						end
         end
     end
-    
-    remove_app_extensions_from_project("NotificationServiceExtension")
-    remove_app_extensions_from_project("NotificationContentExtension")
-
-end
-
-def remove_app_extensions_from_project(notifications_target_name)
-    project_path = Dir.glob("*.xcodeproj").first
-    project_target = "ZappiOS"
-    update_zapp_app_target(project_path, project_target) do |target|
-        target.dependencies.reject! { |dependency| dependency.target.name == "#{notifications_target_name}" }
-        puts("Removing #{notifications_target_name} dependency")
-    end
-end
-
-def update_zapp_app_target(project_name, target)
-    require 'xcodeproj'
-
-    project = Xcodeproj::Project.open("#{project_name}")
-    target = project.native_targets.find {|s| s.name == "#{target}" }
-    yield(target)
-
-    project.save
 end
