@@ -147,7 +147,7 @@ platform :ios do
   	end
 
 	def prepare_store_app_extensions()
-		build_type = "store"
+		build_type = "release"
 		app_extensions_prepare_notification_extension(
 			build_type,
 			notification_service_extension_key,

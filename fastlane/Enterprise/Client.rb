@@ -117,7 +117,7 @@ platform :ios do
   	end
 
 	def prepare_enterprise_client_app_extensions()
-		build_type = "enterprise"
+		build_type = "release"
 		app_extensions_prepare_notification_extension(
 			build_type,
 			notification_service_extension_key,
