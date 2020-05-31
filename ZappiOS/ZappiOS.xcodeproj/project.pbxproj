@@ -83,6 +83,20 @@
 			remoteGlobalIDString = 1D30F67D23CB297F00DDD86F;
 			remoteInfo = ZappiOS;
 		};
+		1D68DC5C2484078200844CB3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1D30F67623CB297F00DDD86F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1D68DC3C2483B16000844CB3;
+			remoteInfo = NotificationContentExtension;
+		};
+		1D68DC5E2484078500844CB3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1D30F67623CB297F00DDD86F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1D18FB6423CFB6F00018D15E;
+			remoteInfo = NotificationServiceExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -494,6 +508,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				1D68DC5F2484078500844CB3 /* PBXTargetDependency */,
+				1D68DC5D2484078200844CB3 /* PBXTargetDependency */,
 			);
 			name = ZappiOS;
 			productName = ZappiOS;
@@ -901,6 +917,16 @@
 			target = 1D30F67D23CB297F00DDD86F /* ZappiOS */;
 			targetProxy = 1D30F6A023CB298000DDD86F /* PBXContainerItemProxy */;
 		};
+		1D68DC5D2484078200844CB3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1D68DC3C2483B16000844CB3 /* NotificationContentExtension */;
+			targetProxy = 1D68DC5C2484078200844CB3 /* PBXContainerItemProxy */;
+		};
+		1D68DC5F2484078500844CB3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1D18FB6423CFB6F00018D15E /* NotificationServiceExtension */;
+			targetProxy = 1D68DC5E2484078500844CB3 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -938,8 +964,8 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.applicaster.ZappiOS.NotificationServiceExtension;
 				NOTIFICATION_SERVICE_EXTENSION_PROV_PROFILE_SPECIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.applicaster.ZappiOS.NotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "$(NOTIFICATION_SERVICE_EXTENSION_PROV_PROFILE_SPECIFIER)";
 				SKIP_INSTALL = YES;
@@ -962,8 +988,8 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.applicaster.ZappiOS.NotificationServiceExtension;
 				NOTIFICATION_SERVICE_EXTENSION_PROV_PROFILE_SPECIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.applicaster.ZappiOS.NotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "$(NOTIFICATION_SERVICE_EXTENSION_PROV_PROFILE_SPECIFIER)";
 				SKIP_INSTALL = YES;
