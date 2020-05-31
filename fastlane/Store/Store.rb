@@ -6,7 +6,8 @@ import "Base/Base.rb"
 platform :ios do
 
 	lane :store do
-
+		
+		ms_app_center_fetch_identifiers()
 		prepare_store_app_signing()
 		prepare_store_app_for_build()
 

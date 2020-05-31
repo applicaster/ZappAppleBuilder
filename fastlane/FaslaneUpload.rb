@@ -15,9 +15,6 @@ platform :ios do
             if isTvOS
                 puts("Installing S3 AWS")
                 sh("sudo pip install awscli")
-            else 
-                puts("Fetching App Center identifiers ms_app_center:fetch_identifiers[#{ENV['bundle_identifier']}]")
-                sh("bundle exec rake ms_app_center:fetch_identifiers[#{ENV['bundle_identifier']}]")
             end
         else 
             puts("Skipping the step, no bundle_identifier available.")

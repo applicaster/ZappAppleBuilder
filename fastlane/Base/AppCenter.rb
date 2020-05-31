@@ -1,4 +1,10 @@
 
+
+ def ms_app_center_fetch_identifiers(bundle_identifier)
+    puts("Fetching App Center identifiers ms_app_center:fetch_identifiers[#{bundle_identifier}]")
+    sh("bundle exec rake ms_app_center:fetch_identifiers[#{bundle_identifier}]")
+ end
+
  def ms_app_center_read_value_from_file(bundle_identifier, type)
     folder_name = ".ms_app_center"
     filename = "#{ENV['PWD']}/#{folder_name}/#{bundle_identifier}_#{type}"

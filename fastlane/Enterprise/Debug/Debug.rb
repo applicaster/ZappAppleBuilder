@@ -6,12 +6,8 @@ fastlane_require 'dotenv'
 platform :ios do
 
   lane :enterprise_debug_prepare_env do
-    unless ENV['APPLE_DEV_ENT_TEAM_NAME'].to_s.strip.empty? ||   
-      ENV['APPLE_DEV_ENT_TEAM_ID'].to_s.strip.empty? ||
-      ENV['APPLE_DEV_ENT_PASS'].to_s.strip.empty? ||
-      ENV['APPLE_DEV_ENT_USER'].to_s.strip.empty?
-        prepare_enterprise_debug_app_signing()
-        prepare_enterprise_debug_app_for_build()
+    unless bundle_identifier.to_s.strip.empty?
+      prepare_enterprise_debug_app_for_build_project_only
     else 
       puts("Skipping the step, no required variables")
   end
@@ -20,6 +16,7 @@ platform :ios do
   
   lane :enterprise_debug do
 
+    ms_app_center_fetch_identifiers()
     prepare_enterprise_debug_app_signing()
     prepare_enterprise_debug_app_for_build()
 
@@ -76,14 +73,11 @@ platform :ios do
     )
 	end
 
-  def prepare_enterprise_debug_app_for_build()
+  def prepare_enterprise_debug_app_for_build_project_only
     base_ent_prepare_enterprise_app_for_build()
 
     # update app base parameters in FeaturesCustomization.json
     update_parameters_in_feature_optimization_json()
-
-    # update ms_app_center app secret
-    ms_app_center_update_app_secret(enterprise_debug_app_bundle_identifier)
 
     #update firebase configuration
     firebase_add_configuration_file("enterprise")
@@ -95,6 +89,13 @@ platform :ios do
       plist_path: project_info_plist_inner_path,
       app_identifier: enterprise_debug_app_bundle_identifier
     )
+  end
+
+  def prepare_enterprise_debug_app_for_build()
+    prepare_enterprise_debug_app_for_build_project_only()
+
+    # update ms_app_center app secret
+    ms_app_center_update_app_secret(enterprise_debug_app_bundle_identifier)
 
     # update project team identifier for all targets
     update_project_team(
