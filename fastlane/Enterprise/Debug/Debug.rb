@@ -57,7 +57,7 @@ platform :ios do
 		base_ent_perform_post_build_procedures()
 
     # upload to ms app center
-    upload_application(identifier,
+    upload_application(enterprise_debug_app_bundle_identifier,
       "Enterprise",
       "debug"
     )
