@@ -88,6 +88,8 @@ platform :ios do
 	end
 
 	def prepare_client_enterprise_app_for_build()
+		base_ent_prepare_enterprise_app_for_build()
+
 		# update app base parameters in FeaturesCustomization.json
 		update_parameters_in_feature_optimization_json()
 

@@ -111,6 +111,9 @@ def base_ent_update_group_identifiers(target, build_type, groups)
   )
 end
 
-def base_ent_app_group_name
-  "group.#{enterprise_debug_app_bundle_identifier}"
+def base_ent_prepare_enterprise_app_for_build
+    #delete spotlight subscription entitlements if exists
+    remove_key_from_entitlements("#{project_name}", "Release", "com.apple.smoot.subscriptionservice")
+    #delete sso entitlements if exists
+    remove_key_from_entitlements("#{project_name}", "Release", "com.apple.developer.video-subscriber-single-sign-on")
 end

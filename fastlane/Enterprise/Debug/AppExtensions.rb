@@ -1,3 +1,6 @@
+def base_ent_debug_app_group_name
+  "group.#{enterprise_debug_app_bundle_identifier}"
+end
 
 def base_ent_debug_app_extension_prepare(
     extension_type, 
@@ -27,11 +30,11 @@ def base_ent_debug_app_extension_prepare(
         "2"
       )
       # create group for app and notification extension
-      sh("bundle exec fastlane produce group -g #{base_ent_app_group_name} -n '#{ENV['bundle_identifier']} Group' -u #{enterprise_debug_username} ")
+      sh("bundle exec fastlane produce group -g #{base_ent_debug_app_group_name} -n '#{ENV['bundle_identifier']} Group' -u #{enterprise_debug_username} ")
 
       # add the app and the notification extension to the created group
-      sh("bundle exec fastlane produce associate_group #{base_ent_app_group_name} -a #{enterprise_debug_app_bundle_identifier} -u #{enterprise_debug_username} ")
-      sh("bundle exec fastlane produce associate_group #{base_ent_app_group_name} -a #{extension_bundle_identifier} -u #{enterprise_debug_username} -i 1")
+      sh("bundle exec fastlane produce associate_group #{base_ent_debug_app_group_name} -a #{enterprise_debug_app_bundle_identifier} -u #{enterprise_debug_username} ")
+      sh("bundle exec fastlane produce associate_group #{base_ent_debug_app_group_name} -a #{extension_bundle_identifier} -u #{enterprise_debug_username} -i 1")
       
       # create provisioning profile for the notifications app
       base_ent_create_provisioning_profile(
@@ -45,7 +48,7 @@ def base_ent_debug_app_extension_prepare(
       base_ent_update_group_identifiers(
         "#{project_name}",
         "Release",
-        ["#{base_ent_app_group_name}"]
+        ["#{base_ent_debug_app_group_name}"]
       )
 
       # update app identifier for to the notification extension
@@ -59,7 +62,7 @@ def base_ent_debug_app_extension_prepare(
       base_ent_update_group_identifiers(
         "#{extension_target_name}",
         "Release",
-        ["#{base_ent_app_group_name}"]
+        ["#{base_ent_debug_app_group_name}"]
       )
       # change app groups support on project file
       project_change_system_capability(

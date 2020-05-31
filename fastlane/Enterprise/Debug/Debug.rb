@@ -40,12 +40,12 @@ platform :ios do
       export_method: "enterprise",
       export_team_id: enterprise_debug_team_id,
       export_options: {
-                  compileBitcode: false,
-                  provisioningProfiles: {
-                    enterprise_debug_app_bundle_identifier => "#{main_prov_profile_specifier}",
-                    enterprise_debug_app_notifications_service_extension_bundle_identifier => "#{notification_service_extension_prov_profile_specifier}",
-                    enterprise_debug_app_notifications_content_extension_bundle_identifier => "#{notification_content_extension_prov_profile_specifier}"
-                  }
+        compileBitcode: false,
+        provisioningProfiles: {
+          enterprise_debug_app_bundle_identifier => "#{main_prov_profile_specifier}",
+          enterprise_debug_app_notifications_service_extension_bundle_identifier => "#{notification_service_extension_prov_profile_specifier}",
+          enterprise_debug_app_notifications_content_extension_bundle_identifier => "#{notification_content_extension_prov_profile_specifier}"
+        }
       }
     )
 
@@ -64,6 +64,8 @@ platform :ios do
 	end
 
   def prepare_enterprise_app_for_build()
+    base_ent_prepare_enterprise_app_for_build()
+
     # update app base parameters in FeaturesCustomization.json
     update_parameters_in_feature_optimization_json()
 
@@ -72,11 +74,6 @@ platform :ios do
 
     #update firebase configuration
     firebase_add_configuration_file("enterprise")
-
-    #delete spotlight subscription entitlements if exists
-    remove_key_from_entitlements("#{project_name}", "Release", "com.apple.smoot.subscriptionservice")
-    #delete sso entitlements if exists
-    remove_key_from_entitlements("#{project_name}", "Release", "com.apple.developer.video-subscriber-single-sign-on")
 
     # update app identifier to the enterprise one
     info_plist_reset_to_bundle_identifier_placeholder(xcodeproj_path, project_info_plist_inner_path)
