@@ -90,7 +90,7 @@ def base_install_awscli_if_needed()
 end
 
 def base_remove_app_extensions() 
-  puts("Removing notifications extensions from project (needed for `pod install`")
+  puts("Removing notifications extensions from project (needed for `pod install`)")
   app_extensions_remove_from_project(notification_content_extension_target_name)
   app_extensions_remove_from_project(notification_service_extension_target_name)
 end
