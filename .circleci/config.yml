@@ -12,7 +12,7 @@ jobs:
       PROJECT_NAME: "ZappApple"
       SCRIPTS_FOLDER: "Scripts"
       BUILD_PATH: ~/build_debug
-      ZAPPTOOL_VERSION: "3.9.8"
+      ZAPPTOOL_VERSION: "3.10.0"
       HOMEBREW_NO_AUTO_UPDATE: "1"
 
       #fastlane variables
@@ -193,14 +193,27 @@ jobs:
             fi
 
       - deploy:
-          name: Building Zapp-App - Enterprise build
+          name: Building Zapp-App - Enterprise Client build
+          command: |
+            if [ -z "$distribution_key_url" ] then
+              echo "No Distribution Key. Enterprise Client Build will be skipped"
+            elif [ -z "$enterprise_client_username" ]; 
+              echo "Enterprise Client username NOT set! Enterprise Debug Build will be skipped"
+            else
+              echo "\n-- Building Zapp-App - Enterprise Client Build --"
+              bundle exec fastlane ios enterprise_client
+            fi
+
+      - deploy:
+          name: Building Zapp-App - Enterprise Debug build
           command: |
             if [ -z "$bundle_identifier" ]; then
-              echo "Bundle identifier NOT set! Enterprise Build will be skipped"
+              echo "Bundle identifier NOT set! Enterprise Debug Build will be skipped"
             else
-              echo "\n-- Building Zapp-App - Enterprise Build --"
-              bundle exec fastlane ios enterprise
+              echo "\n-- Building Zapp-App - Enterprise Debug Build --"
+              bundle exec fastlane ios enterprise_debug
             fi
+
 
       - deploy:
           name: Building development project
