@@ -140,7 +140,7 @@ platform :ios do
     base_ent_debug_app_extension_prepare(
       notification_content_extension_key,
       notification_content_extension_target_name,
-      enterprise_debug_app_devportal_notifications_app_name,
+      enterprise_debug_app_notifications_content_extension_app_name,
       enterprise_debug_app_notifications_content_extension_bundle_identifier,
       notification_content_extension_info_plist_inner_path,
       notification_content_extension_info_plist_path
@@ -151,7 +151,7 @@ platform :ios do
     base_ent_debug_app_extension_prepare(
       notification_service_extension_key,
       notification_service_extension_target_name,
-      enterprise_debug_app_devportal_notifications_app_name,
+      enterprise_debug_app_notifications_service_extension_app_name,
       enterprise_debug_app_notifications_service_extension_bundle_identifier,
       notification_service_extension_info_plist_inner_path,
       notification_service_extension_info_plist_path
@@ -194,8 +194,12 @@ platform :ios do
       "#{ENV['bundle_identifier']}"
   end
 
-  def enterprise_debug_app_devportal_notifications_app_name
-      "#{enterprise_debug_app_devportal_app_name}.notifications"
+  def enterprise_debug_app_notifications_service_extension_app_name
+      "#{enterprise_debug_app_devportal_app_name}.#{notification_service_extension_target_name}"
+  end
+
+  def enterprise_debug_app_notifications_content_extension_app_name
+      "#{enterprise_debug_app_devportal_app_name}.#{notification_content_extension_target_name}"
   end
 
   def enterprise_debug_app_notifications_service_extension_bundle_identifier

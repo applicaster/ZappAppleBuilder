@@ -36,7 +36,7 @@ def app_extensions_prepare_notification_extension(
         sh("echo '#{extension_type} enabled'")
 
         # update app identifier, versions of the notification extension
-        info_plist_update_values(
+        info_plist_update_version_values(
             extension_target_name,
             extension_bundle_identifier
         )
