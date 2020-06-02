@@ -1,17 +1,52 @@
 require 'spaceship'
 require "json"
 
-import "Base/EnvHelper.rb"
 import "FaslaneUpload.rb"
 import "FastfileTest"
-import "Enterprise/Client.rb"
-import "Enterprise/Debug/Debug.rb"
+import "BuildTypeFactory.rb"
+import "Enterprise/Types/Client/Client.rb"
+import "Enterprise/Types/Debug/Debug.rb"
 import "Store/Store.rb"
 
 platform :ios do
     before_all do
-        base_set_device_family()
-        base_install_awscli_if_needed()
-        base_remove_app_extensions()
+        set_device_family()
+        install_awscli_if_needed()
+    end
+
+    lane :post_zapptool do
+        BuildTypeFactory.new.create.prepare_environment()
+    end
+
+    lane :validate_app_signing do
+        BuildTypeFactory.new.create.perform_signing_validation()
+    end
+
+    lane :build do
+        BuildTypeFactory.new.create.build
     end
 end
+
+def set_device_family()
+    puts("Setting device family param")
+  
+    device_family = ENV["device_target"]
+    ENV["DEVICE_FAMILY"] = "1,2"
+    if device_family == "iphone"
+        ENV["DEVICE_FAMILY"] = "1"
+    end
+    if device_family == "ipad"
+        ENV["DEVICE_FAMILY"] = "2"
+    end
+  end
+  
+def install_awscli_if_needed()
+    envHelper = EnvironmentHelper.new
+    unless envHelper.bundle_identifier.to_s.strip.empty?          
+        if envHelper.isTvOS
+            puts("Installing S3 AWS")
+            sh("sudo pip install awscli")
+        end
+    end
+end
+

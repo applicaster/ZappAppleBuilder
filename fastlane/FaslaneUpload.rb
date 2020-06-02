@@ -1,4 +1,4 @@
-import "Base/Base.rb"
+import "Base/BuildType.rb"
 
 platform :ios do
     def upload_application(bundle_identifier, distribute_type, build_configuration)
@@ -15,7 +15,6 @@ platform :ios do
     end
 
     def update_app_secret(bundle_identifier)
-        
         if isTvOS == false 
             puts("Update MS App Center's secret")
             ms_app_center_update_app_secret(bundle_identifier)
@@ -27,5 +26,5 @@ platform :ios do
         version_id = "#{ENV['version_id']}"
         command = "bundle exec rake publish_to_zapp:update_zapp_version[\"#{version_id}\"]"
         sh("#{command}")
-      end
+    end
 end
