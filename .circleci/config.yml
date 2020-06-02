@@ -198,7 +198,7 @@ jobs:
             if [ -z "$distribution_key_url" ] then
               echo "No Distribution Key. Enterprise Client Build will be skipped"
             elif [ -z "$enterprise_client_username" ]; 
-              echo "Enterprise Client username NOT set! Enterprise Debug Build will be skipped"
+              echo "Enterprise Client username NOT set! Enterprise Client Build will be skipped"
             else
               echo "\n-- Building Zapp-App - Enterprise Client Build --"
               bundle exec fastlane ios enterprise_client
@@ -213,7 +213,6 @@ jobs:
               echo "\n-- Building Zapp-App - Enterprise Debug Build --"
               bundle exec fastlane ios enterprise_debug
             fi
-
 
       - deploy:
           name: Building development project
