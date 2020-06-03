@@ -15,11 +15,11 @@ platform :ios do
     end
 
     lane :post_zapptool do
-        BuildTypeFactory.new.create.prepare_environment()
+        BuildTypeFactory.new.create.prepare_environment
     end
 
     lane :validate_app_signing do
-        BuildTypeFactory.new.create.perform_signing_validation()
+        BuildTypeFactory.new.create.perform_signing_validation
     end
 
     lane :build do
@@ -41,7 +41,7 @@ platform :ios do
     end
 end
 
-def set_device_family()
+def set_device_family
     puts("Setting device family param")
   
     device_family = ENV["device_target"]
@@ -54,7 +54,7 @@ def set_device_family()
     end
   end
   
-def install_awscli_if_needed()
+def install_awscli_if_needed
     envHelper = EnvironmentHelper.new
     unless envHelper.bundle_identifier.to_s.strip.empty?          
         if envHelper.isTvOS
