@@ -66,9 +66,6 @@ class BaseHelper
             "filename:\"#{app_bundle}.mobileprovision\" " \
             "platform:\"#{@@envHelper.platform_name}\" "
         )
-
-        value = read_param_from_file("#{app_bundle}_PROFILE_UDID")
-        ENV["#{app_bundle}_PROFILE_UDID"] = value
         
         # delete Invalid provisioning profiles for the same app
         delete_invalid_provisioning_profiles(username, team_id, app_bundle)
