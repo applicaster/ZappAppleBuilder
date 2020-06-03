@@ -1,9 +1,7 @@
 import "Enterprise/BuildTypeEnterprise.rb"
 
 class EnterpriseClient < BuildTypeEnterprise
-	@team_id = ""
-	@team_name = ""
-	@provisioning_profile_uuid = ""
+
 
 	def prepare_environment
 		super
@@ -14,11 +12,25 @@ class EnterpriseClient < BuildTypeEnterprise
 			
 	def build()
 		# get provisioning profiles specifiers
-		main_prov_profile_specifier = @provisioning_profile_uuid
-		notification_service_extension_prov_profile_specifier = app_extension_provisioning_profile_uuid(@@appExtensions.notification_service_extension_key)
-		notification_content_extension_prov_profile_specifier = app_extension_provisioning_profile_uuid(@@appExtensions.notification_content_extension_key)
+		main_prov_profile_specifier = provisioning_profile_uuid
+		notification_service_extension_prov_profile_specifier = @@appExtensions.provisioning_profile_uuid(@@appExtensions.notification_service_extension_key)
+		notification_content_extension_prov_profile_specifier = @@appExtensions.provisioning_profile_uuid(@@appExtensions.notification_content_extension_key)
 	
-		gym(
+		puts("main_prov_profile_specifier: #{provisioning_profile_uuid}")
+
+		export_options = {
+			compileBitcode: true,
+			provisioningProfiles: {
+				@@envHelper.bundle_identifier => "#{main_prov_profile_specifier}",
+				@@appExtensions.notification_service_extension_bundle_identifier => "#{notification_service_extension_prov_profile_specifier}",
+				@@appExtensions.notification_content_extension_bundle_identifier => "#{notification_content_extension_prov_profile_specifier}"
+			}
+		}
+
+		build_export_options = "enterprise_client_build_export_options"
+		save_param_to_file(build_export_options, export_options.to_plist)
+	
+		build_app(
 			workspace: "#{@@projectHelper.xcworkspace_relative_path}",
 			scheme: @@projectHelper.scheme,
 			configuration: @@envHelper.build_configuration,
@@ -35,18 +47,11 @@ class EnterpriseClient < BuildTypeEnterprise
 					"NOTIFICATION_CONTENT_EXTENSION_PROV_PROFILE_SPECIFIER='#{notification_content_extension_prov_profile_specifier}' "\
 					"DEBUG_INFORMATION_FORMAT='dwarf-with-dsym'",
 			export_method: "enterprise",
-			export_team_id: @team_id,
-			export_options: {
-				compileBitcode: true,
-				provisioningProfiles: {
-					@@envHelper.bundle_identifier => "#{main_prov_profile_specifier}",
-					@@appExtensions.notification_service_extension_bundle_identifier => "#{notification_service_extension_prov_profile_specifier}",
-					@@appExtensions.notification_content_extension_bundle_identifier => "#{notification_content_extension_prov_profile_specifier}"
-				}
-			}
+			export_team_id: team_id,
+			export_options: saved_param_filename(build_export_options)
 		)
 	
-		perform_post_build_procedures()
+		# perform_post_build_procedures()
 	end
 	
 	def perform_post_build_procedures()
@@ -83,13 +88,18 @@ class EnterpriseClient < BuildTypeEnterprise
 	
 	def prepare_signing()
 		# fetch values
-		@team_id = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:com.apple.developer.team-identifier' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
-		@team_name = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :TeamName' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\011\012\015'")
-		@provisioning_profile_uuid = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :UUID' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
+		team_id_value = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:com.apple.developer.team-identifier' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
+		team_name_value = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :TeamName' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\011\012\015'")
+		provisioning_profile_uuid_value = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :UUID' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
 	
+		# save values
+		save_param_to_file("#{@@envHelper.bundle_identifier}_PROFILE_UDID", "#{provisioning_profile_uuid_value}")
+		save_param_to_file("#{@@envHelper.bundle_identifier}_TEAM_ID", "#{team_id_value}")
+		save_param_to_file("#{@@envHelper.bundle_identifier}_TEAM_NAME", "#{team_name_value}")
+
 		# install provisioning profile
 		sh("mkdir -p ~/Library/MobileDevice/'Provisioning Profiles'")
-		sh("cp #{@@projectHelper.distribution_provisioning_profile_path} ~/Library/MobileDevice/'Provisioning Profiles'/#{@provisioning_profile_uuid}.mobileprovision")
+		sh("cp #{@@projectHelper.distribution_provisioning_profile_path} ~/Library/MobileDevice/'Provisioning Profiles'/#{provisioning_profile_uuid}.mobileprovision")
 	
 		create_temp_keychain()
 		Actions::ImportCertificateAction.run(
@@ -154,5 +164,17 @@ class EnterpriseClient < BuildTypeEnterprise
 			@@appExtensions.notification_content_extension_info_plist_inner_path,
 			@@appExtensions.notification_content_extension_info_plist_path
 		)
+	end
+
+	def team_id  
+		read_param_from_file("#{@@envHelper.bundle_identifier}_TEAM_ID")
+	end
+
+	def team_name  
+		read_param_from_file("#{@@envHelper.bundle_identifier}_TEAM_NAME")
+	end
+
+	def provisioning_profile_uuid  
+		read_param_from_file("#{@@envHelper.bundle_identifier}_PROFILE_UDID")
 	end
 end

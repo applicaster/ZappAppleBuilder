@@ -16,9 +16,9 @@ class EnterpriseDebug < BuildTypeEnterprise
 			
   def build()
     # get provisioning profiles specifiers
-    main_prov_profile_specifier = "#{ENV["#{app_bundle_identifier}_PROFILE_UDID"]}"
-    notification_service_extension_prov_profile_specifier = "#{ENV["#{notifications_service_extension_bundle_identifier}_PROFILE_UDID"]}"
-    notification_content_extension_prov_profile_specifier = "#{ENV["#{notifications_content_extension_bundle_identifier}_PROFILE_UDID"]}"
+    main_prov_profile_specifier = read_param_from_file("#{app_bundle_identifier}_PROFILE_UDID")
+    notification_service_extension_prov_profile_specifier = read_param_from_file("#{notifications_service_extension_bundle_identifier}_PROFILE_UDID")
+    notification_content_extension_prov_profile_specifier = read_param_from_file("#{notifications_content_extension_bundle_identifier}_PROFILE_UDID")
 
     export_options = {
       compileBitcode: true,
@@ -28,7 +28,9 @@ class EnterpriseDebug < BuildTypeEnterprise
         notifications_content_extension_bundle_identifier => "#{notification_content_extension_prov_profile_specifier}"
       }
     }
-    save_param_to_file("debug_build_export_options", export_options.to_plist)
+
+    build_export_options = "enterprise_debug_build_export_options"
+    save_param_to_file(build_export_options, export_options.to_plist)
 
     build_app(
       workspace: "#{@@projectHelper.xcworkspace_relative_path}",
@@ -53,7 +55,7 @@ class EnterpriseDebug < BuildTypeEnterprise
               "DEBUG_INFORMATION_FORMAT='dwarf-with-dsym'",
       export_method: "enterprise",
       export_team_id: team_id,
-      export_options: saved_param_filename("debug_build_export_options")
+      export_options: saved_param_filename(build_export_options)
     )
 
 		perform_post_build_procedures()

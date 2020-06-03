@@ -1,10 +1,6 @@
 import "Base/BuildType.rb"
 
 class Store < BuildType
-	@team_id = ""
-	@team_name = ""
-	@provisioning_profile_uuid = ""
-
 	def prepare_environment
 		super
 		prepare_signing()
@@ -14,15 +10,27 @@ class Store < BuildType
 	
 	def build()
 		# get provisioning profiles specifiers
-		main_prov_profile_specifier = @provisioning_profile_uuid
-		notification_service_extension_prov_profile_specifier = app_extension_provisioning_profile_uuid(@@appExtensions.notification_service_extension_key)
-		notification_content_extension_prov_profile_specifier = app_extension_provisioning_profile_uuid(@@appExtensions.notification_content_extension_key)
+		main_prov_profile_specifier = provisioning_profile_uuid
+		notification_service_extension_prov_profile_specifier = @@appExtensions.provisioning_profile_uuid(@@appExtensions.notification_service_extension_key)
+		notification_content_extension_prov_profile_specifier = @@appExtensions.provisioning_profile_uuid(@@appExtensions.notification_content_extension_key)
 		
 		unlock_keychain(
 			path: @@envHelper.keychain_name,
 			password: @@envHelper.keychain_password
 		)
 	
+		export_options = {
+			compileBitcode: true,
+			provisioningProfiles: {
+				@@envHelper.bundle_identifier => main_prov_profile_specifier,
+				@@appExtensions.notification_service_extension_bundle_identifier => "#{notification_service_extension_prov_profile_specifier}",
+				@@appExtensions.notification_content_extension_bundle_identifier => "#{notification_content_extension_prov_profile_specifier}"
+			}
+		}
+
+		build_export_options = "store_build_export_options"
+		save_param_to_file(build_export_options, export_options.to_plist)
+
 		build_app(
 			clean: true,
 			workspace: "#{@@projectHelper.xcworkspace_relative_path}",
@@ -35,22 +43,15 @@ class Store < BuildType
 			output_name: "#{@@projectHelper.scheme}-Store",
 			build_path: @@projectHelper.build_path,
 			derived_data_path: @@projectHelper.build_path,
-			xcargs: "DEVELOPMENT_TEAM='#{@team_id}' "\
+			xcargs: "DEVELOPMENT_TEAM='#{team_id}' "\
 					"-UseModernBuildSystem=NO "\
 					"NOTIFICATION_SERVICE_EXTENSION_PROV_PROFILE_SPECIFIER='#{notification_service_extension_prov_profile_specifier}' "\
 					"NOTIFICATION_CONTENT_EXTENSION_PROV_PROFILE_SPECIFIER='#{notification_content_extension_prov_profile_specifier}' "\
 					"DEBUG_INFORMATION_FORMAT='dwarf-with-dsym' "\
 					"PROVISIONING_PROFILE_SPECIFIER='#{main_prov_profile_specifier}'",
-			export_team_id: @team_id,
+			export_team_id: team_id,
 			export_method: "app-store",
-			export_options: {
-				compileBitcode: true,
-				provisioningProfiles: {
-					@@envHelper.bundle_identifier => main_prov_profile_specifier,
-					@@appExtensions.notification_service_extension_bundle_identifier => "#{notification_service_extension_prov_profile_specifier}",
-					@@appExtensions.notification_content_extension_bundle_identifier => "#{notification_content_extension_prov_profile_specifier}"
-				}
-			}
+			export_options: saved_param_filename(build_export_options)
 		)
 	
 		delete_keychain(name: @@envHelper.keychain_name)
@@ -105,13 +106,19 @@ class Store < BuildType
 	
 	def prepare_signing()
 		# fetch values
-		@team_id = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:com.apple.developer.team-identifier' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
-		@team_name = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :TeamName' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\011\012\015'")
-		@provisioning_profile_uuid = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :UUID' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
+		team_id_value = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:com.apple.developer.team-identifier' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
+		team_name_value = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :TeamName' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\011\012\015'")
+		provisioning_profile_uuid_value = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :UUID' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
 	
+		# save values
+		save_param_to_file("#{@@envHelper.bundle_identifier}_PROFILE_UDID", "#{provisioning_profile_uuid_value}")
+		save_param_to_file("#{@@envHelper.bundle_identifier}_TEAM_ID", "#{team_id_value}")
+		save_param_to_file("#{@@envHelper.bundle_identifier}_TEAM_NAME", "#{team_name_value}")
+
+
 		# install provisioning profile
 		sh("mkdir -p ~/Library/MobileDevice/'Provisioning Profiles'")
-		sh("cp #{@@projectHelper.distribution_provisioning_profile_path} ~/Library/MobileDevice/'Provisioning Profiles'/#{@provisioning_profile_uuid}.mobileprovision")
+		sh("cp #{@@projectHelper.distribution_provisioning_profile_path} ~/Library/MobileDevice/'Provisioning Profiles'/#{provisioning_profile_uuid}.mobileprovision")
 	
 		create_temp_keychain()
 	
@@ -184,6 +191,18 @@ class Store < BuildType
 
 	def itunesconnect_password
 		"#{ENV['itunes_connect_password']}"
+	end
+
+	def team_id  
+		read_param_from_file("#{@@envHelper.bundle_identifier}_TEAM_ID")
+	end
+
+	def team_name  
+		read_param_from_file("#{@@envHelper.bundle_identifier}_TEAM_NAME")
+	end
+
+	def provisioning_profile_uuid  
+		read_param_from_file("#{@@envHelper.bundle_identifier}_PROFILE_UDID")
 	end
 end
 
