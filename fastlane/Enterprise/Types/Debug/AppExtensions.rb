@@ -1,16 +1,19 @@
 class EnterpriseDebugAppExtensions < AppExtensions
-  def group_name
-    "group.#{enterprise_debug_app_bundle_identifier}"
+  def group_name(app_bundle_identifier)
+    "group.#{app_bundle_identifier}"
   end
   
   def extension_prepare(
+      enterprise_debug_username,
+      enterprise_debug_team_id,
+      enterprise_debug_team_name,
+      enterprise_debug_app_bundle_identifier,
       extension_type, 
       extension_target_name, 
       extension_app_name, 
       extension_bundle_identifier, 
       extension_info_plist_inner_path,
       extension_info_plist_path
-  
     )
     build_type = "debug"
     # getting the indication if extension is enabled
@@ -32,15 +35,15 @@ class EnterpriseDebugAppExtensions < AppExtensions
         enterprise_debug_team_id,
         extension_app_name,
         extension_bundle_identifier,
-        "2"
+        extension_type
       )
   
       # create group for app and notification extension
-      sh("bundle exec fastlane produce group -g #{group_name} -n '#{@@envHelper.bundle_identifier} Group' -u #{enterprise_debug_username} ")
+      sh("bundle exec fastlane produce group -g #{group_name(enterprise_debug_app_bundle_identifier)} -n '#{@@envHelper.bundle_identifier} Group' -u #{enterprise_debug_username} ")
   
       # add the app and the notification extension to the created group
-      sh("bundle exec fastlane produce associate_group #{group_name} -a #{enterprise_debug_app_bundle_identifier} -u #{enterprise_debug_username} ")
-      sh("bundle exec fastlane produce associate_group #{group_name} -a #{extension_bundle_identifier} -u #{enterprise_debug_username} -i 1")
+      sh("bundle exec fastlane produce associate_group #{group_name(enterprise_debug_app_bundle_identifier)} -a #{enterprise_debug_app_bundle_identifier} -u #{enterprise_debug_username} ")
+      sh("bundle exec fastlane produce associate_group #{group_name(enterprise_debug_app_bundle_identifier)} -a #{extension_bundle_identifier} -u #{enterprise_debug_username} -i 1")
       
       # create provisioning profile for the notifications app
       create_provisioning_profile(
@@ -54,14 +57,27 @@ class EnterpriseDebugAppExtensions < AppExtensions
       update_group_identifiers(
         "#{@@projectHelper.name}",
         "Release",
-        ["#{group_name}"]
+        ["#{group_name(enterprise_debug_app_bundle_identifier)}"]
       )
   
       update_group_identifiers(
         "#{extension_target_name}",
         "Release",
-        ["#{group_name}"]
+        ["#{group_name(enterprise_debug_app_bundle_identifier)}"]
       )
+
+      add_extension_to_project(
+        "#{extension_target_name}"
+    )
     end
   end  
+
+  def update_group_identifiers(target, build_type, groups)
+    file_path = "#{@@projectHelper.path}/#{target}/Entitlements/#{target}-#{build_type}.entitlements"
+  
+    Actions::UpdateAppGroupIdentifiersAction.run(
+      entitlements_file: "#{file_path}",
+      app_group_identifiers: groups
+    )
+  end
 end

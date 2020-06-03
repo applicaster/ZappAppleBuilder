@@ -2,6 +2,8 @@ import "Enterprise/Types/Debug/AppExtensions.rb"
 import "Enterprise/BuildTypeEnterprise.rb"
 
 class EnterpriseDebug < BuildTypeEnterprise
+  @@enterpriseDebugAppExtensions = EnterpriseDebugAppExtensions.new
+
   def prepare_environment
     super
 		prepare_signing()
@@ -144,22 +146,31 @@ class EnterpriseDebug < BuildTypeEnterprise
 	end
 
   def prepare_notification_content_extension()
-    base_ent_debug_app_extension_prepare(
+    @@enterpriseDebugAppExtensions.extension_prepare(
+      username,
+      team_id,
+      team_name,
+      app_bundle_identifier,
       @@appExtensions.notification_content_extension_key,
       @@appExtensions.notification_content_extension_target_name,
-      @@appExtensions.notifications_content_extension_app_name,
-      @@appExtensions.notifications_content_extension_bundle_identifier,
+      notifications_content_extension_app_name,
+      notifications_content_extension_bundle_identifier,
       @@appExtensions.notification_content_extension_info_plist_inner_path,
       @@appExtensions.notification_content_extension_info_plist_path
     )
   end
 
   def prepare_notification_service_extension()
-    base_ent_debug_app_extension_prepare(
+
+    @@enterpriseDebugAppExtensions.extension_prepare(
+      username,
+      team_id,
+      team_name,
+      app_bundle_identifier,
       @@appExtensions.notification_service_extension_key,
       @@appExtensions.notification_service_extension_target_name,
-      @@appExtensions.notifications_service_extension_app_name,
-      @@appExtensions.notifications_service_extension_bundle_identifier,
+      notifications_service_extension_app_name,
+      notifications_service_extension_bundle_identifier,
       @@appExtensions.notification_service_extension_info_plist_inner_path,
       @@appExtensions.notification_service_extension_info_plist_path
     )
@@ -202,18 +213,18 @@ class EnterpriseDebug < BuildTypeEnterprise
   end
 
   def notifications_service_extension_app_name
-      "#{devportal_app_name}.#{notification_service_extension_target_name}"
+      "#{devportal_app_name}.#{@@appExtensions.notification_service_extension_target_name}"
   end
 
   def notifications_content_extension_app_name
-      "#{devportal_app_name}.#{notification_content_extension_target_name}"
+      "#{devportal_app_name}.#{@@appExtensions.notification_content_extension_target_name}"
   end
 
   def notifications_service_extension_bundle_identifier
-      "#{app_bundle_identifier}.#{notification_service_extension_target_name}"
+      "#{app_bundle_identifier}.#{@@appExtensions.notification_service_extension_target_name}"
   end
 
   def notifications_content_extension_bundle_identifier
-      "#{app_bundle_identifier}.#{notification_content_extension_target_name}"
+      "#{app_bundle_identifier}.#{@@appExtensions.notification_content_extension_target_name}"
   end
 end

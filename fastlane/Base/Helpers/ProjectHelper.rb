@@ -1,9 +1,6 @@
-import "Base/Helpers/EnvironmentHelper.rb"
 import "Base/Helpers/BaseHelper.rb"
 
 class ProjectHelper < BaseHelper
-    @@envHelper = EnvironmentHelper.new
-
     def change_system_capability(capability, old_value, new_value)
         project = "#{xcodeproj_path}/project.pbxproj"
         regex = /(#{capability} = {\s+enabled\s=\s)#{old_value}(;\s+};)/
@@ -43,10 +40,6 @@ class ProjectHelper < BaseHelper
     def customizations_folder_path
         "#{@@envHelper.root_path}/ZappApple/Customization"
     end
-    
-    def circle_artifacts_folder_path
-        "#{@@envHelper.root_path}/CircleArtifacts"
-    end
 
     def build_path
         "#{@@envHelper.root_path}/build"
@@ -76,11 +69,11 @@ class ProjectHelper < BaseHelper
       
     def plist_update_version_values(target_name, target_bundle_identifier)
         # update app identifier, versions of the extension
-        bundle_version = get_info_plist_value(
+        bundle_version = Actions::GetInfoPlistValueAction.run(
           path: plist_path,
           key: "CFBundleVersion"
         )
-        bundle_short_version = get_info_plist_value(
+        bundle_short_version = Actions::GetInfoPlistValueAction.run(
           path: plist_path,
           key: "CFBundleShortVersionString"
         )

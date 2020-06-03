@@ -2,10 +2,8 @@ require 'fastlane/action'
 require 'fastlane'
 
 import "Base/Helpers/ProjectHelper.rb"
-import "Base/Helpers/EnvironmentHelper.rb"
 
-class AppExtensions
-    @@envHelper = EnvironmentHelper.new
+class AppExtensions < BaseHelper
     @@projectHelper = ProjectHelper.new
 
     def remove_from_project(target_name)
@@ -41,13 +39,16 @@ class AppExtensions
             sh("echo '#{extension_type} enabled'")
     
             # update app identifier, versions of the notification extension
-            info_plist_update_version_values(
+            @@projectHelper.plist_update_version_values(
                 extension_target_name,
                 extension_bundle_identifier
             )
     
             # save app identifier of the notification extension
-            ENV["#{extension_bundle_identifier}"] = get_info_plist_value(path: "#{extension_info_plist_path}", key: "CFBundleIdentifier")
+            ENV["#{extension_bundle_identifier}"] = Actions::GetInfoPlistValueAction.run(
+                path: "#{extension_info_plist_path}", 
+                key: "CFBundleIdentifier"
+            )
             # change app groups support on project file
             @@projectHelper.change_system_capability(
                 "com.apple.ApplicationGroups.iOS",
@@ -61,10 +62,6 @@ class AppExtensions
                 xcodeproj: @@projectHelper.xcodeproj_path,
                 plist_path: extension_info_plist_inner_path,
                 app_identifier: extension_bundle_identifier
-            )
-    
-            app_extensions_add_to_project(
-                "#{extension_target_name}"
             )
         else
             # notification extension disabled

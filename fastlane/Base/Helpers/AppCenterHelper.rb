@@ -1,9 +1,7 @@
 import "Base/Helpers/ProjectHelper.rb"
-import "Base/Helpers/EnvironmentHelper.rb"
 import "Base/Helpers/BaseHelper.rb"
 
 class AppCenterHelper < BaseHelper
-  @@envHelper = EnvironmentHelper.new
   @@projectHelper = ProjectHelper.new
 
   def fetch_identifiers(bundle_identifier)
@@ -33,8 +31,8 @@ class AppCenterHelper < BaseHelper
       #{app_os}
       #{app_platform}
       #{app_display_name}
-      #{@@projectHelper.circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.ipa
-       #{@@projectHelper.circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.app.dSYM.zip"
+      #{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.ipa
+       #{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.app.dSYM.zip"
        )
     appcenter_upload(
       api_token: "#{ENV['APPCENTER_API_TOKEN']}",
@@ -45,8 +43,8 @@ class AppCenterHelper < BaseHelper
       app_platform: "#{app_platform}",
       app_display_name: "#{app_display_name}",
       app_name: "#{app_name}",
-      ipa: "#{@@projectHelper.circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.ipa",
-      dsym: "#{@@projectHelper.circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.app.dSYM.zip",
+      ipa: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.ipa",
+      dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.app.dSYM.zip",
       notify_testers: false # Set to false if you don't want to notify testers of your new release (default: `false`)
     )
 

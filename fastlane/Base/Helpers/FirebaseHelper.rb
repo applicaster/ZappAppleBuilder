@@ -1,4 +1,6 @@
 
+require 'fileutils'
+
 import "Base/Helpers/ProjectHelper.rb"
 import "Base/Helpers/BaseHelper.rb"
 

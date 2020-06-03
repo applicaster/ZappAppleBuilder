@@ -25,6 +25,20 @@ platform :ios do
     lane :build do
         BuildTypeFactory.new.create.build
     end
+    
+    lane :create_provisioning_profile do |options|
+        sigh(
+            username: options[:username],
+            app_identifier: options[:app_identifier],
+            team_id: options[:team_id],
+            provisioning_name: options[:provisioning_name],
+            cert_owner_name: options[:cert_owner_name],
+            filename: options[:filename],
+            platform: options[:platform]
+        )
+
+        save_param_to_file("#{options[:app_identifier]}_PROFILE_UDID", "#{lane_context[SharedValues::SIGH_UUID]}")
+    end
 end
 
 def set_device_family()
@@ -47,6 +61,15 @@ def install_awscli_if_needed()
             puts("Installing S3 AWS")
             sh("sudo pip install awscli")
         end
+    end
+end
+
+def save_param_to_file(name, value)
+    folder_name = "#{ENV['PWD']}/.fastlane_params"
+    filename = "#{folder_name}/#{name}"
+    Dir.mkdir(folder_name) unless File.exists?(folder_name)
+    File.open(filename,"w") do |f|
+       f.write(value)
     end
 end
 

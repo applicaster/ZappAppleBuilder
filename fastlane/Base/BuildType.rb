@@ -6,14 +6,13 @@ Dotenv.load
 Fastlane.load_actions
 
 import "Base/AppExtensions.rb"
-import "Base/S3.rb"
+import "Base/Helpers/S3.rb"
 import "Base/Helpers/FirebaseHelper.rb"
 import "Base/Helpers/ProjectHelper.rb"
-import "Base/Helpers/EnvironmentHelper.rb"
 import "Base/Helpers/AppCenterHelper.rb"
 
-class BuildType
-  @@envHelper = EnvironmentHelper.new
+
+class BuildType < BaseHelper
   @@projectHelper = ProjectHelper.new
   @@firebaseHelper = FirebaseHelper.new
   @@appCenterHelper = AppCenterHelper.new
@@ -87,9 +86,5 @@ class BuildType
     puts("Removing notifications extensions from project (needed for `pod install`)")
     @@appExtensions.remove_from_project(@@appExtensions.notification_content_extension_target_name)
     @@appExtensions.remove_from_project(@@appExtensions.notification_service_extension_target_name)
-  end
-
-  def sh(command)
-    Actions::sh(command)
   end
 end
