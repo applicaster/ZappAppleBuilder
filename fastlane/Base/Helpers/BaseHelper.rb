@@ -1,4 +1,5 @@
 require 'fastlane/action'
+require 'fastlane_core'
 require 'fastlane'
 import "Base/Helpers/EnvironmentHelper.rb"
 
@@ -9,13 +10,28 @@ class BaseHelper
         Actions::sh(command)
     end
 
+    def params_folder_path
+       "#{@@envHelper.root_path}/fastlane/.fastlane_params"
+    end
     def read_param_from_file(name)
-        folder_name = ".fastlane_params"
-        filename = "#{@@envHelper.root_path}/fastlane/#{folder_name}/#{name}"
+        filename = "#{params_folder_path}/#{name}"
         if File.exist? "#{filename}"
            File.read("#{filename}").strip
         end
     end
+
+    def save_param_to_file(name, value)
+        filename = "#{params_folder_path}/#{name}"
+        Dir.mkdir(params_folder_path) unless File.exists?(params_folder_path)
+        File.open(filename,"w") do |f|
+          f.write(value)
+         end
+    end
+
+    def saved_param_filename(name) 
+      "#{params_folder_path}/#{name}"
+    end
+
 
     def create_app_on_dev_portal(username, team_id, app_name, app_bundle, app_index)
         # create app on developer portal with new identifier for notification extension
@@ -37,28 +53,28 @@ class BaseHelper
             access_wifi: "on"
           }
         )
-      end
+    end
       
-      def create_provisioning_profile(username, team_id, team_name, app_bundle)
+    def create_provisioning_profile(username, team_id, team_name, app_bundle)
         # create download and install new provisioning profile for the app
         sh("fastlane ios create_provisioning_profile " \
-          "username:\"#{username}\" " \
-          "app_identifier:\"#{app_bundle}\" " \
-          "team_id:\"#{team_id}\" " \
-          "provisioning_name:\"#{app_bundle} prov profile\" " \
-          "cert_owner_name:\"#{team_name}\" " \
-          "filename:\"#{app_bundle}.mobileprovision\" " \
-          "platform:\"#{@@envHelper.platform_name}\" "
+            "username:\"#{username}\" " \
+            "app_identifier:\"#{app_bundle}\" " \
+            "team_id:\"#{team_id}\" " \
+            "provisioning_name:\"#{app_bundle} prov profile\" " \
+            "cert_owner_name:\"#{team_name}\" " \
+            "filename:\"#{app_bundle}.mobileprovision\" " \
+            "platform:\"#{@@envHelper.platform_name}\" "
         )
-    
+
         value = read_param_from_file("#{app_bundle}_PROFILE_UDID")
         ENV["#{app_bundle}_PROFILE_UDID"] = value
         
         # delete Invalid provisioning profiles for the same app
         delete_invalid_provisioning_profiles(username, team_id, app_bundle)
-      end
+    end
       
-      def delete_invalid_provisioning_profiles(username, team_id, app_bundle)
+    def delete_invalid_provisioning_profiles(username, team_id, app_bundle)
         password = ENV['FASTLANE_PASSWORD']
         Spaceship::Portal.login(username, password)
         Spaceship::Portal.client.team_id = team_id
@@ -71,9 +87,9 @@ class BaseHelper
           sh("echo 'Deleting #{profile.name}, status: #{profile.status}'")
           profile.delete!
         end
-      end
+    end
       
-      def create_push_certificate(username, team_id, team_name, app_bundle, p12_password)
+    def create_push_certificate(username, team_id, team_name, app_bundle, p12_password)
         Actions::GetPushCertificateAction.run(
           username: "#{username}",
           team_id: "#{team_id}",
@@ -95,9 +111,28 @@ class BaseHelper
         "apns.p12]"
       
         sh("#{command}")
-      end
+    end
 
-      def circle_artifacts_folder_path
+    def circle_artifacts_folder_path
         "#{@@envHelper.root_path}/CircleArtifacts"
+    end
+
+    def build_app(options)
+      sh("fastlane gym " \
+        "--workspace \"#{options[:workspace]}\" " \
+        "--scheme \"#{options[:scheme]}\" " \
+        "--configuration \"#{options[:configuration]}\" " \
+        "--include_bitcode #{options[:include_bitcode]} " \
+        "--include_symbols #{options[:include_symbols]} " \
+        "--output_directory \"#{options[:output_directory]}\" " \
+        "--buildlog_path \"#{options[:buildlog_path]}\" " \
+        "--output_name \"#{options[:output_name]}\" " \
+        "--build_path \"#{options[:build_path]}\" " \
+        "--derived_data_path \"#{options[:derived_data_path]}\" " \
+        "--xcargs \"#{options[:xcargs]}\" " \
+        "--export_method \"#{options[:export_method]}\" " \
+        "--export_team_id \"#{options[:export_team_id]}\" " \
+        "--export_options \"#{options[:export_options]}\" " 
+    )
     end
 end

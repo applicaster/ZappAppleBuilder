@@ -14,7 +14,7 @@ class ProjectHelper < BaseHelper
     end
 
     def xcworkspace_relative_path
-        "#{folder_name}/#{name}.xcworkspace"
+        "../#{folder_name}/#{name}.xcworkspace"
     end
 
     def folder_name

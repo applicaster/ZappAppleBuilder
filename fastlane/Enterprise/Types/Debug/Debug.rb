@@ -1,3 +1,6 @@
+require 'fastlane_core'
+require 'plist'
+
 import "Enterprise/Types/Debug/AppExtensions.rb"
 import "Enterprise/BuildTypeEnterprise.rb"
 
@@ -17,11 +20,20 @@ class EnterpriseDebug < BuildTypeEnterprise
     notification_service_extension_prov_profile_specifier = "#{ENV["#{notifications_service_extension_bundle_identifier}_PROFILE_UDID"]}"
     notification_content_extension_prov_profile_specifier = "#{ENV["#{notifications_content_extension_bundle_identifier}_PROFILE_UDID"]}"
 
-    
-    gym(
+    export_options = {
+      compileBitcode: true,
+      provisioningProfiles: {
+        app_bundle_identifier => "#{main_prov_profile_specifier}",
+        notifications_service_extension_bundle_identifier => "#{notification_service_extension_prov_profile_specifier}",
+        notifications_content_extension_bundle_identifier => "#{notification_content_extension_prov_profile_specifier}"
+      }
+    }
+    save_param_to_file("debug_build_export_options", export_options.to_plist)
+
+    build_app(
       workspace: "#{@@projectHelper.xcworkspace_relative_path}",
       scheme: @@projectHelper.scheme,
-      configuration: build_configuration,
+      configuration: @@envHelper.build_configuration,
       include_bitcode: true,
       include_symbols: true,
       output_directory: "CircleArtifacts/Enterprise",
@@ -41,14 +53,7 @@ class EnterpriseDebug < BuildTypeEnterprise
               "DEBUG_INFORMATION_FORMAT='dwarf-with-dsym'",
       export_method: "enterprise",
       export_team_id: team_id,
-      export_options: {
-        compileBitcode: true,
-        provisioningProfiles: {
-          app_bundle_identifier => "#{main_prov_profile_specifier}",
-          notifications_service_extension_bundle_identifier => "#{notification_service_extension_prov_profile_specifier}",
-          notifications_content_extension_bundle_identifier => "#{notification_content_extension_prov_profile_specifier}"
-        }
-      }
+      export_options: saved_param_filename("debug_build_export_options")
     )
 
 		perform_post_build_procedures()

@@ -21,7 +21,7 @@ class EnterpriseClient < BuildTypeEnterprise
 		gym(
 			workspace: "#{@@projectHelper.xcworkspace_relative_path}",
 			scheme: @@projectHelper.scheme,
-			configuration: build_configuration,
+			configuration: @@envHelper.build_configuration,
 			include_bitcode: true,
 			include_symbols: true,
 			output_directory: "CircleArtifacts/Enterprise",
