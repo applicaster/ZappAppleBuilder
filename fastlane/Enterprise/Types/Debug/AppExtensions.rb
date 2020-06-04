@@ -46,7 +46,7 @@ class EnterpriseDebugAppExtensions < AppExtensions
       sh("bundle exec fastlane produce associate_group #{group_name(enterprise_debug_app_bundle_identifier)} -a #{extension_bundle_identifier} -u #{enterprise_debug_username} -i 1")
       
       # create provisioning profile for the notifications app
-      create_provisioning_profile(
+      enterprise_debug_create_provisioning_profile(
         username: enterprise_debug_username,
         team_id: enterprise_debug_team_id,
         team_name: enterprise_debug_team_name,

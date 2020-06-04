@@ -26,7 +26,8 @@ platform :ios do
         BuildTypeFactory.new.build
     end
     
-    lane :create_provisioning_profile do |options|
+    lane :enterprise_debug_create_provisioning_profile do |options|
+        EnterpriseDebug.new.prepare_signing_internal_fastlane
         sigh(
             username: options[:username],
             app_identifier: options[:app_identifier],

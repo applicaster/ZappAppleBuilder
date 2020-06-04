@@ -135,10 +135,10 @@ class BaseHelper
       )
     end
       
-    def create_provisioning_profile(options)
-      puts("func: create_provisioning_profile")
+    def enterprise_debug_create_provisioning_profile(options)
+      puts("func: enterprise_debug_create_provisioning_profile")
       # create download and install new provisioning profile for the app
-      sh("fastlane ios create_provisioning_profile " \
+      sh("fastlane ios enterprise_debug_create_provisioning_profile " \
           "username:\"#{options[:username]}\" " \
           "app_identifier:\"#{options[:bundle_identifier]}\" " \
           "team_id:\"#{options[:team_id]}\" " \
