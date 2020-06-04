@@ -1,3 +1,5 @@
+require 'colorize'
+
 import "Base/Helpers/EnvironmentHelper.rb"
 
 class BuildTypeFactory
@@ -33,7 +35,7 @@ class BuildTypeFactory
         end
 
         buildtypes.each do |type|
-            puts("Perform signing validation for #{type.class.name}")
+            puts("Perform signing validation for #{type.class.name}".colorize(:yellow))
             type.perform_signing_validation
         end
     end
