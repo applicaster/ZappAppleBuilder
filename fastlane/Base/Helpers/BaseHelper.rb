@@ -112,6 +112,14 @@ class BaseHelper
       )
     end
 
+    def update_project_team(options)
+      puts("func: update_project_team")
+      Actions::UpdateProjectTeamAction.run(
+        path: options[:xcodeproj],
+        teamid: options[:teamid]
+      )
+    end
+
     def create_app_on_dev_portal(options)
       puts("func: create_app_on_dev_portal")
       # create app on developer portal with new identifier for notification extension

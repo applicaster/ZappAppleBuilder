@@ -98,8 +98,8 @@ class EnterpriseDebug < BuildTypeEnterprise
     @@appCenterHelper.update_app_secret(app_bundle_identifier)
 
     # update project team identifier for all targets
-    Actions::UpdateProjectTeamAction.run(
-      path: @@projectHelper.xcodeproj_path,
+    update_project_team(
+      xcodeproj: @@projectHelper.xcodeproj_path,
       teamid: team_id
     )
 
@@ -122,6 +122,11 @@ class EnterpriseDebug < BuildTypeEnterprise
     )
 
     # create provisioning profile for the main app
+    unlock_keychain(
+			keychain_path: @@envHelper.keychain_name,
+			keychain_password: @@envHelper.keychain_password
+    )
+    
     enterprise_debug_create_provisioning_profile(
       username: username,
       team_id: team_id,

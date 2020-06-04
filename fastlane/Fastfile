@@ -35,7 +35,7 @@ platform :ios do
             cert_owner_name: options[:cert_owner_name],
             filename: options[:filename],
             platform: options[:platform],
-            skip_certificate_verification: true
+            skip_certificate_verification: false
         )
 
         save_param_to_file("#{options[:app_identifier]}_PROFILE_UDID", "#{lane_context[SharedValues::SIGH_UUID]}")
