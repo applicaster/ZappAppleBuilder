@@ -27,7 +27,6 @@ platform :ios do
     end
     
     lane :enterprise_debug_create_provisioning_profile do |options|
-        EnterpriseDebug.new.prepare_signing_internal_fastlane
         sigh(
             username: options[:username],
             app_identifier: options[:app_identifier],
@@ -35,7 +34,8 @@ platform :ios do
             provisioning_name: options[:provisioning_name],
             cert_owner_name: options[:cert_owner_name],
             filename: options[:filename],
-            platform: options[:platform]
+            platform: options[:platform],
+            skip_certificate_verification: true
         )
 
         save_param_to_file("#{options[:app_identifier]}_PROFILE_UDID", "#{lane_context[SharedValues::SIGH_UUID]}")

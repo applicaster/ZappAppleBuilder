@@ -136,19 +136,6 @@ class EnterpriseDebug < BuildTypeEnterprise
     add_debug_ribbon_to_app_icon
   end
 
-  def prepare_signing_internal_fastlane()
-    create_temp_keychain()
-
-    import_certificate(
-      certificate_path: certificate_path_internal_fastlane,
-      certificate_password: ENV['KEY_PASSWORD'],
-      keychain_name: @@envHelper.keychain_name,
-      keychain_password: @@envHelper.keychain_password
-    )
-    sh("bundle exec fastlane fastlane-credentials add --username #{username} --password '#{password}'")
-    ENV['FASTLANE_PASSWORD']=password
-  end
-
   def prepare_signing()
     create_temp_keychain()
 
@@ -225,10 +212,6 @@ class EnterpriseDebug < BuildTypeEnterprise
   def certificate_path
       "#{@@envHelper.root_path}/Zapp-Signing/Enterprise/dist.p12"
   end
-
-  def certificate_path_internal_fastlane
-    "#{@@envHelper.root_path}/../Zapp-Signing/Enterprise/dist.p12"
-end
 
   def username
       "#{ENV['APPLE_DEV_ENT_USER']}"
