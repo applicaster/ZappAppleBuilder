@@ -14,16 +14,16 @@ platform :ios do
         install_awscli_if_needed
     end
 
-    lane :post_zapptool do
-        BuildTypeFactory.new.create.prepare_environment
+    lane :prepare_environment do
+        BuildTypeFactory.new.prepare_environment
     end
 
     lane :validate_app_signing do
-        BuildTypeFactory.new.create.perform_signing_validation
+        BuildTypeFactory.new.perform_signing_validation
     end
 
     lane :build do
-        BuildTypeFactory.new.create.build
+        BuildTypeFactory.new.build
     end
     
     lane :create_provisioning_profile do |options|

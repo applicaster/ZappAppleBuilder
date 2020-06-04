@@ -1,8 +1,9 @@
 import "Enterprise/BuildTypeEnterprise.rb"
 
 class EnterpriseClient < BuildTypeEnterprise
-
-
+	def build_type
+		"enterprise"
+	end
 	def prepare_environment
 		super
 		prepare_signing()

@@ -19,6 +19,10 @@ class BuildType < BaseHelper
 
   @@appExtensions = AppExtensions.new
 
+  def build_type
+    # implement in child classes
+  end
+  
 	def prepare_environment
     remove_app_extensions()
   end

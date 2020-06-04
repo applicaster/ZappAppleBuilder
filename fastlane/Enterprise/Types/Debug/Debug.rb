@@ -6,6 +6,9 @@ import "Enterprise/BuildTypeEnterprise.rb"
 
 class EnterpriseDebug < BuildTypeEnterprise
   @@enterpriseDebugAppExtensions = EnterpriseDebugAppExtensions.new
+  def build_type
+    "debug"
+  end
 
   def prepare_environment
     super

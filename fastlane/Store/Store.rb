@@ -1,6 +1,10 @@
 import "Base/BuildType.rb"
 
 class Store < BuildType
+	def build_type
+		"store"
+	end
+
 	def prepare_environment
 		super
 		prepare_signing()
