@@ -12,7 +12,7 @@ jobs:
       PROJECT_NAME: "ZappApple"
       SCRIPTS_FOLDER: "Scripts"
       BUILD_PATH: ~/build_debug
-      ZAPPTOOL_VERSION: "3.10.0"
+      ZAPPTOOL_VERSION: "3.9.8"
       HOMEBREW_NO_AUTO_UPDATE: "1"
 
       #fastlane variables
@@ -191,6 +191,7 @@ jobs:
       - deploy:
           name: Building Zapp-App
           command: |
+              bundle exec fastlane ios prepare_environment
               bundle exec fastlane ios build
 
       - deploy:
