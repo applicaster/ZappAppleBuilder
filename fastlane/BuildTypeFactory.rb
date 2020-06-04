@@ -54,7 +54,7 @@ class BuildTypeFactory
         end
 
         buildtypes.each do |type|
-            puts("Building for #{buildtype.class.name}")
+            puts("Building for #{type.class.name}")
  
             # prepare env if this is not the initially requested build type (like store + debug =>> prepare debug)
             if curent_build_type != type
