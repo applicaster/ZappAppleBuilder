@@ -12,7 +12,7 @@ class EnterpriseDebug < BuildTypeEnterprise
 
   def prepare_environment
     super
-		prepare_signing()
+		# prepare_signing()
 		prepare_build()
 		@@appCenterHelper.fetch_identifiers("#{app_bundle_identifier}")
 	end
@@ -164,6 +164,8 @@ class EnterpriseDebug < BuildTypeEnterprise
       certificate_path: certificate_path,
       certificate_password: ENV['KEY_PASSWORD']
     )
+
+    prepare_signing()
 	end
 
 	def prepare_extensions()
