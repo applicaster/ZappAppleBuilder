@@ -113,6 +113,11 @@ jobs:
             - /Users/distiller/.rubies/ruby-2.6.5/lib/ruby
             - ./.bundle
 
+      - run:
+          name: Validate app signing
+          command: |
+              bundle exec fastlane ios validate_app_signing
+
       # Login NPM
       - run:
           name: NPM login
