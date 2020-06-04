@@ -58,8 +58,12 @@ class AppExtensions < BaseHelper
             )
     
             # update app identifier for to the notification extension
-            @@projectHelper.plist_reset_to_bundle_identifier_placeholder(@@projectHelper.xcodeproj_path, extension_info_plist_inner_path)
+            reset_info_plist_bundle_identifier(
+                xcodeproj: @@projectHelper.xcodeproj_path,
+                plist_path: extension_info_plist_inner_path
+            )
             update_app_identifier(
+                xcodeproj: @@projectHelper.xcodeproj_path,
                 plist_path: extension_info_plist_inner_path,
                 app_identifier: extension_bundle_identifier
             )

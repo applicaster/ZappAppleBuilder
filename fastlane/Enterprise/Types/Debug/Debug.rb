@@ -147,7 +147,15 @@ class EnterpriseDebug < BuildTypeEnterprise
   end
 
   def perform_signing_validation
+    validate_distribution_certificate_password(
+      certificate_path: certificate_path,
+      certificate_password: ENV['KEY_PASSWORD']
+    )
 
+    validate_distribution_certificate_expiration(
+      certificate_path: certificate_path,
+      certificate_password: ENV['KEY_PASSWORD']
+    )
 	end
 
 	def prepare_extensions()

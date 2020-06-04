@@ -64,28 +64,28 @@ class Store < BuildType
 			]
 		)
 	
-		# puts("Starting app delivery to AppStoreConnect using altool")
-		# deliver_output = capture_stream($stdout) {
-		# 	altool(
-		# 		altool_username: "#{itunesconnect_username}",
-		# 		altool_password: "#{itunesconnect_password}",
-		# 		altool_app_type: "appletvos",
-		# 		altool_ipa_path: "CircleArtifacts/Store/#{@@projectHelper.scheme}-Store.ipa",
-		# 		altool_output_format: "xml",
-		# 	)
-		# }
+		puts("Starting app delivery to AppStoreConnect using altool")
+		deliver_output = capture_stream($stdout) {
+			altool(
+				altool_username: "#{itunesconnect_username}",
+				altool_password: "#{itunesconnect_password}",
+				altool_app_type: "appletvos",
+				altool_ipa_path: "CircleArtifacts/Store/#{@@projectHelper.scheme}-Store.ipa",
+				altool_output_format: "xml",
+			)
+		}
 	
-		# # print deliver output
-		# puts("Altool output: #{deliver_output}")
+		# print deliver output
+		puts("Altool output: #{deliver_output}")
 	
-		# # raise an error if the delover output has an error
-		# raise RuntimeError, 'Error posting the app to the App Store Connect' if deliver_output.include?('ERROR ITMS-')
+		# raise an error if the delover output has an error
+		raise RuntimeError, 'Error posting the app to the App Store Connect' if deliver_output.include?('ERROR ITMS-')
 	
-		# # upload to ms app center
-		# upload_application(@@envHelper.bundle_identifier,
-		# 	"Store",
-		# 	"release"
-		# )
+		# upload to ms app center
+		upload_application(@@envHelper.bundle_identifier,
+			"Store",
+			"release"
+		)
 	end
 	
 	def download_signing_files()
@@ -98,6 +98,23 @@ class Store < BuildType
 	
 	def perform_signing_validation
 		download_signing_files()
+		
+		validate_distribution_certificate_password(
+			certificate_path: @@projectHelper.distribution_certificate_path,
+			certificate_password: @@envHelper.distribution_key_password
+		)
+	
+		validate_distribution_certificate_expiration(
+			certificate_path: @@projectHelper.distribution_certificate_path,
+			certificate_password: @@envHelper.distribution_key_password
+		)
+
+		validate_distribution_certificate_and_provisioning_profile_team_id(
+			certificate_path: @@projectHelper.distribution_certificate_path,
+			certificate_password: @@envHelper.distribution_key_password,
+			provisioning_profile_path: @@projectHelper.distribution_provisioning_profile_path
+		)
+
 		provisioning_profile_expiration_date = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :ExpirationDate' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
 		provisioning_profile_team_identifier = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:com.apple.developer.team-identifier' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
 		provisioning_profile_aps_environment = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:aps-environment' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
