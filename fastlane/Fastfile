@@ -25,21 +25,6 @@ platform :ios do
     lane :build do
         BuildTypeFactory.new.build
     end
-    
-    lane :enterprise_debug_create_provisioning_profile do |options|
-        sigh(
-            username: options[:username],
-            app_identifier: options[:app_identifier],
-            team_id: options[:team_id],
-            provisioning_name: options[:provisioning_name],
-            cert_owner_name: options[:cert_owner_name],
-            filename: options[:filename],
-            platform: options[:platform],
-            skip_certificate_verification: false
-        )
-
-        save_param_to_file("#{options[:app_identifier]}_PROFILE_UDID", "#{lane_context[SharedValues::SIGH_UUID]}")
-    end
 end
 
 def set_device_family

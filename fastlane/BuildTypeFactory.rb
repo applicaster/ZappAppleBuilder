@@ -57,7 +57,7 @@ class BuildTypeFactory
             puts("Building for #{type.class.name}")
  
             # prepare env if this is not the initially requested build type (like store + debug =>> prepare debug)
-            if curent_build_type != type
+            if curent_build_type != type.build_type
                 type.prepare_environment
             end
             type.build

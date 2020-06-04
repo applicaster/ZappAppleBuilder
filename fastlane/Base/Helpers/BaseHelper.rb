@@ -145,17 +145,19 @@ class BaseHelper
       
     def enterprise_debug_create_provisioning_profile(options)
       puts("func: enterprise_debug_create_provisioning_profile")
-      # create download and install new provisioning profile for the app
-      sh("fastlane ios enterprise_debug_create_provisioning_profile " \
-          "username:\"#{options[:username]}\" " \
-          "app_identifier:\"#{options[:bundle_identifier]}\" " \
-          "team_id:\"#{options[:team_id]}\" " \
-          "provisioning_name:\"#{options[:bundle_identifier]} prov profile\" " \
-          "cert_owner_name:\"#{options[:team_name]}\" " \
-          "filename:\"#{options[:bundle_identifier]}.mobileprovision\" " \
-          "platform:\"#{@@envHelper.platform_name}\" "
+      sh("fastlane sigh " \
+        "--username \"#{options[:username]}\" " \
+        "--app_identifier \"#{options[:bundle_identifier]}\" " \
+        "--team_id \"#{options[:team_id]}\" " \
+        "--provisioning_name \"#{options[:bundle_identifier]} prov profile\" " \
+        "--cert_owner_name \"#{options[:team_name]}\" " \
+        "--filename \"#{options[:bundle_identifier]}.mobileprovision\" " \
+        "--platform \"#{@@envHelper.platform_name}\" "
       )
-      
+
+      provisioning_profile_uuid = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :UUID' /dev/stdin <<< $(security cms -D -i \"#{@@envHelper.root_path}/fastlane/#{options[:bundle_identifier]}.mobileprovision\")) | tr -d '\040\011\012\015'")
+      save_param_to_file("#{options[:bundle_identifier]}_PROFILE_UDID", "#{provisioning_profile_uuid}")
+
       # delete Invalid provisioning profiles for the same app
       delete_invalid_provisioning_profiles(options)
     end
