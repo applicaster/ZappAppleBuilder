@@ -2,7 +2,7 @@ require 'fastlane/action'
 require 'fastlane_core'
 require 'fastlane'
 require 'openssl'
-
+require 'date'
 import "Base/Helpers/EnvironmentHelper.rb"
 
 class BaseHelper 
@@ -232,16 +232,18 @@ class BaseHelper
       puts("func: validate_distribution_certificate_expiration")
       error_message = "Distrubution Certificate expired"
       begin
-        result = sh("openssl pkcs12 " \
+        expire_date = sh("openssl pkcs12 " \
           "-in #{options[:certificate_path]} " \
           "-nokeys " \
           "-passin pass:#{options[:certificate_password]} " \
-          "| openssl x509 -noout -checkend 9999 " \
-          "| grep -c 'Certificate will not expire'"
+          "| openssl x509 -noout -enddate " \
+          "| grep notAfter " \
+          "| sed -e 's#notAfter=##'"
         )
-        raise error_message unless result.to_i() > 0
+
+        raise error_message unless Date.parse(expire_date) > Date.new
       rescue => ex
-        raise error_message unless result.to_i() > 0
+        raise error_message
       end
     end
 
@@ -255,9 +257,9 @@ class BaseHelper
           "-passin pass:#{options[:certificate_password]} " \
           "| grep -c 'BEGIN CERTIFICATE'"
         )
-        raise error_message unless result.to_i() > 0
+        raise error_message unless result.lines.last.to_i() > 0
       rescue => ex
-        raise error_message unless result.to_i() > 0
+        raise error_message
       end  
     end
 
