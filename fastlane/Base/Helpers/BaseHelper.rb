@@ -181,11 +181,11 @@ class BaseHelper
       
     def import_certificate(options) 
       puts("func: import_certificate")
-      Actions::ImportCertificateAction.run(
-        certificate_path: options[:certificate_path],
-        certificate_password: options[:certificate_password],
-        keychain_name: options[:keychain_name],
-        keychain_password: options[:keychain_password]
+      sh("fastlane run import_certificate " \
+        "certificate_path:\"#{options[:certificate_path]}\" " \
+        "certificate_password:\"#{options[:certificate_password]}\" " \
+        "keychain_name:\"#{options[:keychain_name]}\" " \
+        "keychain_password:\"#{options[:keychain_password]}\" "
       )
     end
 
