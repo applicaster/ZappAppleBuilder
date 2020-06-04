@@ -1,5 +1,6 @@
 require 'fastlane/action'
 require 'fastlane'
+require 'colorize'
 
 fastlane_require 'dotenv'
 Dotenv.load
@@ -81,4 +82,85 @@ class BuildType < BaseHelper
     @@appExtensions.remove_from_project(@@appExtensions.notification_content_extension_target_name)
     @@appExtensions.remove_from_project(@@appExtensions.notification_service_extension_target_name)
   end
+
+  def validate_distribution_certificate_expiration(options)
+    puts("func: validate_distribution_certificate_expiration")
+    error_message = "Distrubution Certificate is expired"
+    begin
+      expire_date = sh("openssl pkcs12 " \
+        "-in #{options[:certificate_path]} " \
+        "-nokeys " \
+        "-passin pass:#{options[:certificate_password]} " \
+        "| openssl x509 -noout -enddate " \
+        "| grep notAfter " \
+        "| sed -e 's#notAfter=##'"
+      )
+
+      raise error_message unless Date.parse(expire_date) > Date.new
+      puts("VALID: Distrubution Certificate is not expired\n".colorize(:green))
+    rescue => ex
+      raise error_message
+    end
+  end
+
+  def validate_distribution_certificate_password(options)
+    puts("func: validate_distribution_certificate_password")
+    error_message = "Incorrect password for Distrubution Certificate"
+    begin
+      result = sh("openssl pkcs12 " \
+        "-in #{options[:certificate_path]} " \
+        "-nokeys " \
+        "-passin pass:#{options[:certificate_password]} " \
+        "| grep -c 'BEGIN CERTIFICATE'"
+      )
+      raise error_message unless result.lines.last.to_i() > 0
+      puts("VALID: Distrubution Certificate password is Ok\n".colorize(:green))
+    rescue => ex
+      raise error_message
+    end  
+  end
+
+
+  def validate_distribution_certificate_and_provisioning_profile_team_id(options)
+    puts("func: validate_distribution_certificate_and_provisioning_profile_team_id")
+    error_message = "Unable to fetch Team ID from distribution certificate"
+    begin
+      result = sh("openssl pkcs12 " \
+        "-in #{options[:certificate_path]} " \
+        "-nokeys " \
+        "-passin pass:#{options[:certificate_password]} " \
+        "| openssl x509 -noout -subject " \
+        "| awk -F'[=,/]' '{print $3}'``"
+
+      )
+      raise error_message unless result.length > 0
+
+      # get provisioning profile team identifier
+      provisioning_profile_team_identifier = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :TeamIdentifier' /dev/stdin <<< $(security cms -D -i \"#{options[:provisioning_profile_path]}\") | sed -e 1d -e '$d')")
+
+      # remove white spaces 
+      provisioning_profile_team_identifier = provisioning_profile_team_identifier.chomp.strip
+      distribution_certificate_team_identifier = result.chomp.strip
+
+      # raise exc if no match
+      error_message = "Provisioning Profile is not signed with provided Distribution Certificate"
+      raise "#{error_message} (#{distribution_certificate_team_identifier} != #{provisioning_profile_team_identifier})" unless distribution_certificate_team_identifier == provisioning_profile_team_identifier
+      puts("VALID: Provisioning Profile is signed with provided Distribution Certificate\n".colorize(:green))
+
+    rescue => ex
+      raise ex.message
+    end 
+  end
+
+  def validate_provisioning_profile(options)
+    error_message = "Provisioning Profile is expired"
+    begin
+		  expire_date = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :ExpirationDate' /dev/stdin <<< $(security cms -D -i \"#{options[:provisioning_profile_path]}\"))")
+      raise error_message unless Date.parse(expire_date) > Date.new
+      puts("VALID: Provisioning Profile is not expired\n".colorize(:green))
+    rescue => ex
+      raise ex.message
+    end 
+  end
+
 end
