@@ -32,17 +32,84 @@ class BaseHelper
       "#{params_folder_path}/#{name}"
     end
 
+    def create_temp_keychain()
+      Actions::CreateKeychainAction.run(
+        name: @@envHelper.keychain_name,
+        password: @@envHelper.keychain_password,
+        unlock: true,
+        timeout: 3600,
+        lock_when_sleeps: true
+      )
+    end
 
-    def create_app_on_dev_portal(username, team_id, app_name, app_bundle, app_index)
+    def unlock_keychain(options)
+      Actions::UnlockKeychainAction.run(
+			  path: options[:keychain_path],
+			  password: options[:keychain_password]
+      )
+    end
+
+    def delete_keychain(options)
+      Actions::DeleteKeychainAction.run(
+			  name: options[:name]
+      )
+    end
+
+    def update_url_schemes(options)
+      Actions::UpdateUrlSchemesAction.run(
+        path: "#{options[:plist_path]}",
+        update_url_schemes: proc do |schemes|
+          schemes + ["#{options[:scheme]}"]
+        end
+      )
+    end
+
+    def get_plist_value(options)
+      Actions::GetInfoPlistValueAction.run(
+        path: options[:plist_path],
+        key: options[:key]
+      )
+    end
+
+    def update_app_identifier(options)
+      Actions::UpdateAppIdentifierAction.run(
+        xcodeproj: @@projectHelper.xcodeproj_path,
+        plist_path: options[:plist_path],
+        app_identifier: options[:app_identifier]
+      )
+    end
+    
+    def update_info_plist_versions(options)
+      Actions::UpdateInfoPlistAction.run(
+        xcodeproj: @@projectHelper.xcodeproj_path,
+        plist_path: options[:plist_path],
+        block: lambda do |plist|
+          plist['CFBundleVersion'] = options[:bundle_version]
+          plist['CFBundleShortVersionString'] =  options[:bundle_short_version]
+        end
+      )
+    end
+
+    def reset_info_plist_bundle_identifier(options)
+      Actions::UpdateInfoPlistAction.run(
+        xcodeproj: @@projectHelper.xcodeproj_path,
+        plist_path: options[:plist_path],
+        block: lambda do |plist|
+          plist['CFBundleIdentifier'] = "$(PRODUCT_BUNDLE_IDENTIFIER)"
+        end
+      )
+    end
+
+    def create_app_on_dev_portal(options)
         # create app on developer portal with new identifier for notification extension
         Actions::ProduceAction.run(
-          username: "#{username}",
-          app_identifier: "#{app_bundle}",
-          team_id: "#{team_id}",
-          app_name: "#{app_name}",
+          username: "#{options[:username]}",
+          app_identifier: "#{options[:bundle_identifier]}",
+          team_id: "#{options[:team_id]}",
+          app_name: "#{options[:app_name]}",
           language: "English",
           app_version: "1.0",
-          sku: "#{app_bundle}.#{app_index}",
+          sku: "#{options[:bundle_identifier]}.#{options[:app_index]}",
           skip_itc: true,
           enable_services: {
             app_group: "on",
@@ -55,29 +122,29 @@ class BaseHelper
         )
     end
       
-    def create_provisioning_profile(username, team_id, team_name, app_bundle)
+    def create_provisioning_profile(options)
         # create download and install new provisioning profile for the app
         sh("fastlane ios create_provisioning_profile " \
-            "username:\"#{username}\" " \
-            "app_identifier:\"#{app_bundle}\" " \
-            "team_id:\"#{team_id}\" " \
-            "provisioning_name:\"#{app_bundle} prov profile\" " \
-            "cert_owner_name:\"#{team_name}\" " \
-            "filename:\"#{app_bundle}.mobileprovision\" " \
+            "username:\"#{options[:username]}\" " \
+            "app_identifier:\"#{options[:bundle_identifier]}\" " \
+            "team_id:\"#{options[:team_id]}\" " \
+            "provisioning_name:\"#{options[:bundle_identifier]} prov profile\" " \
+            "cert_owner_name:\"#{options[:team_name]}\" " \
+            "filename:\"#{options[:bundle_identifier]}.mobileprovision\" " \
             "platform:\"#{@@envHelper.platform_name}\" "
         )
         
         # delete Invalid provisioning profiles for the same app
-        delete_invalid_provisioning_profiles(username, team_id, app_bundle)
+        delete_invalid_provisioning_profiles(options)
     end
       
-    def delete_invalid_provisioning_profiles(username, team_id, app_bundle)
+    def delete_invalid_provisioning_profiles(options)
         password = ENV['FASTLANE_PASSWORD']
-        Spaceship::Portal.login(username, password)
-        Spaceship::Portal.client.team_id = team_id
+        Spaceship::Portal.login(options[:username], options[:password])
+        Spaceship::Portal.client.team_id = options[:team_id]
       
         profiles = Spaceship::Portal::ProvisioningProfile.all.find_all do |profile|
-          (profile.status == "Invalid" or profile.status == "Expired") && profile.app.bundle_id == app_bundle
+          (profile.status == "Invalid" or profile.status == "Expired") && profile.app.bundle_id == options[:bundle_identifier]
         end
       
         profiles.each do |profile|
@@ -86,14 +153,23 @@ class BaseHelper
         end
     end
       
-    def create_push_certificate(username, team_id, team_name, app_bundle, p12_password)
+    def import_certificate(options) 
+      Actions::ImportCertificateAction.run(
+        certificate_path: options[:certificate_path],
+        certificate_password: options[:certificate_password],
+        keychain_name: options[:keychain_name],
+        keychain_password: options[:keychain_password]
+      )
+    end
+
+    def create_push_certificate(options)
         Actions::GetPushCertificateAction.run(
-          username: "#{username}",
-          team_id: "#{team_id}",
-          team_name: "#{team_name}",
-          app_identifier: "#{app_bundle}",
+          username: "#{options[:username]}",
+          team_id: "#{options[:team_id]}",
+          team_name: "#{options[:team_name]}",
+          app_identifier: "#{options[:bundle_identifier]}",
           generate_p12: true,
-          p12_password: "#{p12_password}",
+          p12_password: "#{options[:p12_password]}",
           pem_name: "apns",
           save_private_key: false,
           output_path: "./CircleArtifacts",

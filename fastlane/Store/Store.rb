@@ -64,28 +64,28 @@ class Store < BuildType
 			]
 		)
 	
-		puts("Starting app delivery to AppStoreConnect using altool")
-		deliver_output = capture_stream($stdout) {
-			altool(
-				altool_username: "#{itunesconnect_username}",
-				altool_password: "#{itunesconnect_password}",
-				altool_app_type: "appletvos",
-				altool_ipa_path: "CircleArtifacts/Store/#{@@projectHelper.scheme}-Store.ipa",
-				altool_output_format: "xml",
-			)
-		}
+		# puts("Starting app delivery to AppStoreConnect using altool")
+		# deliver_output = capture_stream($stdout) {
+		# 	altool(
+		# 		altool_username: "#{itunesconnect_username}",
+		# 		altool_password: "#{itunesconnect_password}",
+		# 		altool_app_type: "appletvos",
+		# 		altool_ipa_path: "CircleArtifacts/Store/#{@@projectHelper.scheme}-Store.ipa",
+		# 		altool_output_format: "xml",
+		# 	)
+		# }
 	
-		# print deliver output
-		puts("Altool output: #{deliver_output}")
+		# # print deliver output
+		# puts("Altool output: #{deliver_output}")
 	
-		# raise an error if the delover output has an error
-		raise RuntimeError, 'Error posting the app to the App Store Connect' if deliver_output.include?('ERROR ITMS-')
+		# # raise an error if the delover output has an error
+		# raise RuntimeError, 'Error posting the app to the App Store Connect' if deliver_output.include?('ERROR ITMS-')
 	
-		# upload to ms app center
-		upload_application(@@envHelper.bundle_identifier,
-			"Store",
-			"release"
-		)
+		# # upload to ms app center
+		# upload_application(@@envHelper.bundle_identifier,
+		# 	"Store",
+		# 	"release"
+		# )
 	end
 	
 	def download_signing_files()
@@ -121,8 +121,7 @@ class Store < BuildType
 		sh("cp #{@@projectHelper.distribution_provisioning_profile_path} ~/Library/MobileDevice/'Provisioning Profiles'/#{provisioning_profile_uuid}.mobileprovision")
 	
 		create_temp_keychain()
-	
-		Actions::ImportCertificateAction.run(
+		import_certificate(
 			certificate_path: @@projectHelper.distribution_certificate_path,
 			certificate_password: @@envHelper.distribution_key_password,
 			keychain_name: @@envHelper.keychain_name,
@@ -144,12 +143,15 @@ class Store < BuildType
 		@@firebaseHelper.add_configuration_file("production")
 	
 		# update app identifier to the store one
-		@@projectHelper.plist_reset_to_bundle_identifier_placeholder(@@projectHelper.xcodeproj_path, @@projectHelper.plist_inner_path)
-		Actions::UpdateAppIdentifierAction.run(
+		reset_info_plist_bundle_identifier(
+			xcodeproj: @@projectHelper.xcodeproj_path,
+			plist_path:  @@projectHelper.plist_inner_path
+		)
+		update_app_identifier(
 			xcodeproj: @@projectHelper.xcodeproj_path,
 			plist_path: @@projectHelper.plist_inner_path,
 			app_identifier: @@envHelper.bundle_identifier
-		)
+        )
 	
 		# add support for push notifications
 		@@projectHelper.change_system_capability(

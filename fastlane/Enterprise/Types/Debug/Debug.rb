@@ -81,12 +81,15 @@ class EnterpriseDebug < BuildTypeEnterprise
     @@firebaseHelper.add_configuration_file("enterprise")
 
     # update app identifier to the enterprise one
-    @@projectHelper.plist_reset_to_bundle_identifier_placeholder(@@projectHelper.xcodeproj_path, @@projectHelper.plist_inner_path)
-		Actions::UpdateAppIdentifierAction.run(
-			xcodeproj: @@projectHelper.xcodeproj_path,
-			plist_path: @@projectHelper.plist_inner_path,
-			app_identifier: app_bundle_identifier
+    reset_info_plist_bundle_identifier(
+      xcodeproj: @@projectHelper.xcodeproj_path,
+			plist_path:  @@projectHelper.plist_inner_path
 		)
+    update_app_identifier(
+      xcodeproj: @@projectHelper.xcodeproj_path,
+      plist_path: @@projectHelper.plist_inner_path,
+      app_identifier: app_bundle_identifier
+    )
  
     # update ms_app_center app secret
     @@appCenterHelper.update_app_secret(app_bundle_identifier)
@@ -99,28 +102,28 @@ class EnterpriseDebug < BuildTypeEnterprise
 
     # create main app on developer portal with new identifier
     create_app_on_dev_portal(
-      username,
-      team_id,
-      devportal_app_name,
-      app_bundle_identifier,
-      "1"
+      username: username,
+      team_id: team_id,
+      app_name: devportal_app_name,
+      bundle_identifier: app_bundle_identifier,
+      app_index: "1"
     )
 
     # create and save the push notifications certificate in build artifacts
     create_push_certificate(
-      username,
-      team_id,
-      devportal_app_name,
-      app_bundle_identifier,
-      @@envHelper.accountsAccountId
+      username: username,
+      team_id: team_id,
+      app_name: devportal_app_name,
+      bundle_identifier: app_bundle_identifier,
+      p12_password: @@envHelper.accountsAccountId
     )
 
     # create provisioning profile for the main app
     create_provisioning_profile(
-      username,
-      team_id,
-      team_name,
-      app_bundle_identifier
+      username: username,
+      team_id: team_id,
+      team_name: team_name,
+      bundle_identifier: app_bundle_identifier
     )
 
     # prepare app extensions
@@ -133,7 +136,7 @@ class EnterpriseDebug < BuildTypeEnterprise
   def prepare_signing()
     create_temp_keychain()
 
-    Actions::ImportCertificateAction.run(
+    import_certificate(
       certificate_path: certificate_path,
       certificate_password: ENV['KEY_PASSWORD'],
       keychain_name: @@envHelper.keychain_name,

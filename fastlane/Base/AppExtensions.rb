@@ -40,13 +40,14 @@ class AppExtensions < BaseHelper
     
             # update app identifier, versions of the notification extension
             @@projectHelper.plist_update_version_values(
-                extension_target_name,
-                extension_bundle_identifier
+                target_name: extension_target_name,
+                plist_path: extension_info_plist_path,
+                bundle_identifier: extension_bundle_identifier
             )
     
             # save app identifier of the notification extension
-            ENV["#{extension_bundle_identifier}"] = Actions::GetInfoPlistValueAction.run(
-                path: "#{extension_info_plist_path}", 
+            ENV["#{extension_bundle_identifier}"] = get_plist_value(
+                plist_path: "#{extension_info_plist_path}", 
                 key: "CFBundleIdentifier"
             )
             # change app groups support on project file
@@ -58,11 +59,11 @@ class AppExtensions < BaseHelper
     
             # update app identifier for to the notification extension
             @@projectHelper.plist_reset_to_bundle_identifier_placeholder(@@projectHelper.xcodeproj_path, extension_info_plist_inner_path)
-            Actions::UpdateAppIdentifierAction.run(
-                xcodeproj: @@projectHelper.xcodeproj_path,
+            update_app_identifier(
                 plist_path: extension_info_plist_inner_path,
                 app_identifier: extension_bundle_identifier
             )
+
         else
             # notification extension disabled
             sh("echo '#{extension_type} disabled'")
@@ -117,9 +118,5 @@ class AppExtensions < BaseHelper
     
     def notification_content_extension_bundle_identifier
         "#{@@envHelper.bundle_identifier}.#{notification_content_extension_target_name}"
-    end
-
-    def sh(command)
-        Actions::sh(command)
     end
 end

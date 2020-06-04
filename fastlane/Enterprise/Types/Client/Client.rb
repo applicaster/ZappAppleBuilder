@@ -102,16 +102,16 @@ class EnterpriseClient < BuildTypeEnterprise
 		sh("cp #{@@projectHelper.distribution_provisioning_profile_path} ~/Library/MobileDevice/'Provisioning Profiles'/#{provisioning_profile_uuid}.mobileprovision")
 	
 		create_temp_keychain()
-		Actions::ImportCertificateAction.run(
+		import_certificate(
 			certificate_path: @@projectHelper.distribution_certificate_path,
 			certificate_password: @@envHelper.distribution_key_password,
 			keychain_name: @@envHelper.keychain_name,
 			keychain_password: @@envHelper.keychain_password
 		)
 	
-		Actions::UnlockKeychainAction.run(
-			path: @@envHelper.keychain_name,
-			password: @@envHelper.keychain_password
+		unlock_keychain(
+			keychain_path: @@envHelper.keychain_name,
+			keychain_password: @@envHelper.keychain_password
 		)
 	end
 	
@@ -128,8 +128,11 @@ class EnterpriseClient < BuildTypeEnterprise
 		@@firebaseHelper.add_configuration_file("production")
 	
 		# update app identifier to the store one
-		@@projectHelper.plist_reset_to_bundle_identifier_placeholder(@@projectHelper.xcodeproj_path, @@projectHelper.plist_inner_path)
-		Actions::UpdateInfoPlistAction.run(
+		reset_info_plist_bundle_identifier(
+			xcodeproj: @@projectHelper.xcodeproj_path,
+			plist_path:  @@projectHelper.plist_inner_path
+		)
+		update_app_identifier(
 			xcodeproj: @@projectHelper.xcodeproj_path,
 			plist_path: @@projectHelper.plist_inner_path,
 			app_identifier: @@envHelper.bundle_identifier

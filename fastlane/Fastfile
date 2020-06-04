@@ -10,8 +10,8 @@ import "Store/Store.rb"
 
 platform :ios do
     before_all do
-        set_device_family()
-        install_awscli_if_needed()
+        set_device_family
+        install_awscli_if_needed
     end
 
     lane :post_zapptool do

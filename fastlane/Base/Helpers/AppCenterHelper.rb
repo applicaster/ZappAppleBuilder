@@ -58,11 +58,9 @@ class AppCenterHelper < BaseHelper
     @@projectHelper.update_features_customization("MSAppCenterAppSecret", app_secret)
 
     # add appcenter url scheme to the app
-    Actions::UpdateUrlSchemesAction.run(
-      path: "#{@@projectHelper.plist_path}",
-      update_url_schemes: proc do |schemes|
-        schemes + ["appcenter-#{app_secret}"]
-      end
+    update_url_schemes(
+      plist_path: "#{@@projectHelper.plist_path}",
+      scheme: "appcenter-#{app_secret}"
     )
     puts "MS App Center app secret #{app_secret} was updated successfully for bundle identifier: #{bundle_identifier}"
   end

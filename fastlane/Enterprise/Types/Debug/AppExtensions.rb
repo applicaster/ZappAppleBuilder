@@ -31,11 +31,11 @@ class EnterpriseDebugAppExtensions < AppExtensions
   
       # create app for the notifications
       create_app_on_dev_portal(
-        enterprise_debug_username,
-        enterprise_debug_team_id,
-        extension_app_name,
-        extension_bundle_identifier,
-        extension_type
+        username: enterprise_debug_username,
+        team_id: enterprise_debug_team_id,
+        app_name: extension_app_name,
+        bundle_identifier: extension_bundle_identifier,
+        app_index: extension_type
       )
   
       # create group for app and notification extension
@@ -47,10 +47,10 @@ class EnterpriseDebugAppExtensions < AppExtensions
       
       # create provisioning profile for the notifications app
       create_provisioning_profile(
-        enterprise_debug_username,
-        enterprise_debug_team_id,
-        enterprise_debug_team_name,
-        extension_bundle_identifier
+        username: enterprise_debug_username,
+        team_id: enterprise_debug_team_id,
+        team_name: enterprise_debug_team_name,
+        bundle_identifier: extension_bundle_identifier
       )
       
       # add group to entitlements

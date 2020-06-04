@@ -30,16 +30,6 @@ class BuildType < BaseHelper
   def build
     # implement in child classes
   end
-
-  def create_temp_keychain()
-    Actions::CreateKeychainAction.run(
-      name: @@envHelper.keychain_name,
-      password: @@envHelper.keychain_password,
-      unlock: true,
-      timeout: 3600,
-      lock_when_sleeps: true
-    )
-  end
   
   def remove_key_from_entitlements(target, build_type, key)
     file_path = "#{@@projectHelper.path}/#{target}/Entitlements/#{target}-#{build_type}.entitlements"

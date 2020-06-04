@@ -63,45 +63,31 @@ class ProjectHelper < BaseHelper
     end
 
     def update_features_customization(param_name, param_value)
-        Actions::sh("/usr/libexec/PlistBuddy -c \"Set #{param_name} #{param_value}\" #{customizations_folder_path}/FeaturesCustomization.plist")
+        sh("/usr/libexec/PlistBuddy -c \"Set #{param_name} #{param_value}\" #{customizations_folder_path}/FeaturesCustomization.plist")
         puts "#{param_name} value was updated successfully in FeaturesCustomization.plist"
     end
       
-    def plist_update_version_values(target_name, target_bundle_identifier)
+    def plist_update_version_values(options)
         # update app identifier, versions of the extension
-        bundle_version = Actions::GetInfoPlistValueAction.run(
-          path: plist_path,
-          key: "CFBundleVersion"
+        bundle_version = get_plist_value(
+            plist_path: options[:plist_path],
+            key: "CFBundleVersion"
         )
-        bundle_short_version = Actions::GetInfoPlistValueAction.run(
-          path: plist_path,
-          key: "CFBundleShortVersionString"
+        bundle_short_version = get_plist_value(
+            plist_path: options[:plist_path],
+            key: "CFBundleShortVersionString"
         )
         
-        Actions::UpdateInfoPlistAction.run(
-          xcodeproj: xcodeproj_path,
-          plist_path: "#{target_name}/Info.plist",
-          block: lambda do |plist|
-            plist['CFBundleVersion'] = bundle_version
-            plist['CFBundleShortVersionString'] = bundle_short_version
-          end
+        update_info_plist_versions(
+            plist_path: "#{options[:target_name]}/Info.plist",
+            bundle_version: bundle_version
+            bundle_short_version: bundle_short_version
         )
     
         # update app identifier to the enterprise one
-        Actions::UpdateAppIdentifierAction.run(
-          xcodeproj: xcodeproj_path,
-          plist_path: "#{target_name}/Info.plist",
-          app_identifier: target_bundle_identifier
-        )  
-    end
-    
-    def plist_reset_to_bundle_identifier_placeholder(proj_path, info_plist_path)
-        Actions::UpdateInfoPlistAction.run(
-            xcodeproj: proj_path,
-            plist_path: info_plist_path,
-            block: lambda do |plist|
-                plist['CFBundleIdentifier'] = "$(PRODUCT_BUNDLE_IDENTIFIER)"
-            end
+        update_app_identifier(
+            plist_path: "#{options[:target_name]}/Info.plist",
+            app_identifier: "#{options[:bundle_identifier]}"
         )
     end
 
