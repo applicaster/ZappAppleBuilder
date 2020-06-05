@@ -21,6 +21,7 @@ platform :ios do
 
     lane :validate_app_signing do
         BuildTypeFactory.new.perform_signing_validation
+        BuildTypeFactory.new.prepare_environment
     end
 
     lane :build do
@@ -33,13 +34,7 @@ def create_temp_keychain
         name:  keychain_name,
         password: keychain_password,
         unlock: true,
-        timeout: 3600,
-        lock_when_sleeps: true
-     )
-     
-     unlock_keychain(
-        path: keychain_name,
-        password: keychain_name
+        timeout: false
      )
 end
 
