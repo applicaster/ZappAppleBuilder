@@ -21,7 +21,6 @@ platform :ios do
 
     lane :validate_app_signing do
         BuildTypeFactory.new.perform_signing_validation
-        BuildTypeFactory.new.prepare_environment
     end
 
     lane :build do
