@@ -12,6 +12,7 @@ platform :ios do
     before_all do
         set_device_family
         install_awscli_if_needed
+        create_temp_keychain
     end
 
     lane :prepare_environment do
@@ -25,6 +26,21 @@ platform :ios do
     lane :build do
         BuildTypeFactory.new.build
     end
+end
+
+def create_temp_keychain
+    create_keychain(
+        name:  keychain_name,
+        password: keychain_password,
+        unlock: true,
+        timeout: 3600,
+        lock_when_sleeps: true
+     )
+     
+     unlock_keychain(
+        path: keychain_name,
+        password: keychain_name
+     )
 end
 
 def set_device_family
@@ -59,3 +75,10 @@ def save_param_to_file(name, value)
     end
 end
 
+def keychain_name
+    "zapp-apple-build.keychain"
+end
+
+def keychain_password
+    "circle"
+end

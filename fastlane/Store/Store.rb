@@ -17,11 +17,6 @@ class Store < BuildType
 		main_prov_profile_specifier = provisioning_profile_uuid
 		notification_service_extension_prov_profile_specifier = @@appExtensions.provisioning_profile_uuid(@@appExtensions.notification_service_extension_key)
 		notification_content_extension_prov_profile_specifier = @@appExtensions.provisioning_profile_uuid(@@appExtensions.notification_content_extension_key)
-		
-		unlock_keychain(
-			path: @@envHelper.keychain_name,
-			password: @@envHelper.keychain_password
-		)
 	
 		export_options = {
 			compileBitcode: true,
@@ -144,7 +139,6 @@ class Store < BuildType
 		sh("mkdir -p ~/Library/MobileDevice/'Provisioning Profiles'")
 		sh("cp #{@@projectHelper.distribution_provisioning_profile_path} ~/Library/MobileDevice/'Provisioning Profiles'/#{provisioning_profile_uuid}.mobileprovision")
 	
-		create_temp_keychain()
 		import_certificate(
 			certificate_path: @@projectHelper.distribution_certificate_path,
 			certificate_password: @@envHelper.distribution_key_password,

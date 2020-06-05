@@ -36,25 +36,6 @@ class BaseHelper
       "#{params_folder_path}/#{name}"
     end
 
-    def create_temp_keychain()
-      puts("func: create_temp_keychain")
-      Actions::CreateKeychainAction.run(
-        name: @@envHelper.keychain_name,
-        password: @@envHelper.keychain_password,
-        unlock: true,
-        timeout: 3600,
-        lock_when_sleeps: true
-      )
-    end
-
-    def unlock_keychain(options)
-      puts("func: unlock_keychain")
-      Actions::UnlockKeychainAction.run(
-			  path: options[:keychain_path],
-			  password: options[:keychain_password]
-      )
-    end
-
     def delete_keychain(options)
       puts("func: delete_keychain")
       Actions::DeleteKeychainAction.run(

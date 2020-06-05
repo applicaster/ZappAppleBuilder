@@ -120,12 +120,6 @@ class EnterpriseDebug < BuildTypeEnterprise
       bundle_identifier: app_bundle_identifier,
       p12_password: @@envHelper.accountsAccountId
     )
-
-    # create provisioning profile for the main app
-    unlock_keychain(
-			keychain_path: @@envHelper.keychain_name,
-			keychain_password: @@envHelper.keychain_password
-    )
     
     enterprise_debug_create_provisioning_profile(
       username: username,
@@ -142,8 +136,6 @@ class EnterpriseDebug < BuildTypeEnterprise
   end
 
   def prepare_signing()
-    create_temp_keychain()
-
     import_certificate(
       certificate_path: certificate_path,
       certificate_password: ENV['KEY_PASSWORD'],

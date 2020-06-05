@@ -96,7 +96,7 @@ class EnterpriseClient < BuildTypeEnterprise
 		validate_provisioning_profile(
 			provisioning_profile_path: @@projectHelper.distribution_provisioning_profile_path
 		)
-		
+
 		provisioning_profile_team_identifier = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :TeamIdentifier' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
 		provisioning_profile_aps_environment = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:aps-environment' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
 		provisioning_profile_application_dentifier = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:application-identifier' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
@@ -123,18 +123,13 @@ class EnterpriseClient < BuildTypeEnterprise
 		sh("mkdir -p ~/Library/MobileDevice/'Provisioning Profiles'")
 		sh("cp #{@@projectHelper.distribution_provisioning_profile_path} ~/Library/MobileDevice/'Provisioning Profiles'/#{provisioning_profile_uuid}.mobileprovision")
 	
-		create_temp_keychain()
 		import_certificate(
 			certificate_path: @@projectHelper.distribution_certificate_path,
 			certificate_password: @@envHelper.distribution_key_password,
 			keychain_name: @@envHelper.keychain_name,
 			keychain_password: @@envHelper.keychain_password
 		)
-	
-		unlock_keychain(
-			keychain_path: @@envHelper.keychain_name,
-			keychain_password: @@envHelper.keychain_password
-		)
+
 	end
 	
 	def prepare_build()

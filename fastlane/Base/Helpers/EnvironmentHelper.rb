@@ -43,14 +43,6 @@ class EnvironmentHelper
         "Release"
     end
     
-    def keychain_name
-        "zapp-apple-build.keychain"
-    end
-    
-    def keychain_password
-        "circle"
-    end
-    
     def root_path
         "#{ENV['PWD']}"
     end
