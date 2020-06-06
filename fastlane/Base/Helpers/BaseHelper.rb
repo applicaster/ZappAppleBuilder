@@ -230,6 +230,6 @@ class BaseHelper
     end
 
     def current(name)
-      puts "#method: #{name}".colorize(:white ).colorize( :background => :light_blue)
+      puts "#method: #{name}".colorize(:white ).colorize( :background => :blue)
     end
 end
