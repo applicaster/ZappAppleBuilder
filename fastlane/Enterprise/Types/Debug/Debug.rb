@@ -11,7 +11,7 @@ class EnterpriseDebug < BuildTypeEnterprise
   end
 
   def prepare_environment
-    current
+    current(__callee__.to_s)
     super
 		prepare_signing()
 		prepare_build()
@@ -19,7 +19,7 @@ class EnterpriseDebug < BuildTypeEnterprise
 	end
 			
   def build()
-    current
+    current(__callee__.to_s)
     # get provisioning profiles specifiers
     main_prov_profile_specifier = read_param_from_file("#{app_bundle_identifier}_PROFILE_UDID")
     notification_service_extension_prov_profile_specifier = read_param_from_file("#{notifications_service_extension_bundle_identifier}_PROFILE_UDID")
@@ -67,7 +67,7 @@ class EnterpriseDebug < BuildTypeEnterprise
   end
 
   def perform_post_build_procedures()
-    current
+    current(__callee__.to_s)
 		super
 
     # upload to ms app center
@@ -139,7 +139,7 @@ class EnterpriseDebug < BuildTypeEnterprise
   end
 
   def prepare_signing()
-    current
+    current(__callee__.to_s)
     import_certificate(
       certificate_path: certificate_path,
       certificate_password: ENV['KEY_PASSWORD'],
@@ -151,7 +151,7 @@ class EnterpriseDebug < BuildTypeEnterprise
   end
 
   def perform_signing_validation
-    current
+    current(__callee__.to_s)
     validate_distribution_certificate_password(
       certificate_path: certificate_path,
       certificate_password: ENV['KEY_PASSWORD']
@@ -164,13 +164,13 @@ class EnterpriseDebug < BuildTypeEnterprise
 	end
 
   def prepare_extensions()
-    current
+    current(__callee__.to_s)
 		prepare_notification_content_extension()
 		prepare_notification_service_extension()
 	end
 
   def prepare_notification_content_extension()
-    current
+    current(__callee__.to_s)
     @@enterpriseDebugAppExtensions.extension_prepare(
       username,
       team_id,
@@ -186,7 +186,7 @@ class EnterpriseDebug < BuildTypeEnterprise
   end
 
   def prepare_notification_service_extension()
-    current
+    current(__callee__.to_s)
     @@enterpriseDebugAppExtensions.extension_prepare(
       username,
       team_id,
@@ -202,7 +202,7 @@ class EnterpriseDebug < BuildTypeEnterprise
   end
 
   def add_debug_ribbon_to_app_icon
-    current
+    current(__callee__.to_s)
     sh("sh #{@@envHelper.root_path}/Scripts/add-debug-ribbon-to-app-icon.sh #{ENV['PWD']} #{@@projectHelper.name} #{@@envHelper.platform_name}")
   end
 

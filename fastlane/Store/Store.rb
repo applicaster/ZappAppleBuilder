@@ -6,7 +6,7 @@ class Store < BuildType
 	end
 
 	def prepare_environment
-		current
+		current(__callee__.to_s)
 		super
 		prepare_signing()
 		prepare_build()
@@ -14,7 +14,7 @@ class Store < BuildType
 	end
 	
 	def build()
-		current
+		current(__callee__.to_s)
 		# get provisioning profiles specifiers
 		main_prov_profile_specifier = provisioning_profile_uuid
 		notification_service_extension_prov_profile_specifier = @@appExtensions.provisioning_profile_uuid(@@appExtensions.notification_service_extension_key)
@@ -90,7 +90,7 @@ class Store < BuildType
 	end
 	
 	def download_signing_files()
-		current
+		current(__callee__.to_s)
 		# create new dir for files
 		sh("mkdir -p \"#{@@projectHelper.credentials_folder_path}\"")
 		# download p12 and provisioning profile
@@ -99,7 +99,7 @@ class Store < BuildType
 	end
 	
 	def perform_signing_validation
-		current
+		current(__callee__.to_s)
 		download_signing_files()
 		
 		validate_distribution_certificate_password(
@@ -128,7 +128,7 @@ class Store < BuildType
 	end
 	
 	def prepare_signing()
-		current
+		current(__callee__.to_s)
 		# fetch values
 		team_id_value = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:com.apple.developer.team-identifier' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
 		team_name_value = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :TeamName' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\011\012\015'")
@@ -156,7 +156,7 @@ class Store < BuildType
 	end
 	
 	def prepare_build()
-		current
+		current(__callee__.to_s)
 		# update app base parameters in FeaturesCustomization.json
 		update_parameters_in_feature_optimization_json()
 	
@@ -191,7 +191,7 @@ class Store < BuildType
 	end
 	
 	def prepare_extensions()
-		current
+		current(__callee__.to_s)
 		build_type = "release"
 		@@appExtensions.prepare_notification_extension(
 			build_type,

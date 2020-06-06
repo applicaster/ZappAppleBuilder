@@ -84,7 +84,7 @@ class BuildType < BaseHelper
   end
 
   def validate_distribution_certificate_expiration(options)
-    current
+    current(__callee__.to_s)
     error_message = "Distrubution Certificate is expired"
     begin
       expire_date = sh("openssl pkcs12 " \
@@ -104,7 +104,7 @@ class BuildType < BaseHelper
   end
 
   def validate_distribution_certificate_password(options)
-    current
+    current(__callee__.to_s)
     error_message = "Incorrect password for Distrubution Certificate"
     begin
       result = sh("openssl pkcs12 " \
@@ -122,7 +122,7 @@ class BuildType < BaseHelper
 
 
   def validate_distribution_certificate_and_provisioning_profile_team_id(options)
-    current
+    current(__callee__.to_s)
     error_message = "Unable to fetch Team ID from distribution certificate"
     begin
       result = sh("openssl pkcs12 " \
