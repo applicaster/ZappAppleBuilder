@@ -3,6 +3,8 @@ require 'fastlane_core'
 require 'fastlane'
 require 'openssl'
 require 'date'
+require 'colorize'
+
 import "Base/Helpers/EnvironmentHelper.rb"
 
 class BaseHelper 
@@ -16,7 +18,7 @@ class BaseHelper
        "#{@@envHelper.root_path}/fastlane/.fastlane_params"
     end
     def read_param_from_file(name)
-      puts("func: read_param_from_file")
+      current
       filename = "#{params_folder_path}/#{name}"
       if File.exist? "#{filename}"
           File.read("#{filename}").strip
@@ -24,7 +26,7 @@ class BaseHelper
     end
 
     def save_param_to_file(name, value)
-      puts("func: save_param_to_file")
+      current
       filename = "#{params_folder_path}/#{name}"
       Dir.mkdir(params_folder_path) unless File.exists?(params_folder_path)
       File.open(filename,"w") do |f|
@@ -37,14 +39,14 @@ class BaseHelper
     end
 
     def delete_keychain(options)
-      puts("func: delete_keychain")
+      current
       Actions::DeleteKeychainAction.run(
 			  name: options[:name]
       )
     end
 
     def update_url_schemes(options)
-      puts("func: update_url_schemes")
+      current
       Actions::UpdateUrlSchemesAction.run(
         path: "#{options[:plist_path]}",
         update_url_schemes: proc do |schemes|
@@ -54,7 +56,7 @@ class BaseHelper
     end
 
     def get_plist_value(options)
-      puts("func: get_plist_value")
+      current
       Actions::GetInfoPlistValueAction.run(
         path: options[:plist_path],
         key: options[:key]
@@ -62,7 +64,7 @@ class BaseHelper
     end
 
     def update_app_identifier(options)
-      puts("func: update_app_identifier")
+      current
       Actions::UpdateAppIdentifierAction.run(
         xcodeproj: options[:xcodeproj],
         plist_path: options[:plist_path],
@@ -71,7 +73,7 @@ class BaseHelper
     end
     
     def update_info_plist_versions(options)
-      puts("func: update_info_plist_versions")
+      current
       Actions::UpdateInfoPlistAction.run(
         xcodeproj: options[:xcodeproj],
         plist_path: options[:plist_path],
@@ -83,7 +85,7 @@ class BaseHelper
     end
 
     def reset_info_plist_bundle_identifier(options)
-      puts("func: reset_info_plist_bundle_identifier")
+      current
       Actions::UpdateInfoPlistAction.run(
         xcodeproj: options[:xcodeproj],
         plist_path: options[:plist_path],
@@ -94,7 +96,7 @@ class BaseHelper
     end
 
     def update_project_team(options)
-      puts("func: update_project_team")
+      current
       Actions::UpdateProjectTeamAction.run(
         path: options[:xcodeproj],
         teamid: options[:teamid]
@@ -102,7 +104,7 @@ class BaseHelper
     end
 
     def create_app_on_dev_portal(options)
-      puts("func: create_app_on_dev_portal")
+      current
       # create app on developer portal with new identifier for notification extension
       Actions::ProduceAction.run(
         username: "#{options[:username]}",
@@ -125,7 +127,7 @@ class BaseHelper
     end
       
     def enterprise_debug_create_provisioning_profile(options)
-      puts("func: enterprise_debug_create_provisioning_profile")
+      current
       sh("fastlane sigh " \
         "--username \"#{options[:username]}\" " \
         "--app_identifier \"#{options[:bundle_identifier]}\" " \
@@ -144,7 +146,7 @@ class BaseHelper
     end
       
     def delete_invalid_provisioning_profiles(options)
-      puts("func: delete_invalid_provisioning_profiles")
+      current
 
       password = ENV['FASTLANE_PASSWORD']
       Spaceship::Portal.login(options[:username], options[:password])
@@ -159,9 +161,17 @@ class BaseHelper
         profile.delete!
       end
     end
+
+    def copy_artifacts(options)
+      current
+      Actions::CopyArtifactsAction.run(
+        target_path: options[:target_path],
+        artifacts: options[:artifacts]
+      )
+    end
       
     def import_certificate(options) 
-      puts("func: import_certificate")
+      current
       Actions::ImportCertificateAction.run(
         certificate_path: options[:certificate_path],
         certificate_password: options[:certificate_password],
@@ -171,7 +181,7 @@ class BaseHelper
     end
 
     def create_push_certificate(options)
-      puts("func: create_push_certificate")
+      current
       Actions::GetPushCertificateAction.run(
         username: "#{options[:username]}",
         team_id: "#{options[:team_id]}",
@@ -200,7 +210,7 @@ class BaseHelper
     end
 
     def build_app(options)
-      puts("func: build_app")
+      current
       sh("fastlane gym " \
         "--workspace \"#{options[:workspace]}\" " \
         "--scheme \"#{options[:scheme]}\" " \
@@ -217,5 +227,9 @@ class BaseHelper
         "--export_team_id \"#{options[:export_team_id]}\" " \
         "--export_options \"#{options[:export_options]}\" " 
       )
+    end
+
+    def current
+      puts "#method: #{__callee__}".colorize(:white ).colorize( :background => :blue)
     end
 end

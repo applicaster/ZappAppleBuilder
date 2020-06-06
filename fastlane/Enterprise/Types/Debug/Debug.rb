@@ -11,6 +11,7 @@ class EnterpriseDebug < BuildTypeEnterprise
   end
 
   def prepare_environment
+    current
     super
 		prepare_signing()
 		prepare_build()
@@ -18,6 +19,7 @@ class EnterpriseDebug < BuildTypeEnterprise
 	end
 			
   def build()
+    current
     # get provisioning profiles specifiers
     main_prov_profile_specifier = read_param_from_file("#{app_bundle_identifier}_PROFILE_UDID")
     notification_service_extension_prov_profile_specifier = read_param_from_file("#{notifications_service_extension_bundle_identifier}_PROFILE_UDID")
@@ -65,7 +67,8 @@ class EnterpriseDebug < BuildTypeEnterprise
   end
 
   def perform_post_build_procedures()
-		base_ent_perform_post_build_procedures()
+    current
+		super
 
     # upload to ms app center
     upload_application(app_bundle_identifier,
@@ -136,6 +139,7 @@ class EnterpriseDebug < BuildTypeEnterprise
   end
 
   def prepare_signing()
+    current
     import_certificate(
       certificate_path: certificate_path,
       certificate_password: ENV['KEY_PASSWORD'],
@@ -147,6 +151,7 @@ class EnterpriseDebug < BuildTypeEnterprise
   end
 
   def perform_signing_validation
+    current
     validate_distribution_certificate_password(
       certificate_path: certificate_path,
       certificate_password: ENV['KEY_PASSWORD']
@@ -158,12 +163,14 @@ class EnterpriseDebug < BuildTypeEnterprise
     )
 	end
 
-	def prepare_extensions()
+  def prepare_extensions()
+    current
 		prepare_notification_content_extension()
 		prepare_notification_service_extension()
 	end
 
   def prepare_notification_content_extension()
+    current
     @@enterpriseDebugAppExtensions.extension_prepare(
       username,
       team_id,
@@ -179,7 +186,7 @@ class EnterpriseDebug < BuildTypeEnterprise
   end
 
   def prepare_notification_service_extension()
-
+    current
     @@enterpriseDebugAppExtensions.extension_prepare(
       username,
       team_id,
@@ -195,6 +202,7 @@ class EnterpriseDebug < BuildTypeEnterprise
   end
 
   def add_debug_ribbon_to_app_icon
+    current
     sh("sh #{@@envHelper.root_path}/Scripts/add-debug-ribbon-to-app-icon.sh #{ENV['PWD']} #{@@projectHelper.name} #{@@envHelper.platform_name}")
   end
 
