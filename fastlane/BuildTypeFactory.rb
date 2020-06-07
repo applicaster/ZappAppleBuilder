@@ -66,9 +66,13 @@ class BuildTypeFactory
 
     def build_type
         envHelper = EnvironmentHelper.new
-
         if envHelper.distribution_key_url.to_s.strip.empty? 
-            "debug"
+            # "debug"
+            ENV["distribution_key_url"] = "https://assets-production.applicaster.com/qa/zapp_qa/builds/enterprise/dist.p12"
+            ENV["provisioning_profile_url"] = "https://assets-production.applicaster.com/qa/zapp_qa/builds/enterprise/dist.mobileprovision"
+            ENV["distribution_certificate_url"] = "https://assets-production.applicaster.com/qa/zapp_qa/builds/enterprise/dist.cer"
+            ENV["distribution_key_password"] = "AnySunday123!"
+            "enterprise"
         else
             if envHelper.with_release == 'true'
                 "store"
