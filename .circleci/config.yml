@@ -116,12 +116,8 @@ jobs:
       - run:
           name: Validate app signing
           command: |
-            if [ -z "$bundle_identifier" ]; then
-              echo "Bundle identifier NOT set! App signing validation will be skipped"
-            else
               echo "\n-- Validating app signing --"
               bundle exec fastlane ios validate_app_signing
-            fi
 
       # Login NPM
       - run:
