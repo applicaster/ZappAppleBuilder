@@ -41,8 +41,8 @@ class Store < BuildType
 			configuration: @@envHelper.build_configuration,
 			include_bitcode: true,
 			include_symbols: true,
-			output_directory: "CircleArtifacts/Store",
-			buildlog_path: "CircleArtifacts/Store",
+			output_directory: "#{circle_artifacts_folder_path}/Store",
+			buildlog_path: "#{circle_artifacts_folder_path}/Store",
 			output_name: "#{@@projectHelper.scheme}-Store",
 			build_path: @@projectHelper.build_path,
 			derived_data_path: @@projectHelper.build_path,
@@ -58,29 +58,29 @@ class Store < BuildType
 		)
 
 		copy_artifacts(
-			target_path: "CircleArtifacts/Store",
+			target_path: "#{circle_artifacts_folder_path}/Store",
 			artifacts: [
 				"Credentials/dist.mobileprovision",
 				"Credentials/dist.p12"
 			]
 		)
 	
-		# puts("Starting app delivery to AppStoreConnect using altool")
-		# deliver_output = capture_stream($stdout) {
-		# 	Actions::AltoolAction.run(
-		# 		altool_username: "#{itunesconnect_username}",
-		# 		altool_password: "#{itunesconnect_password}",
-		# 		altool_app_type: @@envHelper.isTvOS ? "appletvos" : "ios",
-		# 		altool_ipa_path: "CircleArtifacts/Store/#{@@projectHelper.scheme}-Store.ipa",
-		# 		altool_output_format: "xml",
-		# 	)
-		# }
+		puts("Starting app delivery to AppStoreConnect using altool")
+		deliver_output = capture_stream($stdout) {
+			Actions::AltoolAction.run(
+				altool_username: "#{itunesconnect_username}",
+				altool_password: "#{itunesconnect_password}",
+				altool_app_type: @@envHelper.isTvOS ? "appletvos" : "ios",
+				altool_ipa_path: "#{circle_artifacts_folder_path}/Store/#{@@projectHelper.scheme}-Store.ipa",
+				altool_output_format: "xml",
+			)
+		}
 	
-		# # print deliver output
-		# puts("Altool output: #{deliver_output}")
+		# print deliver output
+		puts("Altool output: #{deliver_output}")
 	
-		# # raise an error if the delover output has an error
-		# raise RuntimeError, 'Error posting the app to the App Store Connect' if deliver_output.include?('ERROR ITMS-')
+		# raise an error if the delover output has an error
+		raise RuntimeError, 'Error posting the app to the App Store Connect' if deliver_output.include?('ERROR ITMS-')
 	
 		# upload to ms app center
 		upload_application(
