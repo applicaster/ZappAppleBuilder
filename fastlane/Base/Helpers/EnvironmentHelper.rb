@@ -11,10 +11,6 @@ class EnvironmentHelper
         device_target == "apple_tv" ? true : false
     end
     
-    def appCenterDeviceIdentifier
-        "#{platform_name}"
-    end
-    
     def version_name
         ENV["version_name"]
     end
