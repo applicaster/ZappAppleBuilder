@@ -130,21 +130,20 @@ class BuildType < BaseHelper
         "-in #{options[:certificate_path]} " \
         "-nokeys " \
         "-passin pass:#{options[:certificate_password]} " \
-        "| openssl x509 -noout -subject " \
-        "| cut -d',' -f1 " \
-        "| cut -d'=' -f3 " \
-        "| cut -d'/' -f1 " \
-        "| tr ' ' '\n' " \
-        "| tail -1"
+        "| openssl x509 -noout -subject "
       )
-      raise error_message unless result.length > 5
+
+      delimiters = ['verified','\\n','subject','UID', '=', ' ', ",", "/"]
+      array = result.split(Regexp.union(delimiters)).reject { |c| c.length < 10 }
+      certificate_identifier = array.first
+      raise error_message unless certificate_identifier.length > 0
 
       # get provisioning profile team identifier
       provisioning_profile_team_identifier = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :TeamIdentifier' /dev/stdin <<< $(security cms -D -i \"#{options[:provisioning_profile_path]}\") | sed -e 1d -e '$d')")
 
-      # remove white spaces 
+        # remove white spaces
       provisioning_profile_team_identifier = provisioning_profile_team_identifier.chomp.strip
-      distribution_certificate_team_identifier = result.chomp.strip
+      distribution_certificate_team_identifier = certificate_identifier.chomp.strip
 
       # raise exc if no match
       error_message = "Provisioning Profile is not signed with provided Distribution Certificate"
