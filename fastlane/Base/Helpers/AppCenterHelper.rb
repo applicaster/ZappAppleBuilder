@@ -32,6 +32,19 @@ class AppCenterHelper < BaseHelper
     app_platform = "Objective-C-Swift"
     app_os = app_center_platform
     
+    puts("" \
+      "\n--api_token \"#{app_center_api_token}\" " \
+      "\n--owner_name \"#{app_center_owner_name}\" " \
+      "\n--destinations \"#{app_distribution_group}\" " \
+      "\n--destination_type \"group\" " \
+      "\n--app_os #{app_os} " \
+      "\n--app_platform \"#{app_platform}\" " \
+      "\n--app_display_name \"#{app_display_name}\" " \
+      "\n--app_name \"#{app_name}\" " \
+      "\n--ipa \"#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.ipa\" " \
+      "\n--dsym \"#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.app.dSYM.zip\" " \
+      "\n--release_notes \"no release notes\" " 
+    )
     build_information = Actions::AppcenterUploadAction.run(
       api_token: "#{app_center_api_token}",
       owner_name: "#{app_center_owner_name}",
