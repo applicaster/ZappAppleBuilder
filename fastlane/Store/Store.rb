@@ -89,7 +89,7 @@ class Store < BuildType
 		# upload to ms app center
 		upload_application(
 			bundle_identifier: @@envHelper.bundle_identifier,
-			distribute_typetype: "Store"
+			build_type: "Store"
 		)
 	end
 	

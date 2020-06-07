@@ -64,7 +64,7 @@ class EnterpriseClient < BuildTypeEnterprise
 		# upload to ms app center
 		upload_application(
 			bundle_identifier: @@envHelper.bundle_identifier,
-			distribute_typetype: "Enterprise"
+			build_type: "Enterprise"
 		)
 	end
 	
