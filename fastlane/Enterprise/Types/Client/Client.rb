@@ -150,6 +150,12 @@ class EnterpriseClient < BuildTypeEnterprise
 			plist_path: @@projectHelper.plist_inner_path,
 			app_identifier: @@envHelper.bundle_identifier
 		)
+
+		# update project team identifier for all targets
+		update_project_team(
+			xcodeproj: @@projectHelper.xcodeproj_path,
+			teamid: team_id
+		)
 	
 		# add support for push notifications
 		@@projectHelper.change_system_capability(
