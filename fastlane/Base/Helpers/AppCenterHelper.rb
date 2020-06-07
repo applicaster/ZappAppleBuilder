@@ -43,6 +43,7 @@ class AppCenterHelper < BaseHelper
       app_name: "#{app_name}",
       ipa: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.ipa",
       dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.app.dSYM.zip",
+      release_notes: "",
       notify_testers: false # Set to false if you don't want to notify testers of your new release (default: `false`)
     )
 

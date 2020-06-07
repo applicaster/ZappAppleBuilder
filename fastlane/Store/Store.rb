@@ -1,3 +1,5 @@
+require 'fastlane/action'
+require 'fastlane_core'
 import "Base/BuildType.rb"
 
 class Store < BuildType
@@ -69,10 +71,10 @@ class Store < BuildType
 	
 		puts("Starting app delivery to AppStoreConnect using altool")
 		deliver_output = capture_stream($stdout) {
-			altool(
+			Actions::AltoolAction.run(
 				altool_username: "#{itunesconnect_username}",
 				altool_password: "#{itunesconnect_password}",
-				altool_app_type: "appletvos",
+				altool_app_type: @@envHelper.isTvOS ? "appletvos" : "ios",
 				altool_ipa_path: "CircleArtifacts/Store/#{@@projectHelper.scheme}-Store.ipa",
 				altool_output_format: "xml",
 			)
