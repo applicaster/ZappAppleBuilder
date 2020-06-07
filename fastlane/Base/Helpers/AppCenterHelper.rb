@@ -32,36 +32,25 @@ class AppCenterHelper < BaseHelper
     app_platform = "Objective-C-Swift"
     app_os = app_center_platform
     
-    puts("" \
-      "\n--api_token \"#{app_center_api_token}\" " \
-      "\n--owner_name \"#{app_center_owner_name}\" " \
-      "\n--destinations \"#{app_distribution_group}\" " \
-      "\n--destination_type \"group\" " \
-      "\n--app_os #{app_os} " \
-      "\n--app_platform \"#{app_platform}\" " \
-      "\n--app_display_name \"#{app_display_name}\" " \
-      "\n--app_name \"#{app_name}\" " \
-      "\n--ipa \"#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.ipa\" " \
-      "\n--dsym \"#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.app.dSYM.zip\" " \
-      "\n--release_notes \"no release notes\" " 
+    sh("fastlane ios upload_to_appcenter " \
+      "bundle_identifier:\"#{bundle_identifier}\" " \
+      "api_token:\"#{app_center_api_token}\" " \
+      "owner_name:\"#{app_center_owner_name}\" " \
+      "destinations:\"#{app_distribution_group}\" " \
+      "destination_type:\"group\" " \
+      "app_os:\"#{app_os}\" " \
+      "app_platform:\"#{app_platform}\" " \
+      "app_display_name:\"#{app_display_name}\" " \
+      "app_name:\"#{app_name}\" " \
+      "ipa:\"#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.ipa\" " \
+      "dsym:\"#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.app.dSYM.zip\" " \
+      "release_notes:\"no release notes\" " \
+      "app_display_name:\"#{app_display_name}\" " \
+      "notify_testers:false"
     )
-    build_information = Actions::AppcenterUploadAction.run(
-      api_token: "#{app_center_api_token}",
-      owner_name: "#{app_center_owner_name}",
-      destinations: "#{app_distribution_group}",
-      destination_type: "group",
-      app_os: "#{app_os}",
-      app_platform: "#{app_platform}",
-      app_display_name: "#{app_display_name}",
-      app_name: "#{app_name}",
-      ipa: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.ipa",
-      dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.app.dSYM.zip",
-      release_notes: "no release notes",
-      mandatory_update: false,
-      upload_mapping_only: false,
-      should_clip: true,
-      notify_testers: false # Set to false if you don't want to notify testers of your new release (default: `false`)
-    )
+
+    # read upload info previouly saved to file
+    build_information = read_param_from_file("#{options[:app_identifier]}_APPCENTER_BUILD_INFORMATION")
 
     # save uploaded app info to file for future use
     save_build_params_for_type(

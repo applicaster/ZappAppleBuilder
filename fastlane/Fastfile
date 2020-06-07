@@ -35,6 +35,24 @@ platform :ios do
             BuildTypeFactory.new.build
         end
     end
+
+    lane :upload_to_appcenter do |options|
+        appcenter_upload(
+            api_token: options[:api_token],
+            owner_name: options[:owner_name],
+            destinations: options[:destinations],
+            destination_type: options[:destination_type],
+            app_os: options[:app_os],
+            app_platform: options[:app_platform],
+            app_display_name: options[:app_display_name],
+            app_name: options[:app_name],
+            ipa: options[:ipa],
+            dsym: options[:dsym],
+            notify_testers: options[:notify_testers]
+        )
+        save_param_to_file("#{options[:app_identifier]}_APPCENTER_BUILD_INFORMATION", "#{lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]}")
+    end
+
 end
 
 def create_temp_keychain
