@@ -132,8 +132,10 @@ class BuildType < BaseHelper
         "-passin pass:#{options[:certificate_password]} " \
         "| openssl x509 -noout -subject " \
         "| cut -d',' -f1 " \
-        "| cut -d'=' -f3" \
-        "| cut -d'/' -f1"
+        "| cut -d'=' -f3 " \
+        "| cut -d'/' -f1 " \
+        "| tr ' ' '\n' " \
+        "| tail -1"
       )
       raise error_message unless result.length > 5
 
