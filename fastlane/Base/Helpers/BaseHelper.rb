@@ -206,7 +206,7 @@ class BaseHelper
   end
 
   def circle_artifacts_folder_path
-      "#{@@envHelper.root_path}/CircleArtifacts"
+      "./CircleArtifacts"
   end
 
   def build_app(options)
