@@ -1,10 +1,12 @@
 import "Base/Helpers/BaseHelper.rb"
 
 class ProjectHelper < BaseHelper
-    def change_system_capability(capability, old_value, new_value)
+    def change_system_capability(options)
+        current(__callee__.to_s)
+
         project = "#{xcodeproj_path}/project.pbxproj"
-        regex = /(#{capability} = {\s+enabled\s=\s)#{old_value}(;\s+};)/
-        substitue = %Q(\\1#{new_value}\\2)
+        regex = /(#{options[:capability]} = {\s+enabled\s=\s)#{options[:old]}(;\s+};)/
+        substitue = %Q(\\1#{options[:new]}\\2)
         new_content = File.read(project).gsub!(regex, substitue)
         File.write(project, new_content) if new_content
     end
@@ -62,12 +64,16 @@ class ProjectHelper < BaseHelper
         "#{credentials_folder_path}#{distribution_provisioning_profile_filename}"
     end
 
-    def update_features_customization(param_name, param_value)
-        sh("/usr/libexec/PlistBuddy -c \"Set #{param_name} #{param_value}\" #{customizations_folder_path}/FeaturesCustomization.plist")
+    def update_features_customization(options)
+        current(__callee__.to_s)
+
+        sh("/usr/libexec/PlistBuddy -c \"Set #{options[:name]} #{options[:value]}\" #{customizations_folder_path}/FeaturesCustomization.plist")
         puts "#{param_name} value was updated successfully in FeaturesCustomization.plist"
     end
       
     def plist_update_version_values(options)
+        current(__callee__.to_s)
+
         # update app identifier, versions of the extension
         bundle_version = get_plist_value(
             plist_path: options[:plist_path],

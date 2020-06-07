@@ -85,9 +85,9 @@ class Store < BuildType
 		raise RuntimeError, 'Error posting the app to the App Store Connect' if deliver_output.include?('ERROR ITMS-')
 	
 		# upload to ms app center
-		upload_application(@@envHelper.bundle_identifier,
-			"Store",
-			"release"
+		upload_application(
+			bundle_identifier: @@envHelper.bundle_identifier,
+			distribute_typetype: "Store"
 		)
 	end
 	
@@ -181,9 +181,9 @@ class Store < BuildType
 	
 		# add support for push notifications
 		@@projectHelper.change_system_capability(
-			"com.apple.Push",
-			0,
-			1
+			capability: "com.apple.Push",
+			old: 0,
+			new: 1
 		)
 	
 		# add AccessWiFi if needed

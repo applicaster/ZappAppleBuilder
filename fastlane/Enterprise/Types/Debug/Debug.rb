@@ -71,10 +71,10 @@ class EnterpriseDebug < BuildTypeEnterprise
 		super
 
     # upload to ms app center
-    upload_application(app_bundle_identifier,
-      "Enterprise",
-      "debug"
-    )
+    upload_application(
+			bundle_identifier: @@envHelper.bundle_identifier,
+			distribute_typetype: "Enterprise"
+		)
 	end
 
   def prepare_build()

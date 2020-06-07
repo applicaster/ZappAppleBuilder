@@ -7,11 +7,9 @@ Dotenv.load
 Fastlane.load_actions
 
 import "Base/AppExtensions.rb"
-import "Base/Helpers/S3.rb"
 import "Base/Helpers/FirebaseHelper.rb"
 import "Base/Helpers/ProjectHelper.rb"
 import "Base/Helpers/AppCenterHelper.rb"
-
 
 class BuildType < BaseHelper
   @@projectHelper = ProjectHelper.new
@@ -43,16 +41,19 @@ class BuildType < BaseHelper
   end
   
   def update_parameters_in_feature_optimization_json
-    @@projectHelper.update_features_customization("S3Hostname", @@envHelper.s3_hostname)
+    @@projectHelper.update_features_customization(
+      name: "S3Hostname", 
+      value: @@envHelper.s3_hostname
+    )
   end
   
   def add_wifi_system_capability_if_needed()
     requires_wifi_capability = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :com.apple.developer.networking.wifi-info\" #{@@projectHelper.path}/#{@@projectHelper.name}/Entitlements/#{@@projectHelper.name}-Release.entitlements 2>/dev/null | grep -c true)")
     if requires_wifi_capability.to_i() > 0
       @@projectHelper.change_system_capability(
-        "com.apple.AccessWiFi",
-        0,
-        1
+        capability: "com.apple.AccessWiFi",
+        old: 0,
+        new: 1
       )
     end
   end
@@ -153,6 +154,7 @@ class BuildType < BaseHelper
   end
 
   def validate_provisioning_profile(options)
+    current(__callee__.to_s)
     error_message = "Provisioning Profile is expired"
     begin
 		  expire_date = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :ExpirationDate' /dev/stdin <<< $(security cms -D -i \"#{options[:provisioning_profile_path]}\"))")
@@ -163,4 +165,22 @@ class BuildType < BaseHelper
     end 
   end
 
+  def upload_application(options)
+    current(__callee__.to_s)
+    if @@envHelper.isTvOS
+      puts("Upload application to S3")
+        s3DestinationPathParams = s3_upload_path(options[:bundle_identifier])
+        s3DistanationPath = "#{s3BucketName}/#{s3DestinationPathParams}"
+        sh("aws --region #{awsRegion} s3 sync ../CircleArtifacts/#{options[:distribute_type]} s3://#{s3DistanationPath} --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers --delete")
+        @@AppCenterHelper.save_build_params_for_type(
+          bundle_identifier, 
+          distribute_type, 
+          nil, 
+          nil
+        )
+    else
+        puts("Upload application to MS App Center")
+        @@AppCenterHelper.upload_app(options)
+    end
+  end
 end

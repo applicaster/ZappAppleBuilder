@@ -62,9 +62,9 @@ class EnterpriseClient < BuildTypeEnterprise
 		super
 	
 		# upload to ms app center
-		upload_application(@@envHelper.bundle_identifier,
-			"Enterprise",
-			"release"
+		upload_application(
+			bundle_identifier: @@envHelper.bundle_identifier,
+			distribute_typetype: "Enterprise"
 		)
 	end
 	
@@ -163,9 +163,9 @@ class EnterpriseClient < BuildTypeEnterprise
 	
 		# add support for push notifications
 		@@projectHelper.change_system_capability(
-			"com.apple.Push",
-			0,
-			1
+			capability: "com.apple.Push",
+			old: 0,
+			new: 1
 		)
 	
 		prepare_extensions()

@@ -52,9 +52,9 @@ class AppExtensions < BaseHelper
             )
             # change app groups support on project file
             @@projectHelper.change_system_capability(
-                "com.apple.ApplicationGroups.iOS",
-                0,
-                1
+                capability: "com.apple.ApplicationGroups.iOS",
+                old: 0,
+                new: 1
             )
     
             # update app identifier for to the notification extension
