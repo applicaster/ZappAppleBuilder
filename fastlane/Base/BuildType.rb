@@ -131,8 +131,8 @@ class BuildType < BaseHelper
         "-nokeys " \
         "-passin pass:#{options[:certificate_password]} " \
         "| openssl x509 -noout -subject " \
-        "| awk -F'[=,/]' '{print $4}'"
-
+        "| cut -d',' -f1 "\
+        "| cut -d'=' -f3"
       )
       raise error_message unless result.length > 5
 
