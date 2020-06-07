@@ -7,7 +7,9 @@ import "Base/BuildType.rb"
 class BuildTypeEnterprise < BuildType 
   def perform_post_build_procedures()
     # delete temp keychain
-    delete_keychain(name: keychain_name)
+    delete_keychain(
+      name: @@envHelper.keychain_name
+    )
   
     copy_artifacts(
       target_path: "CircleArtifacts/Enterprise",

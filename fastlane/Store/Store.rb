@@ -55,7 +55,9 @@ class Store < BuildType
 			export_options: saved_param_filename(build_export_options)
 		)
 	
-		delete_keychain(name: @@envHelper.keychain_name)
+		delete_keychain(
+			name: @@envHelper.keychain_name
+		)
 	
 		copy_artifacts(
 			target_path: "CircleArtifacts/Store",
