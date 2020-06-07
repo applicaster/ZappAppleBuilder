@@ -25,7 +25,7 @@ class AppCenterHelper < BaseHelper
 
     build_type = options[:build_type]
     bundle_identifier = options[:bundle_identifier]
-    app_display_name = app_name
+    app_display_name = @@envHelper.app_name
     app_name = read_value_from_file(bundle_identifier, "appname")
     app_secret = read_value_from_file(bundle_identifier, "appsecret")
     app_distribution_group = read_value_from_file(bundle_identifier, "appgroup")
