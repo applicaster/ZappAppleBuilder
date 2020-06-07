@@ -34,6 +34,7 @@ class AppCenterHelper < BaseHelper
     
     sh("fastlane ios upload_to_appcenter " \
       "bundle_identifier:\"#{bundle_identifier}\" " \
+      "app_secret:\"#{app_secret}\" " \
       "api_token:\"#{app_center_api_token}\" " \
       "owner_name:\"#{app_center_owner_name}\" " \
       "destinations:\"#{app_distribution_group}\" " \
@@ -90,9 +91,11 @@ class AppCenterHelper < BaseHelper
     File.open(filename,"w") do |f|
        f.write(hash.to_json)
     end
+    puts("folder: #{folder_name}")
+    puts("content: #{hash}")
   end
 
-  def  build_params_hash_for_type(options)
+  def build_params_hash_for_type(options)
     current(__callee__.to_s)
 
     if @@envHelper.isTvOS
