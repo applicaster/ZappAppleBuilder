@@ -31,7 +31,7 @@ class AppCenterHelper < BaseHelper
     app_distribution_group = read_value_from_file(bundle_identifier, "appgroup")
     app_platform = "Objective-C-Swift"
     app_os = app_center_platform
-
+    
     build_information = Actions::AppcenterUploadAction.run(
       api_token: "#{app_center_api_token}",
       owner_name: "#{app_center_owner_name}",
@@ -42,7 +42,7 @@ class AppCenterHelper < BaseHelper
       app_display_name: "#{app_display_name}",
       app_name: "#{app_name}",
       ipa: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.ipa",
-      dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.dSYM.zip",
+      dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.app.dSYM.zip",
       release_notes: "no release notes",
       mandatory_update: false,
       upload_mapping_only: false,

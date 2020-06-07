@@ -74,7 +74,13 @@ class EnterpriseDebug < BuildTypeEnterprise
     upload_application(
 			bundle_identifier: @@envHelper.bundle_identifier,
 			build_type: "Enterprise"
-		)
+    )
+    
+    # delete temp keychain
+    delete_keychain(
+      name: @@envHelper.keychain_name
+    )
+      
 	end
 
   def prepare_build()

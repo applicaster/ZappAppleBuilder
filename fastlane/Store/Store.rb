@@ -56,20 +56,14 @@ class Store < BuildType
 			export_method: "app-store",
 			export_options: saved_param_filename(build_export_options)
 		)
-	
-		delete_keychain(
-			name: @@envHelper.keychain_name
+		
+		copy_artifacts(
+			target_path: "CircleArtifacts/Store",
+			artifacts: [
+				"Credentials/dist.mobileprovision",
+				"Credentials/dist.p12"
+			]
 		)
-	
-		puts(Dir.children("CircleArtifacts/Store/"))
-
-		# copy_artifacts(
-		# 	target_path: "CircleArtifacts/Store",
-		# 	artifacts: [
-		# 		"Credentials/dist.mobileprovision",
-		# 		"Credentials/dist.p12"
-		# 	]
-		# )
 	
 		# puts("Starting app delivery to AppStoreConnect using altool")
 		# deliver_output = capture_stream($stdout) {
@@ -88,11 +82,11 @@ class Store < BuildType
 		# # raise an error if the delover output has an error
 		# raise RuntimeError, 'Error posting the app to the App Store Connect' if deliver_output.include?('ERROR ITMS-')
 	
-		# # upload to ms app center
-		# upload_application(
-		# 	bundle_identifier: @@envHelper.bundle_identifier,
-		# 	build_type: "Store"
-		# )
+		# upload to ms app center
+		upload_application(
+			bundle_identifier: @@envHelper.bundle_identifier,
+			build_type: "Store"
+		)
 	end
 	
 	def download_signing_files()
