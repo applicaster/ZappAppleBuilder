@@ -172,7 +172,7 @@ class BuildType < BaseHelper
         s3DestinationPathParams = s3_upload_path(options[:bundle_identifier])
         s3DistanationPath = "#{s3BucketName}/#{s3DestinationPathParams}"
         sh("aws --region #{awsRegion} s3 sync ../CircleArtifacts/#{options[:distribute_type]} s3://#{s3DistanationPath} --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers --delete")
-        @@AppCenterHelper.save_build_params_for_type(
+        @@appCenterHelper.save_build_params_for_type(
           bundle_identifier, 
           distribute_type, 
           nil, 
@@ -180,7 +180,7 @@ class BuildType < BaseHelper
         )
     else
         puts("Upload application to MS App Center")
-        @@AppCenterHelper.upload_app(options)
+        @@appCenterHelper.upload_app(options)
     end
   end
 end
