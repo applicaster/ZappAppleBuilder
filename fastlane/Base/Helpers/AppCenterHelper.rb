@@ -32,8 +32,6 @@ class AppCenterHelper < BaseHelper
     app_platform = "Objective-C-Swift"
     app_os = app_center_platform
 
-    puts(Dir.children(circle_artifacts_folder_path))
-
     build_information = Actions::AppcenterUploadAction.run(
       api_token: "#{app_center_api_token}",
       owner_name: "#{app_center_owner_name}",

@@ -61,36 +61,38 @@ class Store < BuildType
 			name: @@envHelper.keychain_name
 		)
 	
-		copy_artifacts(
-			target_path: "CircleArtifacts/Store",
-			artifacts: [
-				"Credentials/dist.mobileprovision",
-				"Credentials/dist.p12"
-			]
-		)
+		puts(Dir.children("CircleArtifacts/Store/"))
+
+		# copy_artifacts(
+		# 	target_path: "CircleArtifacts/Store",
+		# 	artifacts: [
+		# 		"Credentials/dist.mobileprovision",
+		# 		"Credentials/dist.p12"
+		# 	]
+		# )
 	
-		puts("Starting app delivery to AppStoreConnect using altool")
-		deliver_output = capture_stream($stdout) {
-			Actions::AltoolAction.run(
-				altool_username: "#{itunesconnect_username}",
-				altool_password: "#{itunesconnect_password}",
-				altool_app_type: @@envHelper.isTvOS ? "appletvos" : "ios",
-				altool_ipa_path: "CircleArtifacts/Store/#{@@projectHelper.scheme}-Store.ipa",
-				altool_output_format: "xml",
-			)
-		}
+		# puts("Starting app delivery to AppStoreConnect using altool")
+		# deliver_output = capture_stream($stdout) {
+		# 	Actions::AltoolAction.run(
+		# 		altool_username: "#{itunesconnect_username}",
+		# 		altool_password: "#{itunesconnect_password}",
+		# 		altool_app_type: @@envHelper.isTvOS ? "appletvos" : "ios",
+		# 		altool_ipa_path: "CircleArtifacts/Store/#{@@projectHelper.scheme}-Store.ipa",
+		# 		altool_output_format: "xml",
+		# 	)
+		# }
 	
-		# print deliver output
-		puts("Altool output: #{deliver_output}")
+		# # print deliver output
+		# puts("Altool output: #{deliver_output}")
 	
-		# raise an error if the delover output has an error
-		raise RuntimeError, 'Error posting the app to the App Store Connect' if deliver_output.include?('ERROR ITMS-')
+		# # raise an error if the delover output has an error
+		# raise RuntimeError, 'Error posting the app to the App Store Connect' if deliver_output.include?('ERROR ITMS-')
 	
-		# upload to ms app center
-		upload_application(
-			bundle_identifier: @@envHelper.bundle_identifier,
-			build_type: "Store"
-		)
+		# # upload to ms app center
+		# upload_application(
+		# 	bundle_identifier: @@envHelper.bundle_identifier,
+		# 	build_type: "Store"
+		# )
 	end
 	
 	def download_signing_files()
