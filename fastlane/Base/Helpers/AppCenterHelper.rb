@@ -44,6 +44,9 @@ class AppCenterHelper < BaseHelper
       ipa: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.ipa",
       dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.app.dSYM.zip",
       release_notes: "",
+      mandatory_update: false,
+      upload_mapping_only: false,
+      should_clip: true,
       notify_testers: false # Set to false if you don't want to notify testers of your new release (default: `false`)
     )
 
