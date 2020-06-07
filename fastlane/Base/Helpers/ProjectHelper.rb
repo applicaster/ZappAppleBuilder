@@ -68,7 +68,7 @@ class ProjectHelper < BaseHelper
         current(__callee__.to_s)
 
         sh("/usr/libexec/PlistBuddy -c \"Set #{options[:name]} #{options[:value]}\" #{customizations_folder_path}/FeaturesCustomization.plist")
-        puts "#{param_name} value was updated successfully in FeaturesCustomization.plist"
+        puts "#{options[:name]} value was updated successfully in FeaturesCustomization.plist"
     end
       
     def plist_update_version_values(options)
