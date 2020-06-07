@@ -84,6 +84,11 @@ class BuildType < BaseHelper
     @@appExtensions.remove_from_project(@@appExtensions.notification_service_extension_target_name)
   end
 
+  def validate_distribution_certificate(options)
+    validate_distribution_certificate_expiration(options)
+    validate_distribution_certificate_password(options)
+  end
+
   def validate_distribution_certificate_expiration(options)
     current(__callee__.to_s)
     error_message = "Distrubution Certificate is expired"
@@ -102,7 +107,7 @@ class BuildType < BaseHelper
     rescue => ex
       raise error_message
     end
-  end
+  end 
 
   def validate_distribution_certificate_password(options)
     current(__callee__.to_s)
@@ -156,12 +161,34 @@ class BuildType < BaseHelper
   end
 
   def validate_provisioning_profile(options)
+    validate_provisioning_profile_expiration(options)
+    validate_provisioning_profile_bundle_identifier(options)
+
+  end
+
+  def validate_provisioning_profile_expiration(options)
     current(__callee__.to_s)
     error_message = "Provisioning Profile is expired"
     begin
 		  expire_date = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :ExpirationDate' /dev/stdin <<< $(security cms -D -i \"#{options[:provisioning_profile_path]}\"))")
       raise error_message unless Date.parse(expire_date) > Date.new
       puts("VALID: Provisioning Profile is not expired\n".colorize(:green))
+    rescue => ex
+      raise ex.message
+    end 
+  end
+
+  def validate_provisioning_profile_bundle_identifier(options)
+    current(__callee__.to_s)
+    error_message = "Provisioning Profile bundle identifier does not match app required bundle identifier"
+    begin
+      pp_bundle_identifier = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:application-identifier' /dev/stdin <<< $(security cms -D -i \"#{options[:provisioning_profile_path]}\")) | tr -d '\040\011\012\015'")
+      prefix = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :ApplicationIdentifierPrefix' /dev/stdin <<< $(security cms -D -i \"#{options[:provisioning_profile_path]}\")) | tr -d '\040\011\012\015'")
+      prefix["Array{"] = ""
+      prefix["}"] = ""
+      pp_bundle_identifier["#{prefix}."] = ""
+      raise "#{error_message} (|#{pp_bundle_identifier}| != |#{@@envHelper.bundle_identifier}|)" unless pp_bundle_identifier == @@envHelper.bundle_identifier
+      puts("VALID: Provisioning Profile bundle identifier matches app required bundle identifier\n".colorize(:green))
     rescue => ex
       raise ex.message
     end 

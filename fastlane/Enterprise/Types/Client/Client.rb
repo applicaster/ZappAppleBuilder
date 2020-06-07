@@ -81,12 +81,7 @@ class EnterpriseClient < BuildTypeEnterprise
 		current(__callee__.to_s)
 		download_signing_files()
 
-		validate_distribution_certificate_password(
-			certificate_path: @@projectHelper.distribution_certificate_path,
-			certificate_password: @@envHelper.distribution_key_password
-		)
-	
-		validate_distribution_certificate_expiration(
+		validate_distribution_certificate(
 			certificate_path: @@projectHelper.distribution_certificate_path,
 			certificate_password: @@envHelper.distribution_key_password
 		)

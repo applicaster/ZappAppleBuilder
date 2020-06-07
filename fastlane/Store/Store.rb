@@ -56,7 +56,7 @@ class Store < BuildType
 			export_method: "app-store",
 			export_options: saved_param_filename(build_export_options)
 		)
-		
+
 		copy_artifacts(
 			target_path: "CircleArtifacts/Store",
 			artifacts: [
@@ -101,13 +101,8 @@ class Store < BuildType
 	def perform_signing_validation
 		current(__callee__.to_s)
 		download_signing_files()
-		
-		validate_distribution_certificate_password(
-			certificate_path: @@projectHelper.distribution_certificate_path,
-			certificate_password: @@envHelper.distribution_key_password
-		)
 	
-		validate_distribution_certificate_expiration(
+		validate_distribution_certificate(
 			certificate_path: @@projectHelper.distribution_certificate_path,
 			certificate_password: @@envHelper.distribution_key_password
 		)
