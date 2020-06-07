@@ -13,8 +13,9 @@ class AppCenterHelper < BaseHelper
   end
 
   def read_value_from_file(bundle_identifier, type)
-    folder_name = ".ms_app_center"
-    filename = "#{@@envHelper.root_path}/#{folder_name}/#{bundle_identifier}_#{type}"
+    folder_name = "#{@@envHelper.root_path}/.ms_app_center"
+    folder_name.gsub('fastlane/', '')
+    filename = "#{folder_name}/#{bundle_identifier}_#{type}"
     if File.exist? "#{filename}"
        File.read("#{filename}").strip
     end
@@ -49,18 +50,6 @@ class AppCenterHelper < BaseHelper
       "app_display_name:\"#{app_display_name}\" " \
       "notify_testers:false"
     )
-
-    # read upload info previouly saved to file
-    build_information = read_param_from_file("#{options[:app_identifier]}_APPCENTER_BUILD_INFORMATION")
-
-    # save uploaded app info to file for future use
-    save_build_params_for_type(
-      build_information: build_information,
-      bundle_identifier: bundle_identifier, 
-      build_type: options[:build_type], 
-      app_name: app_name, 
-      app_secret: app_secret
-    )
   end
 
   def update_app_secret(bundle_identifier)
@@ -85,6 +74,7 @@ class AppCenterHelper < BaseHelper
     current(__callee__.to_s)
 
     folder_name = "#{@@envHelper.root_path}/.ms_app_center"
+    folder_name.gsub('fastlane/', '')
     filename = "#{folder_name}/#{options[:build_type]}_upload_params.json"
     hash = build_params_hash_for_type(options)
     Dir.mkdir(folder_name) unless File.exists?(folder_name)

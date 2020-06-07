@@ -24,6 +24,7 @@ class BuildType < BaseHelper
   
 	def prepare_environment
     remove_app_extensions()
+    fetch_app_center_identifiers()
   end
 
   def perform_signing_validation
@@ -32,6 +33,10 @@ class BuildType < BaseHelper
 
   def build
     # implement in child classes
+  end
+
+  def fetch_app_center_identifiers
+    @@appCenterHelper.fetch_identifiers("#{@@envHelper.bundle_identifier}")
   end
   
   def remove_key_from_entitlements(target, build_type, key)
