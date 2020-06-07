@@ -131,10 +131,10 @@ class BuildType < BaseHelper
         "-nokeys " \
         "-passin pass:#{options[:certificate_password]} " \
         "| openssl x509 -noout -subject " \
-        "| awk -F'[=,/]' '{print $3}'``"
+        "| awk -F'[=,/]' '{print $4}'"
 
       )
-      raise error_message unless result.length > 0
+      raise error_message unless result.length > 5
 
       # get provisioning profile team identifier
       provisioning_profile_team_identifier = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :TeamIdentifier' /dev/stdin <<< $(security cms -D -i \"#{options[:provisioning_profile_path]}\") | sed -e 1d -e '$d')")
