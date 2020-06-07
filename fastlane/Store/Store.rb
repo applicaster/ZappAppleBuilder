@@ -125,10 +125,6 @@ class Store < BuildType
 		validate_provisioning_profile(
 			provisioning_profile_path: @@projectHelper.distribution_provisioning_profile_path
 		)
-
-		provisioning_profile_team_identifier = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:com.apple.developer.team-identifier' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
-		provisioning_profile_aps_environment = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:aps-environment' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
-		provisioning_profile_application_dentifier = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:com.apple.developer.application-identifier' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
 	end
 	
 	def prepare_signing()

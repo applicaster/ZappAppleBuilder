@@ -100,16 +100,6 @@ class EnterpriseClient < BuildTypeEnterprise
 		validate_provisioning_profile(
 			provisioning_profile_path: @@projectHelper.distribution_provisioning_profile_path
 		)
-
-		provisioning_profile_team_identifier = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :TeamIdentifier' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
-		provisioning_profile_aps_environment = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:aps-environment' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
-		provisioning_profile_application_dentifier = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:application-identifier' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
-	
-		puts("provisioning_profile_expiration_date: #{provisioning_profile_expiration_date}")
-		puts("provisioning_profile_team_identifier: #{provisioning_profile_team_identifier}")
-		puts("provisioning_profile_aps_environment: #{provisioning_profile_aps_environment}")
-		puts("provisioning_profile_application_dentifier: #{provisioning_profile_application_dentifier}")
-	
 	end
 	
 	def prepare_signing()
