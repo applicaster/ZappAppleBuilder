@@ -146,7 +146,7 @@ class BuildType < BaseHelper
 
       # raise exc if no match
       error_message = "Provisioning Profile is not signed with provided Distribution Certificate"
-      raise "#{error_message} (#{distribution_certificate_team_identifier} != #{provisioning_profile_team_identifier})" unless distribution_certificate_team_identifier == provisioning_profile_team_identifier
+      raise "#{error_message} (|#{distribution_certificate_team_identifier}| != |#{provisioning_profile_team_identifier}|)" unless distribution_certificate_team_identifier == provisioning_profile_team_identifier
       puts("VALID: Provisioning Profile is signed with provided Distribution Certificate\n".colorize(:green))
 
     rescue => ex
