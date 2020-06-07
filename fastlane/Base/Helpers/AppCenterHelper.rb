@@ -109,12 +109,12 @@ class AppCenterHelper < BaseHelper
       }
     end
   end
-end
 
-def app_center_api_token
-  ENV['APPCENTER_API_TOKEN']
-end
-
-def app_center_owner_name
-  ENV['APPCENTER_OWNER_NAME']
+  def app_center_api_token
+    ENV['APPCENTER_API_TOKEN']
+  end
+  
+  def app_center_owner_name
+    ENV['APPCENTER_OWNER_NAME']
+  end
 end
