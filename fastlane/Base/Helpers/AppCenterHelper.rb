@@ -30,7 +30,7 @@ class AppCenterHelper < BaseHelper
     app_secret = read_value_from_file(bundle_identifier, "appsecret")
     app_distribution_group = read_value_from_file(bundle_identifier, "appgroup")
     app_platform = "Objective-C-Swift"
-    app_os = appCenterDeviceIdentifier
+    app_os = @@envHelper.appCenterDeviceIdentifier
 
     build_information = Actions::AppcenterUploadAction.run(
       api_token: "#{app_center_api_token}",
