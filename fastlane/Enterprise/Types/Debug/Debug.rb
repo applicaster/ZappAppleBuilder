@@ -75,8 +75,9 @@ class EnterpriseDebug < BuildTypeEnterprise
 
     # upload to ms app center
     upload_application(
-			bundle_identifier: app_bundle_identifier,
-			build_type: "Enterprise"
+        bundle_identifier: app_bundle_identifier,
+        build_type: "Enterprise",
+        zapp_build_type: "debug"
     )
     
     # delete temp keychain

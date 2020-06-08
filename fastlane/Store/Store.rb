@@ -85,7 +85,8 @@ class Store < BuildType
 		# upload to ms app center
 		upload_application(
 			bundle_identifier: @@envHelper.bundle_identifier,
-			build_type: "Store"
+			build_type: "Store",
+			zapp_build_type: "release"
 		)
 	end
 	

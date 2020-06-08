@@ -55,13 +55,12 @@ platform :ios do
         # save uploaded app info to file for future use
         AppCenterHelper.new.save_build_params_for_type(
             bundle_identifier: options[:bundle_identifier],
-            build_type: options[:build_type],
+            zapp_build_type: options[:zapp_build_type],
             app_name: options[:app_name],
             app_secret: options[:app_secret],
             build_information: lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]
         )
     end
-
 end
 
 def create_temp_keychain

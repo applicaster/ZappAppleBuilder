@@ -208,7 +208,7 @@ class BuildType < BaseHelper
         sh("aws --region #{awsRegion} s3 sync ../CircleArtifacts/#{options[:distribute_type]} s3://#{s3DistanationPath} --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers --delete")
         @@appCenterHelper.save_build_params_for_type(
           bundle_identifier: options[:bundle_identifier], 
-          build_type: options[:build_type], 
+          zapp_build_type: options[:zapp_build_type], 
           app_name: nil, 
           app_secret: nil
         )

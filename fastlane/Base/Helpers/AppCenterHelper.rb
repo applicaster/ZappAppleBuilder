@@ -25,6 +25,7 @@ class AppCenterHelper < BaseHelper
     current(__callee__.to_s)
 
     build_type = options[:build_type]
+    zapp_build_type = options[:zapp_build_type]
     bundle_identifier = options[:bundle_identifier]
     app_display_name = @@envHelper.app_name
     app_name = read_value_from_file(bundle_identifier, "appname")
@@ -35,6 +36,7 @@ class AppCenterHelper < BaseHelper
     
     sh("fastlane ios upload_to_appcenter " \
       "bundle_identifier:\"#{bundle_identifier}\" " \
+      "zapp_build_type:\"#{zapp_build_type}\" " \
       "app_secret:\"#{app_secret}\" " \
       "api_token:\"#{app_center_api_token}\" " \
       "owner_name:\"#{app_center_owner_name}\" " \
@@ -75,13 +77,12 @@ class AppCenterHelper < BaseHelper
 
     folder_name = "#{@@envHelper.root_path}/.ms_app_center"
     folder_name = folder_name.gsub('fastlane/', '')
-    filename = "#{folder_name}/#{options[:build_type]}_upload_params.json"
+    filename = "#{folder_name}/#{options[:zapp_build_type]}_upload_params.json"
     hash = build_params_hash_for_type(options)
     Dir.mkdir(folder_name) unless File.exists?(folder_name)
     File.open(filename,"w") do |f|
        f.write(hash.to_json)
     end
-    puts("folder: #{folder_name}")
     puts("content: #{hash}")
   end
 
