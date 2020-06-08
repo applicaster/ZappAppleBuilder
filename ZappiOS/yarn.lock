@@ -40,10 +40,10 @@
     reselect "^4.0.0"
     url "^0.11.0"
 
-"@applicaster/quick-brick-native-apple@4.0.0-rc.1":
-  version "4.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-native-apple/-/quick-brick-native-apple-4.0.0-rc.1.tgz#9c194e3c94963270766dda74be0826a64f08869b"
-  integrity sha512-9OvgLFI7ubM1Ypc8VK0OusbvMwGlJraYRfSgqC0xVeZSoooQKmVTxn1EghXKgzJ2V+rvoVXgifHMCcLcyDFdaA==
+"@applicaster/quick-brick-native-apple@4.0.0-rc.2":
+  version "4.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-native-apple/-/quick-brick-native-apple-4.0.0-rc.2.tgz#e96f8bc73e35ba5e9d92b6b31a12ef40fd4a394f"
+  integrity sha512-SlXVSb8KVD+liYqQNPlb6ldIPBawxflbZT2e1pIOW9pNHPkzaqlCo9O1ksfslIAGwlC2Gao/91H18tGHjVXU3Q==
 
 "@applicaster/zapp-pipes-dev-kit@^1.4.1":
   version "1.4.1"
