@@ -73,6 +73,18 @@ class EnvironmentHelper
     ENV['provisioning_profile_url']
   end
 
+  def debug_distribution_key_url
+    ENV['debug_distribution_key_url']
+  end
+
+  def debug_distribution_key_password
+    ENV['debug_distribution_key_password']
+  end
+
+  def debug_provisioning_profile_url
+    ENV['debug_provisioning_profile_url']
+  end
+
   def s3_hostname
     ENV['s3_hostname']
   end

@@ -140,19 +140,12 @@ class BuildType < BaseHelper
     current(__callee__.to_s)
     error_message = 'Distrubution Certificate is expired'
     begin
-      expire_date = sh('openssl pkcs12 ' \
-        "-in #{options[:certificate_path]} " \
-        '-nokeys ' \
-        "-passin pass:#{options[:certificate_password]} " \
-        '| openssl x509 -noout -enddate ' \
-        '| grep notAfter ' \
-        "| sed -e 's#notAfter=##'")
-
-      raise error_message unless Date.parse(expire_date) > Date.new
+      p12 = OpenSSL::PKCS12.new(File.read((options[:certificate_path]).to_s), (options[:certificate_password]).to_s)
+      raise error_message unless p12.certificate.not_after > Time.new
 
       puts("VALID: Distrubution Certificate is not expired\n".colorize(:green))
     rescue StandardError => e
-      raise e.message
+      raise error_message
     end
   end
 
@@ -160,16 +153,12 @@ class BuildType < BaseHelper
     current(__callee__.to_s)
     error_message = 'Incorrect password for Distrubution Certificate'
     begin
-      result = sh('openssl pkcs12 ' \
-        "-in #{options[:certificate_path]} " \
-        '-nokeys ' \
-        "-passin pass:#{options[:certificate_password]} " \
-        "| grep -c 'BEGIN CERTIFICATE'")
-      raise error_message unless result.lines.last.to_i > 0
+      p12 = OpenSSL::PKCS12.new(File.read((options[:certificate_path]).to_s), (options[:certificate_password]).to_s)
+      raise error_message unless p12.certificate.subject
 
       puts("VALID: Distrubution Certificate password is Ok\n".colorize(:green))
     rescue StandardError => e
-      raise e.message
+      raise error_message
     end
   end
 
@@ -177,34 +166,33 @@ class BuildType < BaseHelper
     current(__callee__.to_s)
     error_message = 'Unable to fetch Team ID from distribution certificate'
     begin
-      result = sh('openssl pkcs12 ' \
-        "-in #{options[:certificate_path]} " \
-        '-nokeys ' \
-        "-passin pass:#{options[:certificate_password]} " \
-        '| openssl x509 -noout -subject ')
+      p12 = OpenSSL::PKCS12.new(File.read((options[:certificate_path]).to_s), (options[:certificate_password]).to_s)
+      certificate_team_identifier = parse_certificate_subject_value(p12, 'OU')
 
-      delimiters = ['verified', '\\n', 'subject', 'UID', '=', ' ', ',', '/']
-      array = result.split(Regexp.union(delimiters)).reject { |c| c.length < 10 }
-      certificate_identifier = array.first
-      raise error_message if certificate_identifier.empty?
+      raise error_message if certificate_team_identifier.empty?
 
       # get provisioning profile team identifier
       provisioning_profile_team_identifier = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :TeamIdentifier' /dev/stdin <<< $(security cms -D -i \"#{options[:provisioning_profile_path]}\") | sed -e 1d -e '$d')")
 
       # remove white spaces
       provisioning_profile_team_identifier = provisioning_profile_team_identifier.chomp.strip
-      distribution_certificate_team_identifier = certificate_identifier.chomp.strip
 
       # raise exc if no match
-      error_message = 'Provisioning Profile is not signed with provided Distribution Certificate'
-      unless distribution_certificate_team_identifier == provisioning_profile_team_identifier
-        raise "#{error_message} (|#{distribution_certificate_team_identifier}| != |#{provisioning_profile_team_identifier}|)"
+      error_message = 'Provisioning Profile is not signed with provided certificate'
+      unless certificate_team_identifier == provisioning_profile_team_identifier
+        raise "#{error_message} (|#{certificate_team_identifier}| != |#{provisioning_profile_team_identifier}|)"
       end
 
-      puts("VALID: Provisioning Profile is signed with provided Distribution Certificate\n".colorize(:green))
+      puts("VALID: Provisioning Profile is signed with provided certificate\n".colorize(:green))
     rescue StandardError => e
-      raise e.message
+      raise error_message
     end
+  end
+
+  def parse_certificate_subject_value(certificate, _key)
+    content_array = certificate.certificate.subject.to_a.reject { |c| c.include?('OU') == false }
+    value = content_array.first.select { |c| c.to_s.length == 10 }
+    value.first
   end
 
   def validate_provisioning_profile(options)
@@ -222,7 +210,7 @@ class BuildType < BaseHelper
 
       puts("VALID: Provisioning Profile is not expired\n".colorize(:green))
     rescue StandardError => e
-      raise e.message
+      raise error_message
     end
   end
 
@@ -241,7 +229,7 @@ class BuildType < BaseHelper
 
       puts("VALID: Provisioning Profile bundle identifier matches app required bundle identifier\n".colorize(:green))
     rescue StandardError => e
-      raise e.message
+      raise error_message
     end
   end
 

@@ -85,8 +85,8 @@ class EnterpriseClient < BuildTypeEnterprise
     # create new dir for files
     sh("mkdir -p \"#{@@projectHelper.credentials_folder_path}\"")
     # download p12 and provisioning profile
-    sh("curl -sL \"#{@@envHelper.provisioning_profile_url}\" --output \"#{@@projectHelper.distribution_provisioning_profile_path}\"")
-    sh("curl -sL \"#{@@envHelper.distribution_key_url}\" --output \"#{@@projectHelper.distribution_certificate_path}\"")
+    sh("curl -sL \"#{@@envHelper.debug_provisioning_profile_url}\" --output \"#{@@projectHelper.distribution_provisioning_profile_path}\"")
+    sh("curl -sL \"#{@@envHelper.debug_distribution_key_url}\" --output \"#{@@projectHelper.distribution_certificate_path}\"")
   end
 
   def perform_signing_validation
