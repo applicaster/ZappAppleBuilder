@@ -156,7 +156,7 @@ const TVOS_FILES_TO_PATCH = [
 async function run() {
   var platform_install_folder = process.argv.slice(2);
 
-  console.log("-| Patching react native |-");
+  console.log("-| Patching react native |-");
   console.log("-| for: " + platform_install_folder + " |-");
 
   const filesToPatch =

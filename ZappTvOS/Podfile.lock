@@ -1,5 +1,6 @@
 PODS:
   - boost-for-react-native (1.63.0)
+  - DeviceKit (3.2.0)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.62.2-0)
   - FBReactNativeSpec (0.62.2-0):
@@ -245,48 +246,46 @@ PODS:
     - React-jsi (= 0.62.2-0)
     - ReactCommon/callinvoker (= 0.62.2-0)
   - Yoga (1.14.0)
-  - ZappApple (0.7.20):
+  - ZappApple (0.7.21):
     - AppCenter/Analytics (= 3.0.0)
     - AppCenter/Distribute (= 3.0.0)
+    - DeviceKit (= 3.2.0)
     - ReachabilitySwift (= 5.0.0)
     - ZappCore
   - ZappCore (0.9.16)
-  - ZappGoogleAnalytics (0.7.2):
-    - ZappCore
 
 DEPENDENCIES:
-  - DoubleConversion (from `./node_modules/react-native-tvos/third-party-podspecs/DoubleConversion.podspec`)
-  - FBLazyVector (from `./node_modules/react-native-tvos/Libraries/FBLazyVector`)
-  - FBReactNativeSpec (from `./node_modules/react-native-tvos/Libraries/FBReactNativeSpec`)
-  - Folly (from `./node_modules/react-native-tvos/third-party-podspecs/Folly.podspec`)
-  - glog (from `./node_modules/react-native-tvos/third-party-podspecs/glog.podspec`)
+  - DoubleConversion (from `./node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
+  - FBLazyVector (from `./node_modules/react-native/Libraries/FBLazyVector`)
+  - FBReactNativeSpec (from `./node_modules/react-native/Libraries/FBReactNativeSpec`)
+  - Folly (from `./node_modules/react-native/third-party-podspecs/Folly.podspec`)
+  - glog (from `./node_modules/react-native/third-party-podspecs/glog.podspec`)
   - "QuickBrickApple (from `./node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec`)"
-  - RCTRequired (from `./node_modules/react-native-tvos/Libraries/RCTRequired`)
-  - RCTTypeSafety (from `./node_modules/react-native-tvos/Libraries/TypeSafety`)
-  - React (from `./node_modules/react-native-tvos/`)
-  - React-Core (from `./node_modules/react-native-tvos/`)
-  - React-Core/DevSupport (from `./node_modules/react-native-tvos/`)
-  - React-Core/RCTWebSocket (from `./node_modules/react-native-tvos/`)
-  - React-CoreModules (from `./node_modules/react-native-tvos/React/CoreModules`)
-  - React-cxxreact (from `./node_modules/react-native-tvos/ReactCommon/cxxreact`)
-  - React-jsi (from `./node_modules/react-native-tvos/ReactCommon/jsi`)
-  - React-jsiexecutor (from `./node_modules/react-native-tvos/ReactCommon/jsiexecutor`)
-  - React-jsinspector (from `./node_modules/react-native-tvos/ReactCommon/jsinspector`)
-  - React-RCTActionSheet (from `./node_modules/react-native-tvos/Libraries/ActionSheetIOS`)
-  - React-RCTAnimation (from `./node_modules/react-native-tvos/Libraries/NativeAnimation`)
-  - React-RCTBlob (from `./node_modules/react-native-tvos/Libraries/Blob`)
-  - React-RCTImage (from `./node_modules/react-native-tvos/Libraries/Image`)
-  - React-RCTLinking (from `./node_modules/react-native-tvos/Libraries/LinkingIOS`)
-  - React-RCTNetwork (from `./node_modules/react-native-tvos/Libraries/Network`)
-  - React-RCTSettings (from `./node_modules/react-native-tvos/Libraries/Settings`)
-  - React-RCTText (from `./node_modules/react-native-tvos/Libraries/Text`)
-  - React-RCTVibration (from `./node_modules/react-native-tvos/Libraries/Vibration`)
-  - ReactCommon/callinvoker (from `./node_modules/react-native-tvos/ReactCommon`)
-  - ReactCommon/turbomodule/core (from `./node_modules/react-native-tvos/ReactCommon`)
-  - Yoga (from `./node_modules/react-native-tvos/ReactCommon/yoga`)
-  - ZappApple (= 0.7.20)
+  - RCTRequired (from `./node_modules/react-native/Libraries/RCTRequired`)
+  - RCTTypeSafety (from `./node_modules/react-native/Libraries/TypeSafety`)
+  - React (from `./node_modules/react-native/`)
+  - React-Core (from `./node_modules/react-native/`)
+  - React-Core/DevSupport (from `./node_modules/react-native/`)
+  - React-Core/RCTWebSocket (from `./node_modules/react-native/`)
+  - React-CoreModules (from `./node_modules/react-native/React/CoreModules`)
+  - React-cxxreact (from `./node_modules/react-native/ReactCommon/cxxreact`)
+  - React-jsi (from `./node_modules/react-native/ReactCommon/jsi`)
+  - React-jsiexecutor (from `./node_modules/react-native/ReactCommon/jsiexecutor`)
+  - React-jsinspector (from `./node_modules/react-native/ReactCommon/jsinspector`)
+  - React-RCTActionSheet (from `./node_modules/react-native/Libraries/ActionSheetIOS`)
+  - React-RCTAnimation (from `./node_modules/react-native/Libraries/NativeAnimation`)
+  - React-RCTBlob (from `./node_modules/react-native/Libraries/Blob`)
+  - React-RCTImage (from `./node_modules/react-native/Libraries/Image`)
+  - React-RCTLinking (from `./node_modules/react-native/Libraries/LinkingIOS`)
+  - React-RCTNetwork (from `./node_modules/react-native/Libraries/Network`)
+  - React-RCTSettings (from `./node_modules/react-native/Libraries/Settings`)
+  - React-RCTText (from `./node_modules/react-native/Libraries/Text`)
+  - React-RCTVibration (from `./node_modules/react-native/Libraries/Vibration`)
+  - ReactCommon/callinvoker (from `./node_modules/react-native/ReactCommon`)
+  - ReactCommon/turbomodule/core (from `./node_modules/react-native/ReactCommon`)
+  - Yoga (from `./node_modules/react-native/ReactCommon/yoga`)
+  - ZappApple (= 0.7.21)
   - ZappCore (= 0.9.16)
-  - "ZappGoogleAnalytics (from `./node_modules/@applicaster/google-analytics-web-based-apple/ZappGoogleAnalytics.podspec`)"
 
 SPEC REPOS:
   "git@github.com:applicaster/CocoaPods.git":
@@ -294,66 +293,66 @@ SPEC REPOS:
     - ZappCore
   https://cdn.cocoapods.org/:
     - boost-for-react-native
+    - DeviceKit
     - ReachabilitySwift
 
 EXTERNAL SOURCES:
   DoubleConversion:
-    :podspec: "./node_modules/react-native-tvos/third-party-podspecs/DoubleConversion.podspec"
+    :podspec: "./node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   FBLazyVector:
-    :path: "./node_modules/react-native-tvos/Libraries/FBLazyVector"
+    :path: "./node_modules/react-native/Libraries/FBLazyVector"
   FBReactNativeSpec:
-    :path: "./node_modules/react-native-tvos/Libraries/FBReactNativeSpec"
+    :path: "./node_modules/react-native/Libraries/FBReactNativeSpec"
   Folly:
-    :podspec: "./node_modules/react-native-tvos/third-party-podspecs/Folly.podspec"
+    :podspec: "./node_modules/react-native/third-party-podspecs/Folly.podspec"
   glog:
-    :podspec: "./node_modules/react-native-tvos/third-party-podspecs/glog.podspec"
+    :podspec: "./node_modules/react-native/third-party-podspecs/glog.podspec"
   QuickBrickApple:
     :path: "./node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec"
   RCTRequired:
-    :path: "./node_modules/react-native-tvos/Libraries/RCTRequired"
+    :path: "./node_modules/react-native/Libraries/RCTRequired"
   RCTTypeSafety:
-    :path: "./node_modules/react-native-tvos/Libraries/TypeSafety"
+    :path: "./node_modules/react-native/Libraries/TypeSafety"
   React:
-    :path: "./node_modules/react-native-tvos/"
+    :path: "./node_modules/react-native/"
   React-Core:
-    :path: "./node_modules/react-native-tvos/"
+    :path: "./node_modules/react-native/"
   React-CoreModules:
-    :path: "./node_modules/react-native-tvos/React/CoreModules"
+    :path: "./node_modules/react-native/React/CoreModules"
   React-cxxreact:
-    :path: "./node_modules/react-native-tvos/ReactCommon/cxxreact"
+    :path: "./node_modules/react-native/ReactCommon/cxxreact"
   React-jsi:
-    :path: "./node_modules/react-native-tvos/ReactCommon/jsi"
+    :path: "./node_modules/react-native/ReactCommon/jsi"
   React-jsiexecutor:
-    :path: "./node_modules/react-native-tvos/ReactCommon/jsiexecutor"
+    :path: "./node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
-    :path: "./node_modules/react-native-tvos/ReactCommon/jsinspector"
+    :path: "./node_modules/react-native/ReactCommon/jsinspector"
   React-RCTActionSheet:
-    :path: "./node_modules/react-native-tvos/Libraries/ActionSheetIOS"
+    :path: "./node_modules/react-native/Libraries/ActionSheetIOS"
   React-RCTAnimation:
-    :path: "./node_modules/react-native-tvos/Libraries/NativeAnimation"
+    :path: "./node_modules/react-native/Libraries/NativeAnimation"
   React-RCTBlob:
-    :path: "./node_modules/react-native-tvos/Libraries/Blob"
+    :path: "./node_modules/react-native/Libraries/Blob"
   React-RCTImage:
-    :path: "./node_modules/react-native-tvos/Libraries/Image"
+    :path: "./node_modules/react-native/Libraries/Image"
   React-RCTLinking:
-    :path: "./node_modules/react-native-tvos/Libraries/LinkingIOS"
+    :path: "./node_modules/react-native/Libraries/LinkingIOS"
   React-RCTNetwork:
-    :path: "./node_modules/react-native-tvos/Libraries/Network"
+    :path: "./node_modules/react-native/Libraries/Network"
   React-RCTSettings:
-    :path: "./node_modules/react-native-tvos/Libraries/Settings"
+    :path: "./node_modules/react-native/Libraries/Settings"
   React-RCTText:
-    :path: "./node_modules/react-native-tvos/Libraries/Text"
+    :path: "./node_modules/react-native/Libraries/Text"
   React-RCTVibration:
-    :path: "./node_modules/react-native-tvos/Libraries/Vibration"
+    :path: "./node_modules/react-native/Libraries/Vibration"
   ReactCommon:
-    :path: "./node_modules/react-native-tvos/ReactCommon"
+    :path: "./node_modules/react-native/ReactCommon"
   Yoga:
-    :path: "./node_modules/react-native-tvos/ReactCommon/yoga"
-  ZappGoogleAnalytics:
-    :path: "./node_modules/@applicaster/google-analytics-web-based-apple/ZappGoogleAnalytics.podspec"
+    :path: "./node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
+  DeviceKit: d081659419cce07c0b5239dbc9fb39ed7413c7fe
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   FBLazyVector: 4b807f39fe540b3c6c463bf2c2a06061f8116976
   FBReactNativeSpec: 89412591bc63798fa9831e2886f50032b6b8da4e
@@ -381,10 +380,9 @@ SPEC CHECKSUMS:
   React-RCTVibration: 9297dbae8760f1f536ef29e71bfcff23c121e1b9
   ReactCommon: 4520755b5a8921156f0bca32157da837640c2ae6
   Yoga: 2b7639f79fddf5026153af56851b832318942330
-  ZappApple: 1317da252a6283ad5b0816487e024e134276bdf1
+  ZappApple: 6d54222b85d92c8565df9afed7ac7112401537c3
   ZappCore: 8d057418e422657f7521689b6a2844e31baede88
-  ZappGoogleAnalytics: 6ee9376e6071c4b875214928eb9c9332fc19dc59
 
-PODFILE CHECKSUM: 026eade9ffafc5edd797bade6b9a6e90b96eecd2
+PODFILE CHECKSUM: b6cc46a0c95c194695b8af6cdf311243e4442c46
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3

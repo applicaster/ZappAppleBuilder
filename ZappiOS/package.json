@@ -23,14 +23,14 @@
     "reset": "rm -rf quick_brick/* quick_brick/.babelrc"
   },
   "dependencies": {
-    "@applicaster/quick-brick-native-apple": "3.1.0-rc.ca914400",
+    "@applicaster/quick-brick-native-apple": "4.0.0-rc.1",
     "@react-native-community/cli-platform-ios": "^4.7.0",
     "@react-native-community/netinfo": "^5.9.0",
     "react": "16.11.0",
     "react-native": "0.62.2"
   },
   "devDependencies": {
-    "@applicaster/zapplicaster-cli": "3.1.0-rc.ca914400",
+    "@applicaster/zapplicaster-cli": "4.0.0-rc.1",
     "flipper-plugin-react-native-performance": "^0.4.3"
   },
   "repository": {
