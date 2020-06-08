@@ -96,18 +96,14 @@ class BuildType < BaseHelper
     validate_distribution_certificate_password(options)
     validate_distribution_certificate_expiration(options)
 
-    if options[:provisioning_profile_path] 
+    if options[:provisioning_profile_path]
       validate_distribution_certificate_and_provisioning_profile_team_id(options)
       validate_provisioning_profile(options)
     end
 
-    if options[:version_number]
-      validate_version_number(options)
-    end
+    validate_version_number(options) if options[:version_number]
 
-    if options[:appstore_username]
-      validate_appstoreconnect_credentials(options)
-    end
+    validate_appstoreconnect_credentials(options) if options[:appstore_username]
   end
 
   def validate_version_number(options)
@@ -115,9 +111,9 @@ class BuildType < BaseHelper
     app_version = options[:version_number]
     error_message = "App version (#{app_version}) is not valid, version must be a period-separated list of at most three non-negative integers"
     begin
-      raise error_message unless app_version.count('.') <= 2 
-      puts("VALID: App version '#{app_version}' is valid for AppStore submission\n".colorize(:green))
+      raise error_message unless app_version.count('.') <= 2
 
+      puts("VALID: App version '#{app_version}' is valid for AppStore submission\n".colorize(:green))
     rescue StandardError => e
       raise e.message
     end
@@ -127,14 +123,13 @@ class BuildType < BaseHelper
     current(__callee__.to_s)
     username = options[:appstore_username]
     password = options[:appstore_password]
-    error_message = "AppStoreConnect credentials are incorrect"
+    error_message = 'AppStoreConnect credentials are incorrect'
     begin
-      filename = "./providers.list"
+      filename = './providers.list'
       sh("xcrun altool --list-providers -u '#{username}' -p '#{password}' --output-format json > #{filename}")
       result = File.read(filename.to_s).strip if File.exist? filename.to_s
-      if result["-20101"]
-        raise error_message
-      end
+      raise error_message if result['-20101']
+
       puts("VALID: AppStoreConnect credentials are Ok\n".colorize(:green))
     rescue StandardError => e
       raise error_message
@@ -254,7 +249,7 @@ class BuildType < BaseHelper
     current(__callee__.to_s)
     begin
       pp_app_groups_entitlements = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:com.apple.security.application-groups' /dev/stdin <<< $(security cms -D -i \"#{options[:provisioning_profile_path]}\")) | tr -d '\040\011\012\015'")
-      if pp_app_groups_entitlements["Does Not Exist"]
+      if pp_app_groups_entitlements['Does Not Exist']
         error_message = 'Provisioning Profile doesn\'t support the App Groups capability'
         raise error_message
       end

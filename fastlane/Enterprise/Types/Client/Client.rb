@@ -7,6 +7,14 @@ class EnterpriseClient < BuildTypeEnterprise
     'enterprise'
   end
 
+  def build_configuration
+    if read_param_from_file("#{@@envHelper.bundle_identifier}_ISDEBUG").to_s.downcase == 'true'
+      'Debug'
+    else
+      super
+    end
+  end
+
   def prepare_environment
     current(__callee__.to_s)
     super
@@ -39,7 +47,7 @@ class EnterpriseClient < BuildTypeEnterprise
     build_app(
       workspace: @@projectHelper.xcworkspace_relative_path.to_s,
       scheme: @@projectHelper.scheme,
-      configuration: @@envHelper.build_configuration,
+      configuration: build_configuration,
       include_bitcode: true,
       include_symbols: true,
       output_directory: "#{circle_artifacts_folder_path}/Enterprise",
@@ -86,9 +94,9 @@ class EnterpriseClient < BuildTypeEnterprise
     download_signing_files
 
     validate(
-		certificate_path: @@projectHelper.distribution_certificate_path,
-		certificate_password: @@envHelper.distribution_key_password,
-		provisioning_profile_path: @@projectHelper.distribution_provisioning_profile_path
+      certificate_path: @@projectHelper.distribution_certificate_path,
+      certificate_password: @@envHelper.distribution_key_password,
+      provisioning_profile_path: @@projectHelper.distribution_provisioning_profile_path
     )
   end
 
@@ -98,11 +106,13 @@ class EnterpriseClient < BuildTypeEnterprise
     team_id_value = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:com.apple.developer.team-identifier' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
     team_name_value = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :TeamName' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\011\012\015'")
     provisioning_profile_uuid_value = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :UUID' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
+    provisioning_profile_debug = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:get-task-allow' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
 
     # save values
     save_param_to_file("#{@@envHelper.bundle_identifier}_PROFILE_UDID", provisioning_profile_uuid_value.to_s)
     save_param_to_file("#{@@envHelper.bundle_identifier}_TEAM_ID", team_id_value.to_s)
     save_param_to_file("#{@@envHelper.bundle_identifier}_TEAM_NAME", team_name_value.to_s)
+    save_param_to_file("#{@@envHelper.bundle_identifier}_ISDEBUG", provisioning_profile_debug.to_s)
 
     # install provisioning profile
     sh("mkdir -p ~/Library/MobileDevice/'Provisioning Profiles'")

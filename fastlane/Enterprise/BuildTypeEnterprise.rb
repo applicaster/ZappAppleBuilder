@@ -26,4 +26,8 @@ class BuildTypeEnterprise < BuildType
   def enterprise_build_type
     'enterprise'
   end
+
+  def build_configuration
+    @@envHelper.build_configuration
+  end
 end

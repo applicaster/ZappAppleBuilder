@@ -108,10 +108,10 @@ class Store < BuildType
     validate(
       certificate_path: @@projectHelper.distribution_certificate_path,
       certificate_password: @@envHelper.distribution_key_password,
-	  provisioning_profile_path: @@projectHelper.distribution_provisioning_profile_path,
-	  version_number: @@envHelper.version_name,
-	  appstore_username: itunesconnect_username,
-	  appstore_password: itunesconnect_password
+      provisioning_profile_path: @@projectHelper.distribution_provisioning_profile_path,
+      version_number: @@envHelper.version_name,
+      appstore_username: itunesconnect_username,
+      appstore_password: itunesconnect_password
     )
   end
 

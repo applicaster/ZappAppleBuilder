@@ -45,7 +45,7 @@ class EnterpriseDebug < BuildTypeEnterprise
     build_app(
       workspace: @@projectHelper.xcworkspace_relative_path.to_s,
       scheme: @@projectHelper.scheme,
-      configuration: @@envHelper.build_configuration,
+      configuration: build_configuration,
       include_bitcode: true,
       include_symbols: true,
       output_directory: "#{circle_artifacts_folder_path}/Enterprise",

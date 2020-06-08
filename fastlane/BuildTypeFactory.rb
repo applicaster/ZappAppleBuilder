@@ -66,12 +66,12 @@ class BuildTypeFactory
   def build_type
     envHelper = EnvironmentHelper.new
     if envHelper.distribution_key_url.to_s.strip.empty?
-      'debug'
+      'debug' # enterprise applicaster release
     else
       if envHelper.with_release == 'true'
         'store'
       else
-        'enterprise'
+        'enterprise' # enterprise client release/debug depending on provided provisioning
       end
     end
   end
