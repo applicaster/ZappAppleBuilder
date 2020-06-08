@@ -164,7 +164,7 @@ class EnterpriseDebug < BuildTypeEnterprise
   def perform_signing_validation
     current(__callee__.to_s)
 
-    validate_distribution_certificate(
+    validate(
       certificate_path: certificate_path,
       certificate_password: ENV['KEY_PASSWORD']
     )

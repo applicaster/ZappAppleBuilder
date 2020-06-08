@@ -92,9 +92,31 @@ class BuildType < BaseHelper
     @@appExtensions.remove_from_project(@@appExtensions.notification_service_extension_target_name)
   end
 
-  def validate_distribution_certificate(options)
-    validate_distribution_certificate_expiration(options)
+  def validate(options)
     validate_distribution_certificate_password(options)
+    validate_distribution_certificate_expiration(options)
+
+    if options[:provisioning_profile_path] 
+      validate_distribution_certificate_and_provisioning_profile_team_id(options)
+      validate_provisioning_profile(options)
+    end
+
+    if options[:version_number]
+      validate_version_number(options)
+    end
+  end
+
+  def validate_version_number(options)
+    current(__callee__.to_s)
+    app_version = options[:version_number]
+    error_message = "App version (#{app_version}) is not valid, version must be a period-separated list of at most three non-negative integers"
+    begin
+      raise error_message unless app_version.count('.') <= 2 
+      puts("VALID: App version '#{app_version}' is valid for AppStore submission\n".colorize(:green))
+
+    rescue StandardError => e
+      raise e.message
+    end
   end
 
   def validate_distribution_certificate_expiration(options)
@@ -113,7 +135,7 @@ class BuildType < BaseHelper
 
       puts("VALID: Distrubution Certificate is not expired\n".colorize(:green))
     rescue StandardError => e
-      raise error_message
+      raise e.message
     end
   end
 
@@ -130,7 +152,7 @@ class BuildType < BaseHelper
 
       puts("VALID: Distrubution Certificate password is Ok\n".colorize(:green))
     rescue StandardError => e
-      raise error_message
+      raise e.message
     end
   end
 
@@ -171,6 +193,7 @@ class BuildType < BaseHelper
   def validate_provisioning_profile(options)
     validate_provisioning_profile_expiration(options)
     validate_provisioning_profile_bundle_identifier(options)
+    validate_provisioning_profile_entitlements(options)
   end
 
   def validate_provisioning_profile_expiration(options)
@@ -200,6 +223,21 @@ class BuildType < BaseHelper
       end
 
       puts("VALID: Provisioning Profile bundle identifier matches app required bundle identifier\n".colorize(:green))
+    rescue StandardError => e
+      raise e.message
+    end
+  end
+
+  def validate_provisioning_profile_entitlements(options)
+    current(__callee__.to_s)
+    begin
+      pp_app_groups_entitlements = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:com.apple.security.application-groups' /dev/stdin <<< $(security cms -D -i \"#{options[:provisioning_profile_path]}\")) | tr -d '\040\011\012\015'")
+      if pp_app_groups_entitlements["Does Not Exist"]
+        error_message = 'Provisioning Profile doesn\'t support the App Groups capability'
+        raise error_message
+      end
+
+      puts("VALID: Provisioning Profile has `application-groups` entitlement \n".colorize(:green))
     rescue StandardError => e
       raise e.message
     end

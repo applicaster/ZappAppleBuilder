@@ -105,19 +105,11 @@ class Store < BuildType
     current(__callee__.to_s)
     download_signing_files
 
-    validate_distribution_certificate(
-      certificate_path: @@projectHelper.distribution_certificate_path,
-      certificate_password: @@envHelper.distribution_key_password
-    )
-
-    validate_distribution_certificate_and_provisioning_profile_team_id(
+    validate(
       certificate_path: @@projectHelper.distribution_certificate_path,
       certificate_password: @@envHelper.distribution_key_password,
-      provisioning_profile_path: @@projectHelper.distribution_provisioning_profile_path
-    )
-
-    validate_provisioning_profile(
-      provisioning_profile_path: @@projectHelper.distribution_provisioning_profile_path
+	  provisioning_profile_path: @@projectHelper.distribution_provisioning_profile_path,
+	  version_number: @@envHelper.version_name
     )
   end
 
