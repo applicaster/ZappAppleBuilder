@@ -10,7 +10,7 @@
   },
   "private": true,
   "devDependencies": {
-    "@applicaster/zapplicaster-cli": "3.0.1"
+    "@applicaster/zapplicaster-cli": "3.1.0-rc.ca914400"
   },
   "scripts": {
     "patch:react": "node ./../Scripts/react-native-patch.js \"ZappiOS\"",
