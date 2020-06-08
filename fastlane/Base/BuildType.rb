@@ -104,6 +104,10 @@ class BuildType < BaseHelper
     if options[:version_number]
       validate_version_number(options)
     end
+
+    if options[:appstore_username]
+      validate_appstoreconnect_credentials(options)
+    end
   end
 
   def validate_version_number(options)
@@ -116,6 +120,24 @@ class BuildType < BaseHelper
 
     rescue StandardError => e
       raise e.message
+    end
+  end
+
+  def validate_appstoreconnect_credentials(options)
+    current(__callee__.to_s)
+    username = options[:appstore_username]
+    password = options[:appstore_password]
+    error_message = "AppStoreConnect credentials are incorrect"
+    begin
+      filename = "./providers.list"
+      sh("xcrun altool --list-providers -u '#{username}' -p '#{password}' --output-format json > #{filename}")
+      result = File.read(filename.to_s).strip if File.exist? filename.to_s
+      if result["-20101"]
+        raise error_message
+      end
+      puts("VALID: AppStoreConnect credentials are Ok\n".colorize(:green))
+    rescue StandardError => e
+      raise error_message
     end
   end
 
