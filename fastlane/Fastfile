@@ -1,113 +1,105 @@
-require 'spaceship'
-require "json"
+# frozen_string_literal: true
 
-import "FaslaneUpload.rb"
-import "FastfileTest"
-import "BuildTypeFactory.rb"
-import "Enterprise/Types/Client/Client.rb"
-import "Enterprise/Types/Debug/Debug.rb"
-import "Store/Store.rb"
-import "Base/Helpers/AppCenterHelper.rb"
+require 'spaceship'
+require 'json'
+
+import 'FaslaneUpload.rb'
+import 'FastfileTest'
+import 'BuildTypeFactory.rb'
+import 'Enterprise/Types/Client/Client.rb'
+import 'Enterprise/Types/Debug/Debug.rb'
+import 'Store/Store.rb'
+import 'Base/Helpers/AppCenterHelper.rb'
 
 platform :ios do
-    before_all do
-        set_device_family
-        install_awscli_if_needed
-        create_temp_keychain
-    end
+  before_all do
+    set_device_family
+    install_awscli_if_needed
+    create_temp_keychain
+  end
 
-    lane :prepare_environment do
-        envHelper = EnvironmentHelper.new
-        unless envHelper.bundle_identifier.to_s.strip.empty?  
-            BuildTypeFactory.new.prepare_environment
-        end
-    end
+  lane :prepare_environment do
+    envHelper = EnvironmentHelper.new
+    BuildTypeFactory.new.prepare_environment unless envHelper.bundle_identifier.to_s.strip.empty?
+  end
 
-    lane :validate_app_signing do
-        envHelper = EnvironmentHelper.new
-        unless envHelper.bundle_identifier.to_s.strip.empty?  
-            BuildTypeFactory.new.perform_signing_validation
-        end
-    end
+  lane :validate_app_signing do
+    envHelper = EnvironmentHelper.new
+    BuildTypeFactory.new.perform_signing_validation unless envHelper.bundle_identifier.to_s.strip.empty?
+  end
 
-    lane :build do
-        envHelper = EnvironmentHelper.new
-        unless envHelper.bundle_identifier.to_s.strip.empty?  
-            BuildTypeFactory.new.build
-        end
-    end
+  lane :build do
+    envHelper = EnvironmentHelper.new
+    BuildTypeFactory.new.build unless envHelper.bundle_identifier.to_s.strip.empty?
+  end
 
-    lane :upload_to_appcenter do |options|
-        appcenter_upload(
-            api_token: options[:api_token],
-            owner_name: options[:owner_name],
-            destinations: options[:destinations],
-            destination_type: options[:destination_type],
-            app_os: options[:app_os],
-            app_platform: options[:app_platform],
-            app_display_name: options[:app_display_name],
-            app_name: options[:app_name],
-            ipa: options[:ipa],
-            dsym: options[:dsym],
-            notify_testers: options[:notify_testers]
-        )
+  lane :upload_to_appcenter do |options|
+    appcenter_upload(
+      api_token: options[:api_token],
+      owner_name: options[:owner_name],
+      destinations: options[:destinations],
+      destination_type: options[:destination_type],
+      app_os: options[:app_os],
+      app_platform: options[:app_platform],
+      app_display_name: options[:app_display_name],
+      app_name: options[:app_name],
+      ipa: options[:ipa],
+      dsym: options[:dsym],
+      notify_testers: options[:notify_testers]
+    )
 
-        # save uploaded app info to file for future use
-        AppCenterHelper.new.save_build_params_for_type(
-            bundle_identifier: options[:bundle_identifier],
-            zapp_build_type: options[:zapp_build_type],
-            app_name: options[:app_name],
-            app_secret: options[:app_secret],
-            build_information: lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]
-        )
-    end
+    # save uploaded app info to file for future use
+    AppCenterHelper.new.save_build_params_for_type(
+      bundle_identifier: options[:bundle_identifier],
+      zapp_build_type: options[:zapp_build_type],
+      app_name: options[:app_name],
+      app_secret: options[:app_secret],
+      build_information: lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]
+    )
+  end
 end
 
 def create_temp_keychain
-    create_keychain(
-        name:  keychain_name,
-        password: keychain_password,
-        unlock: true,
-        timeout: false
-     )
+  create_keychain(
+    name: keychain_name,
+    password: keychain_password,
+    unlock: true,
+    timeout: false
+  )
 end
 
 def set_device_family
-    puts("Setting device family param")
-  
-    device_family = ENV["device_target"]
-    ENV["DEVICE_FAMILY"] = "1,2"
-    if device_family == "iphone"
-        ENV["DEVICE_FAMILY"] = "1"
-    end
-    if device_family == "ipad"
-        ENV["DEVICE_FAMILY"] = "2"
+  puts('Setting device family param')
+
+  device_family = ENV['device_target']
+  ENV['DEVICE_FAMILY'] = '1,2'
+  ENV['DEVICE_FAMILY'] = '1' if device_family == 'iphone'
+  ENV['DEVICE_FAMILY'] = '2' if device_family == 'ipad'
+  end
+
+def install_awscli_if_needed
+  envHelper = EnvironmentHelper.new
+  unless envHelper.bundle_identifier.to_s.strip.empty?
+    if envHelper.isTvOS
+      puts('Installing S3 AWS')
+      sh('sudo pip install awscli')
     end
   end
-  
-def install_awscli_if_needed
-    envHelper = EnvironmentHelper.new
-    unless envHelper.bundle_identifier.to_s.strip.empty?          
-        if envHelper.isTvOS
-            puts("Installing S3 AWS")
-            sh("sudo pip install awscli")
-        end
-    end
 end
 
 def save_param_to_file(name, value)
-    folder_name = "#{ENV['PWD']}/.fastlane_params"
-    filename = "#{folder_name}/#{name}"
-    Dir.mkdir(folder_name) unless File.exists?(folder_name)
-    File.open(filename,"w") do |f|
-       f.write(value)
-    end
+  folder_name = "#{ENV['PWD']}/.fastlane_params"
+  filename = "#{folder_name}/#{name}"
+  Dir.mkdir(folder_name) unless File.exist?(folder_name)
+  File.open(filename, 'w') do |f|
+    f.write(value)
+  end
 end
 
 def keychain_name
-    "zapp-apple-build.keychain"
+  'zapp-apple-build.keychain'
 end
 
 def keychain_password
-    "circle"
+  'circle'
 end
