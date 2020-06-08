@@ -14,7 +14,7 @@ class AppCenterHelper < BaseHelper
 
   def read_value_from_file(bundle_identifier, type)
     folder_name = "#{@@envHelper.root_path}/.ms_app_center"
-    folder_name.gsub('fastlane/', '')
+    folder_name = folder_name.gsub('fastlane/', '')
     filename = "#{folder_name}/#{bundle_identifier}_#{type}"
     if File.exist? "#{filename}"
        File.read("#{filename}").strip
@@ -74,7 +74,7 @@ class AppCenterHelper < BaseHelper
     current(__callee__.to_s)
 
     folder_name = "#{@@envHelper.root_path}/.ms_app_center"
-    folder_name.gsub('fastlane/', '')
+    folder_name = folder_name.gsub('fastlane/', '')
     filename = "#{folder_name}/#{options[:build_type]}_upload_params.json"
     hash = build_params_hash_for_type(options)
     Dir.mkdir(folder_name) unless File.exists?(folder_name)

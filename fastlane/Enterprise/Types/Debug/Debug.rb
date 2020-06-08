@@ -15,9 +15,12 @@ class EnterpriseDebug < BuildTypeEnterprise
     super
 		prepare_signing()
 		prepare_build()
-		@@appCenterHelper.fetch_identifiers("#{app_bundle_identifier}")
 	end
-			
+      
+  def fetch_app_center_identifiers
+    @@appCenterHelper.fetch_identifiers("#{app_bundle_identifier}")
+  end
+
   def build()
     current(__callee__.to_s)
     # get provisioning profiles specifiers
@@ -72,7 +75,7 @@ class EnterpriseDebug < BuildTypeEnterprise
 
     # upload to ms app center
     upload_application(
-			bundle_identifier: @@envHelper.bundle_identifier,
+			bundle_identifier: app_bundle_identifier,
 			build_type: "Enterprise"
     )
     
