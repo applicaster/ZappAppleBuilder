@@ -199,6 +199,27 @@ jobs:
           command: |
               bundle exec fastlane ios build
 
+      - deploy:	
+          name: Building development project	
+          command: |	
+            if [ "$build_dev_project" = true ]; then	
+              # compress the app	
+              env_commit=$(git rev-parse HEAD)	
+              epoch_time=$(date +%s)	
+              zipped_project_file_name="${epoch_time}_${env_commit}.zip"	
+              target="ios"	
+              if [ "$device_target" = apple_tv ]; then	
+                target="tvos"	
+              fi	
+              # using zip	
+              echo; echo	
+              echo "Compressing using zip..."	
+              zip -rq "${zipped_project_file_name}" -@r < "$(pwd)/dev_project_whitelist_${target}.txt"	
+              bundle exec rake zapp_sdks:upload_dev_project["$(pwd)/${zipped_project_file_name}"]	
+            else	
+              echo "Building standard app, not for external development environment! Step will be skipped"	
+            fi
+            
       - run:
           name: Publishing builds to Zapp
           command: |
