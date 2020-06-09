@@ -65,6 +65,8 @@ jobs:
       - run: echo "$GENERAL_CACHE_KEY" > ~/_caching_file
       - run: echo "$ZAPPTOOL_VERSION" > ~/_zappToolVersion
 
+      - checkout
+
       - run:
           name: Set Ruby Version
           command: echo 'chruby ruby-2.5.8' >> ~/.bash_profile
