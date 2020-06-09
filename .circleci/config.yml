@@ -24,7 +24,7 @@ references:
   prepare_cashing_file: &prepare_cashing_file
     run: echo "$GENERAL_CACHE_KEY" > ~/_caching_file
 
-  gems_cache_key: &gems_cache_key Bundler-{{ checksum "~/_caching_file" }}-{{ checksum "Gemfile.lock" }}
+  gems_cache_key: &gems_cache_key Zapp-Platform-IOS-v1-{{ checksum "Gemfile.lock" }}
   restore_gems: &restore_gems
     restore_cache:
       name: Bundler - restore cache
@@ -44,6 +44,11 @@ references:
       key: *gems_cache_key
       paths:
         - /usr/local/bundle
+
+  set_ruby_version: &set_ruby_version
+    run:
+      name: Set Ruby Version
+      command: echo 'chruby ruby-2.5.8' >> ~/.bash_profile
 
   create_zapp_sdk: &create_zapp_sdk
     run:
@@ -69,9 +74,7 @@ jobs:
       - run: echo "$ZAPPTOOL_VERSION" > ~/_zappToolVersion
       - checkout
 
-      - run:
-          name: Set Ruby Version
-          command: echo 'chruby ruby-2.5.8' >> ~/.bash_profile
+      - *set_ruby_version
 
       - run:
           name: Ruby - version
@@ -254,6 +257,7 @@ jobs:
     steps:
       - *prepare_cashing_file
       - checkout
+      - *set_ruby_version
       - *restore_gems
       - *gems_install
       - *save_gems
@@ -266,6 +270,7 @@ jobs:
     steps:
       - *prepare_cashing_file
       - checkout
+      - *set_ruby_version
       - *restore_gems
       - *gems_install
       - *save_gems
