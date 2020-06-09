@@ -245,6 +245,8 @@ jobs:
 
   create_ios_mobile_sdk:
     <<: *mac_config
+    environment:
+      ZAPP_SDK_PLATFORM: ios_for_quickbrick
     steps:
       - checkout
       - *restore_gems
@@ -254,6 +256,8 @@ jobs:
 
   create_tvos_sdk:
     <<: *mac_config
+    environment:
+      ZAPP_SDK_PLATFORM: tvos_for_quickbrick
     steps:
       - checkout
       - *restore_gems
@@ -274,8 +278,6 @@ workflows:
           requires:
             - build
       - create_ios_mobile_sdk:
-          environment:
-            - ZAPP_SDK_PLATFORM: ios_for_quickbrick
           requires:
             - hold_create_ios_mobile_sdk
       - hold_create_tvos_sdk:
@@ -283,7 +285,5 @@ workflows:
           requires:
             - build
       - create_tvos_sdk:
-          environment:
-            - ZAPP_SDK_PLATFORM: tvos_for_quickbrick
           requires:
             - hold_create_tvos_sdk
