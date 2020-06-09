@@ -113,11 +113,11 @@ class AppCenterHelper < BaseHelper
   end
 
   def app_center_api_token
-    ENV['APPCENTER_API_TOKEN'].to_s
+    (ENV['APPCENTER_API_TOKEN']).to_s
   end
 
   def app_center_owner_name
-    ENV['APPCENTER_OWNER_NAME'].to_s
+    (ENV['APPCENTER_OWNER_NAME']).to_s
   end
 
   def app_center_platform
