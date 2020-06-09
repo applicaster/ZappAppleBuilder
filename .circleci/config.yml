@@ -283,8 +283,6 @@ workflows:
     jobs:
       - build:
           filters:
-            branches:
-              ignore: /.*/
             tags:
               only: /.*/
       - hold_create_ios_mobile_sdk:
