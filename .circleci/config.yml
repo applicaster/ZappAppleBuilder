@@ -283,19 +283,41 @@ workflows:
     jobs:
       - build:
           filters:
+            branches:
+              ignore: /.*/
             tags:
               only: /.*/
       - hold_create_ios_mobile_sdk:
           type: approval
           requires:
             - build
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
       - create_ios_mobile_sdk:
           requires:
             - hold_create_ios_mobile_sdk
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
       - hold_create_tvos_sdk:
           type: approval
           requires:
             - build
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
       - create_tvos_sdk:
           requires:
             - hold_create_tvos_sdk
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
