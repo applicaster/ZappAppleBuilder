@@ -199,9 +199,9 @@ jobs:
           command: |
               bundle exec fastlane ios build
 
-      - deploy:	
+      - deploy:
           name: Building development project	
-          command: |	
+          command: |
             if [ "$build_dev_project" = true ]; then	
               # compress the app	
               env_commit=$(git rev-parse HEAD)	
@@ -219,7 +219,7 @@ jobs:
             else	
               echo "Building standard app, not for external development environment! Step will be skipped"	
             fi
-            
+
       - run:
           name: Publishing builds to Zapp
           command: |
