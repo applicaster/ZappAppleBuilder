@@ -117,10 +117,11 @@ class Store < BuildType
 
   def prepare_signing
     current(__callee__.to_s)
-    # fetch values
-    team_id_value = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:com.apple.developer.team-identifier' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
-    team_name_value = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :TeamName' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\011\012\015'")
-    provisioning_profile_uuid_value = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :UUID' /dev/stdin <<< $(security cms -D -i \"#{@@projectHelper.distribution_provisioning_profile_path}\")) | tr -d '\040\011\012\015'")
+	# fetch values
+	provisioning_profile = get_provisioning_profile_content(@@projectHelper.distribution_provisioning_profile_path)
+	team_id_value = provisioning_profile["Entitlements"]["com.apple.developer.team-identifier"]
+	team_name_value = provisioning_profile["TeamName"] 
+	provisioning_profile_uuid_value = provisioning_profile["UUID"] 
 
     # save values
     save_param_to_file("#{@@envHelper.bundle_identifier}_PROFILE_UDID", provisioning_profile_uuid_value.to_s)

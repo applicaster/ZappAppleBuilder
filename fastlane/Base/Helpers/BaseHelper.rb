@@ -23,12 +23,14 @@ class BaseHelper
 
   def read_param_from_file(name)
     current(__callee__.to_s)
+    puts("param: |#{name}|")
     filename = "#{params_folder_path}/#{name}"
     File.read(filename.to_s).strip if File.exist? filename.to_s
   end
 
   def save_param_to_file(name, value)
     current(__callee__.to_s)
+    puts("param: |#{name}|, value: |#{value}|")
     filename = "#{params_folder_path}/#{name}"
     Dir.mkdir(params_folder_path) unless File.exist?(params_folder_path)
     File.open(filename, 'w') do |f|
@@ -139,8 +141,9 @@ class BaseHelper
       "--filename \"#{options[:bundle_identifier]}.mobileprovision\" " \
       "--platform \"#{@@envHelper.platform_name}\" ")
 
-    provisioning_profile_uuid = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :UUID' /dev/stdin <<< $(security cms -D -i \"#{@@envHelper.root_path}/fastlane/#{options[:bundle_identifier]}.mobileprovision\")) | tr -d '\040\011\012\015'")
-    save_param_to_file("#{options[:bundle_identifier]}_PROFILE_UDID", provisioning_profile_uuid.to_s)
+    provisioning_profile = get_provisioning_profile_content("#{@@envHelper.root_path}/fastlane/#{options[:bundle_identifier]}.mobileprovision")
+	  provisioning_profile_uuid_value = provisioning_profile["UUID"]
+    save_param_to_file("#{options[:bundle_identifier]}_PROFILE_UDID", provisioning_profile_uuid_value.to_s)
 
     # delete Invalid provisioning profiles for the same app
     delete_invalid_provisioning_profiles(options)
