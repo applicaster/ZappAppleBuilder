@@ -42,7 +42,7 @@ references:
         - /usr/local/bundle
 
   create_zapp_sdk: &create_zapp_sdk
-    - run:
+    run:
       name: Creating Zapp SDK
       command: |
         if [ -z "$CIRCLE_TAG" ];
@@ -243,23 +243,23 @@ jobs:
       - store_artifacts:
           path: ./CircleArtifacts
 
-create_ios_mobile_sdk:
-  <<: *mac_config
-  steps:
-    - checkout
-    - *restore_gems
-    - *gems_install
-    - *save_gems
-    - *create_zapp_sdk
+  create_ios_mobile_sdk:
+    <<: *mac_config
+    steps:
+      - checkout
+      - *restore_gems
+      - *gems_install
+      - *save_gems
+      - *create_zapp_sdk
 
-create_tvos_sdk:
-  <<: *mac_config
-  steps:
-    - checkout
-    - *restore_gems
-    - *gems_install
-    - *save_gems
-    - *create_zapp_sdk
+  create_tvos_sdk:
+    <<: *mac_config
+    steps:
+      - checkout
+      - *restore_gems
+      - *gems_install
+      - *save_gems
+      - *create_zapp_sdk
 
 workflows:
   version: 2
