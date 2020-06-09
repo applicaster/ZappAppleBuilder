@@ -6,6 +6,7 @@ require 'fastlane'
 require 'openssl'
 require 'date'
 require 'colorize'
+require 'plist'
 
 import 'Base/Helpers/EnvironmentHelper.rb'
 
@@ -230,5 +231,14 @@ class BaseHelper
 
   def current(name)
     puts "#method: #{name}".colorize(:white).colorize(background: :blue)
+  end
+
+  def get_provisioning_profile_content(path)
+    # get provisioning profile data
+    filename = './provisioning_profile.plist'
+    sh("security cms -D -i #{path} > #{filename}")
+    provisioning_profile = Plist.parse_xml(filename.to_s) if File.exist? filename.to_s
+    File.delete(filename.to_s)
+    provisioning_profile
   end
 end

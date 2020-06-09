@@ -3,7 +3,6 @@
 require 'fastlane/action'
 require 'fastlane'
 require 'colorize'
-require 'plist'
 
 fastlane_require 'dotenv'
 Dotenv.load
@@ -98,12 +97,13 @@ class BuildType < BaseHelper
     validate_distribution_certificate_expiration(options)
 
     if options[:provisioning_profile_path]
+      options[:provisioning_profile] = get_provisioning_profile_content(options[:provisioning_profile_path])
+
       validate_distribution_certificate_and_provisioning_profile_team_id(options)
       validate_provisioning_profile(options)
     end
 
     validate_version_number(options) if options[:version_number]
-
     validate_appstoreconnect_credentials(options) if options[:appstore_username]
   end
 
@@ -167,35 +167,33 @@ class BuildType < BaseHelper
   def validate_distribution_certificate_and_provisioning_profile_team_id(options)
     current(__callee__.to_s)
     error_message = 'Unable to fetch Team ID from distribution certificate'
-    # begin
-    p12 = OpenSSL::PKCS12.new(File.read((options[:certificate_path]).to_s), (options[:certificate_password]).to_s)
-    certificate_team_identifier = parse_certificate_subject_value(p12, 'OU')
+    begin
+      p12 = OpenSSL::PKCS12.new(File.read((options[:certificate_path]).to_s), (options[:certificate_password]).to_s)
+      certificate_team_identifier = parse_certificate_subject_value(p12, 'OU')
 
-    raise error_message if certificate_team_identifier.empty?
+      raise error_message if certificate_team_identifier.empty?
+      
+      provisioning_profile = options[:provisioning_profile]
+      provisioning_profile_certificates = provisioning_profile['DeveloperCertificates']
 
-    # get provisioning profile data
-    filename = './provisioning_profile.plist'
-    sh("security cms -D -i #{options[:provisioning_profile_path]} > #{filename}")
-    provisioning_profile = Plist.parse_xml(filename.to_s) if File.exist? filename.to_s
-    File.delete(filename.to_s)
+      hasCertificate = false
+      provisioning_profile_certificates.each do |raw|
+        certificate = OpenSSL::X509::Certificate.new(raw.string)
+        hasCertificate = true if certificate.subject == p12.certificate.subject
+      end
 
-    provisioning_profile_certificates = provisioning_profile['DeveloperCertificates']
+      error_message = 'Provisioning Profile is not signed with provided certificate'
+      raise error_message unless hasCertificate == true
 
-    hasCertificate = false
-    provisioning_profile_certificates.each do |raw|
-      certificate = OpenSSL::X509::Certificate.new(raw.string)
-      hasCertificate = true if certificate.subject == p12.certificate.subject
+      puts(p12.certificate.subject)
+      puts("VALID: Provisioning Profile is signed with provided certificate\n".colorize(:green))
+    rescue StandardError => e
+      raise error_message
     end
-
-    error_message = 'Provisioning Profile is not signed with provided certificate'
-    raise error_message unless hasCertificate == true
-
-    puts(p12.certificate.subject)
-    puts("VALID: Provisioning Profile is signed with provided certificate\n".colorize(:green))
   end
 
-  def parse_certificate_subject_value(certificate, _key)
-    content_array = certificate.certificate.subject.to_a.reject { |c| c.include?('OU') == false }
+  def parse_certificate_subject_value(certificate, key)
+    content_array = certificate.certificate.subject.to_a.reject { |c| c.include?(key) == false }
     value = content_array.first.select { |c| c.to_s.length == 10 }
     value.first
   end
@@ -210,8 +208,10 @@ class BuildType < BaseHelper
     current(__callee__.to_s)
     error_message = 'Provisioning Profile is expired'
     begin
-      expire_date = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :ExpirationDate' /dev/stdin <<< $(security cms -D -i \"#{options[:provisioning_profile_path]}\"))")
-      raise error_message unless Date.parse(expire_date) > Date.new
+      provisioning_profile = options[:provisioning_profile]
+
+      expire_date = provisioning_profile["ExpirationDate"]
+      raise error_message unless expire_date > Date.new
 
       puts("VALID: Provisioning Profile is not expired\n".colorize(:green))
     rescue StandardError => e
@@ -223,11 +223,10 @@ class BuildType < BaseHelper
     current(__callee__.to_s)
     error_message = 'Provisioning Profile bundle identifier does not match app required bundle identifier'
     begin
-      pp_bundle_identifier = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:application-identifier' /dev/stdin <<< $(security cms -D -i \"#{options[:provisioning_profile_path]}\")) | tr -d '\040\011\012\015'")
-      prefix = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :ApplicationIdentifierPrefix' /dev/stdin <<< $(security cms -D -i \"#{options[:provisioning_profile_path]}\")) | tr -d '\040\011\012\015'")
-      prefix['Array{'] = ''
-      prefix['}'] = ''
-      pp_bundle_identifier["#{prefix}."] = ''
+      provisioning_profile = options[:provisioning_profile]
+      pp_bundle_identifier = provisioning_profile["Entitlements"]["application-identifier"]
+      prefix = provisioning_profile["ApplicationIdentifierPrefix"]
+      pp_bundle_identifier["#{prefix.first}."] = ''
       unless pp_bundle_identifier == @@envHelper.bundle_identifier
         raise "#{error_message} (|#{pp_bundle_identifier}| != |#{@@envHelper.bundle_identifier}|)"
       end
@@ -241,8 +240,10 @@ class BuildType < BaseHelper
   def validate_provisioning_profile_entitlements(options)
     current(__callee__.to_s)
     begin
-      pp_app_groups_entitlements = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:com.apple.security.application-groups' /dev/stdin <<< $(security cms -D -i \"#{options[:provisioning_profile_path]}\")) | tr -d '\040\011\012\015'")
-      if pp_app_groups_entitlements['Does Not Exist']
+      provisioning_profile = options[:provisioning_profile]
+
+      pp_app_groups_entitlements = provisioning_profile["Entitlements"]["com.apple.security.application-groups"]
+      if pp_app_groups_entitlements.nil?
         error_message = 'Provisioning Profile doesn\'t support the App Groups capability'
         raise error_message
       end
