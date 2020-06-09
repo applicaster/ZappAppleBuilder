@@ -1,5 +1,9 @@
 # Uncomment the next line to define a global platform for your project
+load 'Flipper'
+
 platform :ios, '11.0'
+require_relative './node_modules/@react-native-community/cli-platform-ios/native_modules'
+require_relative '../scripts/autolink-react-dependencies.rb'
 
 require 'resolv-replace'
 install! 'cocoapods', :deterministic_uuids => false, :preserve_pod_file_structure => true
@@ -11,7 +15,6 @@ source 'https://cdn.cocoapods.org/'
 
 # Zaptool sources - Do not remove or change.
 
-
 pre_install do |installer|
 	# workaround for https://github.com/CocoaPods/CocoaPods/issues/3289
 	Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
@@ -21,37 +24,23 @@ puts("\n\nCocoaPods preparing for platform: iOS\n\n")
 
 def shared_pods
     # This frameworks added to support backwards compatibility
-    pod 'ZappPlugins', '= 11.6.6'
+    pod 'ZappPlugins', '= 11.7.0'
     pod 'ZappPushPluginsSDK', '= 11.0.1'
     pod 'ZappAnalyticsPluginsSDK', '= 11.0.0'
     pod 'ZappCore', '= 0.9.16'
     pod 'ZappApple', '= 0.7.21'
     pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
-    pod 'yoga', :path => './node_modules/react-native/ReactCommon/yoga'
-    pod 'DoubleConversion', :podspec => './node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
-    pod 'glog', :podspec => './node_modules/react-native/third-party-podspecs/GLog.podspec'
-    pod 'Folly', :podspec => './node_modules/react-native/third-party-podspecs/Folly.podspec'
-
     # Zaptool pods - Do not remove or change.
 
 end
 
 target 'ZappiOS' do
-  pod 'React', :path => './node_modules/react-native', :subspecs => [
-    'Core',
-    'CxxBridge',
-    'DevSupport',
-    'RCTAnimation',
-    'RCTImage',
-    'RCTLinkingIOS',
-    'RCTNetwork',
-    'RCTPushNotification',
-    'RCTSettings',
-    'RCTText',
-    'RCTWebSocket',
-    'RCTActionSheet'
-  ]
   shared_pods
+  use_native_modules!
+  use_react_native!
+
+  # Enables Flipper.
+  add_flipper_pods!
 end
 
 target 'ZappiOSTests' do
@@ -60,10 +49,16 @@ end
 
 target 'NotificationServiceExtension' do
     # Zaptool notification service extension pods - Do not remove or change.
+end
+
+target 'NotificationContentExtension' do
+    # Zaptool notification content extension pods - Do not remove or change.
 
 end
 
 post_install do |installer|
+    flipper_post_install(installer)
+
     installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|
             config.build_settings['APPLICATION_TARGET'] = "ZappiOS"

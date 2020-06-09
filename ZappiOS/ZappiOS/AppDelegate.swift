@@ -12,6 +12,13 @@ import UIKit
 import ZappApple
 import ZappCore
 
+#if DEBUG && targetEnvironment(simulator)
+    #if FB_SONARKIT_ENABLED
+        import FlipperKit
+        import flipper_plugin_react_native_performance
+    #endif
+#endif
+
 @UIApplicationMain
 class AppDelegate: AppDelegateBase {
     var appCenterHandler = MsAppCenterHandler()
@@ -20,6 +27,8 @@ class AppDelegate: AppDelegateBase {
 
     override func application(_ application: UIApplication,
                               didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        initializeFlipper(with: application)
+
         let retVal = super.application(application,
                                        didFinishLaunchingWithOptions: launchOptions)
 
@@ -82,5 +91,21 @@ class AppDelegate: AppDelegateBase {
         debugPrint(error.localizedDescription)
         uiLayerPluginDelegate?.applicationDelegate?.application?(application,
                                                                  didFailToRegisterForRemoteNotificationsWithError: error)
+    }
+
+    private func initializeFlipper(with application: UIApplication) {
+        #if DEBUG && targetEnvironment(simulator)
+            #if FB_SONARKIT_ENABLED
+                let client = FlipperClient.shared()
+                let layoutDescriptorMapper = SKDescriptorMapper(defaults: ())
+                FlipperKitLayoutComponentKitSupport.setUpWith(layoutDescriptorMapper)
+                client?.add(FlipperKitLayoutPlugin(rootNode: application, with: layoutDescriptorMapper!))
+                client?.add(FKUserDefaultsPlugin(suiteName: nil))
+                client?.add(FlipperKitReactPlugin())
+                client?.add(FlipperKitNetworkPlugin(networkAdapter: SKIOSNetworkAdapter()))
+                client?.add(FlipperReactPerformancePlugin.sharedInstance())
+                client?.start()
+            #endif
+        #endif
     }
 }
