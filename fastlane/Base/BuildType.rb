@@ -3,6 +3,7 @@
 require 'fastlane/action'
 require 'fastlane'
 require 'colorize'
+require 'plist'
 
 fastlane_require 'dotenv'
 Dotenv.load
@@ -128,6 +129,7 @@ class BuildType < BaseHelper
       filename = './providers.list'
       sh("xcrun altool --list-providers -u '#{username}' -p '#{password}' --output-format json > #{filename}")
       result = File.read(filename.to_s).strip if File.exist? filename.to_s
+      File.delete(filename.to_s)
       raise error_message if result['-20101']
 
       puts("VALID: AppStoreConnect credentials are Ok\n".colorize(:green))
@@ -165,28 +167,31 @@ class BuildType < BaseHelper
   def validate_distribution_certificate_and_provisioning_profile_team_id(options)
     current(__callee__.to_s)
     error_message = 'Unable to fetch Team ID from distribution certificate'
-    begin
-      p12 = OpenSSL::PKCS12.new(File.read((options[:certificate_path]).to_s), (options[:certificate_password]).to_s)
-      certificate_team_identifier = parse_certificate_subject_value(p12, 'OU')
+    # begin
+    p12 = OpenSSL::PKCS12.new(File.read((options[:certificate_path]).to_s), (options[:certificate_password]).to_s)
+    certificate_team_identifier = parse_certificate_subject_value(p12, 'OU')
 
-      raise error_message if certificate_team_identifier.empty?
+    raise error_message if certificate_team_identifier.empty?
 
-      # get provisioning profile team identifier
-      provisioning_profile_team_identifier = sh("echo $(/usr/libexec/PlistBuddy -c 'Print :TeamIdentifier' /dev/stdin <<< $(security cms -D -i \"#{options[:provisioning_profile_path]}\") | sed -e 1d -e '$d')")
+    # get provisioning profile data
+    filename = './provisioning_profile.plist'
+    sh("security cms -D -i #{options[:provisioning_profile_path]} > #{filename}")
+    provisioning_profile = Plist.parse_xml(filename.to_s) if File.exist? filename.to_s
+    File.delete(filename.to_s)
 
-      # remove white spaces
-      provisioning_profile_team_identifier = provisioning_profile_team_identifier.chomp.strip
+    provisioning_profile_certificates = provisioning_profile['DeveloperCertificates']
 
-      # raise exc if no match
-      error_message = 'Provisioning Profile is not signed with provided certificate'
-      unless certificate_team_identifier == provisioning_profile_team_identifier
-        raise "#{error_message} (|#{certificate_team_identifier}| != |#{provisioning_profile_team_identifier}|)"
-      end
-
-      puts("VALID: Provisioning Profile is signed with provided certificate\n".colorize(:green))
-    rescue StandardError => e
-      raise error_message
+    hasCertificate = false
+    provisioning_profile_certificates.each do |raw|
+      certificate = OpenSSL::X509::Certificate.new(raw.string)
+      hasCertificate = true if certificate.subject == p12.certificate.subject
     end
+
+    error_message = 'Provisioning Profile is not signed with provided certificate'
+    raise error_message unless hasCertificate == true
+
+    puts(p12.certificate.subject)
+    puts("VALID: Provisioning Profile is signed with provided certificate\n".colorize(:green))
   end
 
   def parse_certificate_subject_value(certificate, _key)

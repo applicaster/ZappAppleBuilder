@@ -117,48 +117,52 @@ class EnterpriseDebug < BuildTypeEnterprise
       teamid: team_id
     )
 
-    # create main app on developer portal with new identifier
-    create_app_on_dev_portal(
-      username: username,
-      team_id: team_id,
-      app_name: devportal_app_name,
-      bundle_identifier: app_bundle_identifier,
-      app_index: '1'
-    )
+    unless username.empty? && password.empty?
+      # create main app on developer portal with new identifier
+      create_app_on_dev_portal(
+        username: username,
+        team_id: team_id,
+        app_name: devportal_app_name,
+        bundle_identifier: app_bundle_identifier,
+        app_index: '1'
+      )
 
-    # create and save the push notifications certificate in build artifacts
-    create_push_certificate(
-      username: username,
-      team_id: team_id,
-      app_name: devportal_app_name,
-      bundle_identifier: app_bundle_identifier,
-      p12_password: @@envHelper.accountsAccountId
-    )
+      # create and save the push notifications certificate in build artifacts
+      create_push_certificate(
+        username: username,
+        team_id: team_id,
+        app_name: devportal_app_name,
+        bundle_identifier: app_bundle_identifier,
+        p12_password: @@envHelper.accountsAccountId
+      )
 
-    enterprise_debug_create_provisioning_profile(
-      username: username,
-      team_id: team_id,
-      team_name: team_name,
-      bundle_identifier: app_bundle_identifier
-    )
+      enterprise_debug_create_provisioning_profile(
+        username: username,
+        team_id: team_id,
+        team_name: team_name,
+        bundle_identifier: app_bundle_identifier
+      )
 
-    # prepare app extensions
-    prepare_extensions
+      # prepare app extensions
+      prepare_extensions
+    end
 
     # add debug ribbon
     add_debug_ribbon_to_app_icon
   end
 
   def prepare_signing
-    current(__callee__.to_s)
-    import_certificate(
-      certificate_path: certificate_path,
-      certificate_password: ENV['KEY_PASSWORD'],
-      keychain_name: @@envHelper.keychain_name,
-      keychain_password: @@envHelper.keychain_password
-    )
-    sh("bundle exec fastlane fastlane-credentials add --username #{username} --password '#{password}'")
-    ENV['FASTLANE_PASSWORD'] = password
+    unless username.empty? && password.empty?
+      current(__callee__.to_s)
+      import_certificate(
+        certificate_path: certificate_path,
+        certificate_password: ENV['KEY_PASSWORD'],
+        keychain_name: @@envHelper.keychain_name,
+        keychain_password: @@envHelper.keychain_password
+      )
+      sh("bundle exec fastlane fastlane-credentials add --username #{username} --password '#{password}'")
+      ENV['FASTLANE_PASSWORD'] = password
+    end
   end
 
   def perform_signing_validation

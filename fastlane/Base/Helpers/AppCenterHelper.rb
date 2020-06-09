@@ -10,8 +10,10 @@ class AppCenterHelper < BaseHelper
   @@projectHelper = ProjectHelper.new
 
   def fetch_identifiers(bundle_identifier)
-    puts("Fetching App Center identifiers ms_app_center:fetch_identifiers[#{bundle_identifier}")
-    sh("bundle exec rake ms_app_center:fetch_identifiers[#{bundle_identifier}]")
+    unless app_center_api_token.empty?
+      puts("Fetching App Center identifiers ms_app_center:fetch_identifiers[#{bundle_identifier}")
+      sh("bundle exec rake ms_app_center:fetch_identifiers[#{bundle_identifier}]")
+    end
   end
 
   def read_value_from_file(bundle_identifier, type)
@@ -22,6 +24,7 @@ class AppCenterHelper < BaseHelper
   end
 
   def upload_app(options)
+    return unless app_center_api_token.empty?
     current(__callee__.to_s)
 
     build_type = options[:build_type]
@@ -110,11 +113,11 @@ class AppCenterHelper < BaseHelper
   end
 
   def app_center_api_token
-    ENV['APPCENTER_API_TOKEN']
+    ENV['APPCENTER_API_TOKEN'].to_s
   end
 
   def app_center_owner_name
-    ENV['APPCENTER_OWNER_NAME']
+    ENV['APPCENTER_OWNER_NAME'].to_s
   end
 
   def app_center_platform

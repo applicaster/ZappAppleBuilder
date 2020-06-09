@@ -20,7 +20,6 @@ class EnterpriseClient < BuildTypeEnterprise
     super
     prepare_signing
     prepare_build
-    @@appCenterHelper.fetch_identifiers(@@envHelper.bundle_identifier)
   end
 
   def build
@@ -95,7 +94,7 @@ class EnterpriseClient < BuildTypeEnterprise
 
     validate(
       certificate_path: @@projectHelper.distribution_certificate_path,
-      certificate_password: @@envHelper.distribution_key_password,
+      certificate_password: @@envHelper.debug_distribution_key_password,
       provisioning_profile_path: @@projectHelper.distribution_provisioning_profile_path
     )
   end
