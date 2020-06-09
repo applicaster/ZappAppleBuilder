@@ -24,8 +24,8 @@ namespace :publish_to_zapp do
 
     # set initial build status as failure
     build_status = "failure"
-    debug_info = read_build_params_for_type("Enterprise")
-    release_info = read_build_params_for_type("Store")
+    debug_info = read_build_params_for_type("debug")
+    release_info = read_build_params_for_type("release")
 
     # success if it is store build and there (release_info and debug_info)
     # or debug_info if it is a debug build only
