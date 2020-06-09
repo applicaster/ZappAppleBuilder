@@ -244,6 +244,7 @@ jobs:
           path: ./CircleArtifacts
 
 create_ios_mobile_sdk:
+  <<: *mac_config
   steps:
     - checkout
     - *restore_gems
@@ -252,6 +253,7 @@ create_ios_mobile_sdk:
     - *create_zapp_sdk
 
 create_tvos_sdk:
+  <<: *mac_config
   steps:
     - checkout
     - *restore_gems
