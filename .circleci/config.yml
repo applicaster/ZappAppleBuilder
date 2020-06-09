@@ -118,8 +118,8 @@ jobs:
       - run:
           name: Validate app signing
           command: |
-              echo "\n-- Validating app signing --"
-              bundle exec fastlane ios validate_app_signing
+            echo "\n-- Validating app signing --"
+            bundle exec fastlane ios validate_app_signing
 
       # Login NPM
       - run:
@@ -194,15 +194,15 @@ jobs:
       - deploy:
           name: Prepare Build environment
           command: |
-              bundle exec fastlane ios prepare_environment
+            bundle exec fastlane ios prepare_environment
 
       - deploy:
           name: Build App
           command: |
-              bundle exec fastlane ios build
+            bundle exec fastlane ios build
 
       - deploy:
-          name: Building development project	
+          name: Building development project
           command: |
             if [ "$build_dev_project" = true ]; then	
               # compress the app	
@@ -273,7 +273,7 @@ workflows:
             - build
       - create_ios_mobile_sdk:
           environment:
-            - ZAPP_SDK_PLATFORM: ios
+            - ZAPP_SDK_PLATFORM: ios_for_quickbrick
           requires:
             - hold_create_ios_mobile_sdk
       - hold_create_tvos_sdk:
@@ -282,6 +282,6 @@ workflows:
             - build
       - create_tvos_sdk:
           environment:
-            - ZAPP_SDK_PLATFORM: tvos
+            - ZAPP_SDK_PLATFORM: tvos_for_quickbrick
           requires:
             - hold_create_tvos_sdk
