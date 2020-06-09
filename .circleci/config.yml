@@ -20,6 +20,10 @@ references:
       LC_ALL: "en_US.UTF-8"
       LANG: "en_US.UTF-8"
 
+  #Hack general caching until circle does not support global env variables
+  prepare_cashing_file: &prepare_cashing_file
+    run: echo "$GENERAL_CACHE_KEY" > ~/_caching_file
+
   gems_cache_key: &gems_cache_key Bundler-{{ checksum "~/_caching_file" }}-{{ checksum "Gemfile.lock" }}
   restore_gems: &restore_gems
     restore_cache:
@@ -61,10 +65,8 @@ jobs:
     <<: *mac_config
 
     steps:
-      #Hack general caching until circle does not support global env variables
-      - run: echo "$GENERAL_CACHE_KEY" > ~/_caching_file
+      - *prepare_cashing_file
       - run: echo "$ZAPPTOOL_VERSION" > ~/_zappToolVersion
-
       - checkout
 
       - run:
@@ -250,6 +252,7 @@ jobs:
     environment:
       ZAPP_SDK_PLATFORM: ios_for_quickbrick
     steps:
+      - *prepare_cashing_file
       - checkout
       - *restore_gems
       - *gems_install
@@ -261,6 +264,7 @@ jobs:
     environment:
       ZAPP_SDK_PLATFORM: tvos_for_quickbrick
     steps:
+      - *prepare_cashing_file
       - checkout
       - *restore_gems
       - *gems_install
