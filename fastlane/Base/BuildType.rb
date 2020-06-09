@@ -99,7 +99,7 @@ class BuildType < BaseHelper
     if options[:provisioning_profile_path]
       options[:provisioning_profile] = get_provisioning_profile_content(options[:provisioning_profile_path])
 
-      validate_distribution_certificate_and_provisioning_profile_team_id(options)
+      validate_distribution_certificate_and_provisioning_profile(options)
       validate_provisioning_profile(options)
     end
 
@@ -164,7 +164,7 @@ class BuildType < BaseHelper
     end
   end
 
-  def validate_distribution_certificate_and_provisioning_profile_team_id(options)
+  def validate_distribution_certificate_and_provisioning_profile(options)
     current(__callee__.to_s)
     error_message = 'Unable to fetch Team ID from distribution certificate'
     begin
