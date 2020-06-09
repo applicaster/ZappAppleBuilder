@@ -2,11 +2,14 @@ version: 2.1
 notify:
   webhooks:
     - url: https://zapp.applicaster.com/callbacks/build_status/circleci_builds
-jobs:
-  build:
+references:
+  workspace_root: &workspace_root ~/ZappAppleBuilder
+  mac_config: &mac_config
+    working_directory: *workspace_root
     macos:
       xcode: "11.4.0"
     shell: /bin/bash --login -eo pipefail
+
     environment:
       GENERAL_CACHE_KEY: "ZappApple_Cache_1.0.1"
       PROJECT_NAME: "ZappApple"
@@ -14,48 +17,69 @@ jobs:
       BUILD_PATH: ~/build_debug
       ZAPPTOOL_VERSION: "3.10.0"
       HOMEBREW_NO_AUTO_UPDATE: "1"
-
       #fastlane variables
       LC_ALL: "en_US.UTF-8"
       LANG: "en_US.UTF-8"
 
-    working_directory: ~/ZappAppleBuilder
-    steps:
-      #Hack general caching until circle does not support global env variables
-      - run: echo "$GENERAL_CACHE_KEY" > ~/_caching_file
-      - run: echo "$ZAPPTOOL_VERSION" > ~/_zappToolVersion
+  #Hack general caching until circle does not support global env variables
+  prepare_cashing_file: &prepare_cashing_file
+    run: echo "$GENERAL_CACHE_KEY" > ~/_caching_file
 
-      - run:
-          name: Set Ruby Version
-          command: echo 'chruby ruby-2.5.8' >> ~/.bash_profile
+  gems_cache_key: &gems_cache_key Zapp-Platform-IOS-v1-{{ checksum "Gemfile.lock" }}
+  restore_gems: &restore_gems
+    restore_cache:
+      name: Bundler - restore cache
+      keys:
+        - *gems_cache_key
+
+  gems_install: &gems_install
+    run:
+      name: Bundler - install dependencies
+      command: |
+        gem install bundler
+        bundle check --path=.bundle || bundle install --path=.bundle
+
+  save_gems: &save_gems
+    save_cache:
+      name: Bundler - save cache
+      key: *gems_cache_key
+      paths:
+        - /usr/local/bundle
+
+  set_ruby_version: &set_ruby_version
+    run:
+      name: Set Ruby Version
+      command: echo 'chruby ruby-2.5.8' >> ~/.bash_profile
+
+  create_zapp_sdk: &create_zapp_sdk
+    run:
+      name: Creating Zapp SDK
+      command: |
+        if [ -z "$CIRCLE_TAG" ];
+        then
+          echo "no tag passing branch name"
+          version=$CIRCLE_BRANCH
+        else
+          version=$CIRCLE_TAG
+        fi
+        echo "Creating SDK for platform:$ZAPP_SDK_PLATFORM"
+        bundle exec rake zapp_sdks:create[$ZAPP_SDK_PLATFORM,$version,$CIRCLE_PROJECT_REPONAME]
+        bundle exec rake zapp_sdks:publish_changelog[$ZAPP_SDK_PLATFORM,$version]
+
+jobs:
+  build:
+    <<: *mac_config
+
+    steps:
+      - *prepare_cashing_file
+      - run: echo "$ZAPPTOOL_VERSION" > ~/_zappToolVersion
+      - checkout
+
+      - *set_ruby_version
 
       - run:
           name: Ruby - version
           command: ruby -v
-
-      # Prepere Git and Submodules
-      - restore_cache:
-          keys:
-            - GIT-{{ checksum "~/_caching_file" }}-{{ .Branch }}-{{ .Revision }}
-            - GIT-{{ checksum "~/_caching_file" }}-{{ .Branch }}-
-            - GIT-{{ checksum "~/_caching_file" }}-
-
-      - run:
-          name: Fetch tags
-          command: |
-            if [ -n "$CIRCLE_TAG" ]; then
-              git fetch --tags -f
-            else
-              echo "Skipping fetch tags"
-            fi
-
-      - checkout
-
-      - save_cache:
-          name: Git - save cache
-          key: GIT-{{ checksum "~/_caching_file" }}-{{ .Branch }}-{{ .Revision }}
-          paths:
-            - ".git"
 
       - run:
           name: install node@12.0.0
@@ -95,29 +119,15 @@ jobs:
           name: ZappTool - version
           command: "${HOME}/ZappTool/ZappTool -v"
 
-      # Prepare Bundler
-      - restore_cache:
-          name: Bundler - restore cache
-          key: Bundler-{{ checksum "~/_caching_file" }}-{{ checksum "Gemfile.lock" }}
-
-      - run:
-          name: Bundler - update dependencies
-          command: |
-            gem install bundler
-            bundle check --path=.bundle || bundle install --path=.bundle
-
-      - save_cache:
-          name: Bundler - save cache
-          key: Bundler-{{ checksum "~/_caching_file" }}-{{ checksum "Gemfile.lock" }}
-          paths:
-            - /Users/distiller/.rubies/ruby-2.6.5/lib/ruby
-            - ./.bundle
+      - *restore_gems
+      - *gems_install
+      - *save_gems
 
       - run:
           name: Validate app signing
           command: |
-              echo "\n-- Validating app signing --"
-              bundle exec fastlane ios validate_app_signing
+            echo "\n-- Validating app signing --"
+            bundle exec fastlane ios validate_app_signing
 
       # Login NPM
       - run:
@@ -192,15 +202,15 @@ jobs:
       - deploy:
           name: Prepare Build environment
           command: |
-              bundle exec fastlane ios prepare_environment
+            bundle exec fastlane ios prepare_environment
 
       - deploy:
           name: Build App
           command: |
-              bundle exec fastlane ios build
+            bundle exec fastlane ios build
 
       - deploy:
-          name: Building development project	
+          name: Building development project
           command: |
             if [ "$build_dev_project" = true ]; then	
               # compress the app	
@@ -238,33 +248,54 @@ jobs:
       #         bundle exec fastlane ios test
       #       fi
 
-      - deploy:
-          name: Creating Zapp SDK
-          command: |
-            if [ "$triggered_by" = "zapp" ];
-            then
-             echo "Skipping SDK creation"
-             else
-             if [ -z "$CIRCLE_TAG" ];
-             then
-              echo "no tag passing branch name"
-              version=$CIRCLE_BRANCH
-             else
-              version=$CIRCLE_TAG
-             fi
-
-             bundle exec rake zapp_sdks:create[tvos,$version,$CIRCLE_PROJECT_REPONAME]
-             bundle exec rake zapp_sdks:publish_changelog[tvos,$version]
-             fi
-
       - store_artifacts:
           path: ./CircleArtifacts
 
+  create_ios_mobile_sdk:
+    <<: *mac_config
+    environment:
+      ZAPP_SDK_PLATFORM: ios_for_quickbrick
+    steps:
+      - *prepare_cashing_file
+      - checkout
+      - *set_ruby_version
+      - *restore_gems
+      - *gems_install
+      - *save_gems
+      - *create_zapp_sdk
+
+  create_tvos_sdk:
+    <<: *mac_config
+    environment:
+      ZAPP_SDK_PLATFORM: tvos_for_quickbrick
+    steps:
+      - *prepare_cashing_file
+      - checkout
+      - *set_ruby_version
+      - *restore_gems
+      - *gems_install
+      - *save_gems
+      - *create_zapp_sdk
+
 workflows:
   version: 2
-  build:
+  build_from_branch_and_tag:
     jobs:
       - build:
           filters:
             tags:
-              only: /^[0-9]+[.][0-9]+[.][0-9]+$/
+              only: /.*/
+      - hold_create_ios_mobile_sdk:
+          type: approval
+          requires:
+            - build
+      - create_ios_mobile_sdk:
+          requires:
+            - hold_create_ios_mobile_sdk
+      - hold_create_tvos_sdk:
+          type: approval
+          requires:
+            - build
+      - create_tvos_sdk:
+          requires:
+            - hold_create_tvos_sdk
