@@ -24,36 +24,37 @@ class AppCenterHelper < BaseHelper
   end
 
   def upload_app(options)
-    return unless app_center_api_token.empty?
-    current(__callee__.to_s)
+    unless app_center_api_token.empty?
+      current(__callee__.to_s)
 
-    build_type = options[:build_type]
-    zapp_build_type = options[:zapp_build_type]
-    bundle_identifier = options[:bundle_identifier]
-    app_display_name = @@envHelper.app_name
-    app_name = read_value_from_file(bundle_identifier, 'appname')
-    app_secret = read_value_from_file(bundle_identifier, 'appsecret')
-    app_distribution_group = read_value_from_file(bundle_identifier, 'appgroup')
-    app_platform = 'Objective-C-Swift'
-    app_os = app_center_platform
+      build_type = options[:build_type]
+      zapp_build_type = options[:zapp_build_type]
+      bundle_identifier = options[:bundle_identifier]
+      app_display_name = @@envHelper.app_name
+      app_name = read_value_from_file(bundle_identifier, 'appname')
+      app_secret = read_value_from_file(bundle_identifier, 'appsecret')
+      app_distribution_group = read_value_from_file(bundle_identifier, 'appgroup')
+      app_platform = 'Objective-C-Swift'
+      app_os = app_center_platform
 
-    sh('fastlane ios upload_to_appcenter ' \
-      "bundle_identifier:\"#{bundle_identifier}\" " \
-      "zapp_build_type:\"#{zapp_build_type}\" " \
-      "app_secret:\"#{app_secret}\" " \
-      "api_token:\"#{app_center_api_token}\" " \
-      "owner_name:\"#{app_center_owner_name}\" " \
-      "destinations:\"#{app_distribution_group}\" " \
-      'destination_type:"group" ' \
-      "app_os:\"#{app_os}\" " \
-      "app_platform:\"#{app_platform}\" " \
-      "app_display_name:\"#{app_display_name}\" " \
-      "app_name:\"#{app_name}\" " \
-      "ipa:\"#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.ipa\" " \
-      "dsym:\"#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.app.dSYM.zip\" " \
-      'release_notes:"no release notes" ' \
-      "app_display_name:\"#{app_display_name}\" " \
-      'notify_testers:false')
+      sh('fastlane ios upload_to_appcenter ' \
+        "bundle_identifier:\"#{bundle_identifier}\" " \
+        "zapp_build_type:\"#{zapp_build_type}\" " \
+        "app_secret:\"#{app_secret}\" " \
+        "api_token:\"#{app_center_api_token}\" " \
+        "owner_name:\"#{app_center_owner_name}\" " \
+        "destinations:\"#{app_distribution_group}\" " \
+        'destination_type:"group" ' \
+        "app_os:\"#{app_os}\" " \
+        "app_platform:\"#{app_platform}\" " \
+        "app_display_name:\"#{app_display_name}\" " \
+        "app_name:\"#{app_name}\" " \
+        "ipa:\"#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.ipa\" " \
+        "dsym:\"#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.app.dSYM.zip\" " \
+        'release_notes:"no release notes" ' \
+        "app_display_name:\"#{app_display_name}\" " \
+        'notify_testers:false')
+    end
   end
 
   def update_app_secret(bundle_identifier)
