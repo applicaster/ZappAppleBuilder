@@ -22,7 +22,7 @@ references:
       LANG: "en_US.UTF-8"
 
   #Hack general caching until circle does not support global env variables
-  prepare_cashing_file: &prepare_cashing_file
+  prepare_caching_file: &prepare_caching_file
     run: echo "$GENERAL_CACHE_KEY" > ~/_caching_file
 
   gems_cache_key: &gems_cache_key Zapp-Platform-IOS-v1-{{ checksum "Gemfile.lock" }}
@@ -71,7 +71,7 @@ jobs:
     <<: *mac_config
 
     steps:
-      - *prepare_cashing_file
+      - *prepare_caching_file
       - run: echo "$ZAPPTOOL_VERSION" > ~/_zappToolVersion
       - checkout
 
@@ -256,7 +256,7 @@ jobs:
     environment:
       ZAPP_SDK_PLATFORM: ios_for_quickbrick
     steps:
-      - *prepare_cashing_file
+      - *prepare_caching_file
       - checkout
       - *set_ruby_version
       - *restore_gems
@@ -269,7 +269,7 @@ jobs:
     environment:
       ZAPP_SDK_PLATFORM: tvos_for_quickbrick
     steps:
-      - *prepare_cashing_file
+      - *prepare_caching_file
       - checkout
       - *set_ruby_version
       - *restore_gems
