@@ -24,14 +24,14 @@ puts("\n\nCocoaPods preparing for platform: iOS\n\n")
 
 def shared_pods
     # This frameworks added to support backwards compatibility
-    pod 'ZappPlugins', '= 11.6.6'
+    pod 'ZappPlugins', '= 11.7.0'
     pod 'ZappPushPluginsSDK', '= 11.0.1'
     pod 'ZappAnalyticsPluginsSDK', '= 11.0.0'
     pod 'ZappCore', '= 0.9.16'
     pod 'ZappApple', '= 0.7.21'
     pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
     # Zaptool pods - Do not remove or change.
-		
+
 end
 
 target 'ZappiOS' do
