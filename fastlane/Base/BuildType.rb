@@ -264,6 +264,7 @@ class BuildType < BaseHelper
       @@appCenterHelper.save_build_params_for_type(
         bundle_identifier: options[:bundle_identifier],
         zapp_build_type: options[:zapp_build_type],
+        build_type: options[:build_type],
         app_name: nil,
         app_secret: nil
       )

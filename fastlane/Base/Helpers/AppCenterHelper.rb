@@ -95,7 +95,7 @@ class AppCenterHelper < BaseHelper
     if @@envHelper.isTvOS
       time = Time.new
       s3DestinationPathParams = @@envHelper.s3_upload_path(options[:bundle_identifier])
-      s3DistanationPath = "https://assets-secure.applicaster.com/#{s3DestinationPathParams}/#{@@projectHelper.scheme}-#{build_type}.ipa"
+      s3DistanationPath = "https://assets-secure.applicaster.com/#{s3DestinationPathParams}/#{@@projectHelper.scheme}-#{options[:build_type]}.ipa"
       {
         uploaded_at: time.inspect,
         download_url: s3DistanationPath
