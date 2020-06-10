@@ -65,7 +65,7 @@
     <p><em>Built on <%= Time.now.strftime('%a, %e %b %Y %H:%M %p') %></em></p>
 
     <div class="oneRow">
-      <span class="download" id="android">
+      <span class="download" id="ios">
         <a href="<%= apk_url %>" id="text" class="btn btn-lg btn-default" onclick="document.getElementById('finished').id = '';">
           Install <%= title %> <%= version_name %> (<%= version_code %>)
         </a>
@@ -76,7 +76,7 @@
       </span>
     </div>
 
-    <h3 id="os-message">Please open this page on your Android device!</h3>
+    <h3 id="os-message">Please open this page on your iOS device!</h3>
 
     <p id="finished">
       App is being installed. You might have to close the browser.
