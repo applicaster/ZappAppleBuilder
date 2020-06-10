@@ -132,7 +132,7 @@ class EnterpriseDebug < BuildTypeEnterprise
         team_id: team_id,
         app_name: devportal_app_name,
         bundle_identifier: app_bundle_identifier,
-        p12_password: @@envHelper.accountsAccountId
+        p12_password: @@envHelper.accounts_account_id
       )
 
       enterprise_debug_create_provisioning_profile(

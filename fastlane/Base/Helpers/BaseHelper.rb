@@ -139,11 +139,11 @@ class BaseHelper
       region: @@envHelper.aws_region,
       ipa: "#{options[:ipa]}",
       dsym: "#{options[:dsym]}",
-      path: "#{options[:zapp_build_path]}",
+      path: "#{@@envHelper.s3_generic_upload_path}",
       upload_metadata: true,
       html_in_folder: true,
       html_template_path: "#{@@envHelper.root_path}/rake/templates/s3_ipa.html.erb",
-      version_file_name: "#{options[:zapp_build_path]}version_distribution.json"
+      version_file_name: "#{@@envHelper.s3_generic_upload_path}/version_distribution.json"
     )
   end
 

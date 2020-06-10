@@ -25,7 +25,7 @@ class EnvironmentHelper
     ENV['store']
   end
 
-  def accountsAccountId
+  def accounts_account_id
     ENV['accounts_account_id']
   end
 
@@ -102,7 +102,10 @@ class EnvironmentHelper
   end
 
   def s3_upload_path(bundle_identifier)
-    puts("s3_upload_path: #{bundle_identifier}")
-    "zapp/accounts/#{accountsAccountId}/apps/#{bundle_identifier}/#{store}/#{version_name}/tvos/#{build_version}"
-    end
+    "zapp/accounts/#{accounts_account_id}/apps/#{bundle_identifier}/#{store}/#{version_name}/tvos/#{build_version}"
+  end
+
+  def s3_generic_upload_path(bundle_identifier)
+    "zapp/accounts/#{accounts_account_id}/apps/#{bundle_identifier}/#{store}/#{version_name}/builds/#{platform_name}/#{build_version}"
+  end
 end
