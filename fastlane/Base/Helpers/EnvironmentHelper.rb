@@ -34,7 +34,7 @@ class EnvironmentHelper
   end
 
   def aws_access_key
-    ENV['AWS_ACCESS_KEY']
+    ENV['AWS_ACCESS_KEY_ID']
   end
 
   def aws_secret_access_key
