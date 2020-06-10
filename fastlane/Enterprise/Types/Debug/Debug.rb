@@ -54,7 +54,6 @@ class EnterpriseDebug < BuildTypeEnterprise
       build_path: @@projectHelper.build_path,
       derived_data_path: @@projectHelper.build_path,
       xcargs: "RELEASE_SWIFT_OPTIMIZATION_LEVEL='-Onone' "\
-              '-UseModernBuildSystem=NO '\
               'RELEASE_COPY_PHASE_STRIP=NO '\
               "DEBUG_ENABLED_GCC='DEBUG=1' "\
               "DEBUG_ENABLED_SWIFT='-DDEBUG' "\

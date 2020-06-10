@@ -49,7 +49,6 @@ class Store < BuildType
       build_path: @@projectHelper.build_path,
       derived_data_path: @@projectHelper.build_path,
       xcargs: "DEVELOPMENT_TEAM='#{team_id}' "\
-           '-UseModernBuildSystem=NO '\
            "NOTIFICATION_SERVICE_EXTENSION_PROV_PROFILE_SPECIFIER='#{notification_service_extension_prov_profile_specifier}' "\
            "NOTIFICATION_CONTENT_EXTENSION_PROV_PROFILE_SPECIFIER='#{notification_content_extension_prov_profile_specifier}' "\
            "DEBUG_INFORMATION_FORMAT='dwarf-with-dsym' "\
