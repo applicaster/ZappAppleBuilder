@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'fastlane/action'
 require 'fastlane_core'
 require 'fastlane'
@@ -133,6 +131,7 @@ class BaseHelper
   def s3_upload(options)
     current(__callee__.to_s)
     Actions::AwsS3Action.run(
+      acl: 'public_read',
       access_key: @@envHelper.aws_access_key,
       secret_access_key: @@envHelper.aws_secret_access_key,
       bucket: @@envHelper.s3_bucket_name,
