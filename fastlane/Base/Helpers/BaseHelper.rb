@@ -130,6 +130,23 @@ class BaseHelper
     )
   end
 
+  def s3_upload(options)
+    current(__callee__.to_s)
+    Actions::AwsS3Action.run(
+      access_key: @@envHelper.aws_access_key,
+      secret_access_key: @@envHelper.aws_secret_access_key,
+      bucket: @@envHelper.s3BucketName,
+      region: @@envHelper.aws_region,
+      ipa: "#{options[:ipa]}",
+      dsym: "#{options[:dsym]}",
+      path: "#{options[:zapp_build_path]}",
+      upload_metadata: true,
+      html_in_folder: true,
+      html_template_path: "#{@@envHelper.root_path}/rake/templates/s3_ipa.html.erb",
+      version_file_name: "#{options[:zapp_build_path]}version_distribution.json"
+    )
+  end
+
   def enterprise_debug_create_provisioning_profile(options)
     current(__callee__.to_s)
     sh('fastlane sigh ' \

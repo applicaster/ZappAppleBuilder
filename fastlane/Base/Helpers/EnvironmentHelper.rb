@@ -29,11 +29,19 @@ class EnvironmentHelper
     ENV['accounts_account_id']
   end
 
-  def s3BucketName
+  def s3_bucket_name
     ENV['S3_BUCKET_NAME']
   end
 
-  def awsRegion
+  def aws_access_key
+    ENV['AWS_ACCESS_KEY']
+  end
+
+  def aws_secret_access_key
+    ENV['AWS_SECRET_ACCESS_KEY']
+  end
+
+  def aws_region
     ENV['AWS_REGION']
   end
 
