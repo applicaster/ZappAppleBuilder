@@ -51,6 +51,84 @@ references:
       name: Set Ruby Version
       command: echo 'chruby ruby-2.5.8' >> ~/.bash_profile
 
+  install_node: &install_node
+    run:
+      name: install node@12.0.0
+      command: |
+        set +e
+        touch $BASH_ENV
+        curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash
+        echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
+        echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+        echo nvm install 12.0.0 >> $BASH_ENV
+        echo nvm alias default 12.0.0 >> $BASH_ENV
+
+  whitch_ruby: &whitch_ruby
+    run:
+      name: Ruby - version
+      command: ruby -v
+
+  npm_login: &npm_login
+    run:
+      name: NPM login
+      command: npx npm-shell-login
+
+  restore_npm: &restore_npm
+    restore_cache:
+      name: Restore npm dependencies
+      key: YARN-{{ checksum "~/_caching_file" }}-{{ checksum "ZappiOS/yarn.lock" }}
+
+  install_npm_dependencies: &install_npm_dependencies
+    run:
+      name: Install NPM dependencies
+      command: yarn
+
+  save_npm: &save_npm
+    save_cache:
+      name: Saving NPM dependencies
+      key: YARN-{{ checksum "~/_caching_file" }}-{{ checksum "ZappiOS/yarn.lock" }}
+      paths:
+        - ./node_modules
+
+  resotre_pods: &resotre_pods
+    restore_cache:
+      keys:
+        - CocoaPods-{{ checksum "~/_caching_file" }}-{{ .Branch }}-{{ .Revision }}
+        - CocoaPods-{{ checksum "~/_caching_file" }}-{{ .Branch }}-
+        - CocoaPods-{{ checksum "~/_caching_file" }}-
+
+  vesion_pods: &vesion_pods
+    run:
+      name: CocoaPods - version
+      command: bundle exec pod --version
+
+  install_pods: &install_pods
+    run:
+      name: CocoaPods - install default dependencies
+      command: |
+        targetFolder="ZappiOS"
+        if [ "$device_target" = apple_tv ]; then
+          targetFolder="ZappTvOS"
+        fi
+        cd $targetFolder && bundle exec pod update && cd ..
+
+  save_pods: &save_pods
+    save_cache:
+      name: CocoaPods - save cache
+      key: CocoaPods-{{ checksum "~/_caching_file" }}-{{ .Branch }}-{{ .Revision }}
+      paths:
+        - "~/.cocoapods/repos/cocoapods-"
+
+  version_xcode: &version_xcode
+    run:
+      name: Current Xcode version
+      command: /usr/bin/xcodebuild -version
+
+  location_xcode: &location_xcode
+    run:
+      name: Xcode installed location
+      command: xcode-select -p
+
   create_zapp_sdk: &create_zapp_sdk
     run:
       name: Creating Zapp SDK
@@ -251,6 +329,59 @@ jobs:
       - store_artifacts:
           path: ./CircleArtifacts
 
+  pre_cache_ios:
+    <<: *mac_config
+    environment:
+      device_target: universal
+    steps:
+      - run:
+          name: Workflow Validation
+          command: |
+            if [ "$triggered_by" = "zapp" ]; then
+            echo "Skipping a workflow, can not work with triggered from zapp"
+                circleci-agent step halt
+            fi
+
+      - *prepare_caching_file
+      - checkout
+      - *set_ruby_version
+      - *whitch_ruby
+      - *install_node
+      - *restore_gems
+      - *gems_install
+      - *save_gems
+
+      - *npm_login
+      - *restore_npm
+      - *install_npm_dependencies
+      - *save_npm
+
+      - *resotre_pods
+      - *vesion_pods
+      - *install_pods
+      - *save_pods
+
+      - *version_xcode
+      - *location_xcode
+
+      - deploy:
+          name: Building Zapp-App - Tests
+          command: |
+            if [ -z "$bundle_identifier" ]; then
+              echo "Test will be started"
+              bundle exec fastlane ios precache
+            fi
+
+      # - run:
+      #     name: Pushing prebuilding project
+      #     command: |
+      #       git add .
+      #       git commit -m "Saving precached project"
+      #       git push origin $CIRCLE_BRANCH
+
+      - store_artifacts:
+          path: ./CircleArtifacts
+
   create_ios_mobile_sdk:
     <<: *mac_config
     environment:
@@ -281,41 +412,46 @@ workflows:
   version: 2
   build_from_branch_and_tag:
     jobs:
-      - build:
+      - pre_cache_ios:
           filters:
-            tags:
-              only: /.*/
-      - hold_create_ios_mobile_sdk:
-          type: approval
-          requires:
-            - build
-          filters:
+            # Change Branch to master only
             branches:
-              ignore: /.*/
-            tags:
               only: /.*/
-      - create_ios_mobile_sdk:
-          requires:
-            - hold_create_ios_mobile_sdk
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /.*/
-      - hold_create_tvos_sdk:
-          type: approval
-          requires:
-            - build
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /.*/
-      - create_tvos_sdk:
-          requires:
-            - hold_create_tvos_sdk
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /.*/
+      # - build:
+      #     filters:
+      #       tags:
+      #         only: /.*/
+      # - hold_create_ios_mobile_sdk:
+      #     type: approval
+      #     requires:
+      #       - build
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags:
+      #         only: /.*/
+      # - create_ios_mobile_sdk:
+      #     requires:
+      #       - hold_create_ios_mobile_sdk
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags:
+      #         only: /.*/
+      # - hold_create_tvos_sdk:
+      #     type: approval
+      #     requires:
+      #       - build
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags:
+      #         only: /.*/
+      # - create_tvos_sdk:
+      #     requires:
+      #       - hold_create_tvos_sdk
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags:
+      #         only: /.*/

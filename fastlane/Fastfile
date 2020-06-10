@@ -11,7 +11,27 @@ import 'Enterprise/Types/Debug/Debug.rb'
 import 'Store/Store.rb'
 import 'Base/Helpers/AppCenterHelper.rb'
 
+# platform :tvos do
+  # lane :precache do
+  #   build_app(
+  #     workspace: @@projectHelper.xcworkspace_relative_path.to_s,
+  #     scheme: @@projectHelper.scheme,
+  #     buildlog_path: "#{circle_artifacts_folder_path}/Prechase",
+  #     derived_data_path: @@projectHelper.build_path
+  #   )
+  # end
+# end
+
 platform :ios do
+  lane :precache do
+    build_app(
+      workspace: @@projectHelper.xcworkspace_relative_path.to_s,
+      scheme: @@projectHelper.scheme,
+      buildlog_path: "#{circle_artifacts_folder_path}/Prechase",
+      derived_data_path: @@projectHelper.build_path
+    )
+  end
+  
   before_all do
     set_device_family
     install_awscli_if_needed
@@ -20,17 +40,23 @@ platform :ios do
 
   lane :prepare_environment do
     envHelper = EnvironmentHelper.new
-    BuildTypeFactory.new.prepare_environment unless envHelper.bundle_identifier.to_s.strip.empty?
+    unless envHelper.bundle_identifier.to_s.strip.empty?
+      BuildTypeFactory.new.prepare_environment
+    end
   end
 
   lane :validate_app_signing do
     envHelper = EnvironmentHelper.new
-    BuildTypeFactory.new.perform_signing_validation unless envHelper.bundle_identifier.to_s.strip.empty?
+    unless envHelper.bundle_identifier.to_s.strip.empty?
+      BuildTypeFactory.new.perform_signing_validation
+    end
   end
 
   lane :build do
     envHelper = EnvironmentHelper.new
-    BuildTypeFactory.new.build unless envHelper.bundle_identifier.to_s.strip.empty?
+    unless envHelper.bundle_identifier.to_s.strip.empty?
+      BuildTypeFactory.new.build
+    end
   end
 
   lane :upload_to_appcenter do |options|
@@ -75,7 +101,7 @@ def set_device_family
   ENV['DEVICE_FAMILY'] = '1,2'
   ENV['DEVICE_FAMILY'] = '1' if device_family == 'iphone'
   ENV['DEVICE_FAMILY'] = '2' if device_family == 'ipad'
-  end
+end
 
 def install_awscli_if_needed
   envHelper = EnvironmentHelper.new
