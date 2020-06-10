@@ -81,7 +81,14 @@ references:
   install_npm_dependencies: &install_npm_dependencies
     run:
       name: Install NPM dependencies
-      command: yarn
+      command: |
+        targetFolder="ZappiOS"
+        if [ "$device_target" = apple_tv ]; then
+          targetFolder="ZappTvOS"
+        fi
+
+        cd $targetFolder
+        yarn
 
   save_npm: &save_npm
     save_cache:
