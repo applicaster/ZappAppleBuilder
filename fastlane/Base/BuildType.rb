@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'fastlane/action'
 require 'fastlane'
 require 'colorize'
@@ -170,7 +172,7 @@ class BuildType < BaseHelper
       certificate_team_identifier = parse_certificate_subject_value(p12, 'OU')
 
       raise error_message if certificate_team_identifier.empty?
-      
+
       provisioning_profile = options[:provisioning_profile]
       provisioning_profile_certificates = provisioning_profile['DeveloperCertificates']
 
@@ -208,7 +210,7 @@ class BuildType < BaseHelper
     begin
       provisioning_profile = options[:provisioning_profile]
 
-      expire_date = provisioning_profile["ExpirationDate"]
+      expire_date = provisioning_profile['ExpirationDate']
       raise error_message unless expire_date > Date.new
 
       puts("VALID: Provisioning Profile is not expired\n".colorize(:green))
@@ -222,8 +224,8 @@ class BuildType < BaseHelper
     error_message = 'Provisioning Profile bundle identifier does not match app required bundle identifier'
     begin
       provisioning_profile = options[:provisioning_profile]
-      pp_bundle_identifier = provisioning_profile["Entitlements"]["application-identifier"]
-      prefix = provisioning_profile["ApplicationIdentifierPrefix"]
+      pp_bundle_identifier = provisioning_profile['Entitlements']['application-identifier']
+      prefix = provisioning_profile['ApplicationIdentifierPrefix']
       pp_bundle_identifier["#{prefix.first}."] = ''
       unless pp_bundle_identifier == @@envHelper.bundle_identifier
         raise "#{error_message} (|#{pp_bundle_identifier}| != |#{@@envHelper.bundle_identifier}|)"
@@ -240,7 +242,7 @@ class BuildType < BaseHelper
     begin
       provisioning_profile = options[:provisioning_profile]
 
-      pp_app_groups_entitlements = provisioning_profile["Entitlements"]["com.apple.security.application-groups"]
+      pp_app_groups_entitlements = provisioning_profile['Entitlements']['com.apple.security.application-groups']
       if pp_app_groups_entitlements.nil?
         error_message = 'Provisioning Profile doesn\'t support the App Groups capability'
         raise error_message
@@ -271,6 +273,7 @@ class BuildType < BaseHelper
       )
     else
       s3_upload(
+        bundle_identifier: options[:bundle_identifier],
         ipa: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.ipa",
         dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.app.dSYM.zip"
       )
