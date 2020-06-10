@@ -135,11 +135,11 @@ class BaseHelper
     Actions::AwsS3Action.run(
       access_key: @@envHelper.aws_access_key,
       secret_access_key: @@envHelper.aws_secret_access_key,
-      bucket: @@envHelper.s3BucketName,
+      bucket: @@envHelper.s3_bucket_name,
       region: @@envHelper.aws_region,
-      ipa: "#{options[:ipa]}",
-      dsym: "#{options[:dsym]}",
-      path: "#{@@envHelper.s3_generic_upload_path}",
+      ipa: (options[:ipa]).to_s,
+      dsym: (options[:dsym]).to_s,
+      path: @@envHelper.s3_generic_upload_path.to_s,
       upload_metadata: true,
       html_in_folder: true,
       html_template_path: "#{@@envHelper.root_path}/rake/templates/s3_ipa.html.erb",
@@ -159,7 +159,7 @@ class BaseHelper
       "--platform \"#{@@envHelper.platform_name}\" ")
 
     provisioning_profile = get_provisioning_profile_content("#{@@envHelper.root_path}/fastlane/#{options[:bundle_identifier]}.mobileprovision")
-	  provisioning_profile_uuid_value = provisioning_profile["UUID"]
+    provisioning_profile_uuid_value = provisioning_profile['UUID']
     save_param_to_file("#{options[:bundle_identifier]}_PROFILE_UDID", provisioning_profile_uuid_value.to_s)
 
     # delete Invalid provisioning profiles for the same app
@@ -174,7 +174,7 @@ class BaseHelper
     Spaceship::Portal.client.team_id = options[:team_id]
 
     profiles = Spaceship::Portal::ProvisioningProfile.all.find_all do |profile|
-      (profile.status == 'Invalid' or profile.status == 'Expired') && profile.app.bundle_id == options[:bundle_identifier]
+      ((profile.status == 'Invalid') || (profile.status == 'Expired')) && profile.app.bundle_id == options[:bundle_identifier]
     end
 
     profiles.each do |profile|
@@ -257,7 +257,9 @@ class BaseHelper
     # get provisioning profile data
     filename = './provisioning_profile.plist'
     sh("security cms -D -i #{path} > #{filename}")
-    provisioning_profile = Plist.parse_xml(filename.to_s) if File.exist? filename.to_s
+    if File.exist? filename.to_s
+      provisioning_profile = Plist.parse_xml(filename.to_s)
+    end
     File.delete(filename.to_s)
     provisioning_profile
   end
