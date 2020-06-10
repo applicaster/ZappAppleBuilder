@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'fastlane/action'
 require 'fastlane'
 require 'colorize'
@@ -258,10 +256,6 @@ class BuildType < BaseHelper
     current(__callee__.to_s)
 
     build_type = options[:build_type]
-    # s3_upload(
-    #   ipa: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.ipa",
-    #   dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.app.dSYM.zip"
-    # )
 
     if @@envHelper.isTvOS
       puts('Upload application to S3')
@@ -276,6 +270,10 @@ class BuildType < BaseHelper
         app_secret: nil
       )
     else
+      s3_upload(
+        ipa: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.ipa",
+        dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.app.dSYM.zip"
+      )
       puts('Upload application to MS App Center')
       @@appCenterHelper.upload_app(options)
     end
