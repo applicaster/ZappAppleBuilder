@@ -10,28 +10,31 @@ import 'Enterprise/Types/Client/Client.rb'
 import 'Enterprise/Types/Debug/Debug.rb'
 import 'Store/Store.rb'
 import 'Base/Helpers/AppCenterHelper.rb'
+import 'Base/Helpers/ProjectHelper.rb'
 
 # platform :tvos do
-  # lane :precache do
-  #   build_app(
-  #     workspace: @@projectHelper.xcworkspace_relative_path.to_s,
-  #     scheme: @@projectHelper.scheme,
-  #     buildlog_path: "#{circle_artifacts_folder_path}/Prechase",
-  #     derived_data_path: @@projectHelper.build_path
-  #   )
-  # end
+# lane :precache do
+#   build_app(
+#     workspace: @@projectHelper.xcworkspace_relative_path.to_s,
+#     scheme: @@projectHelper.scheme,
+#     buildlog_path: "#{circle_artifacts_folder_path}/Prechase",
+#     derived_data_path: @@projectHelper.build_path
+#   )
+# end
 # end
 
 platform :ios do
   lane :precache do
+    project_help = ProjectHelper.new
+
     build_app(
-      workspace: @@projectHelper.xcworkspace_relative_path.to_s,
-      scheme: @@projectHelper.scheme,
+      workspace: project_help.xcworkspace_relative_path.to_s,
+      scheme: project_help.scheme,
       buildlog_path: "#{circle_artifacts_folder_path}/Prechase",
-      derived_data_path: @@projectHelper.build_path
+      derived_data_path: project_help.build_path
     )
   end
-  
+
   before_all do
     set_device_family
     install_awscli_if_needed
