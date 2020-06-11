@@ -34,12 +34,12 @@ class EnterpriseDebugAppExtensions < AppExtensions
 
     if entension_enabled
       prepare_notification_extension(
-        build_type,
-        extension_type,
-        extension_target_name,
-        extension_bundle_identifier,
-        extension_info_plist_inner_path,
-        extension_info_plist_path
+        build_type: build_type,
+        extension_type: extension_type,
+        extension_target_name: extension_target_name,
+        extension_bundle_identifier: extension_bundle_identifier,
+        extension_info_plist_inner_path: extension_info_plist_inner_path,
+        extension_info_plist_path: extension_info_plist_path
       )
 
       # create app for the notifications
