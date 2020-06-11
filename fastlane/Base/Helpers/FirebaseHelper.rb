@@ -6,10 +6,14 @@ import 'Base/Helpers/ProjectHelper.rb'
 import 'Base/Helpers/BaseHelper.rb'
 
 class FirebaseHelper < BaseHelper
-  @@projectHelper = ProjectHelper.new
+  attr_accessor :projectHelper
+  def initialize(options = {})
+    super
+    @projectHelper = options[:projectHelper]
+  end
 
   def add_configuration_file(configuration)
-    base_folder = "#{@@projectHelper.path}/#{@@projectHelper.name}"
+    base_folder = "#{@projectHelper.path}/#{@projectHelper.name}"
 
     filepath = "#{base_folder}/.firebase/#{configuration}/GoogleService-Info.plist"
     if File.exist? filepath

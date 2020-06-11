@@ -7,7 +7,11 @@ import 'Base/Helpers/ProjectHelper.rb'
 import 'Base/Helpers/BaseHelper.rb'
 
 class AppCenterHelper < BaseHelper
-  @@projectHelper = ProjectHelper.new
+  attr_accessor :projectHelper
+  def initialize(options = {})
+    super
+    @projectHelper = options[:projectHelper]
+  end
 
   def fetch_identifiers(bundle_identifier)
     unless app_center_api_token.empty?
@@ -37,23 +41,28 @@ class AppCenterHelper < BaseHelper
       app_platform = 'Objective-C-Swift'
       app_os = app_center_platform
 
-      sh('fastlane ios upload_to_appcenter ' \
-        "bundle_identifier:\"#{bundle_identifier}\" " \
-        "zapp_build_type:\"#{zapp_build_type}\" " \
-        "app_secret:\"#{app_secret}\" " \
-        "api_token:\"#{app_center_api_token}\" " \
-        "owner_name:\"#{app_center_owner_name}\" " \
-        "destinations:\"#{app_distribution_group}\" " \
-        'destination_type:"group" ' \
-        "app_os:\"#{app_os}\" " \
-        "app_platform:\"#{app_platform}\" " \
-        "app_display_name:\"#{app_display_name}\" " \
-        "app_name:\"#{app_name}\" " \
-        "ipa:\"#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.ipa\" " \
-        "dsym:\"#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.app.dSYM.zip\" " \
-        'release_notes:"no release notes" ' \
-        "app_display_name:\"#{app_display_name}\" " \
-        'notify_testers:false')
+      @fastlane.appcenter_upload(
+        api_token: app_center_api_token,
+        owner_name: app_center_owner_name,
+        destinations: app_distribution_group,
+        destination_type: "group",
+        app_os: app_os,
+        app_platform: app_platform,
+        app_display_name: app_display_name,
+        app_name: app_name,
+        ipa: "#{circle_artifacts_folder_path}/#{build_type}/#{@projectHelper.scheme}-#{build_type}.ipa",
+        dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@projectHelper.scheme}-#{build_type}.app.dSYM.zip",
+        notify_testers: false
+      )
+  
+      # save uploaded app info to file for future use
+      save_build_params_for_type(
+        bundle_identifier: options[:bundle_identifier],
+        zapp_build_type: options[:zapp_build_type],
+        app_name: options[:app_name],
+        app_secret: options[:app_secret],
+        build_information: @fastlane.lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]
+      )
     end
   end
 
@@ -62,14 +71,14 @@ class AppCenterHelper < BaseHelper
 
     app_secret = read_value_from_file(bundle_identifier, 'appsecret')
 
-    @@projectHelper.update_features_customization(
+    @projectHelper.update_features_customization(
       name: 'MSAppCenterAppSecret',
       value: app_secret
     )
 
     # add appcenter url scheme to the app
     update_url_schemes(
-      plist_path: @@projectHelper.plist_path.to_s,
+      plist_path: @projectHelper.plist_path.to_s,
       scheme: "appcenter-#{app_secret}"
     )
     puts "MS App Center app secret #{app_secret} was updated successfully for bundle identifier: #{bundle_identifier}"
@@ -94,8 +103,8 @@ class AppCenterHelper < BaseHelper
 
     if @@envHelper.isTvOS
       time = Time.new
-      s3DestinationPathParams = s3_upload_path(options[:bundle_identifier])
-      s3DistanationPath = "https://assets-secure.applicaster.com/#{s3DestinationPathParams}/#{@@projectHelper.scheme}-#{build_type}.ipa"
+      s3DestinationPathParams = @@envHelper.s3_upload_path(options[:bundle_identifier])
+      s3DistanationPath = "https://assets-secure.applicaster.com/#{s3DestinationPathParams}/#{@projectHelper.scheme}-#{options[:build_type]}.ipa"
       {
         uploaded_at: time.inspect,
         download_url: s3DistanationPath
