@@ -139,7 +139,6 @@ class BaseHelper
   def s3_upload(options)
     current(__callee__.to_s)
     @fastlane.aws_s3(
-      acl: 'public_read',
       access_key: @@envHelper.aws_access_key,
       secret_access_key: @@envHelper.aws_secret_access_key,
       bucket: @@envHelper.s3_bucket_name,
@@ -264,7 +263,9 @@ class BaseHelper
   def get_provisioning_profile_content(path)
     filename = './provisioning_profile.plist'
     sh("security cms -D -i #{path} > #{filename}")
-    provisioning_profile = Plist.parse_xml(filename.to_s) if File.exist? filename.to_s
+    if File.exist? filename.to_s
+      provisioning_profile = Plist.parse_xml(filename.to_s)
+    end
     File.delete(filename.to_s)
     provisioning_profile
   end
