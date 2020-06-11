@@ -68,15 +68,15 @@ class EnterpriseDebugAppExtensions < AppExtensions
 
       # add group to entitlements
       update_group_identifiers(
-        @projectHelper.name.to_s,
-        'Release',
-        [group_name(app_bundle_identifier).to_s]
+        target: @projectHelper.name.to_s,
+        build_type: 'Release',
+        groups: [group_name(app_bundle_identifier).to_s]
       )
 
       update_group_identifiers(
-        extension_target_name.to_s,
-        'Release',
-        [group_name(app_bundle_identifier).to_s]
+        target: extension_target_name.to_s,
+        build_type: 'Release',
+        groups: [group_name(app_bundle_identifier).to_s]
       )
 
       add_extension_to_project(
@@ -89,10 +89,13 @@ class EnterpriseDebugAppExtensions < AppExtensions
     end
   end
 
-  def update_group_identifiers(target, build_type, groups)
+  def update_group_identifiers(options)
+    target = options[:target]
+    build_type = options[:build_type]
+    groups = options[:groups]
     file_path = "#{@projectHelper.path}/#{target}/Entitlements/#{target}-#{build_type}.entitlements"
 
-    @fastlane.update_group_identifiers(
+    @fastlane.update_app_group_identifiers(
       entitlements_file: file_path.to_s,
       app_group_identifiers: groups
     )
