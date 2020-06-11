@@ -18,7 +18,7 @@ class EnterpriseDebugAppExtensions < AppExtensions
     extension_info_plist_path = options[:extension_info_plist_path]
 
     build_type = 'debug'
-    entension_enabled = 0
+    entension_enabled = false
     # getting the indication if extension is enabled
     plist_content = get_plist_content("#{@projectHelper.customizations_folder_path}/FeaturesCustomization.plist")
     supported_app_extensions = plist_content['SupportedAppExtensions']
@@ -32,8 +32,7 @@ class EnterpriseDebugAppExtensions < AppExtensions
       end
     end
 
-    if entension_enabled.to_i > 0
-
+    if entension_enabled
       prepare_notification_extension(
         build_type,
         extension_type,
