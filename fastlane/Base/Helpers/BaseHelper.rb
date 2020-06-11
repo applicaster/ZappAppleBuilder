@@ -263,9 +263,7 @@ class BaseHelper
   def get_provisioning_profile_content(path)
     filename = './provisioning_profile.plist'
     sh("security cms -D -i #{path} > #{filename}")
-    if File.exist? filename.to_s
-      provisioning_profile = Plist.parse_xml(filename.to_s)
-    end
+    provisioning_profile = Plist.parse_xml(filename.to_s) if File.exist? filename.to_s
     File.delete(filename.to_s)
     provisioning_profile
   end
