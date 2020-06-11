@@ -146,7 +146,7 @@ class BaseHelper
       region: @@envHelper.aws_region,
       ipa: (options[:ipa]).to_s,
       dsym: (options[:dsym]).to_s,
-      path: @@envHelper.s3_generic_upload_path(options[:bundle_identifier]).to_s,
+      path: "#{@@envHelper.s3_generic_upload_path(options[:bundle_identifier])}/",
       upload_metadata: true,
       html_in_folder: true,
       html_template_path: "#{@@envHelper.root_path}/rake/templates/s3_ipa.html.erb",
