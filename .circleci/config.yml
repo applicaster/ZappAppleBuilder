@@ -150,7 +150,7 @@ references:
         echo "Creating SDK for platform:$ZAPP_SDK_PLATFORM"
         bundle exec rake zapp_sdks:create[$ZAPP_SDK_PLATFORM,$version,$CIRCLE_PROJECT_REPONAME]
         bundle exec rake zapp_sdks:publish_changelog[$ZAPP_SDK_PLATFORM,$version]
-        
+
   release_zapp_sdk_workflow: &release_zapp_sdk_workflow
     - *prepare_caching_file
     - checkout
@@ -427,46 +427,46 @@ workflows:
   version: 2
   build_from_branch_and_tag:
     jobs:
-      - pre_cache_ios:
+      # - pre_cache_ios:
+      #     filters:
+      #       # Change Branch to master only
+      #       branches:
+      #         only: /.*/
+      - build:
           filters:
-            # Change Branch to master only
-            branches:
+            tags:
               only: /.*/
-      # - build:
-      #     filters:
-      #       tags:
-      #         only: /.*/
-      # - hold_create_ios_mobile_sdk:
-      #     type: approval
-      #     requires:
-      #       - build
-      #     filters:
-      #       branches:
-      #         ignore: /.*/
-      #       tags:
-      #         only: /.*/
-      # - create_ios_mobile_sdk:
-      #     requires:
-      #       - hold_create_ios_mobile_sdk
-      #     filters:
-      #       branches:
-      #         ignore: /.*/
-      #       tags:
-      #         only: /.*/
-      # - hold_create_tvos_sdk:
-      #     type: approval
-      #     requires:
-      #       - build
-      #     filters:
-      #       branches:
-      #         ignore: /.*/
-      #       tags:
-      #         only: /.*/
-      # - create_tvos_sdk:
-      #     requires:
-      #       - hold_create_tvos_sdk
-      #     filters:
-      #       branches:
-      #         ignore: /.*/
-      #       tags:
-      #         only: /.*/
+      - hold_create_ios_mobile_sdk:
+          type: approval
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+      - create_ios_mobile_sdk:
+          requires:
+            - hold_create_ios_mobile_sdk
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+      - hold_create_tvos_sdk:
+          type: approval
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+      - create_tvos_sdk:
+          requires:
+            - hold_create_tvos_sdk
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
