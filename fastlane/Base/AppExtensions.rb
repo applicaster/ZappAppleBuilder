@@ -45,7 +45,7 @@ class AppExtensions < BaseHelper
     unless supported_app_extensions.nil?
       supported_extension_for_type = supported_app_extensions[extension_type.to_s]
       unless supported_extension_for_type.nil?
-        entension_enabled = supported_extension_for_type["#{build_type}_enabled"].to_i
+        entension_enabled = supported_extension_for_type["#{build_type}_enabled"]
       end
     end
 
