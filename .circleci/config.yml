@@ -150,7 +150,15 @@ references:
         echo "Creating SDK for platform:$ZAPP_SDK_PLATFORM"
         bundle exec rake zapp_sdks:create[$ZAPP_SDK_PLATFORM,$version,$CIRCLE_PROJECT_REPONAME]
         bundle exec rake zapp_sdks:publish_changelog[$ZAPP_SDK_PLATFORM,$version]
-
+        
+  release_zapp_sdk_workflow: &release_zapp_sdk_workflow
+    - *prepare_caching_file
+    - checkout
+    - *set_ruby_version
+    - *restore_gems
+    - *gems_install
+    - *save_gems
+    - *create_zapp_sdk
 jobs:
   build:
     <<: *mac_config

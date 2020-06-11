@@ -7,7 +7,12 @@ import 'Enterprise/Types/Debug/AppExtensions.rb'
 import 'Enterprise/BuildTypeEnterprise.rb'
 
 class EnterpriseDebug < BuildTypeEnterprise
-  @@enterpriseDebugAppExtensions = EnterpriseDebugAppExtensions.new
+  attr_accessor :enterpriseDebugAppExtensions
+  def initialize(options = {})
+    super
+    @enterpriseDebugAppExtensions = EnterpriseDebugAppExtensions.new(fastlane: @fastlane, projectHelper: @projectHelper)
+  end
+
   def build_type
     'debug'
   end
@@ -20,7 +25,7 @@ class EnterpriseDebug < BuildTypeEnterprise
   end
 
   def fetch_app_center_identifiers
-    @@appCenterHelper.fetch_identifiers(app_bundle_identifier.to_s)
+    @appCenterHelper.fetch_identifiers(app_bundle_identifier.to_s)
   end
 
   def build
@@ -43,18 +48,17 @@ class EnterpriseDebug < BuildTypeEnterprise
     save_param_to_file(build_export_options, export_options.to_plist)
 
     build_app(
-      workspace: @@projectHelper.xcworkspace_relative_path.to_s,
-      scheme: @@projectHelper.scheme,
+      workspace: @projectHelper.xcworkspace_relative_path.to_s,
+      scheme: @projectHelper.scheme,
       configuration: build_configuration,
       include_bitcode: true,
       include_symbols: true,
       output_directory: "#{circle_artifacts_folder_path}/Enterprise",
       buildlog_path: "#{circle_artifacts_folder_path}/Enterprise",
-      output_name: "#{@@projectHelper.scheme}-Enterprise",
-      build_path: @@projectHelper.build_path,
-      derived_data_path: @@projectHelper.build_path,
+      output_name: "#{@projectHelper.scheme}-Enterprise",
+      build_path: @projectHelper.build_path,
+      derived_data_path: @projectHelper.build_path,
       xcargs: "RELEASE_SWIFT_OPTIMIZATION_LEVEL='-Onone' "\
-              '-UseModernBuildSystem=NO '\
               'RELEASE_COPY_PHASE_STRIP=NO '\
               "DEBUG_ENABLED_GCC='DEBUG=1' "\
               "DEBUG_ENABLED_SWIFT='-DDEBUG' "\
@@ -95,25 +99,25 @@ class EnterpriseDebug < BuildTypeEnterprise
     update_parameters_in_feature_optimization_json
 
     # update firebase configuration
-    @@firebaseHelper.add_configuration_file('enterprise')
+    @firebaseHelper.add_configuration_file('enterprise')
 
     # update app identifier to the enterprise one
     reset_info_plist_bundle_identifier(
-      xcodeproj: @@projectHelper.xcodeproj_path,
-      plist_path: @@projectHelper.plist_inner_path
+      xcodeproj: @projectHelper.xcodeproj_path,
+      plist_path: @projectHelper.plist_inner_path
     )
     update_app_identifier(
-      xcodeproj: @@projectHelper.xcodeproj_path,
-      plist_path: @@projectHelper.plist_inner_path,
+      xcodeproj: @projectHelper.xcodeproj_path,
+      plist_path: @projectHelper.plist_inner_path,
       app_identifier: app_bundle_identifier
     )
 
     # update ms_app_center app secret
-    @@appCenterHelper.update_app_secret(app_bundle_identifier)
+    @appCenterHelper.update_app_secret(app_bundle_identifier)
 
     # update project team identifier for all targets
     update_project_team(
-      xcodeproj: @@projectHelper.xcodeproj_path,
+      xcodeproj: @projectHelper.xcodeproj_path,
       teamid: team_id
     )
 
@@ -133,7 +137,7 @@ class EnterpriseDebug < BuildTypeEnterprise
         team_id: team_id,
         app_name: devportal_app_name,
         bundle_identifier: app_bundle_identifier,
-        p12_password: @@envHelper.accountsAccountId
+        p12_password: @@envHelper.accounts_account_id
       )
 
       enterprise_debug_create_provisioning_profile(
@@ -182,39 +186,39 @@ class EnterpriseDebug < BuildTypeEnterprise
 
   def prepare_notification_content_extension
     current(__callee__.to_s)
-    @@enterpriseDebugAppExtensions.extension_prepare(
-      username,
-      team_id,
-      team_name,
-      app_bundle_identifier,
-      @@appExtensions.notification_content_extension_key,
-      @@appExtensions.notification_content_extension_target_name,
-      notifications_content_extension_app_name,
-      notifications_content_extension_bundle_identifier,
-      @@appExtensions.notification_content_extension_info_plist_inner_path,
-      @@appExtensions.notification_content_extension_info_plist_path
+    @enterpriseDebugAppExtensions.extension_prepare(
+      username: username,
+      team_id: team_id,
+      team_name: team_name,
+      app_bundle_identifier: app_bundle_identifier,
+      extension_type: @appExtensions.notification_content_extension_key,
+      extension_target_name: @appExtensions.notification_content_extension_target_name,
+      extension_app_name: notifications_content_extension_app_name,
+      extension_bundle_identifier: notifications_content_extension_bundle_identifier,
+      extension_info_plist_inner_path: @appExtensions.notification_content_extension_info_plist_inner_path,
+      extension_info_plist_path: @appExtensions.notification_content_extension_info_plist_path
     )
   end
 
   def prepare_notification_service_extension
     current(__callee__.to_s)
-    @@enterpriseDebugAppExtensions.extension_prepare(
-      username,
-      team_id,
-      team_name,
-      app_bundle_identifier,
-      @@appExtensions.notification_service_extension_key,
-      @@appExtensions.notification_service_extension_target_name,
-      notifications_service_extension_app_name,
-      notifications_service_extension_bundle_identifier,
-      @@appExtensions.notification_service_extension_info_plist_inner_path,
-      @@appExtensions.notification_service_extension_info_plist_path
+    @enterpriseDebugAppExtensions.extension_prepare(
+      username: username,
+      team_id: team_id,
+      team_name: team_name,
+      app_bundle_identifier: app_bundle_identifier,
+      extension_type: @appExtensions.notification_service_extension_key,
+      extension_target_name: @appExtensions.notification_service_extension_target_name,
+      extension_app_name: notifications_service_extension_app_name,
+      extension_bundle_identifier: notifications_service_extension_bundle_identifier,
+      extension_info_plist_inner_path: @appExtensions.notification_service_extension_info_plist_inner_path,
+      extension_info_plist_path: @appExtensions.notification_service_extension_info_plist_path
     )
   end
 
   def add_debug_ribbon_to_app_icon
     current(__callee__.to_s)
-    sh("sh #{@@envHelper.root_path}/Scripts/add-debug-ribbon-to-app-icon.sh #{ENV['PWD']} #{@@projectHelper.name} #{@@envHelper.platform_name}")
+    sh("sh #{@@envHelper.root_path}/Scripts/add-debug-ribbon-to-app-icon.sh #{ENV['PWD']} #{@projectHelper.name} #{@@envHelper.platform_name}")
   end
 
   def app_bundle_prefix
@@ -250,18 +254,18 @@ class EnterpriseDebug < BuildTypeEnterprise
   end
 
   def notifications_service_extension_app_name
-    "#{devportal_app_name}.#{@@appExtensions.notification_service_extension_target_name}"
+    "#{devportal_app_name}.#{@appExtensions.notification_service_extension_target_name}"
   end
 
   def notifications_content_extension_app_name
-    "#{devportal_app_name}.#{@@appExtensions.notification_content_extension_target_name}"
+    "#{devportal_app_name}.#{@appExtensions.notification_content_extension_target_name}"
   end
 
   def notifications_service_extension_bundle_identifier
-    "#{app_bundle_identifier}.#{@@appExtensions.notification_service_extension_target_name}"
+    "#{app_bundle_identifier}.#{@appExtensions.notification_service_extension_target_name}"
   end
 
   def notifications_content_extension_bundle_identifier
-    "#{app_bundle_identifier}.#{@@appExtensions.notification_content_extension_target_name}"
+    "#{app_bundle_identifier}.#{@appExtensions.notification_content_extension_target_name}"
   end
 end

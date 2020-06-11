@@ -43,48 +43,17 @@ platform :ios do
 
   lane :prepare_environment do
     envHelper = EnvironmentHelper.new
-    unless envHelper.bundle_identifier.to_s.strip.empty?
-      BuildTypeFactory.new.prepare_environment
-    end
+    BuildTypeFactory.new(fastlane: self).prepare_environment unless envHelper.bundle_identifier.to_s.strip.empty?
   end
 
   lane :validate_app_signing do
     envHelper = EnvironmentHelper.new
-    unless envHelper.bundle_identifier.to_s.strip.empty?
-      BuildTypeFactory.new.perform_signing_validation
-    end
+    BuildTypeFactory.new(fastlane: self).perform_signing_validation unless envHelper.bundle_identifier.to_s.strip.empty?
   end
 
   lane :build do
     envHelper = EnvironmentHelper.new
-    unless envHelper.bundle_identifier.to_s.strip.empty?
-      BuildTypeFactory.new.build
-    end
-  end
-
-  lane :upload_to_appcenter do |options|
-    appcenter_upload(
-      api_token: options[:api_token],
-      owner_name: options[:owner_name],
-      destinations: options[:destinations],
-      destination_type: options[:destination_type],
-      app_os: options[:app_os],
-      app_platform: options[:app_platform],
-      app_display_name: options[:app_display_name],
-      app_name: options[:app_name],
-      ipa: options[:ipa],
-      dsym: options[:dsym],
-      notify_testers: options[:notify_testers]
-    )
-
-    # save uploaded app info to file for future use
-    AppCenterHelper.new.save_build_params_for_type(
-      bundle_identifier: options[:bundle_identifier],
-      zapp_build_type: options[:zapp_build_type],
-      app_name: options[:app_name],
-      app_secret: options[:app_secret],
-      build_information: lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]
-    )
+    BuildTypeFactory.new(fastlane: self).build unless envHelper.bundle_identifier.to_s.strip.empty?
   end
 end
 
@@ -104,7 +73,7 @@ def set_device_family
   ENV['DEVICE_FAMILY'] = '1,2'
   ENV['DEVICE_FAMILY'] = '1' if device_family == 'iphone'
   ENV['DEVICE_FAMILY'] = '2' if device_family == 'ipad'
-end
+  end
 
 def install_awscli_if_needed
   envHelper = EnvironmentHelper.new

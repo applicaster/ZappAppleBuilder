@@ -11,16 +11,16 @@ class BuildTypeEnterprise < BuildType
     copy_artifacts(
       target_path: 'CircleArtifacts/Enterprise',
       artifacts: [
-        "~/Library/Logs/gym/#{@@projectHelper.scheme}-#{@@projectHelper.scheme}.log"
+        "~/Library/Logs/gym/#{@projectHelper.scheme}-#{@projectHelper.scheme}.log"
       ]
     )
   end
 
   def prepare_app_for_build
     # delete spotlight subscription entitlements if exists
-    remove_key_from_entitlements(@@projectHelper.name.to_s, 'Release', 'com.apple.smoot.subscriptionservice')
+    remove_key_from_entitlements(@projectHelper.name.to_s, 'Release', 'com.apple.smoot.subscriptionservice')
     # delete sso entitlements if exists
-    remove_key_from_entitlements(@@projectHelper.name.to_s, 'Release', 'com.apple.developer.video-subscriber-single-sign-on')
+    remove_key_from_entitlements(@projectHelper.name.to_s, 'Release', 'com.apple.developer.video-subscriber-single-sign-on')
   end
 
   def enterprise_build_type

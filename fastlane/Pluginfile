@@ -3,4 +3,5 @@
 # Ensure this file is checked in to source control!
 
 gem 'fastlane-plugin-appcenter'
+gem 'fastlane-plugin-aws_s3'
 gem 'fastlane-plugin-altool', :git => "git@github.com:applicaster/fastlane-plugin-altool.git"
