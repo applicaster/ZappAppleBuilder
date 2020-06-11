@@ -63,6 +63,7 @@ class AppCenterHelper < BaseHelper
         app_secret: options[:app_secret],
         build_information: @fastlane.lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]
       )
+    end
   end
 
   def update_app_secret(bundle_identifier)
