@@ -5,16 +5,29 @@ require 'colorize'
 import 'Base/Helpers/EnvironmentHelper.rb'
 
 class BuildTypeFactory
+  attr_accessor :fastlane
+
+  def initialize(options = {})
+    @fastlane = options[:fastlane]
+  end
+
   def prepare_environment
     # prepare only specific env to build
     buildtypes = []
+
     case build_type
     when 'enterprise'
-      buildtypes = [EnterpriseClient.new]
+      buildtypes = [
+        EnterpriseClient.new(fastlane: @fastlane)
+      ]
     when 'store'
-      buildtypes = [Store.new]
+      buildtypes = [
+        Store.new(fastlane: @fastlane)
+      ]
     when 'debug'
-      buildtypes = [EnterpriseDebug.new]
+      buildtypes = [
+        EnterpriseDebug.new(fastlane: @fastlane)
+      ]
     end
 
     buildtypes.each do |type|
@@ -28,11 +41,19 @@ class BuildTypeFactory
     buildtypes = []
     case build_type
     when 'enterprise'
-      buildtypes = [EnterpriseClient.new, EnterpriseDebug.new]
+      buildtypes = [
+        EnterpriseClient.new(fastlane: @fastlane),
+        EnterpriseDebug.new(fastlane: @fastlane)
+      ]
     when 'store'
-      buildtypes = [Store.new, EnterpriseDebug.new]
+      buildtypes = [
+        Store.new(fastlane: fastlane),
+        EnterpriseDebug.new(fastlane: @fastlane)
+      ]
     when 'debug'
-      buildtypes = [EnterpriseDebug.new]
+      buildtypes = [
+        EnterpriseDebug.new(fastlane: @fastlane)
+      ]
     end
 
     buildtypes.each do |type|
@@ -47,11 +68,19 @@ class BuildTypeFactory
     curent_build_type = build_type
     case curent_build_type
     when 'enterprise'
-      buildtypes = [EnterpriseClient.new, EnterpriseDebug.new]
+      buildtypes = [
+        EnterpriseClient.new(fastlane: @fastlane),
+        EnterpriseDebug.new(fastlane: @fastlane)
+      ]
     when 'store'
-      buildtypes = [Store.new, EnterpriseDebug.new]
+      buildtypes = [
+        Store.new(fastlane: fastlane),
+        EnterpriseDebug.new(fastlane: @fastlane)
+      ]
     when 'debug'
-      buildtypes = [EnterpriseDebug.new]
+      buildtypes = [
+        EnterpriseDebug.new(fastlane: @fastlane)
+      ]
     end
 
     buildtypes.each do |type|

@@ -26,8 +26,8 @@ class EnterpriseClient < BuildTypeEnterprise
     current(__callee__.to_s)
     # get provisioning profiles specifiers
     main_prov_profile_specifier = provisioning_profile_uuid
-    notification_service_extension_prov_profile_specifier = @@appExtensions.provisioning_profile_uuid(@@appExtensions.notification_service_extension_key)
-    notification_content_extension_prov_profile_specifier = @@appExtensions.provisioning_profile_uuid(@@appExtensions.notification_content_extension_key)
+    notification_service_extension_prov_profile_specifier = @appExtensions.provisioning_profile_uuid(@appExtensions.notification_service_extension_key)
+    notification_content_extension_prov_profile_specifier = @appExtensions.provisioning_profile_uuid(@appExtensions.notification_content_extension_key)
 
     puts("main_prov_profile_specifier: #{provisioning_profile_uuid}")
 
@@ -35,8 +35,8 @@ class EnterpriseClient < BuildTypeEnterprise
       compileBitcode: true,
       provisioningProfiles: {
         @@envHelper.bundle_identifier => main_prov_profile_specifier.to_s,
-        @@appExtensions.notification_service_extension_bundle_identifier => notification_service_extension_prov_profile_specifier.to_s,
-        @@appExtensions.notification_content_extension_bundle_identifier => notification_content_extension_prov_profile_specifier.to_s
+        @appExtensions.notification_service_extension_bundle_identifier => notification_service_extension_prov_profile_specifier.to_s,
+        @appExtensions.notification_content_extension_bundle_identifier => notification_content_extension_prov_profile_specifier.to_s
       }
     }
 
@@ -44,16 +44,16 @@ class EnterpriseClient < BuildTypeEnterprise
     save_param_to_file(build_export_options, export_options.to_plist)
 
     build_app(
-      workspace: @@projectHelper.xcworkspace_relative_path.to_s,
-      scheme: @@projectHelper.scheme,
+      workspace: @projectHelper.xcworkspace_relative_path.to_s,
+      scheme: @projectHelper.scheme,
       configuration: build_configuration,
       include_bitcode: true,
       include_symbols: true,
       output_directory: "#{circle_artifacts_folder_path}/Enterprise",
       buildlog_path: "#{circle_artifacts_folder_path}/Enterprise",
-      output_name: "#{@@projectHelper.scheme}-Enterprise",
-      build_path: @@projectHelper.build_path,
-      derived_data_path: @@projectHelper.build_path,
+      output_name: "#{@projectHelper.scheme}-Enterprise",
+      build_path: @projectHelper.build_path,
+      derived_data_path: @projectHelper.build_path,
       xcargs: "PROVISIONING_PROFILE='#{main_prov_profile_specifier}' "\
            "NOTIFICATION_SERVICE_EXTENSION_PROV_PROFILE_SPECIFIER='#{notification_service_extension_prov_profile_specifier}' "\
            "NOTIFICATION_CONTENT_EXTENSION_PROV_PROFILE_SPECIFIER='#{notification_content_extension_prov_profile_specifier}' "\
@@ -81,10 +81,10 @@ class EnterpriseClient < BuildTypeEnterprise
   def download_signing_files
     current(__callee__.to_s)
     # create new dir for files
-    sh("mkdir -p \"#{@@projectHelper.credentials_folder_path}\"")
+    sh("mkdir -p \"#{@projectHelper.credentials_folder_path}\"")
     # download p12 and provisioning profile
-    sh("curl -sL \"#{@@envHelper.debug_provisioning_profile_url}\" --output \"#{@@projectHelper.distribution_provisioning_profile_path}\"")
-    sh("curl -sL \"#{@@envHelper.debug_distribution_key_url}\" --output \"#{@@projectHelper.distribution_certificate_path}\"")
+    sh("curl -sL \"#{@@envHelper.debug_provisioning_profile_url}\" --output \"#{@projectHelper.distribution_provisioning_profile_path}\"")
+    sh("curl -sL \"#{@@envHelper.debug_distribution_key_url}\" --output \"#{@projectHelper.distribution_certificate_path}\"")
   end
 
   def perform_signing_validation
@@ -92,20 +92,20 @@ class EnterpriseClient < BuildTypeEnterprise
     download_signing_files
 
     validate(
-      certificate_path: @@projectHelper.distribution_certificate_path,
+      certificate_path: @projectHelper.distribution_certificate_path,
       certificate_password: @@envHelper.debug_distribution_key_password,
-      provisioning_profile_path: @@projectHelper.distribution_provisioning_profile_path
+      provisioning_profile_path: @projectHelper.distribution_provisioning_profile_path
     )
   end
 
   def prepare_signing
     current(__callee__.to_s)
-	# fetch values
-	provisioning_profile = get_provisioning_profile_content(@@projectHelper.distribution_provisioning_profile_path)
-	team_id_value = provisioning_profile["Entitlements"]["com.apple.developer.team-identifier"]
-	team_name_value = provisioning_profile["TeamName"] 
-	provisioning_profile_uuid_value = provisioning_profile["UUID"] 
-	provisioning_profile_debug = provisioning_profile["Entitlements"]["get-task-allow"] 
+    # fetch values
+    provisioning_profile = get_provisioning_profile_content(@projectHelper.distribution_provisioning_profile_path)
+    team_id_value = provisioning_profile['Entitlements']['com.apple.developer.team-identifier']
+    team_name_value = provisioning_profile['TeamName']
+    provisioning_profile_uuid_value = provisioning_profile['UUID']
+    provisioning_profile_debug = provisioning_profile['Entitlements']['get-task-allow']
 
     # save values
     save_param_to_file("#{@@envHelper.bundle_identifier}_PROFILE_UDID", provisioning_profile_uuid_value.to_s)
@@ -115,10 +115,10 @@ class EnterpriseClient < BuildTypeEnterprise
 
     # install provisioning profile
     sh("mkdir -p ~/Library/MobileDevice/'Provisioning Profiles'")
-    sh("cp #{@@projectHelper.distribution_provisioning_profile_path} ~/Library/MobileDevice/'Provisioning Profiles'/#{provisioning_profile_uuid}.mobileprovision")
+    sh("cp #{@projectHelper.distribution_provisioning_profile_path} ~/Library/MobileDevice/'Provisioning Profiles'/#{provisioning_profile_uuid}.mobileprovision")
 
     import_certificate(
-      certificate_path: @@projectHelper.distribution_certificate_path,
+      certificate_path: @projectHelper.distribution_certificate_path,
       certificate_password: @@envHelper.distribution_key_password,
       keychain_name: @@envHelper.keychain_name,
       keychain_password: @@envHelper.keychain_password
@@ -133,30 +133,30 @@ class EnterpriseClient < BuildTypeEnterprise
     update_parameters_in_feature_optimization_json
 
     # update ms_app_center app secret
-    @@appCenterHelper.update_app_secret(@@envHelper.bundle_identifier.to_s)
+    @appCenterHelper.update_app_secret(@@envHelper.bundle_identifier.to_s)
 
     # update firebase configuration
     @@firebaseHelper.add_configuration_file('production')
 
     # update app identifier to the store one
     reset_info_plist_bundle_identifier(
-      xcodeproj: @@projectHelper.xcodeproj_path,
-      plist_path: @@projectHelper.plist_inner_path
+      xcodeproj: @projectHelper.xcodeproj_path,
+      plist_path: @projectHelper.plist_inner_path
     )
     update_app_identifier(
-      xcodeproj: @@projectHelper.xcodeproj_path,
-      plist_path: @@projectHelper.plist_inner_path,
+      xcodeproj: @projectHelper.xcodeproj_path,
+      plist_path: @projectHelper.plist_inner_path,
       app_identifier: @@envHelper.bundle_identifier
     )
 
     # update project team identifier for all targets
     update_project_team(
-      xcodeproj: @@projectHelper.xcodeproj_path,
+      xcodeproj: @projectHelper.xcodeproj_path,
       teamid: team_id
     )
 
     # add support for push notifications
-    @@projectHelper.change_system_capability(
+    @projectHelper.change_system_capability(
       capability: 'com.apple.Push',
       old: 0,
       new: 1
@@ -169,22 +169,22 @@ class EnterpriseClient < BuildTypeEnterprise
     current(__callee__.to_s)
 
     build_type = 'release'
-    @@appExtensions.prepare_notification_extension(
-      build_type,
-      @@appExtensions.notification_service_extension_key,
-      @@appExtensions.notification_service_extension_target_name,
-      @@appExtensions.notification_service_extension_bundle_identifier,
-      @@appExtensions.notification_service_extension_info_plist_inner_path,
-      @@appExtensions.notification_service_extension_info_plist_path
+    @appExtensions.prepare_notification_extension(
+      build_type: build_type,
+      extension_type: @appExtensions.notification_service_extension_key,
+      extension_target_name: @appExtensions.notification_service_extension_target_name,
+      extension_bundle_identifier: @appExtensions.notification_service_extension_bundle_identifier,
+      extension_info_plist_inner_path: @appExtensions.notification_service_extension_info_plist_inner_path,
+      extension_info_plist_path: @appExtensions.notification_service_extension_info_plist_path
     )
 
-    @@appExtensions.prepare_notification_extension(
-      build_type,
-      @@appExtensions.notification_content_extension_key,
-      @@appExtensions.notification_content_extension_target_name,
-      @@appExtensions.notification_content_extension_bundle_identifier,
-      @@appExtensions.notification_content_extension_info_plist_inner_path,
-      @@appExtensions.notification_content_extension_info_plist_path
+    @appExtensions.prepare_notification_extension(
+      build_type: build_type,
+      extension_type: @appExtensions.notification_content_extension_key,
+      extension_target_name: @appExtensions.notification_content_extension_target_name,
+      extension_bundle_identifier: @appExtensions.notification_content_extension_bundle_identifier,
+      extension_info_plist_inner_path: @appExtensions.notification_content_extension_info_plist_inner_path,
+      extension_info_plist_path: @appExtensions.notification_content_extension_info_plist_path
     )
   end
 

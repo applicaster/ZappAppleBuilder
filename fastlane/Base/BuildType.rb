@@ -14,11 +14,14 @@ import 'Base/Helpers/ProjectHelper.rb'
 import 'Base/Helpers/AppCenterHelper.rb'
 
 class BuildType < BaseHelper
-  @@projectHelper = ProjectHelper.new
-  @@firebaseHelper = FirebaseHelper.new
-  @@appCenterHelper = AppCenterHelper.new
-
-  @@appExtensions = AppExtensions.new
+  attr_accessor :projectHelper, :firebaseHelper, :appCenterHelper, :appExtensions
+  def initialize(options = {})
+    super
+    @projectHelper = ProjectHelper.new(fastlane: @fastlane)
+    @firebaseHelper = FirebaseHelper.new(fastlane: @fastlane, projectHelper: @projectHelper)
+    @appCenterHelper = AppCenterHelper.new(fastlane: @fastlane, projectHelper: @projectHelper)
+    @appExtensions = AppExtensions.new(fastlane: @fastlane, projectHelper: @projectHelper)
+  end
 
   def build_type
     # implement in child classes
@@ -38,26 +41,26 @@ class BuildType < BaseHelper
   end
 
   def fetch_app_center_identifiers
-    @@appCenterHelper.fetch_identifiers(@@envHelper.bundle_identifier.to_s)
+    @appCenterHelper.fetch_identifiers(@@envHelper.bundle_identifier.to_s)
   end
 
   def remove_key_from_entitlements(target, build_type, key)
-    file_path = "#{@@projectHelper.path}/#{target}/Entitlements/#{target}-#{build_type}.entitlements"
+    file_path = "#{@projectHelper.path}/#{target}/Entitlements/#{target}-#{build_type}.entitlements"
 
     sh("echo $(/usr/libexec/PlistBuddy -c \"Delete :#{key}\" #{file_path} 2>/dev/null)")
   end
 
   def update_parameters_in_feature_optimization_json
-    @@projectHelper.update_features_customization(
+    @projectHelper.update_features_customization(
       name: 'S3Hostname',
       value: @@envHelper.s3_hostname
     )
   end
 
   def add_wifi_system_capability_if_needed
-    requires_wifi_capability = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :com.apple.developer.networking.wifi-info\" #{@@projectHelper.path}/#{@@projectHelper.name}/Entitlements/#{@@projectHelper.name}-Release.entitlements 2>/dev/null | grep -c true)")
+    requires_wifi_capability = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :com.apple.developer.networking.wifi-info\" #{@projectHelper.path}/#{@projectHelper.name}/Entitlements/#{@projectHelper.name}-Release.entitlements 2>/dev/null | grep -c true)")
     if requires_wifi_capability.to_i > 0
-      @@projectHelper.change_system_capability(
+      @projectHelper.change_system_capability(
         capability: 'com.apple.AccessWiFi',
         old: 0,
         new: 1
@@ -88,8 +91,8 @@ class BuildType < BaseHelper
 
   def remove_app_extensions
     puts('Removing notifications extensions from project (needed for `pod install`)')
-    @@appExtensions.remove_from_project(@@appExtensions.notification_content_extension_target_name)
-    @@appExtensions.remove_from_project(@@appExtensions.notification_service_extension_target_name)
+    @appExtensions.remove_from_project(@appExtensions.notification_content_extension_target_name)
+    @appExtensions.remove_from_project(@appExtensions.notification_service_extension_target_name)
   end
 
   def validate(options)
@@ -264,7 +267,7 @@ class BuildType < BaseHelper
       s3DestinationPathParams = @@envHelper.s3_upload_path(options[:bundle_identifier])
       s3DistanationPath = "#{@@envHelper.s3_bucket_name}/#{s3DestinationPathParams}"
       sh("aws --region #{@@envHelper.aws_region} s3 sync #{circle_artifacts_folder_path}/#{build_type} s3://#{s3DistanationPath} --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers --delete")
-      @@appCenterHelper.save_build_params_for_type(
+      @appCenterHelper.save_build_params_for_type(
         bundle_identifier: options[:bundle_identifier],
         zapp_build_type: options[:zapp_build_type],
         build_type: build_type,
@@ -272,13 +275,13 @@ class BuildType < BaseHelper
         app_secret: nil
       )
     else
-      # s3_upload(
-      #   bundle_identifier: options[:bundle_identifier],
-      #   ipa: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.ipa",
-      #   dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.app.dSYM.zip"
-      # )
+      s3_upload(
+        bundle_identifier: options[:bundle_identifier],
+        ipa: "#{circle_artifacts_folder_path}/#{build_type}/#{@projectHelper.scheme}-#{build_type}.ipa",
+        dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@projectHelper.scheme}-#{build_type}.app.dSYM.zip"
+      )
       puts('Upload application to MS App Center')
-      @@appCenterHelper.upload_app(options)
+      @appCenterHelper.upload_app(options)
     end
   end
 end

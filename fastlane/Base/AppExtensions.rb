@@ -6,7 +6,11 @@ require 'fastlane'
 import 'Base/Helpers/ProjectHelper.rb'
 
 class AppExtensions < BaseHelper
-  @@projectHelper = ProjectHelper.new
+  attr_accessor :projectHelper
+  def initialize(options = {})
+    super
+    @projectHelper = options[:projectHelper]
+  end
 
   def remove_from_project(target_name)
     update_app_target do |target|
@@ -19,29 +23,38 @@ class AppExtensions < BaseHelper
   def update_app_target
     require 'xcodeproj'
 
-    project = Xcodeproj::Project.open(@@projectHelper.xcodeproj_path.to_s)
-    target = project.native_targets.find { |s| s.name == @@projectHelper.scheme.to_s }
+    project = Xcodeproj::Project.open(@projectHelper.xcodeproj_path.to_s)
+    target = project.native_targets.find { |s| s.name == @projectHelper.scheme.to_s }
 
     yield(target)
 
     project.save
   end
 
-  def prepare_notification_extension(
-    build_type,
-    extension_type,
-    extension_target_name,
-    extension_bundle_identifier,
-    extension_info_plist_inner_path,
-    extension_info_plist_path
-  )
-    entension_enabled = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :SupportedAppExtensions:#{extension_type}:#{build_type}_enabled\" #{@@projectHelper.customizations_folder_path}/FeaturesCustomization.plist 2>/dev/null | grep -c true)")
+  def prepare_notification_extension(options)
+    build_type = options[:build_type]
+    extension_type = options[:extension_type]
+    extension_target_name = options[:extension_target_name]
+    extension_bundle_identifier = options[:extension_bundle_identifier]
+    extension_info_plist_inner_path = options[:extension_info_plist_inner_path]
+    extension_info_plist_path = options[:extension_info_plist_path]
+
+    entension_enabled = 0
+    plist_content = get_plist_content("#{@projectHelper.customizations_folder_path}/FeaturesCustomization.plist")
+    supported_app_extensions = plist_content['SupportedAppExtensions']
+    unless supported_app_extensions.nil?
+      supported_extension_for_type = supported_app_extensions[extension_type.to_s]
+      unless supported_extension_for_type.nil?
+        entension_enabled = supported_extension_for_type["#{build_type}_enabled"].to_i
+      end
+    end
+
     if entension_enabled.to_i > 0
       # print extension enabled
       sh("echo '#{extension_type} enabled'")
 
       # update app identifier, versions of the notification extension
-      @@projectHelper.plist_update_version_values(
+      @projectHelper.plist_update_version_values(
         target_name: extension_target_name,
         plist_path: extension_info_plist_path,
         bundle_identifier: extension_bundle_identifier
@@ -53,7 +66,7 @@ class AppExtensions < BaseHelper
         key: 'CFBundleIdentifier'
       )
       # change app groups support on project file
-      @@projectHelper.change_system_capability(
+      @projectHelper.change_system_capability(
         capability: 'com.apple.ApplicationGroups.iOS',
         old: 0,
         new: 1
@@ -61,11 +74,11 @@ class AppExtensions < BaseHelper
 
       # update app identifier for to the notification extension
       reset_info_plist_bundle_identifier(
-        xcodeproj: @@projectHelper.xcodeproj_path,
+        xcodeproj: @projectHelper.xcodeproj_path,
         plist_path: extension_info_plist_inner_path
       )
       update_app_identifier(
-        xcodeproj: @@projectHelper.xcodeproj_path,
+        xcodeproj: @projectHelper.xcodeproj_path,
         plist_path: extension_info_plist_inner_path,
         app_identifier: extension_bundle_identifier
       )
@@ -77,11 +90,14 @@ class AppExtensions < BaseHelper
   end
 
   def add_extension_to_project(target_name)
-    sh("configure_extensions add #{@@projectHelper.xcodeproj_path} #{@@projectHelper.name} #{target_name}")
+    sh("configure_extensions add #{@projectHelper.xcodeproj_path} #{@projectHelper.name} #{target_name}")
   end
 
   def provisioning_profile_uuid(extension_type)
-    sh("echo $(/usr/libexec/PlistBuddy -c \"Print :SupportedAppExtensions:#{extension_type}:provisioning_profile_uuid\" #{@@projectHelper.customizations_folder_path}/FeaturesCustomization.plist 2>/dev/null) | tr -d '\040\011\012\015'")
+    plist_content = get_plist_content("#{@projectHelper.customizations_folder_path}/FeaturesCustomization.plist")
+    supported_extension = plist_content['SupportedAppExtensions']
+    supported_extension_for_type = supported_extension[extension_type.to_s]
+    supported_extension_for_type['provisioning_profile_uuid'] unless supported_extension_for_type.nil?
   end
 
   # notification service extension
@@ -94,7 +110,7 @@ class AppExtensions < BaseHelper
   end
 
   def notification_service_extension_info_plist_path
-    "#{@@projectHelper.path}/#{notification_service_extension_target_name}/Info.plist"
+    "#{@projectHelper.path}/#{notification_service_extension_target_name}/Info.plist"
   end
 
   def notification_service_extension_info_plist_inner_path
@@ -115,7 +131,7 @@ class AppExtensions < BaseHelper
   end
 
   def notification_content_extension_info_plist_path
-    "#{@@projectHelper.path}/#{notification_content_extension_target_name}/Info.plist"
+    "#{@projectHelper.path}/#{notification_content_extension_target_name}/Info.plist"
   end
 
   def notification_content_extension_info_plist_inner_path
