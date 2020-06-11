@@ -6,7 +6,7 @@ require_relative '../scripts/autolink-react-dependencies.rb'
 
 require 'resolv-replace'
 install! 'cocoapods', :deterministic_uuids => false, :preserve_pod_file_structure => true
-use_frameworks!
+use_frameworks! :linkage => :static
 
 source 'git@github.com:applicaster/CocoaPods.git'
 source 'git@github.com:applicaster/CocoaPods-Private.git'

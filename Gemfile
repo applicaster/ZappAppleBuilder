@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 # Gemfile
 source 'https://rubygems.org'
 
-gem 'fastlane', '= 2.149.1'
-gem 'cocoapods', '= 1.9.1'
-gem 'configure_extensions', '= 1.0.1'
+gem 'cocoapods', '= 1.9.3'
 gem 'colorize', '= 0.8.1'
+gem 'configure_extensions', '= 1.0.1'
+gem 'fastlane', '= 2.149.1'
 # Zapp SDK creation process
 gem 'zapp_sdk_tasks', '= 0.5.0'
 
