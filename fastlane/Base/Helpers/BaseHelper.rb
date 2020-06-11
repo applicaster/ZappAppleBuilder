@@ -166,7 +166,7 @@ class BaseHelper
       platform: @@envHelper.platform_name
     )
 
-    provisioning_profile = get_provisioning_profile_content("#{@@envHelper.root_path}/fastlane/#{options[:bundle_identifier]}.mobileprovision")
+    provisioning_profile = get_provisioning_profile_content("#{@@envHelper.root_path}/#{options[:bundle_identifier]}.mobileprovision")
     provisioning_profile_uuid_value = provisioning_profile['UUID']
     save_param_to_file("#{options[:bundle_identifier]}_PROFILE_UDID", provisioning_profile_uuid_value.to_s)
 
