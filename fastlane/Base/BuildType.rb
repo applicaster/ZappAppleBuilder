@@ -272,11 +272,11 @@ class BuildType < BaseHelper
         app_secret: nil
       )
     else
-      s3_upload(
-        bundle_identifier: options[:bundle_identifier],
-        ipa: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.ipa",
-        dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.app.dSYM.zip"
-      )
+      # s3_upload(
+      #   bundle_identifier: options[:bundle_identifier],
+      #   ipa: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.ipa",
+      #   dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@@projectHelper.scheme}-#{build_type}.app.dSYM.zip"
+      # )
       puts('Upload application to MS App Center')
       @@appCenterHelper.upload_app(options)
     end
