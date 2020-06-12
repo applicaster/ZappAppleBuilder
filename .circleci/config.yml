@@ -371,7 +371,7 @@ jobs:
             echo ${TARGET_FOLDER}
 
       - when:
-          condition: ${IS_IOS}
+          condition: false
           steps:
             - *restore_npm_ios
       - when:
