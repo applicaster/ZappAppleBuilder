@@ -252,7 +252,8 @@ jobs:
           name: Saving NPM dependencies
           key: YARN-{{ checksum "~/_caching_file" }}-{{ checksum "ZappiOS/yarn.lock" }}
           paths:
-            - ./node_modules
+            - ./ZappiOS/node_modules
+            - ./ZappTvOS/node_modules
 
       # Restore Cocoapods cache, save cache on lower level, after pod install
       - restore_cache:
