@@ -3,8 +3,6 @@ notify:
   webhooks:
     - url: https://zapp.applicaster.com/callbacks/build_status/circleci_builds
 references:
-  environment:
-    ZAPPTOOL_VERSION: "3.10.0"
   workspace_root: &workspace_root ~/ZappAppleBuilder
   mac_config: &mac_config
     working_directory: *workspace_root
@@ -13,11 +11,9 @@ references:
     shell: /bin/bash --login -eo pipefail
 
     environment:
-      GENERAL_CACHE_KEY: "ZappApple_Cache_1.0.3"
       PROJECT_NAME: "ZappApple"
       SCRIPTS_FOLDER: "Scripts"
       BUILD_PATH: ~/build_debug
-      ZAPPTOOL_VERSION: "3.10.0"
       HOMEBREW_NO_AUTO_UPDATE: "1"
       #fastlane variables
       LC_ALL: "en_US.UTF-8"
@@ -25,10 +21,10 @@ references:
 
   #Hack general caching until circle does not support global env variables
   prepare_caching_file: &prepare_caching_file
-    run: echo "$GENERAL_CACHE_KEY" > ~/_caching_file
+    run: echo "ZappApple_Cache_1.0.3" > ~/_caching_file
 
   prepare_zapptool_version_file: &prepare_zapptool_version_file
-    run: echo "$ZAPPTOOL_VERSION" > ~/_zappToolVersion
+    run: echo "3.10.0" > ~/_zappToolVersion
 
   stop_job_triggered_by_zapp: &stop_job_triggered_by_zapp
     run:
