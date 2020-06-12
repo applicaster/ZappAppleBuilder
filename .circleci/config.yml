@@ -355,7 +355,7 @@ jobs:
   build:
     <<: *mac_config
     steps:
-      - *triggered_by_zapp_only
+      # - *triggered_by_zapp_only
       - checkout
       - run:
           name: "Set target folder ENV VAR"
