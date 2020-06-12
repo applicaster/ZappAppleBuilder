@@ -187,12 +187,12 @@ references:
     run:
       name: ZappTool - Download if needed
       command: |
-        if [ ! -d "$HOME/ZappTool" ]; then
+        if [ ! -d "${HOME}/ZappTool" ]; then
           echo "Installing ZappTool"
-          curl -L "https://dl.bintray.com/applicaster-ltd/pods/ZappTool_v<< pipeline.parameters.zapptool-version >>.zip" > "$HOME/ZappTool.zip"
+          curl -L "https://dl.bintray.com/applicaster-ltd/pods/ZappTool_v<< pipeline.parameters.zapptool-version >>.zip" > "${HOME}/ZappTool.zip"
           mkdir $HOME/ZappTool
-          unzip -o "$HOME/ZappTool.zip" -d "$HOME/ZappTool"
-          rm -rf "$HOME/ZappTool.zip"
+          unzip -o "${HOME}/ZappTool.zip" -d "${HOME}/ZappTool"
+          rm -rf "${HOME}/ZappTool.zip"
         else
           echo "ZappTool was cached"
         fi
@@ -208,6 +208,12 @@ references:
     run:
       name: ZappTool - version
       command: "$HOME//ZappTool/ZappTool -v"
+
+  zapptool_prepare_group: &zapptool_prepare_group
+    - *restore_zapptool
+    - *zapptool_download
+    - *save_zapptool
+    - *version_zapptool
 
   create_zapp_sdk: &create_zapp_sdk
     run:
