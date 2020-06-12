@@ -6,9 +6,6 @@ parameters:
   general-caching-key:
     type: string
     default: "ZappApple_Cache_1.0.3"
-  platform-destination-path:
-    type: string
-    default: "ZappTvOS"
   platform-destination-path-ios:
     type: string
     default: "ZappiOS"
@@ -363,11 +360,11 @@ jobs:
       - run:
           name: "Set target folder ENV VAR"
           command: |
-            targetFolder="ZappiOS"
             if [ "$device_target" = apple_tv ]; then
-              targetFolder="ZappTvOS"
+              echo 'export TARGET_FOLDER=ZappTvOS' >> $BASH_ENV
+            else
+              echo 'export TARGET_FOLDER=ZappiOS' >> $BASH_ENV
             fi
-            echo 'export TARGET_FOLDER=${targetFolder}' >> $BASH_ENV
             echo $TARGET_FOLDER
       - *prepare_caching_file
       - *prepare_zapptool_version_file
