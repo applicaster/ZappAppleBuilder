@@ -1,4 +1,8 @@
 version: 2.1
+parameters:
+  image-tag:
+    type: ZAPPTOOL_VERSION
+    default: "3.10.0"
 notify:
   webhooks:
     - url: https://zapp.applicaster.com/callbacks/build_status/circleci_builds
@@ -23,8 +27,9 @@ references:
   prepare_caching_file: &prepare_caching_file
     run: echo "ZappApple_Cache_1.0.3" > ~/_caching_file
 
+  zapptool_version: &zapptool_version
   prepare_zapptool_version_file: &prepare_zapptool_version_file
-    run: echo "3.10.0" > ~/_zappToolVersion
+    run: echo "<< pipeline.parameters.ZAPPTOOL_VERSION >>" > ~/_zappToolVersion
 
   stop_job_triggered_by_zapp: &stop_job_triggered_by_zapp
     run:
@@ -171,7 +176,7 @@ references:
       name: Xcode installed location
       command: xcode-select -p
 
-  zapptool_cache_key: &zapptool_cache_key ZappTool-1.2-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
+  zapptool_cache_key: &zapptool_cache_key ZappTool-1.0-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
 
   restore_zapptool: &restore_zapptool
     restore_cache:
@@ -184,10 +189,10 @@ references:
       command: |
         if [ ! -d "ZappTool" ]; then
           echo "Installing ZappTool"
-          curl -L "https://dl.bintray.com/applicaster-ltd/pods/ZappTool_v${ZAPPTOOL_VERSION}.zip" > "ZappTool.zip"
-          mkdir ZappTool
-          unzip -o "ZappTool.zip" -d "ZappTool"
-          rm -rf "ZappTool.zip"
+          curl -L "https://dl.bintray.com/applicaster-ltd/pods/ZappTool_v${ZAPPTOOL_VERSION}.zip" > "$HOME/ZappTool.zip"
+          mkdir $HOME/ZappTool
+          unzip -o "$HOME/ZappTool.zip" -d "$HOME/ZappTool"
+          rm -rf "$HOME/ZappTool.zip"
         else
           echo "ZappTool was cached"
         fi
@@ -197,12 +202,12 @@ references:
       name: ZappTool - save cache
       key: zapptool_cache_key
       paths:
-        - "ZappTool"
+        - "$HOME/ZappTool"
 
   version_zapptool: &version_zapptool
     run:
       name: ZappTool - version
-      command: "ZappTool/ZappTool -v"
+      command: "$HOME/ZappTool/ZappTool -v"
 
   create_zapp_sdk: &create_zapp_sdk
     run:
