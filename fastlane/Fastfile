@@ -29,7 +29,7 @@ platform :ios do
     #       workspace: project_help.xcworkspace_relative_path.to_s,
 
     build_app(
-      workspace: ZappiOS / ZappiOS.xcworkspace,
+      workspace: 'ZappiOS/ZappiOS.xcworkspace',
       scheme: project_help.scheme,
       buildlog_path: circle_artifacts_folder_path.to_s,
       derived_data_path: project_help.build_path,
