@@ -6,6 +6,9 @@ parameters:
   general-caching-key:
     type: string
     default: "ZappApple_Cache_1.0.3"
+  platform-destination-path:
+    type: string
+    default: "ZappTvOS"
   platform-destination-path-ios:
     type: string
     default: "ZappiOS"
@@ -106,13 +109,14 @@ references:
       name: NPM login
       command: npx npm-shell-login
 
+  npm_cache_key: &npm_cache_key Yarn.1.0-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path >>/yarn.lock" }}
   npm_cache_key_ios: &npm_cache_key_ios Yarn.1.0-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path-ios >>/yarn.lock" }}
   npm_cache_key_tvos: &npm_cache_key_tvos Yarn.1.0-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path-tvos >>/yarn.lock" }}
 
   restore_npm: &restore_npm
     run:
       command: |
-        - *restore_npm_ios
+        -*restore_npm_ios
 
   restore_npm_ios: &restore_npm_ios
     restore_cache:
@@ -527,10 +531,11 @@ workflows:
       #       tags:
       #         only: /.*/
       - pre_cache_ios:
+          platform-destination-path: "ZappiOS"
           filters:
             # Change Branch to master only
             branches:
-              only: /.*/
+      #         only: /.*/
       # - prepare_tools_for_build:
       #     filters:
       #       tags:
