@@ -344,36 +344,40 @@ jobs:
       target_folder: ZappiOS
     steps:
       - *stop_job_triggered_by_zapp
+      - checkout
 
+      # Can be gerneral workflow
       - *prepare_caching_file
       - *prepare_zapptool_version_file
 
-      - checkout
-
+      # Can be gerneral workflow, download and cashe
       - *restore_zapptool
       - *zapptool_download
       - *save_zapptool
       - *version_zapptool
 
-      - *set_ruby_version
-      - *whitch_ruby
-      - *install_node
-      - *restore_gems
-      - *gems_install
-      - *save_gems
+      # # Can be base workflow
+      #   - *set_ruby_version
+      #   - *whitch_ruby
+      #   - *install_node
+      #   - *restore_gems
+      #   - *gems_install
+      #   - *save_gems
 
-      - *npm_login
-      - *restore_npm_ios
-      - *install_npm_dependencies
-      - *save_npm_ios
+      #   # Can be logged it on top worfglow
+      #   - *npm_login
 
-      - *restore_pods_ios
-      - *vesion_pods
-      - *install_pods
-      - *save_pods_ios
+      #   - *restore_npm_ios
+      #   - *install_npm_dependencies
+      #   - *save_npm_ios
 
-      - *version_xcode
-      - *location_xcode
+      #   - *restore_pods_ios
+      #   - *vesion_pods
+      #   - *install_pods
+      #   - *save_pods_ios
+
+      #   - *version_xcode
+      #   - *location_xcode
 
       # - deploy:
       #     name: Building Zapp-App - Tests
