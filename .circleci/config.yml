@@ -109,12 +109,23 @@ references:
       name: Restore npm dependencies ios
       key: *npm_cache_key_tvos
 
-  install_npm_dependencies: &install_npm_dependencies
+  prepare_application_environment: &prepare_application_environment
     run:
-      name: Install NPM dependencies
+      name: ZappTool - prepare application environment
       command: |
-        cd $target_folder
-        yarn
+        targetFolder="ZappiOS"
+        if [ "$device_target" = apple_tv ]; then
+          targetFolder="ZappTvOS"
+        fi
+
+        cd $targetFolder
+        if [ "$bundle_identifier" ];
+        then
+          "$HOME/ZappTool/ZappTool"
+        else
+          yarn
+        fi
+        cd ..
 
   save_npm_ios: &save_npm_ios
     save_cache:
@@ -372,7 +383,7 @@ jobs:
       - *npm_login
 
       - *restore_npm_ios
-      - *install_npm_dependencies
+      - *prepare_application_environment
       - *save_npm_ios
 
       - *restore_pods_ios
@@ -384,7 +395,7 @@ jobs:
       - *location_xcode
 
       - deploy:
-          name: Building Zapp-App - Precahse
+          name: Building Zapp-App - Precache
           command: |
             bundle exec fastlane ios precache
 
@@ -418,7 +429,7 @@ jobs:
       - *npm_login
 
       - *restore_npm_ios
-      - *install_npm_dependencies
+      - *prepare_application_environment
       - *save_npm_ios
 
       - *restore_pods_ios
@@ -429,13 +440,12 @@ jobs:
       - *version_xcode
       - *location_xcode
 
-      - deploy:
-          name: Building Zapp-App - Precahse
-          command: |
-            bundle exec fastlane ios precache
-
-      - store_artifacts:
-          path: ./CircleArtifacts
+      # - deploy:
+      #     name: Building Zapp-App - Precache
+      #     command: |
+      #       bundle exec fastlane ios precache
+      # - store_artifacts:
+      #     path: ./CircleArtifacts
   # create_ios_mobile_sdk:
   #   <<: *mac_config
   #   environment:
@@ -460,21 +470,37 @@ jobs:
   #     - *gems_install
   #     - *save_gems
   #     - *create_zapp_sdk
+
+  validate_app_signing:
+    <<: *mac_config
+    steps:
+      - run:
+          name: Validate app signing
+          command: |
+            echo "\n-- Validating app signing --"
+            bundle exec fastlane ios validate_app_signing
+
 # Solution two make seperate files for ci https://github.com/samsalisbury/circleci-multi-file-config
 workflows:
   version: 2
   build_from_branch_and_tag:
     jobs:
+      - validate_app_signing:
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              only: /.*/
       - pre_cache_ios:
           filters:
             # Change Branch to master only
             branches:
               only: /.*/
-      - pre_cache_tvos:
-          filters:
-            # Change Branch to master only
-            branches:
-              only: /.*/
+      # - pre_cache_tvos:
+      #     filters:
+      #       # Change Branch to master only
+      #       branches:
+      #         only: /.*/
       # - build:
       #     filters:
       #       tags:
