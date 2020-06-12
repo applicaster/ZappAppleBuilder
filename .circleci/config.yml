@@ -496,7 +496,7 @@ jobs:
       - persist_to_workspace: # store the built files into the workspace for other jobs.
           root: .
           paths:
-            - *workspace_root
+            - .
 
   create_ios_mobile_sdk:
     <<: *mac_config
