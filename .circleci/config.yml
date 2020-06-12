@@ -176,7 +176,7 @@ references:
       name: Xcode installed location
       command: xcode-select -p
 
-  zapptool_cache_key: &zapptool_cache_key ZappTool-2.2-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
+  zapptool_cache_key: &zapptool_cache_key ZappTool-2.3-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
 
   restore_zapptool: &restore_zapptool
     restore_cache:
