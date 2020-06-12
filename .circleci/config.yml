@@ -191,7 +191,7 @@ references:
           echo "Installing ZappTool"
           curl -L "https://dl.bintray.com/applicaster-ltd/pods/ZappTool_v<< pipeline.parameters.zapptool-version >>.zip" > "ZappTool.zip"
           mkdir ZappTool
-          unzip -o "ZappTool.zip" -d "${HOME}/ZappTool"
+          unzip -o "ZappTool.zip" -d "ZappTool"
           rm -rf "ZappTool.zip"
         else
           echo "ZappTool was cached"
@@ -361,10 +361,7 @@ jobs:
       - *prepare_zapptool_version_file
 
       # Can be gerneral workflow, download and cashe
-      - *restore_zapptool
-      - *zapptool_download
-      - *save_zapptool
-      - *version_zapptool
+      - *zapptool_prepare_group
 
       # # Can be base workflow
       #   - *set_ruby_version
