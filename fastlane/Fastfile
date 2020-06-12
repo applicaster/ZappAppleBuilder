@@ -13,16 +13,19 @@ import 'Base/Helpers/AppCenterHelper.rb'
 import 'Base/Helpers/ProjectHelper.rb'
 import 'Base/Helpers/BaseHelper.rb'
 
-# platform :tvos do
-# lane :precache do
-#   build_app(
-#     workspace: @@projectHelper.xcworkspace_relative_path.to_s,
-#     scheme: @@projectHelper.scheme,
-#     buildlog_path: "#{circle_artifacts_folder_path}/Prechase",
-#     derived_data_path: @@projectHelper.build_path
-#   )
-# end
-# end
+platform :tvos do
+  lane :precache do
+    scan(
+      workspace: 'ZappiOS/ZappiOS.xcworkspace',
+      scheme: project_help.scheme,
+      buildlog_path: "#{base_helper.circle_artifacts_folder_path}.to_s/precache",
+      derived_data_path: project_help.build_path,
+      configuration: 'Release',
+      skip_archive: true,
+      skip_codesigning: true
+    )
+  end
+end
 
 platform :ios do
   lane :precache do
@@ -30,7 +33,17 @@ platform :ios do
     base_helper = BaseHelper.new
     #       workspace: project_help.xcworkspace_relative_path.to_s,
 
-    build_app(
+    # build_app(
+    #   workspace: 'ZappiOS/ZappiOS.xcworkspace',
+    #   scheme: project_help.scheme,
+    #   buildlog_path: "#{base_helper.circle_artifacts_folder_path}.to_s/precache",
+    #   derived_data_path: project_help.build_path,
+    #   configuration: 'Release',
+    #   skip_archive: true,
+    #   skip_codesigning: true
+    # )
+
+    scan(
       workspace: 'ZappiOS/ZappiOS.xcworkspace',
       scheme: project_help.scheme,
       buildlog_path: "#{base_helper.circle_artifacts_folder_path}.to_s/precache",
