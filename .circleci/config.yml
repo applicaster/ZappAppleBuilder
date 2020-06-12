@@ -129,7 +129,7 @@ references:
     run:
       name: Install NPM dependencies
       command: |
-        cd $target_folder
+        cd $TARGET_FOLDER
         yarn
 
   prepare_application_environment: &prepare_application_environment
@@ -188,7 +188,7 @@ references:
         # if [ "$device_target" = apple_tv ]; then
         #   targetFolder="ZappTvOS"
         # fi
-        cd $target_folder && bundle exec pod update && cd ..
+        cd $TARGET_FOLDER && bundle exec pod update && cd ..
 
   save_pods_ios: &save_pods_ios
     save_cache:
@@ -282,7 +282,7 @@ jobs:
     <<: *mac_config
     environment:
       device_target: universal
-      target_folder: ZappiOS
+      TARGET_FOLDER: ZappiOS
     steps:
       - *stop_job_triggered_by_zapp
       - checkout
@@ -320,7 +320,7 @@ jobs:
     <<: *mac_config
     environment:
       device_target: apple_tv
-      target_folder: "ZappTvOS"
+      TARGET_FOLDER: "ZappTvOS"
     steps:
       - *stop_job_triggered_by_zapp
       - checkout
@@ -359,6 +359,14 @@ jobs:
     steps:
       - *triggered_by_zapp_only
       - checkout
+      - run:
+          name: "Set target folder ENV VAR"
+          command: |
+            targetFolder="ZappiOS"
+            if [ "$device_target" = apple_tv ]; then
+              targetFolder="ZappTvOS"
+            fi
+            echo 'export TARGET_FOLDER=${targetFolder}' >> $BASH_ENV
 
       - *prepare_caching_file
       - *prepare_zapptool_version_file
