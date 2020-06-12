@@ -573,7 +573,7 @@ workflows:
               ignore: /.*/
             tags:
               only: /.*/
-      - build:
-          filters:
-            tags:
-              only: /.*/
+      # - build:
+      #     filters:
+      #       tags:
+      #         only: /.*/
