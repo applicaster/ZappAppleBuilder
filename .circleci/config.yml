@@ -11,7 +11,7 @@ references:
     shell: /bin/bash --login -eo pipefail
 
     environment:
-      GENERAL_CACHE_KEY: "ZappApple_Cache_1.0.1"
+      GENERAL_CACHE_KEY: "ZappApple_Cache_1.0.2"
       PROJECT_NAME: "ZappApple"
       SCRIPTS_FOLDER: "Scripts"
       BUILD_PATH: ~/build_debug
