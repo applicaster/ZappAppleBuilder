@@ -22,7 +22,7 @@ references:
   workspace_root: &workspace_root ~/ZappAppleBuilder
   attach_workspace: &attach_workspace
     attach_workspace:
-      at: "*"
+      at: *workspace_root
 
   mac_config: &mac_config
     working_directory: *workspace_root
@@ -494,7 +494,7 @@ jobs:
       - *version_xcode
       - *location_xcode
       - persist_to_workspace: # store the built files into the workspace for other jobs.
-          root: *workspace_root
+          root: .
           paths:
             - *workspace_root
 
