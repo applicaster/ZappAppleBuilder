@@ -368,7 +368,7 @@ jobs:
               targetFolder="ZappTvOS"
             fi
             echo 'export TARGET_FOLDER=${targetFolder}' >> $BASH_ENV
-
+            echo $TARGET_FOLDER
       - *prepare_caching_file
       - *prepare_zapptool_version_file
 
@@ -383,9 +383,19 @@ jobs:
       - *gems_install
 
       - *npm_login
-      - *restore_npm_ios
 
-      # - *restore_npm_tvos
+      - when:
+          condition:
+            - equal: [ZappiOS, $TARGET_FOLDER]
+          steps:
+            - *restore_npm_ios
+      - when:
+          condition:
+            - equal: [ZappTvOS, $TARGET_FOLDER]
+          steps:
+            - *restore_npm_tvos
+
+      - *restore_npm_tvos
       - *validate_app_signing
       - *prepare_application_environment
 
