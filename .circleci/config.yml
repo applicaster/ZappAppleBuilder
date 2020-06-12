@@ -6,9 +6,9 @@ parameters:
   general-caching-key:
     type: string
     default: "ZappApple_Cache_1.0.3"
-  # platform-destination-path:
-  #   type: string
-  #   default: &target_folder
+  platform-destination-path:
+    type: string
+    default: $target_folder
 notify:
   webhooks:
     - url: https://zapp.applicaster.com/callbacks/build_status/circleci_builds
@@ -92,7 +92,7 @@ references:
       name: NPM login
       command: npx npm-shell-login
 
-  npm_cache_key: &npm_cache_key Yarn-1-{{ checksum "~/_caching_file" }}-{{ checksum "$target_folder/yarn.lock" }}
+  npm_cache_key: &npm_cache_key Yarn-1-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path >>/yarn.lock" }}
 
   restore_npm: &restore_npm
     restore_cache:
