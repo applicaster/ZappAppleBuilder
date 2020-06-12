@@ -40,6 +40,15 @@ references:
   prepare_zapptool_version_file: &prepare_zapptool_version_file
     run: echo "<< pipeline.parameters.zapptool-version >>" > ~/_zappToolVersion
 
+  triggered_by_zapp_only: &triggered_by_zapp_only
+    run:
+      name: Workflow Validation
+      command: |
+        if [ "$triggered_by" = "zapp" ]; 
+        echo "Skipping a workflow, can not work with triggered from zapp"
+            circleci-agent step halt
+        fi
+
   stop_job_triggered_by_zapp: &stop_job_triggered_by_zapp
     run:
       name: Workflow Validation
@@ -99,6 +108,15 @@ references:
   npm_cache_key_ios: &npm_cache_key_ios Yarn.1.0-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path-ios >>/yarn.lock" }}
   npm_cache_key_tvos: &npm_cache_key_tvos Yarn.1.0-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path-tvos >>/yarn.lock" }}
 
+  restore_npm: &restore_npm
+    run:
+      command: |
+        if [ "$device_target" = apple_tv ]; 
+              * restore_npm_ios
+        then
+              *restore_npm_tvos
+        fi
+
   restore_npm_ios: &restore_npm_ios
     restore_cache:
       name: Restore npm dependencies ios
@@ -108,6 +126,13 @@ references:
     restore_cache:
       name: Restore npm dependencies ios
       key: *npm_cache_key_tvos
+
+  install_npm_dependencies: &install_npm_dependencies
+    run:
+      name: Install NPM dependencies
+      command: |
+        cd $target_folder
+        yarn
 
   prepare_application_environment: &prepare_application_environment
     run:
@@ -382,8 +407,8 @@ jobs:
 
       - *npm_login
 
-      - *restore_npm_ios
-      - *prepare_application_environment
+      - *restore_npm
+      - *install_npm_dependencies
       - *save_npm_ios
 
       - *restore_pods_ios
@@ -394,14 +419,6 @@ jobs:
       - *version_xcode
       - *location_xcode
 
-      - deploy:
-          name: Building Zapp-App - Precache
-          command: |
-            bundle exec fastlane ios precache
-
-      - store_artifacts:
-          path: ./CircleArtifacts
-
   pre_cache_tvos:
     <<: *mac_config
     environment:
@@ -409,6 +426,41 @@ jobs:
       target_folder: "ZappTvOS"
     steps:
       - *stop_job_triggered_by_zapp
+      - checkout
+
+      - *prepare_caching_file
+      - *prepare_zapptool_version_file
+
+      - *restore_zapptool
+      - *zapptool_download
+      - *save_zapptool
+      - *version_zapptool
+
+      - *set_ruby_version
+      - *whitch_ruby
+      - *install_node
+      - *restore_gems
+      - *gems_install
+      - *save_gems
+
+      - *npm_login
+
+      - *restore_npm_tvos
+      - *install_npm_dependencies
+      - *save_npm_tvos
+
+      - *restore_pods_tvos
+      - *vesion_pods
+      - *install_pods
+      - *save_pods_tvos
+
+      - *version_xcode
+      - *location_xcode
+
+  prepare_tool_for_build:
+    <<: *mac_config
+    steps:
+      - *triggered_by_zapp_only
       - checkout
 
       - *prepare_caching_file
@@ -439,7 +491,6 @@ jobs:
 
       - *version_xcode
       - *location_xcode
-
       # - deploy:
       #     name: Building Zapp-App - Precache
       #     command: |
