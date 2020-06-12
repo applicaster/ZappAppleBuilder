@@ -14,6 +14,7 @@ notify:
     - url: https://zapp.applicaster.com/callbacks/build_status/circleci_builds
 references:
   workspace_root: &workspace_root ~/ZappAppleBuilder
+
   mac_config: &mac_config
     working_directory: *workspace_root
     macos:
@@ -92,12 +93,11 @@ references:
       name: NPM login
       command: npx npm-shell-login
 
-  npm_cache_key: &npm_cache_key Yarn-1-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path >>/yarn.lock" }}
-
+  npm_cache_key: &npm_cache_key Yarn.1.0-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path >>/Gemfile.lock" }}
   restore_npm: &restore_npm
     restore_cache:
       name: Restore npm dependencies
-      keys: *npm_cache_key
+      key: *npm_cache_key
 
   install_npm_dependencies: &install_npm_dependencies
     run:
