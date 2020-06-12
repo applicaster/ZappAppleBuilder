@@ -383,13 +383,10 @@ jobs:
       - *version_xcode
       - *location_xcode
 
-      # - deploy:
-      #     name: Building Zapp-App - Tests
-      #     command: |
-      #       if [ -z "$bundle_identifier" ]; then
-      #         echo "Test will be started"
-      #         bundle exec fastlane ios precache
-      #       fi
+      - run:
+          name: Building Zapp-App - Tests
+          command: |
+            bundle exec fastlane ios precache
 
       # - run:
       #     name: Pushing prebuilding project

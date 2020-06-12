@@ -26,12 +26,16 @@ import 'Base/Helpers/ProjectHelper.rb'
 platform :ios do
   lane :precache do
     project_help = ProjectHelper.new
+    #       workspace: project_help.xcworkspace_relative_path.to_s,
 
     build_app(
-      workspace: project_help.xcworkspace_relative_path.to_s,
+      workspace: ZappiOS / ZappiOS.xcworkspace,
       scheme: project_help.scheme,
-      buildlog_path: "#{circle_artifacts_folder_path}/Prechase",
-      derived_data_path: project_help.build_path
+      buildlog_path: circle_artifacts_folder_path.to_s,
+      derived_data_path: project_help.build_path,
+      configuration: 'Release',
+      skip_archive: true,
+      skip_codesigning: true
     )
   end
 
@@ -43,17 +47,23 @@ platform :ios do
 
   lane :prepare_environment do
     envHelper = EnvironmentHelper.new
-    BuildTypeFactory.new(fastlane: self).prepare_environment unless envHelper.bundle_identifier.to_s.strip.empty?
+    unless envHelper.bundle_identifier.to_s.strip.empty?
+      BuildTypeFactory.new(fastlane: self).prepare_environment
+    end
   end
 
   lane :validate_app_signing do
     envHelper = EnvironmentHelper.new
-    BuildTypeFactory.new(fastlane: self).perform_signing_validation unless envHelper.bundle_identifier.to_s.strip.empty?
+    unless envHelper.bundle_identifier.to_s.strip.empty?
+      BuildTypeFactory.new(fastlane: self).perform_signing_validation
+    end
   end
 
   lane :build do
     envHelper = EnvironmentHelper.new
-    BuildTypeFactory.new(fastlane: self).build unless envHelper.bundle_identifier.to_s.strip.empty?
+    unless envHelper.bundle_identifier.to_s.strip.empty?
+      BuildTypeFactory.new(fastlane: self).build
+    end
   end
 end
 
