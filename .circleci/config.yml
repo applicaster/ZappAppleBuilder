@@ -362,12 +362,12 @@ jobs:
       # - *save_zapptool
       # - *version_zapptool
 
-      # - *set_ruby_version
-      # - *whitch_ruby
-      # - *install_node
-      # - *restore_gems
-      # - *gems_install
-      # - *save_gems
+      - *set_ruby_version
+      - *whitch_ruby
+      - *install_node
+      - *restore_gems
+      - *gems_install
+      - *save_gems
 
       - *npm_login
 
