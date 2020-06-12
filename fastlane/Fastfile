@@ -11,7 +11,7 @@ import 'Enterprise/Types/Debug/Debug.rb'
 import 'Store/Store.rb'
 import 'Base/Helpers/AppCenterHelper.rb'
 import 'Base/Helpers/ProjectHelper.rb'
-import 'Base/BaseHelper.rb'
+import 'Base/Helpers/BaseHelper.rb'
 
 # platform :tvos do
 # lane :precache do
