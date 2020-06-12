@@ -530,7 +530,7 @@ workflows:
           filters:
             # Change Branch to master only
             branches:
-      #         only: /.*/
+              only: /.*/
       # - prepare_tools_for_build:
       #     filters:
       #       tags:
