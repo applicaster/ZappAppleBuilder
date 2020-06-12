@@ -364,9 +364,9 @@ jobs:
           command: |
             if [ "$device_target" = apple_tv ]; then
               echo 'export TARGET_FOLDER="ZappTvOS"' >> $BASH_ENV
+              echo 'export IS_TVOS=true' >> $BASH_ENV
             else
               echo 'export TARGET_FOLDER="ZappiOS"' >> $BASH_ENV
-              echo 'export IS_TVOS=true' >> $BASH_ENV
             fi
             echo ${TARGET_FOLDER}
 
