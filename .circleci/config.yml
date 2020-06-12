@@ -44,7 +44,7 @@ references:
     run:
       name: Workflow Validation
       command: |
-        if [ "$triggered_by" = "zapp" ]; 
+        if [ "$triggered_by" = "zapp" ] 
         echo "Skipping a workflow, can not work with triggered from zapp"
             circleci-agent step halt
         fi
@@ -508,23 +508,18 @@ jobs:
   validate_app_signing:
     <<: *mac_config
     steps:
-      - run:
-          name: Validate app signing
-          command: |
-            echo "\n-- Validating app signing --"
-            bundle exec fastlane ios validate_app_signing
 
 # Solution two make seperate files for ci https://github.com/samsalisbury/circleci-multi-file-config
 workflows:
   version: 2
   build_from_branch_and_tag:
     jobs:
-      - validate_app_signing:
-          filters:
-            branches:
-              only: /.*/
-            tags:
-              only: /.*/
+      # - validate_app_signing:
+      #     filters:
+      #       branches:
+      #         only: /.*/
+      #       tags:
+      #         only: /.*/
       - pre_cache_ios:
           filters:
             # Change Branch to master only
