@@ -1,0 +1,24 @@
+{
+  "name": "flipper-plugin-react-native-performance",
+  "version": "0.4.3",
+  "summary": "Inspect React Native performance with Flipper",
+  "authors": "Joel Arvidsson",
+  "homepage": "https://github.com/oblador/flipper-plugin-react-native-performance",
+  "license": "MIT",
+  "source": {
+    "git": "https://github.com/oblador/flipper-plugin-react-native-performance.git",
+    "tag": "v0.4.3"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source_files": "**/*.{h,m}",
+  "pod_target_xcconfig": {
+    "HEADER_SEARCH_PATHS": "\"$(PODS_ROOT)\"/Headers/Private/FlipperKit/**"
+  },
+  "dependencies": {
+    "React": [
+
+    ]
+  }
+}
