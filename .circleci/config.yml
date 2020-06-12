@@ -25,7 +25,7 @@ references:
   prepare_caching_file: &prepare_caching_file
     run: echo "$GENERAL_CACHE_KEY" > ~/_caching_file
 
-  gems_cache_key: &gems_cache_key Zapp-Platform-IOS-v1-{{ checksum "Gemfile.lock" }}
+  gems_cache_key: &gems_cache_key Zapp-Platform-IOS-v1.1-{{ checksum "Gemfile.lock" }}
   restore_gems: &restore_gems
     restore_cache:
       name: Bundler - restore cache
@@ -207,7 +207,7 @@ jobs:
           name: ZappTool - save cache
           key: ZappTool-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
           paths:
-            - "${HOME}/ZappTool"
+            - "$HOME/ZappTool"
 
       - run:
           name: ZappTool - version
