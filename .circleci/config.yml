@@ -6,6 +6,9 @@ parameters:
   general-caching-key:
     type: string
     default: "ZappApple_Cache_1.0.3"
+  platform-destination-path:
+    type: string
+    default: &target_folder
 notify:
   webhooks:
     - url: https://zapp.applicaster.com/callbacks/build_status/circleci_builds
@@ -90,44 +93,26 @@ references:
       name: NPM login
       command: npx npm-shell-login
 
-  npm_cache_key_ios: &npm_cache_key_ios Yarn-1-{{ checksum "~/_caching_file" }}-{{ checksum "ZappiOS/yarn.lock" }}
-  npm_cache_key_tvos: &npm_cache_key_tvos Yarn-1-{{ checksum "~/_caching_file" }}-{{ checksum "ZappTvOS/yarn.lock" }}
+  npm_cache_key: &npm_cache_key Yarn-1-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path >>/yarn.lock" }}
 
-  restore_npm_ios: &restore_npm_ios
+  restore_npm: &restore_npm
     restore_cache:
       name: Restore npm dependencies ios
-      keys: *npm_cache_key_ios
-
-  restore_npm_tvos: &restore_npm_tvos
-    restore_cache:
-      name: Restore npm dependencies tvos
-      key: *npm_cache_key_tvos
+      keys: *npm_cache_key
 
   install_npm_dependencies: &install_npm_dependencies
     run:
       name: Install NPM dependencies
       command: |
-        # targetFolder="ZappiOS"
-        # if [ "$device_target" = apple_tv ]; then
-        #   targetFolder="ZappTvOS"
-        # fi
-
         cd $target_folder
         yarn
 
-  save_npm_ios: &save_npm_ios
+  save_npm: &save_npm
     save_cache:
       name: Saving NPM dependencies
       key: *npm_cache_key_ios
       paths:
         - ./ZappiOS/node_modules
-
-  save_npm_tvos: &save_npm_tvos
-    save_cache:
-      name: Saving NPM dependencies
-      key: *npm_cache_key_tvos
-      paths:
-        - ./ZappTvOS/node_modules
 
   cocoapods_cache_key_ios: &cocoapods_cache_key_ios CocoaPods-1-{{ checksum "~/_caching_file" }}-{{ checksum "ZappiOS/Podfile.lock" }}
   cocoapods_cache_key_tvos: &cocoapods_cache_key_tvos CocoaPods-1-{{ checksum "~/_caching_file" }}-{{ checksum "ZappTvOS/Podfile.lock" }}
@@ -361,24 +346,23 @@ jobs:
       # - *save_zapptool
       # - *version_zapptool
 
-      - *set_ruby_version
-      - *whitch_ruby
-      - *install_node
-      - *restore_gems
-      - *gems_install
-      - *save_gems
+      # - *set_ruby_version
+      # - *whitch_ruby
+      # - *install_node
+      # - *restore_gems
+      # - *gems_install
+      # - *save_gems
 
-      #   # Can be logged it on top worfglow
-      #   - *npm_login
+      - *npm_login
 
-      #   - *restore_npm_ios
-      #   - *install_npm_dependencies
-      #   - *save_npm_ios
+      - *restore_npm
+      - *install_npm_dependencies
+      - *save_npm
 
-      #   - *restore_pods_ios
-      #   - *vesion_pods
-      #   - *install_pods
-      #   - *save_pods_ios
+      # - *restore_pods_ios
+      # - *vesion_pods
+      # - *install_pods
+      # - *save_pods_ios
 
       #   - *version_xcode
       #   - *location_xcode
