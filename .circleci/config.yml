@@ -193,12 +193,12 @@ jobs:
       - run:
           name: ZappTool - Download
           command: |
-            if [ ! -d "${HOME}/ZappTool" ]; then
+            if [ ! -d "$HOME/ZappTool" ]; then
               echo "Installing ZappTool"
-              curl -L "https://dl.bintray.com/applicaster-ltd/pods/ZappTool_v${ZAPPTOOL_VERSION}.zip" > "${HOME}/ZappTool.zip"
-              mkdir ${HOME}/ZappTool
-              unzip -o "${HOME}/ZappTool.zip" -d "${HOME}/ZappTool"
-              rm -rf "${HOME}/ZappTool.zip"
+              curl -L "https://dl.bintray.com/applicaster-ltd/pods/ZappTool_v${ZAPPTOOL_VERSION}.zip" > "$HOME/ZappTool.zip"
+              mkdir $HOME/ZappTool
+              unzip -o "$HOME/ZappTool.zip" -d "$HOME/ZappTool"
+              rm -rf "$HOME/ZappTool.zip"
             else
               echo "ZappTool was cached"
             fi
@@ -211,7 +211,7 @@ jobs:
 
       - run:
           name: ZappTool - version
-          command: "${HOME}/ZappTool/ZappTool -v"
+          command: "$HOME/ZappTool/ZappTool -v"
 
       - *restore_gems
       - *gems_install
@@ -243,7 +243,7 @@ jobs:
             cd $targetFolder
             if [ "$bundle_identifier" ];
             then
-              "${HOME}/ZappTool/ZappTool"
+              "$HOME/ZappTool/ZappTool"
             else
               yarn
             fi
@@ -282,7 +282,7 @@ jobs:
           name: CocoaPods - save cache
           key: CocoaPods-{{ checksum "~/_caching_file" }}-{{ .Branch }}-{{ .Revision }}
           paths:
-            - "~/.cocoapods/repos/cocoapods-"
+            - "~/.cocoapods/repos"
 
       # Set Xcode version
       - run:
