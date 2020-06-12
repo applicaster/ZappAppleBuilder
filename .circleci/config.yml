@@ -1,7 +1,7 @@
 version: 2.1
 parameters:
-  image-tag:
-    type: ZAPPTOOL_VERSION
+  ZAPPTOOL_VERSION:
+    type: String
     default: "3.10.0"
 notify:
   webhooks:
