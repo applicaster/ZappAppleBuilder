@@ -130,8 +130,8 @@ references:
       paths:
         - ./<< pipeline.parameters.platform-destination-path-tvos >>/node_modules
 
-  cocoapods_cache_key_ios: &cocoapods_cache_key_ios CocoaPods-1-{{ checksum "~/_caching_file" }}-{{ checksum "ZappiOS/Podfile.lock" }}
-  cocoapods_cache_key_tvos: &cocoapods_cache_key_tvos CocoaPods-1-{{ checksum "~/_caching_file" }}-{{ checksum "ZappTvOS/Podfile.lock" }}
+  cocoapods_cache_key_ios: &cocoapods_cache_key_ios CocoaPods-1-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path-ios >>/Podfile.lock" }}
+  cocoapods_cache_key_tvos: &cocoapods_cache_key_tvos CocoaPods-1-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path-tvos >>/Podfile.lock" }}
 
   restore_pods_ios: &restore_pods_ios
     restore_cache:
@@ -375,13 +375,13 @@ jobs:
       - *install_npm_dependencies
       - *save_npm_ios
 
-      # - *restore_pods_ios
-      # - *vesion_pods
-      # - *install_pods
-      # - *save_pods_ios
+      - *restore_pods_ios
+      - *vesion_pods
+      - *install_pods
+      - *save_pods_ios
 
-      #   - *version_xcode
-      #   - *location_xcode
+      - *version_xcode
+      - *location_xcode
 
       # - deploy:
       #     name: Building Zapp-App - Tests
