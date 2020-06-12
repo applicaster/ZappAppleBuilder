@@ -92,7 +92,7 @@ references:
       name: NPM login
       command: npx npm-shell-login
 
-  npm_cache_key: &npm_cache_key Yarn-1-{{ checksum "~/_caching_file" }}-{{ checksum "{{ .Environment.target_folder }}/yarn.lock" }}
+  npm_cache_key: &npm_cache_key Yarn-1-{{ checksum "~/_caching_file" }}-{{ checksum "$target_folder/yarn.lock" }}
 
   restore_npm: &restore_npm
     restore_cache:
