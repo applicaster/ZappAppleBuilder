@@ -209,12 +209,6 @@ references:
       name: ZappTool - version
       command: "ZappTool/ZappTool -v"
 
-  zapptool_prepare_group: &zapptool_prepare_group
-    - *restore_zapptool
-    - *zapptool_download
-    - *save_zapptool
-    - *version_zapptool
-
   create_zapp_sdk: &create_zapp_sdk
     run:
       name: Creating Zapp SDK
@@ -361,7 +355,10 @@ jobs:
       - *prepare_zapptool_version_file
 
       # Can be gerneral workflow, download and cashe
-      - *zapptool_prepare_group
+      - *restore_zapptool
+      - *zapptool_download
+      - *save_zapptool
+      - *version_zapptool
 
       # # Can be base workflow
       #   - *set_ruby_version
