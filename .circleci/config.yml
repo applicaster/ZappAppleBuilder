@@ -3,6 +3,8 @@ notify:
   webhooks:
     - url: https://zapp.applicaster.com/callbacks/build_status/circleci_builds
 references:
+  environment:
+    ZAPPTOOL_VERSION: "3.10.0"
   workspace_root: &workspace_root ~/ZappAppleBuilder
   mac_config: &mac_config
     working_directory: *workspace_root
