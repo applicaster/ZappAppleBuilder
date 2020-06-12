@@ -112,7 +112,7 @@ references:
   restore_npm: &restore_npm
     run:
       command: |
-        *restore_npm_ios
+        - *restore_npm_ios
 
   restore_npm_ios: &restore_npm_ios
     restore_cache:
@@ -526,15 +526,15 @@ workflows:
       #         only: /.*/
       #       tags:
       #         only: /.*/
-      # - pre_cache_ios:
-      #     filters:
-      #       # Change Branch to master only
-      #       branches:
-      #         only: /.*/
-      - prepare_tools_for_build:
+      - pre_cache_ios:
           filters:
-            tags:
-              only: /.*/
+            # Change Branch to master only
+            branches:
+      #         only: /.*/
+      # - prepare_tools_for_build:
+      #     filters:
+      #       tags:
+      #         only: /.*/
       # - pre_cache_tvos:
       #     filters:
       #       tags:
