@@ -188,6 +188,7 @@ references:
         # if [ "$device_target" = apple_tv ]; then
         #   targetFolder="ZappTvOS"
         # fi
+        echo $TARGET_FOLDER
         cd $TARGET_FOLDER && bundle exec pod update && cd ..
 
   save_pods_ios: &save_pods_ios
@@ -382,9 +383,9 @@ jobs:
       - *gems_install
 
       - *npm_login
-
       - *restore_npm_ios
-      - *restore_npm_tvos
+
+      # - *restore_npm_tvos
       - *validate_app_signing
       - *prepare_application_environment
 
