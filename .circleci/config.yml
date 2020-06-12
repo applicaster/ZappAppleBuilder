@@ -479,36 +479,31 @@ jobs:
 
       - *version_xcode
       - *location_xcode
-      # - deploy:
-      #     name: Building Zapp-App - Precache
-      #     command: |
-      #       bundle exec fastlane ios precache
-      # - store_artifacts:
-      #     path: ./CircleArtifacts
-  # create_ios_mobile_sdk:
-  #   <<: *mac_config
-  #   environment:
-  #     ZAPP_SDK_PLATFORM: ios_for_quickbrick
-  #   steps:
-  #     - *prepare_caching_file
-  #     - checkout
-  #     - *set_ruby_version
-  #     - *restore_gems
-  #     - *gems_install
-  #     - *save_gems
-  #     - *create_zapp_sdk
-  # create_tvos_sdk:
-  #   <<: *mac_config
-  #   environment:
-  #     ZAPP_SDK_PLATFORM: tvos_for_quickbrick
-  #   steps:
-  #     - *prepare_caching_file
-  #     - checkout
-  #     - *set_ruby_version
-  #     - *restore_gems
-  #     - *gems_install
-  #     - *save_gems
-  #     - *create_zapp_sdk
+
+  create_ios_mobile_sdk:
+    <<: *mac_config
+    environment:
+      ZAPP_SDK_PLATFORM: ios_for_quickbrick
+    steps:
+      - *prepare_caching_file
+      - checkout
+      - *set_ruby_version
+      - *restore_gems
+      - *gems_install
+      - *save_gems
+      - *create_zapp_sdk
+  create_tvos_sdk:
+    <<: *mac_config
+    environment:
+      ZAPP_SDK_PLATFORM: tvos_for_quickbrick
+    steps:
+      - *prepare_caching_file
+      - checkout
+      - *set_ruby_version
+      - *restore_gems
+      - *gems_install
+      - *save_gems
+      - *create_zapp_sdk
 
   validate_app_signing:
     <<: *mac_config
