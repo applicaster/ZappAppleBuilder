@@ -97,7 +97,7 @@ references:
 
   restore_npm: &restore_npm
     restore_cache:
-      name: Restore npm dependencies ios
+      name: Restore npm dependencies
       keys: *npm_cache_key
 
   install_npm_dependencies: &install_npm_dependencies
@@ -110,7 +110,7 @@ references:
   save_npm: &save_npm
     save_cache:
       name: Saving NPM dependencies
-      key: *npm_cache_key_ios
+      key: *npm_cache_key
       paths:
         - ./ZappiOS/node_modules
 
