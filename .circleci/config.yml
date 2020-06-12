@@ -189,7 +189,7 @@ references:
       command: |
         if [ ! -d "ZappTool" ]; then
           echo "Installing ZappTool"
-          curl -L "https://dl.bintray.com/applicaster-ltd/pods/ZappTool_v${ZAPPTOOL_VERSION}.zip" > "$HOME/ZappTool.zip"
+          curl -L "https://dl.bintray.com/applicaster-ltd/pods/ZappTool_v<< pipeline.parameters.ZAPPTOOL_VERSION >>.zip" > "$HOME/ZappTool.zip"
           mkdir $HOME/ZappTool
           unzip -o "$HOME/ZappTool.zip" -d "$HOME/ZappTool"
           rm -rf "$HOME/ZappTool.zip"
