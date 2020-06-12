@@ -361,87 +361,88 @@ jobs:
           name: "Set target folder ENV VAR"
           command: |
             if [ "$device_target" = apple_tv ]; then
-              echo 'export TARGET_FOLDER=ZappTvOS' >> $BASH_ENV
+              echo 'export TARGET_FOLDER="ZappTvOS"' >> $BASH_ENV
             else
-              echo 'export TARGET_FOLDER=ZappiOS' >> $BASH_ENV
+              echo 'export TARGET_FOLDER="ZappiOS"' >> $BASH_ENV
             fi
-            echo $TARGET_FOLDER
-      - *prepare_caching_file
-      - *prepare_zapptool_version_file
-
-      - *restore_zapptool
-      - *zapptool_download
-      - *version_zapptool
-
-      - *set_ruby_version
-      - *whitch_ruby
-      - *install_node
-      - *restore_gems
-      - *gems_install
-
-      - *npm_login
+            echo ${TARGET_FOLDER}
 
       - when:
           condition:
-            - equal: [ZappiOS, $TARGET_FOLDER]
+            - equal: [ZappiOS, "${TARGET_FOLDER}"]
           steps:
             - *restore_npm_ios
       - when:
           condition:
-            - equal: [ZappTvOS, $TARGET_FOLDER]
+            - equal: [ZappTvOS, "${TARGET_FOLDER}"]
           steps:
             - *restore_npm_tvos
 
-      - *restore_npm_tvos
-      - *validate_app_signing
-      - *prepare_application_environment
-
-      - *restore_pods_ios
-      - *vesion_pods
-      - *install_pods
-
-      - *version_xcode
-      - *location_xcode
-
-      - deploy:
-          name: Prepare Build environment
-          command: |
-            bundle exec fastlane ios prepare_environment
-
-      - deploy:
-          name: Build App
-          command: |
-            bundle exec fastlane ios build
-
-      - deploy:
-          name: Building development project
-          command: |
-            if [ "$build_dev_project" = true ]; then
-              # compress the app
-              env_commit=$(git rev-parse HEAD)
-              epoch_time=$(date +%s)
-              zipped_project_file_name="${epoch_time}_${env_commit}.zip"
-              target="ios"
-              if [ "$device_target" = apple_tv ]; then
-                target="tvos"
-              fi
-              # using zip
-              echo; echo
-              echo "Compressing using zip..."
-              zip -rq "${zipped_project_file_name}" -@r < "$(pwd)/dev_project_whitelist_${target}.txt"
-              bundle exec rake zapp_sdks:upload_dev_project["$(pwd)/${zipped_project_file_name}"]
-            else
-              echo "Building standard app, not for external development environment! Step will be skipped"
-            fi
-
-      - run:
-          name: Publishing builds to Zapp
-          command: |
-            if [ -z "$bundle_identifier" ]; then
-              echo "Bundle identifier NOT set! Publishing builds to Zapp not relevant"
-            else
-              bundle exec rake publish_to_zapp:update_zapp_version
-            fi
+      # - *prepare_caching_file
+      # - *prepare_zapptool_version_file
+      # - *restore_zapptool
+      # - *zapptool_download
+      # - *version_zapptool
+      # - *set_ruby_version
+      # - *whitch_ruby
+      # - *install_node
+      # - *restore_gems
+      # - *gems_install
+      # - *npm_login
+      # - when:
+      #     condition:
+      #       - equal: [ZappiOS, $TARGET_FOLDER]
+      #     steps:
+      #       - *restore_npm_ios
+      # - when:
+      #     condition:
+      #       - equal: [ZappTvOS, $TARGET_FOLDER]
+      #     steps:
+      #       - *restore_npm_tvos
+      # - *restore_npm_tvos
+      # - *validate_app_signing
+      # - *prepare_application_environment
+      # - *restore_pods_ios
+      # - *vesion_pods
+      # - *install_pods
+      # - *version_xcode
+      # - *location_xcode
+      # - deploy:
+      #     name: Prepare Build environment
+      #     command: |
+      #       bundle exec fastlane ios prepare_environment
+      # - deploy:
+      #     name: Build App
+      #     command: |
+      #       bundle exec fastlane ios build
+      # - deploy:
+      #     name: Building development project
+      #     command: |
+      #       if [ "$build_dev_project" = true ]; then
+      #         # compress the app
+      #         env_commit=$(git rev-parse HEAD)
+      #         epoch_time=$(date +%s)
+      #         zipped_project_file_name="${epoch_time}_${env_commit}.zip"
+      #         target="ios"
+      #         if [ "$device_target" = apple_tv ]; then
+      #           target="tvos"
+      #         fi
+      #         # using zip
+      #         echo; echo
+      #         echo "Compressing using zip..."
+      #         zip -rq "${zipped_project_file_name}" -@r < "$(pwd)/dev_project_whitelist_${target}.txt"
+      #         bundle exec rake zapp_sdks:upload_dev_project["$(pwd)/${zipped_project_file_name}"]
+      #       else
+      #         echo "Building standard app, not for external development environment! Step will be skipped"
+      #       fi
+      # - run:
+      #     name: Publishing builds to Zapp
+      #     command: |
+      #       if [ -z "$bundle_identifier" ]; then
+      #         echo "Bundle identifier NOT set! Publishing builds to Zapp not relevant"
+      #       else
+      #         bundle exec rake publish_to_zapp:update_zapp_version
+      #       fi
 
   create_ios_mobile_sdk:
     <<: *mac_config
