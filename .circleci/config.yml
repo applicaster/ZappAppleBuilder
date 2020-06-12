@@ -207,7 +207,7 @@ references:
   version_zapptool: &version_zapptool
     run:
       name: ZappTool - version
-      command: "$HOME/ZappTool/ZappTool -v"
+      command: "ZappTool/ZappTool -v"
 
   create_zapp_sdk: &create_zapp_sdk
     run:
