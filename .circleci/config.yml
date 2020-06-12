@@ -28,6 +28,15 @@ references:
   prepare_zapptool_version_file: &prepare_zapptool_version_file
     run: echo "$ZAPPTOOL_VERSION" > ~/_zappToolVersion
 
+  stop_job_triggered_by_zapp: &stop_job_triggered_by_zapp
+    run:
+      name: Workflow Validation
+      command: |
+        if [ "$triggered_by" = "zapp" ]; then
+        echo "Skipping a workflow, can not work with triggered from zapp"
+            circleci-agent step halt
+        fi
+
   gems_cache_key: &gems_cache_key GEMS.1-{{ checksum "~/_caching_file" }}-{{ checksum "Gemfile.lock" }}
   restore_gems: &restore_gems
     restore_cache:
@@ -334,17 +343,11 @@ jobs:
       device_target: universal
       target_folder: ZappiOS
     steps:
-      - run:
-          name: Workflow Validation
-          command: |
-            if [ "$triggered_by" = "zapp" ]; then
-            echo "Skipping a workflow, can not work with triggered from zapp"
-                circleci-agent step halt
-            fi
+      - *stop_job_triggered_by_zapp
 
       - *prepare_caching_file
       - *prepare_zapptool_version_file
-      
+
       - checkout
 
       - *restore_zapptool
