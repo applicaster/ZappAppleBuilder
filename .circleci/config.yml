@@ -371,7 +371,7 @@ jobs:
 
       - when:
           condition:
-            - equal: [ZappiOS, "${TARGET_FOLDER}"]
+            - equal: ["ZappiOS", "333"]
           steps:
             - *restore_npm_ios
       - when:
