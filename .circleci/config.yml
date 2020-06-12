@@ -6,9 +6,12 @@ parameters:
   general-caching-key:
     type: string
     default: "ZappApple_Cache_1.0.3"
-  platform-destination-path:
+  platform-destination-path-ios:
     type: string
-    default: "${target_folder}"
+    default: "ZappiOS"
+  platform-destination-path-tvos:
+    type: string
+    default: "ZappTvOS"
 notify:
   webhooks:
     - url: https://zapp.applicaster.com/callbacks/build_status/circleci_builds
@@ -93,11 +96,18 @@ references:
       name: NPM login
       command: npx npm-shell-login
 
-  npm_cache_key: &npm_cache_key Yarn.1.0-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path >>/Gemfile.lock" }}
-  restore_npm: &restore_npm
+  npm_cache_key_ios: &npm_cache_key_ios Yarn.1.0-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path-ios >>/Gemfile.lock" }}
+  npm_cache_key_tvos: &npm_cache_key_tvos Yarn.1.0-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path-tvos >>/Gemfile.lock" }}
+
+  restore_npm_ios: &restore_npm_ios
     restore_cache:
-      name: Restore npm dependencies
-      key: *npm_cache_key
+      name: Restore npm dependencies ios
+      key: *npm_cache_key_ios
+
+  restore_npm_tvos: &restore_npm_tvos
+    restore_cache:
+      name: Restore npm dependencies ios
+      key: *npm_cache_key_ios
 
   install_npm_dependencies: &install_npm_dependencies
     run:
@@ -106,12 +116,19 @@ references:
         cd $target_folder
         yarn
 
-  save_npm: &save_npm
+  save_npm_ios: &save_npm_ios
     save_cache:
-      name: Saving NPM dependencies
-      key: *npm_cache_key
+      name: Saving NPM dependencies iOS
+      key: *npm_cache_key_ios
       paths:
-        - ./ZappiOS/node_modules
+        - ./<< pipeline.parameters.platform-destination-path-ios >>/node_modules
+
+  save_npm_tvos: &save_npm_tvos
+    save_cache:
+      name: Saving NPM dependencies TvOS
+      key: *npm_cache_key_tvos
+      paths:
+        - ./<< pipeline.parameters.platform-destination-path-tvos >>/node_modules
 
   cocoapods_cache_key_ios: &cocoapods_cache_key_ios CocoaPods-1-{{ checksum "~/_caching_file" }}-{{ checksum "ZappiOS/Podfile.lock" }}
   cocoapods_cache_key_tvos: &cocoapods_cache_key_tvos CocoaPods-1-{{ checksum "~/_caching_file" }}-{{ checksum "ZappTvOS/Podfile.lock" }}
@@ -354,9 +371,9 @@ jobs:
 
       - *npm_login
 
-      - *restore_npm
+      - *restore_npm_tvos
       - *install_npm_dependencies
-      - *save_npm
+      - *save_npm_tvos
 
       # - *restore_pods_ios
       # - *vesion_pods
