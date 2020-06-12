@@ -356,6 +356,8 @@ jobs:
     <<: *mac_config
     steps:
       # - *triggered_by_zapp_only
+      - *prepare_caching_file
+      - *prepare_zapptool_version_file
       - checkout
       - run:
           name: "Set target folder ENV VAR"
@@ -378,8 +380,6 @@ jobs:
           steps:
             - *restore_npm_tvos
 
-      # - *prepare_caching_file
-      # - *prepare_zapptool_version_file
       # - *restore_zapptool
       # - *zapptool_download
       # - *version_zapptool
