@@ -144,7 +144,7 @@ references:
         cd $targetFolder
         if [ "$bundle_identifier" ];
         then
-          "$HOME/ZappTool/ZappTool"
+          "ZappTool/ZappTool"
         else
           yarn
         fi
@@ -485,6 +485,7 @@ jobs:
 
       - *restore_npm_ios
       - *restore_npm_tvos
+      - *validate_app_signing
       - *prepare_application_environment
 
       - *restore_pods_ios
@@ -493,41 +494,6 @@ jobs:
 
       - *version_xcode
       - *location_xcode
-      - persist_to_workspace: # store the built files into the workspace for other jobs.
-          root: .
-          paths:
-            - .
-
-  create_ios_mobile_sdk:
-    <<: *mac_config
-    environment:
-      ZAPP_SDK_PLATFORM: ios_for_quickbrick
-    steps:
-      - *prepare_caching_file
-      - checkout
-      - *set_ruby_version
-      - *restore_gems
-      - *gems_install
-      - *save_gems
-      - *create_zapp_sdk
-  create_tvos_sdk:
-    <<: *mac_config
-    environment:
-      ZAPP_SDK_PLATFORM: tvos_for_quickbrick
-    steps:
-      - *prepare_caching_file
-      - checkout
-      - *set_ruby_version
-      - *restore_gems
-      - *gems_install
-      - *save_gems
-      - *create_zapp_sdk
-
-  build2:
-    <<: *mac_config
-    steps:
-      - *attach_workspace
-      - *validate_app_signing
 
       - deploy:
           name: Prepare Build environment
@@ -569,19 +535,37 @@ jobs:
               bundle exec rake publish_to_zapp:update_zapp_version
             fi
 
+  create_ios_mobile_sdk:
+    <<: *mac_config
+    environment:
+      ZAPP_SDK_PLATFORM: ios_for_quickbrick
+    steps:
+      - *prepare_caching_file
+      - checkout
+      - *set_ruby_version
+      - *restore_gems
+      - *gems_install
+      - *save_gems
+      - *create_zapp_sdk
+  create_tvos_sdk:
+    <<: *mac_config
+    environment:
+      ZAPP_SDK_PLATFORM: tvos_for_quickbrick
+    steps:
+      - *prepare_caching_file
+      - checkout
+      - *set_ruby_version
+      - *restore_gems
+      - *gems_install
+      - *save_gems
+      - *create_zapp_sdk
+
 # Solution two make seperate files for ci https://github.com/samsalisbury/circleci-multi-file-config
 workflows:
   version: 2
   build_from_branch_and_tag:
     jobs:
       - build:
-          filters:
-            tags:
-              only: /.*/
-      - build2:
-          type: approval
-          requires:
-            - build
           filters:
             tags:
               only: /.*/
