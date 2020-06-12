@@ -1,7 +1,7 @@
 version: 2.1
 parameters:
   ZAPPTOOL_VERSION:
-    type: String
+    type: string
     default: "3.10.0"
 notify:
   webhooks:
