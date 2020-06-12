@@ -22,7 +22,7 @@ references:
   workspace_root: &workspace_root ~/ZappAppleBuilder
   attach_workspace: &attach_workspace
     attach_workspace:
-      at: *workspace_root
+      at: "*"
 
   mac_config: &mac_config
     working_directory: *workspace_root
