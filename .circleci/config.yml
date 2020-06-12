@@ -44,9 +44,9 @@ references:
     run:
       name: Workflow Validation
       command: |
-        if [  -z "$triggered_by" = "zapp" ]; then
-          echo "Skipping a workflow, can not work with triggered from zapp"
-              circleci-agent step halt
+        if [ -z "$triggered_by" = "zapp" ]; 
+        echo "Skipping a workflow, can not work with triggered from zapp"
+            circleci-agent step halt
         fi
 
   stop_job_triggered_by_zapp: &stop_job_triggered_by_zapp
@@ -510,9 +510,9 @@ jobs:
       - *save_gems
       - *create_zapp_sdk
 
-  validate_app_signing:
-    <<: *mac_config
-    steps:
+  # validate_app_signing:
+  #   <<: *mac_config
+  #   steps:
 
 # Solution two make seperate files for ci https://github.com/samsalisbury/circleci-multi-file-config
 workflows:
