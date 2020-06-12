@@ -188,7 +188,7 @@ jobs:
 
       - restore_cache:
           keys:
-            - ZappTool-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
+            - ZappTool-1-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
 
       - run:
           name: ZappTool - Download
@@ -205,7 +205,7 @@ jobs:
 
       - save_cache:
           name: ZappTool - save cache
-          key: ZappTool-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
+          key: ZappTool-1-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
           paths:
             - "$HOME/ZappTool"
 
