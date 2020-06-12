@@ -44,8 +44,7 @@ references:
     run:
       name: Workflow Validation
       command: |
-        if [ "$triggered_by" = "zapp" ]; then
-        else
+        if [  -z "$triggered_by" = "zapp" ]; then
           echo "Skipping a workflow, can not work with triggered from zapp"
               circleci-agent step halt
         fi
