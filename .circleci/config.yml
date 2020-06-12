@@ -3,6 +3,9 @@ parameters:
   zapptool-version:
     type: string
     default: "3.10.0"
+  general-caching-key:
+    type: string
+    default: "ZappApple_Cache_1.0.3"
 notify:
   webhooks:
     - url: https://zapp.applicaster.com/callbacks/build_status/circleci_builds
@@ -25,7 +28,7 @@ references:
 
   #Hack general caching until circle does not support global env variables
   prepare_caching_file: &prepare_caching_file
-    run: echo "ZappApple_Cache_1.0.3" > ~/_caching_file
+    run: echo "<< pipeline.parameters.general-caching-key >>" > ~/_caching_file
 
   zapptool_version: &zapptool_version
   prepare_zapptool_version_file: &prepare_zapptool_version_file
@@ -40,7 +43,7 @@ references:
             circleci-agent step halt
         fi
 
-  gems_cache_key: &gems_cache_key GEMS.1-{{ checksum "~/_caching_file" }}-{{ checksum "Gemfile.lock" }}
+  gems_cache_key: &gems_cache_key GEMS.1.0-{{ checksum "~/_caching_file" }}-{{ checksum "Gemfile.lock" }}
   restore_gems: &restore_gems
     restore_cache:
       name: Bundler - restore cache
@@ -350,23 +353,20 @@ jobs:
       - *stop_job_triggered_by_zapp
       - checkout
 
-      # Can be gerneral workflow
       - *prepare_caching_file
       - *prepare_zapptool_version_file
 
-      # Can be gerneral workflow, download and cashe
-      - *restore_zapptool
-      - *zapptool_download
-      - *save_zapptool
-      - *version_zapptool
+      # - *restore_zapptool
+      # - *zapptool_download
+      # - *save_zapptool
+      # - *version_zapptool
 
-      # # Can be base workflow
-      #   - *set_ruby_version
-      #   - *whitch_ruby
-      #   - *install_node
-      #   - *restore_gems
-      #   - *gems_install
-      #   - *save_gems
+      - *set_ruby_version
+      - *whitch_ruby
+      - *install_node
+      - *restore_gems
+      - *gems_install
+      - *save_gems
 
       #   # Can be logged it on top worfglow
       #   - *npm_login
