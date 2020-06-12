@@ -1,6 +1,6 @@
 version: 2.1
 parameters:
-  ZAPPTOOL_VERSION:
+  zapptool-version:
     type: string
     default: "3.10.0"
 notify:
@@ -29,7 +29,7 @@ references:
 
   zapptool_version: &zapptool_version
   prepare_zapptool_version_file: &prepare_zapptool_version_file
-    run: echo "<< pipeline.parameters.ZAPPTOOL_VERSION >>" > ~/_zappToolVersion
+    run: echo "<< pipeline.parameters.zapptool-version >>" > ~/_zappToolVersion
 
   stop_job_triggered_by_zapp: &stop_job_triggered_by_zapp
     run:
@@ -176,7 +176,7 @@ references:
       name: Xcode installed location
       command: xcode-select -p
 
-  zapptool_cache_key: &zapptool_cache_key ZappTool-2.0-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
+  zapptool_cache_key: &zapptool_cache_key ZappTool-2.1-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
 
   restore_zapptool: &restore_zapptool
     restore_cache:
@@ -187,12 +187,12 @@ references:
     run:
       name: ZappTool - Download if needed
       command: |
-        if [ ! -d "ZappTool" ]; then
+        if [ ! -d "$HOME/ZappTool" ]; then
           echo "Installing ZappTool"
-          curl -L "https://dl.bintray.com/applicaster-ltd/pods/ZappTool_v<< pipeline.parameters.ZAPPTOOL_VERSION >>.zip" > "ZappTool.zip"
-          mkdir ZappTool
-          unzip -o "ZappTool.zip" -d "ZappTool"
-          rm -rf "ZappTool.zip"
+          curl -L "https://dl.bintray.com/applicaster-ltd/pods/ZappTool_v<< pipeline.parameters.zapptool-version >>.zip" > "$HOME/ZappTool.zip"
+          mkdir $HOME/ZappTool
+          unzip -o "$HOME/ZappTool.zip" -d "$HOME/ZappTool"
+          rm -rf "$HOME/ZappTool.zip"
         else
           echo "ZappTool was cached"
         fi
@@ -207,7 +207,7 @@ references:
   version_zapptool: &version_zapptool
     run:
       name: ZappTool - version
-      command: "ZappTool/ZappTool -v"
+      command: "$HOME//ZappTool/ZappTool -v"
 
   create_zapp_sdk: &create_zapp_sdk
     run:
