@@ -25,6 +25,9 @@ references:
   prepare_caching_file: &prepare_caching_file
     run: echo "$GENERAL_CACHE_KEY" > ~/_caching_file
 
+  prepare_zapptool_version_file: &prepare_zapptool_version_file
+    run: echo "$ZAPPTOOL_VERSION" > ~/_zappToolVersion
+
   gems_cache_key: &gems_cache_key GEMS.1-{{ checksum "~/_caching_file" }}-{{ checksum "Gemfile.lock" }}
   restore_gems: &restore_gems
     restore_cache:
@@ -222,7 +225,7 @@ jobs:
 
   #   steps:
   #     - *prepare_caching_file
-  #     - run: echo "$ZAPPTOOL_VERSION" > ~/_zappToolVersion
+  #     - *prepare_zapptool_version_file
   #     - checkout
 
   #     - *set_ruby_version
@@ -340,6 +343,8 @@ jobs:
             fi
 
       - *prepare_caching_file
+      - *prepare_zapptool_version_file
+      
       - checkout
 
       - *restore_zapptool
