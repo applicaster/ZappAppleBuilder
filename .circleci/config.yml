@@ -125,7 +125,7 @@ references:
       name: CocoaPods - save cache
       key: CocoaPods-{{ checksum "~/_caching_file" }}-{{ .Branch }}-{{ .Revision }}
       paths:
-        - "~/.cocoapods/repos/cocoapods-"
+        - "~/.cocoapods/repos"
 
   version_xcode: &version_xcode
     run:
@@ -170,21 +170,8 @@ jobs:
       - checkout
 
       - *set_ruby_version
-
-      - run:
-          name: Ruby - version
-          command: ruby -v
-
-      - run:
-          name: install node@12.0.0
-          command: |
-            set +e
-            touch $BASH_ENV
-            curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash
-            echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
-            echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-            echo nvm install 12.0.0 >> $BASH_ENV
-            echo nvm alias default 12.0.0 >> $BASH_ENV
+      - *whitch_ruby
+      - *install_node
 
       - restore_cache:
           keys:
@@ -223,14 +210,8 @@ jobs:
             echo "\n-- Validating app signing --"
             bundle exec fastlane ios validate_app_signing
 
-      # Login NPM
-      - run:
-          name: NPM login
-          command: npx npm-shell-login
-
-      - restore_cache:
-          name: Restore npm dependencies
-          key: YARN-{{ checksum "~/_caching_file" }}-{{ checksum "ZappiOS/yarn.lock" }}
+      - *npm_login
+      - *restore_npm
 
       - run:
           name: ZappTool - prepare application environment
@@ -249,50 +230,15 @@ jobs:
             fi
             cd ..
 
-      - save_cache:
-          name: Saving NPM dependencies
-          key: YARN-{{ checksum "~/_caching_file" }}-{{ checksum "ZappiOS/yarn.lock" }}
-          paths:
-            - ./ZappiOS/node_modules
-            - ./ZappTvOS/node_modules
+      - *save_npm
 
-      # Restore Cocoapods cache, save cache on lower level, after pod install
-      - restore_cache:
-          keys:
-            - CocoaPods-{{ checksum "~/_caching_file" }}-{{ .Branch }}-{{ .Revision }}
-            - CocoaPods-{{ checksum "~/_caching_file" }}-{{ .Branch }}-
-            - CocoaPods-{{ checksum "~/_caching_file" }}-
+      - *resotre_pods
+      - *vesion_pods
+      - *install_pods
+      - *save_pods
 
-      - run:
-          name: CocoaPods - version
-          command: bundle exec pod --version
-
-      # Pod install
-      - run:
-          name: CocoaPods - install default dependencies
-          command: |
-            targetFolder="ZappiOS"
-            if [ "$device_target" = apple_tv ]; then
-              targetFolder="ZappTvOS"
-            fi
-            cd $targetFolder && bundle exec pod update && cd ..
-
-      # Cache CocoaPods
-      - save_cache:
-          name: CocoaPods - save cache
-          key: CocoaPods-{{ checksum "~/_caching_file" }}-{{ .Branch }}-{{ .Revision }}
-          paths:
-            - "~/.cocoapods/repos"
-
-      # Set Xcode version
-      - run:
-          name: Current Xcode version
-          command: /usr/bin/xcodebuild -version
-
-      # Print Xcode location
-      - run:
-          name: Xcode installed location
-          command: xcode-select -p
+      - *version_xcode
+      - *location_xcode
 
       - deploy:
           name: Prepare Build environment
