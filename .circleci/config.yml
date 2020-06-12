@@ -130,8 +130,8 @@ references:
       paths:
         - ./<< pipeline.parameters.platform-destination-path-tvos >>/node_modules
 
-  cocoapods_cache_key_ios: &cocoapods_cache_key_ios CocoaPods-1.0-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path-ios >>/Podfile.lock" }}
-  cocoapods_cache_key_tvos: &cocoapods_cache_key_tvos CocoaPods-1.0-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path-tvos >>/Podfile.lock" }}
+  cocoapods_cache_key_ios: &cocoapods_cache_key_ios CocoaPods-2.0-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path-ios >>/Podfile.lock" }}
+  cocoapods_cache_key_tvos: &cocoapods_cache_key_tvos CocoaPods-2.0-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path-tvos >>/Podfile.lock" }}
 
   restore_pods_ios: &restore_pods_ios
     restore_cache:
