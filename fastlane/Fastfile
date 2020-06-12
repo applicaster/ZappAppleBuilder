@@ -20,9 +20,7 @@ platform :tvos do
       scheme: project_help.scheme,
       buildlog_path: "#{base_helper.circle_artifacts_folder_path}.to_s/precache",
       derived_data_path: project_help.build_path,
-      configuration: 'Release',
-      skip_archive: true,
-      skip_codesigning: true
+      configuration: 'Release'
     )
   end
 end
@@ -48,9 +46,7 @@ platform :ios do
       scheme: project_help.scheme,
       buildlog_path: "#{base_helper.circle_artifacts_folder_path}.to_s/precache",
       derived_data_path: project_help.build_path,
-      configuration: 'Release',
-      skip_archive: true,
-      skip_codesigning: true
+      configuration: 'Release'
     )
   end
 
