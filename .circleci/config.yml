@@ -122,7 +122,7 @@ references:
 
   restore_npm_tvos: &restore_npm_tvos
     restore_cache:
-      name: Restore npm dependencies ios
+      name: Restore npm dependencies tvos
       key: *npm_cache_key_tvos
 
   install_npm_dependencies: &install_npm_dependencies
@@ -144,7 +144,7 @@ references:
         cd $targetFolder
         if [ "$bundle_identifier" ];
         then
-          "ZappTool/ZappTool"
+          "../ZappTool/ZappTool"
         else
           yarn
         fi
@@ -278,114 +278,6 @@ references:
     - *save_gems
     - *create_zapp_sdk
 jobs:
-  # build:
-  #   <<: *mac_config
-
-  #   steps:
-  #     - *prepare_caching_file
-  #     - *prepare_zapptool_version_file
-  #     - checkout
-
-  #     - *set_ruby_version
-  #     - *whitch_ruby
-  #     - *install_node
-  # - *restore_zapptool
-  # - *zapptool_download
-  # - *save_zapptool
-  # - *version_zapptool
-
-  #     - *restore_gems
-  #     - *gems_install
-  #     - *save_gems
-
-  #     - run:
-  #         name: Validate app signing
-  #         command: |
-  #           echo "\n-- Validating app signing --"
-  #           bundle exec fastlane ios validate_app_signing
-
-  #     - *npm_login
-  #     - *restore_npm
-
-  #     - run:
-  #         name: ZappTool - prepare application environment
-  #         command: |
-  #           targetFolder="ZappiOS"
-  #           if [ "$device_target" = apple_tv ]; then
-  #             targetFolder="ZappTvOS"
-  #           fi
-
-  #           cd $targetFolder
-  #           if [ "$bundle_identifier" ];
-  #           then
-  #             "$HOME/ZappTool/ZappTool"
-  #           else
-  #             yarn
-  #           fi
-  #           cd ..
-
-  #     - *save_npm
-
-  #     - *restore_pods
-  #     - *vesion_pods
-  #     - *install_pods
-  #     - *save_pods
-
-  #     - *version_xcode
-  #     - *location_xcode
-
-  #     - deploy:
-  #         name: Prepare Build environment
-  #         command: |
-  #           bundle exec fastlane ios prepare_environment
-
-  #     - deploy:
-  #         name: Build App
-  #         command: |
-  #           bundle exec fastlane ios build
-
-  #     - deploy:
-  #         name: Building development project
-  #         command: |
-  #           if [ "$build_dev_project" = true ]; then
-  #             # compress the app
-  #             env_commit=$(git rev-parse HEAD)
-  #             epoch_time=$(date +%s)
-  #             zipped_project_file_name="${epoch_time}_${env_commit}.zip"
-  #             target="ios"
-  #             if [ "$device_target" = apple_tv ]; then
-  #               target="tvos"
-  #             fi
-  #             # using zip
-  #             echo; echo
-  #             echo "Compressing using zip..."
-  #             zip -rq "${zipped_project_file_name}" -@r < "$(pwd)/dev_project_whitelist_${target}.txt"
-  #             bundle exec rake zapp_sdks:upload_dev_project["$(pwd)/${zipped_project_file_name}"]
-  #           else
-  #             echo "Building standard app, not for external development environment! Step will be skipped"
-  #           fi
-
-  #     - run:
-  #         name: Publishing builds to Zapp
-  #         command: |
-  #           if [ -z "$bundle_identifier" ]; then
-  #             echo "Bundle identifier NOT set! Publishing builds to Zapp not relevant"
-  #           else
-  #             bundle exec rake publish_to_zapp:update_zapp_version
-  #           fi
-
-  #     # Temporary removed until will not be fully prepared
-  #     # - deploy:
-  #     #     name: Building Zapp-App - Tests
-  #     #     command: |
-  #     #       if [ -z "$bundle_identifier" ]; then
-  #     #         echo "Test will be started"
-  #     #         bundle exec fastlane ios test
-  #     #       fi
-
-  #     - store_artifacts:
-  #         path: ./CircleArtifacts
-
   pre_cache_ios:
     <<: *mac_config
     environment:
