@@ -171,7 +171,7 @@ references:
       name: Xcode installed location
       command: xcode-select -p
 
-  zapptool_cache_key: &zapptool_cache_key ZappTool-1.1-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
+  zapptool_cache_key: &zapptool_cache_key ZappTool-1.2-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
 
   restore_zapptool: &restore_zapptool
     restore_cache:
@@ -184,10 +184,10 @@ references:
       command: |
         if [ ! -d "ZappTool" ]; then
           echo "Installing ZappTool"
-          curl -L "https://dl.bintray.com/applicaster-ltd/pods/ZappTool_v${ZAPPTOOL_VERSION}.zip" > "$HOME/ZappTool.zip"
+          curl -L "https://dl.bintray.com/applicaster-ltd/pods/ZappTool_v${ZAPPTOOL_VERSION}.zip" > "ZappTool.zip"
           mkdir ZappTool
-          unzip -o "$HOME/ZappTool.zip" -d "~$HOME/ZappTool"
-          rm -rf "$HOME/ZappTool.zip"
+          unzip -o "ZappTool.zip" -d "ZappTool"
+          rm -rf "ZappTool.zip"
         else
           echo "ZappTool was cached"
         fi
@@ -197,12 +197,12 @@ references:
       name: ZappTool - save cache
       key: zapptool_cache_key
       paths:
-        - "$HOME/ZappTool"
+        - "ZappTool"
 
   version_zapptool: &version_zapptool
     run:
       name: ZappTool - version
-      command: "$HOME/ZappTool/ZappTool -v"
+      command: "ZappTool/ZappTool -v"
 
   create_zapp_sdk: &create_zapp_sdk
     run:
