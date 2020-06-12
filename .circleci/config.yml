@@ -462,7 +462,7 @@ jobs:
       - *version_xcode
       - *location_xcode
 
-  prepare_tools_for_build:
+  build:
     <<: *mac_config
     steps:
       - *triggered_by_zapp_only
@@ -523,7 +523,7 @@ jobs:
       - *save_gems
       - *create_zapp_sdk
 
-  build:
+  build2:
     <<: *mac_config
     steps:
       - *attach_workspace
@@ -574,14 +574,14 @@ workflows:
   version: 2
   build_from_branch_and_tag:
     jobs:
-      - prepare_tools_for_build:
+      - build:
           filters:
             tags:
               only: /.*/
-      - build:
+      - build2:
           type: approval
           requires:
-            - prepare_tools_for_build
+            - build
           filters:
             tags:
               only: /.*/
