@@ -11,6 +11,7 @@ import 'Enterprise/Types/Debug/Debug.rb'
 import 'Store/Store.rb'
 import 'Base/Helpers/AppCenterHelper.rb'
 import 'Base/Helpers/ProjectHelper.rb'
+import 'Base/BaseHelper.rb'
 
 # platform :tvos do
 # lane :precache do
@@ -26,12 +27,13 @@ import 'Base/Helpers/ProjectHelper.rb'
 platform :ios do
   lane :precache do
     project_help = ProjectHelper.new
+    base_helper = BaseHelper.new
     #       workspace: project_help.xcworkspace_relative_path.to_s,
 
     build_app(
       workspace: 'ZappiOS/ZappiOS.xcworkspace',
       scheme: project_help.scheme,
-      buildlog_path: circle_artifacts_folder_path.to_s,
+      buildlog_path: "#{base_helper.circle_artifacts_folder_path}.to_s/precache",
       derived_data_path: project_help.build_path,
       configuration: 'Release',
       skip_archive: true,
