@@ -95,7 +95,8 @@ references:
       name: Saving NPM dependencies
       key: YARN-{{ checksum "~/_caching_file" }}-{{ checksum "ZappiOS/yarn.lock" }}
       paths:
-        - ./node_modules
+        - ./ZappiOS/node_modules
+        - ./ZappTvOS/node_modules
 
   resotre_pods: &resotre_pods
     restore_cache:
