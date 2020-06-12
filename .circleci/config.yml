@@ -46,7 +46,7 @@ references:
       command: |
         if [ -z "$triggered_by" = "zapp" ]; 
         echo "Skipping a workflow, can not work with triggered from zapp"
-            circleci-agent step halt
+            # circleci-agent step halt
         fi
 
   stop_job_triggered_by_zapp: &stop_job_triggered_by_zapp
@@ -525,21 +525,21 @@ workflows:
       #         only: /.*/
       #       tags:
       #         only: /.*/
-      - pre_cache_ios:
-          filters:
-            # Change Branch to master only
-            branches:
-              only: /.*/
+      # - pre_cache_ios:
+      #     filters:
+      #       # Change Branch to master only
+      #       branches:
+      #         only: /.*/
       - prepare_tools_for_build:
           filters:
             tags:
               only: /.*/
-      - pre_cache_tvos:
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              only: /.*/
+      # - pre_cache_tvos:
+      #     filters:
+      #       tags:
+      #         only: /.*/
+      #       branches:
+      #         only: /.*/
       - hold_create_ios_mobile_sdk:
           type: approval
           requires:
