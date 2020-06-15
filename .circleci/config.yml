@@ -5,7 +5,7 @@ parameters:
     default: "3.10.0"
   general-caching-key:
     type: string
-    default: "ZappApple_Cache_1.0.4"
+    default: "ZappApple_Cache_1.0.5"
 notify:
   webhooks:
     - url: https://zapp.applicaster.com/callbacks/build_status/circleci_builds
@@ -141,7 +141,8 @@ references:
       name: Saving NPM dependencies
       key: *npm_cache_key
       paths:
-        - $TARGET_FOLDER/node_modules
+        - ZappTvOS/node_modules
+        - ZappiOS/node_modules
 
   prepare_pods_cache_file: &prepare_pods_cache_file
     run:
@@ -163,10 +164,6 @@ references:
     run:
       name: CocoaPods - install default dependencies
       command: |
-        # targetFolder="ZappiOS"
-        # if [ "$device_target" = apple_tv ]; then
-        #   targetFolder="ZappTvOS"
-        # fi
         echo $TARGET_FOLDER
         cd $TARGET_FOLDER && bundle exec pod update && cd ..
 
