@@ -346,6 +346,16 @@ jobs:
     <<: *mac_config
     steps:
       - *triggered_by_zapp_only
+
+      - run:
+          name: CocoaPods - install default dependencies
+          command: |
+            if [ "$device_target" = apple_tv ]; then
+              echo 'export TARGET_FOLDER="ZappTvOS"' >> $BASH_ENV
+            else 
+              echo 'export TARGET_FOLDER="ZappiOS"' >> $BASH_ENV
+            fi
+
       - *prepare_caching_file
       - *prepare_zapptool_version_file
       - checkout
