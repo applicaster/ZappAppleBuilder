@@ -288,6 +288,7 @@ jobs:
       - *gems_install
       - *save_gems
 
+      - *prepare_npm_cache_file
       - *npm_login
 
       - *restore_npm
@@ -326,6 +327,7 @@ jobs:
       - *gems_install
       - *save_gems
 
+      - *prepare_npm_cache_file
       - *npm_login
 
       - *restore_npm
@@ -355,6 +357,8 @@ jobs:
       - *install_node
       - *restore_gems
       - *gems_install
+
+      - *prepare_npm_cache_file
       - *npm_login
 
       - *restore_npm
@@ -434,10 +438,6 @@ workflows:
   build_from_branch_and_tag:
     jobs:
       - build:
-          filters:
-            tags:
-              only: /.*/
-      - prepare_env_release:
           filters:
             tags:
               only: /.*/
