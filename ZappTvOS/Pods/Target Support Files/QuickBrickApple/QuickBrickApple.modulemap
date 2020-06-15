@@ -1,0 +1,6 @@
+framework module QuickBrickApple {
+  umbrella header "QuickBrickApple-umbrella.h"
+
+  export *
+  module * { export * }
+}
