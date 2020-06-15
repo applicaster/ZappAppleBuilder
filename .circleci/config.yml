@@ -105,24 +105,17 @@ references:
       name: NPM login
       command: npx npm-shell-login
 
-  npm_cache_key: &npm_cache_key Yarn.1.0-{{ checksum "~/_caching_file" }}-{{ .Environment.npm_cache_key }}
+  npm_cache_key: &npm_cache_key Yarn.1.0-{{ checksum "~/_caching_file" }}-{{ checksum "yarn.lock" }}
+
+  prepare_npm_cache_file: &prepare_npm_cache_file
+    run:
+      name: "Prepare npm caching file: Copy yarn lock to main folder"
+      command: cp $TARGET_FOLDER/yarn.lock
+
   restore_npm: &restore_npm
     restore_cache:
       name: Restore npm dependencies
       key: *npm_cache_key
-
-  npm_cache_key_ios: &npm_cache_key_ios Yarn.1.0-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path-ios >>/yarn.lock" }}
-  npm_cache_key_tvos: &npm_cache_key_tvos Yarn.1.0-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path-tvos >>/yarn.lock" }}
-
-  restore_npm_ios: &restore_npm_ios
-    restore_cache:
-      name: Restore npm dependencies ios
-      key: *npm_cache_key_ios
-
-  restore_npm_tvos: &restore_npm_tvos
-    restore_cache:
-      name: Restore npm dependencies tvos
-      key: *npm_cache_key_tvos
 
   install_npm_dependencies: &install_npm_dependencies
     run:
@@ -149,19 +142,12 @@ references:
         fi
         cd ..
 
-  save_npm_ios: &save_npm_ios
+  save_npm: &save_npm
     save_cache:
-      name: Saving NPM dependencies iOS
-      key: *npm_cache_key_ios
+      name: Saving NPM dependencies
+      key: *npm_cache_key
       paths:
-        - ./<< pipeline.parameters.platform-destination-path-ios >>/node_modules
-
-  save_npm_tvos: &save_npm_tvos
-    save_cache:
-      name: Saving NPM dependencies TvOS
-      key: *npm_cache_key_tvos
-      paths:
-        - ./<< pipeline.parameters.platform-destination-path-tvos >>/node_modules
+        - $TARGET_FOLDER/node_modules
 
   cocoapods_cache_key_ios: &cocoapods_cache_key_ios CocoaPods-2.0-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path-ios >>/Podfile.lock" }}
   cocoapods_cache_key_tvos: &cocoapods_cache_key_tvos CocoaPods-2.0-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path-tvos >>/Podfile.lock" }}
@@ -304,9 +290,9 @@ jobs:
 
       - *npm_login
 
-      - *restore_npm_ios
+      - *restore_npm
       - *install_npm_dependencies
-      - *save_npm_ios
+      - *save_npm
 
       - *restore_pods_ios
       - *vesion_pods
@@ -342,9 +328,9 @@ jobs:
 
       - *npm_login
 
-      - *restore_npm_tvos
+      - *restore_npm
       - *install_npm_dependencies
-      - *save_npm_tvos
+      - *save_npm
 
       - *restore_pods_tvos
       - *vesion_pods
@@ -357,95 +343,65 @@ jobs:
   build:
     <<: *mac_config
     steps:
-      # - *triggered_by_zapp_only
+      - *triggered_by_zapp_only
       - *prepare_caching_file
       - *prepare_zapptool_version_file
       - checkout
-      - run:
-          name: "Set target folder ENV VAR"
-          command: |
-            if [ "$device_target" = apple_tv ]; then
-              echo 'export TARGET_FOLDER="ZappTvOS"' >> $BASH_ENV
-            else
-              echo 'export TARGET_FOLDER="ZappiOS"' >> $BASH_ENV
-              echo 'export npm_cache_key="ZappiOS/yarn.lock"' >> $BASH_ENV
-            fi
-            echo ${TARGET_FOLDER}
+      - *restore_zapptool
+      - *zapptool_download
+      - *version_zapptool
+      - *set_ruby_version
+      - *whitch_ruby
+      - *install_node
+      - *restore_gems
+      - *gems_install
+      - *npm_login
 
       - *restore_npm
+
+      - *validate_app_signing
+      - *prepare_application_environment
+      - *restore_pods_ios
+      - *vesion_pods
+      - *install_pods
+      - *version_xcode
+      - *location_xcode
+      - deploy:
+          name: Prepare Build environment
+          command: |
+            bundle exec fastlane ios prepare_environment
+      - deploy:
+          name: Build App
+          command: |
+            bundle exec fastlane ios build
+      - deploy:
+          name: Building development project
+          command: |
+            if [ "$build_dev_project" = true ]; then
+              # compress the app
+              env_commit=$(git rev-parse HEAD)
+              epoch_time=$(date +%s)
+              zipped_project_file_name="${epoch_time}_${env_commit}.zip"
+              target="ios"
+              if [ "$device_target" = apple_tv ]; then
+                target="tvos"
+              fi
+              # using zip
+              echo; echo
+              echo "Compressing using zip..."
+              zip -rq "${zipped_project_file_name}" -@r < "$(pwd)/dev_project_whitelist_${target}.txt"
+              bundle exec rake zapp_sdks:upload_dev_project["$(pwd)/${zipped_project_file_name}"]
+            else
+              echo "Building standard app, not for external development environment! Step will be skipped"
+            fi
       - run:
-          command: echo "{{ .Environment.npm_cache_key }}"
-      # - when:
-      #     condition: false
-      #     steps:
-      #       - *restore_npm_ios
-      # - when:
-      #     condition: ${IS_TVOS}
-      #     steps:
-      #       - *restore_npm_tvos
-      # - *restore_zapptool
-      # - *zapptool_download
-      # - *version_zapptool
-      # - *set_ruby_version
-      # - *whitch_ruby
-      # - *install_node
-      # - *restore_gems
-      # - *gems_install
-      # - *npm_login
-      # - when:
-      #     condition:
-      #       - equal: [ZappiOS, $TARGET_FOLDER]
-      #     steps:
-      #       - *restore_npm_ios
-      # - when:
-      #     condition:
-      #       - equal: [ZappTvOS, $TARGET_FOLDER]
-      #     steps:
-      #       - *restore_npm_tvos
-      # - *restore_npm_tvos
-      # - *validate_app_signing
-      # - *prepare_application_environment
-      # - *restore_pods_ios
-      # - *vesion_pods
-      # - *install_pods
-      # - *version_xcode
-      # - *location_xcode
-      # - deploy:
-      #     name: Prepare Build environment
-      #     command: |
-      #       bundle exec fastlane ios prepare_environment
-      # - deploy:
-      #     name: Build App
-      #     command: |
-      #       bundle exec fastlane ios build
-      # - deploy:
-      #     name: Building development project
-      #     command: |
-      #       if [ "$build_dev_project" = true ]; then
-      #         # compress the app
-      #         env_commit=$(git rev-parse HEAD)
-      #         epoch_time=$(date +%s)
-      #         zipped_project_file_name="${epoch_time}_${env_commit}.zip"
-      #         target="ios"
-      #         if [ "$device_target" = apple_tv ]; then
-      #           target="tvos"
-      #         fi
-      #         # using zip
-      #         echo; echo
-      #         echo "Compressing using zip..."
-      #         zip -rq "${zipped_project_file_name}" -@r < "$(pwd)/dev_project_whitelist_${target}.txt"
-      #         bundle exec rake zapp_sdks:upload_dev_project["$(pwd)/${zipped_project_file_name}"]
-      #       else
-      #         echo "Building standard app, not for external development environment! Step will be skipped"
-      #       fi
-      # - run:
-      #     name: Publishing builds to Zapp
-      #     command: |
-      #       if [ -z "$bundle_identifier" ]; then
-      #         echo "Bundle identifier NOT set! Publishing builds to Zapp not relevant"
-      #       else
-      #         bundle exec rake publish_to_zapp:update_zapp_version
-      #       fi
+          name: Publishing builds to Zapp
+          command: |
+            if [ -z "$bundle_identifier" ]; then
+              echo "Bundle identifier NOT set! Publishing builds to Zapp not relevant"
+            else
+              bundle exec rake publish_to_zapp:update_zapp_version
+            fi
 
   create_ios_mobile_sdk:
     <<: *mac_config
