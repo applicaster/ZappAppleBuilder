@@ -100,6 +100,11 @@ class ProjectHelper < BaseHelper
     )
   end
 
+  def plugins_for_type(type)
+    json = get_json_content("#{path}/#{folder_name}/Resources/plugin_configurations.json")
+    json.select { |a| a['plugin']['type'] == type }
+  end
+
   def plist_path
     "#{path}/#{plist_inner_path}"
   end
