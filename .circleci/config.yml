@@ -17,10 +17,6 @@ notify:
     - url: https://zapp.applicaster.com/callbacks/build_status/circleci_builds
 references:
   workspace_root: &workspace_root ~/ZappAppleBuilder
-  attach_workspace: &attach_workspace
-    attach_workspace:
-      at: *workspace_root
-
   mac_config: &mac_config
     working_directory: *workspace_root
     macos:
@@ -108,6 +104,12 @@ references:
     run:
       name: NPM login
       command: npx npm-shell-login
+
+  npm_cache_key: &npm_cache_key Yarn.1.0-{{ checksum "~/_caching_file" }}-{{ .Environment.npm_cache_key }}
+  restore_npm: &restore_npm
+    restore_cache:
+      name: Restore npm dependencies
+      key: *npm_cache_key
 
   npm_cache_key_ios: &npm_cache_key_ios Yarn.1.0-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path-ios >>/yarn.lock" }}
   npm_cache_key_tvos: &npm_cache_key_tvos Yarn.1.0-{{ checksum "~/_caching_file" }}-{{ checksum "<< pipeline.parameters.platform-destination-path-tvos >>/yarn.lock" }}
@@ -364,21 +366,21 @@ jobs:
           command: |
             if [ "$device_target" = apple_tv ]; then
               echo 'export TARGET_FOLDER="ZappTvOS"' >> $BASH_ENV
-              echo 'export IS_TVOS=true' >> $BASH_ENV
             else
               echo 'export TARGET_FOLDER="ZappiOS"' >> $BASH_ENV
+              echo 'export IS_TVOS="ZappiOS/yarn.lock"' >> $BASH_ENV
             fi
             echo ${TARGET_FOLDER}
 
-      - when:
-          condition: false
-          steps:
-            - *restore_npm_ios
-      - when:
-          condition: ${IS_TVOS}
-          steps:
-            - *restore_npm_tvos
-
+      - *restore_npm
+      # - when:
+      #     condition: false
+      #     steps:
+      #       - *restore_npm_ios
+      # - when:
+      #     condition: ${IS_TVOS}
+      #     steps:
+      #       - *restore_npm_tvos
       # - *restore_zapptool
       # - *zapptool_download
       # - *version_zapptool
