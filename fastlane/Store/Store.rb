@@ -173,7 +173,7 @@ class Store < BuildType
         new: 1
       )
     else 
-      # delete notifications entitlements if exists
+      # if not plugin attached - delete notifications entitlements if exists
       remove_key_from_entitlements(@projectHelper.name.to_s, 'Release', 'aps-environment')
     end
 
