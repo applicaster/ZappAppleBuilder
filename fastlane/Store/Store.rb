@@ -112,6 +112,7 @@ class Store < BuildType
       appstore_username: itunesconnect_username,
       appstore_password: itunesconnect_password
     )
+
   end
 
   def prepare_signing
@@ -165,11 +166,16 @@ class Store < BuildType
     )
 
     # add support for push notifications
-    @projectHelper.change_system_capability(
-      capability: 'com.apple.Push',
-      old: 0,
-      new: 1
-    )
+    if @projectHelper.plugins_for_type("push").count > 0
+      @projectHelper.change_system_capability(
+        capability: 'com.apple.Push',
+        old: 0,
+        new: 1
+      )
+    else 
+      # delete notifications entitlements if exists
+      remove_key_from_entitlements(@projectHelper.name.to_s, 'Release', 'aps-environment')
+    end
 
     # add AccessWiFi if needed
     add_wifi_system_capability_if_needed

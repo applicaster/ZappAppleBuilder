@@ -7,6 +7,7 @@ require 'openssl'
 require 'date'
 require 'colorize'
 require 'plist'
+require 'json'
 
 import 'Base/Helpers/EnvironmentHelper.rb'
 
@@ -270,5 +271,10 @@ class BaseHelper
 
   def get_plist_content(path)
     Plist.parse_xml(path.to_s) if File.exist? path.to_s
+  end
+
+  def get_json_content(path)
+    json = File.read(path.to_s).strip if File.exist? path.to_s
+    JSON.parse(json)
   end
 end
