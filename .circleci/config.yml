@@ -330,7 +330,6 @@ jobs:
     <<: *mac_config
     steps:
       - *triggered_by_zapp_only
-
       - run:
           name: CocoaPods - install default dependencies
           command: |
