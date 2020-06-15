@@ -258,12 +258,12 @@ jobs:
       TARGET_FOLDER: ZappiOS
     steps:
       - *stop_job_triggered_by_zapp
-      - *prepare_pods_cache_file
-      - *prepare_npm_cache_file
       - checkout
 
       - *prepare_caching_file
       - *prepare_zapptool_version_file
+      - *prepare_pods_cache_file
+      - *prepare_npm_cache_file
 
       - *restore_zapptool
       - *zapptool_download
@@ -297,12 +297,13 @@ jobs:
       TARGET_FOLDER: "ZappTvOS"
     steps:
       - *stop_job_triggered_by_zapp
-      - *prepare_pods_cache_file
-      - *prepare_npm_cache_file
       - checkout
 
       - *prepare_caching_file
       - *prepare_zapptool_version_file
+      - *prepare_pods_cache_file
+      - *prepare_npm_cache_file
+
       - *restore_zapptool
       - *zapptool_download
       - *save_zapptool
@@ -341,12 +342,14 @@ jobs:
             else 
               echo 'export TARGET_FOLDER="ZappiOS"' >> $BASH_ENV
             fi
-      - *prepare_pods_cache_file
-      - *prepare_npm_cache_file
+
+      - checkout
 
       - *prepare_caching_file
       - *prepare_zapptool_version_file
-      - checkout
+      - *prepare_pods_cache_file
+      - *prepare_npm_cache_file
+
       - *restore_zapptool
       - *zapptool_download
       - *version_zapptool
