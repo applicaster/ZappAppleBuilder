@@ -368,7 +368,7 @@ jobs:
               echo 'export TARGET_FOLDER="ZappTvOS"' >> $BASH_ENV
             else
               echo 'export TARGET_FOLDER="ZappiOS"' >> $BASH_ENV
-              echo 'export IS_TVOS="ZappiOS/yarn.lock"' >> $BASH_ENV
+              echo 'export npm_cache_key="ZappiOS/yarn.lock"' >> $BASH_ENV
             fi
             echo ${TARGET_FOLDER}
 
