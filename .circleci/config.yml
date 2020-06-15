@@ -373,6 +373,8 @@ jobs:
             echo ${TARGET_FOLDER}
 
       - *restore_npm
+      - run:
+          command: echo "{{ .Environment.npm_cache_key }}"
       # - when:
       #     condition: false
       #     steps:
