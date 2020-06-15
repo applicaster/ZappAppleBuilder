@@ -1,4 +1,11 @@
 version: 2.1
+parameters:
+  zapptool-version:
+    type: string
+    default: "3.10.0"
+  general-caching-key:
+    type: string
+    default: "ZappApple_Cache_1.0.5"
 notify:
   webhooks:
     - url: https://zapp.applicaster.com/callbacks/build_status/circleci_builds
@@ -11,11 +18,9 @@ references:
     shell: /bin/bash --login -eo pipefail
 
     environment:
-      GENERAL_CACHE_KEY: "ZappApple_Cache_1.0.1"
       PROJECT_NAME: "ZappApple"
       SCRIPTS_FOLDER: "Scripts"
       BUILD_PATH: ~/build_debug
-      ZAPPTOOL_VERSION: "3.10.0"
       HOMEBREW_NO_AUTO_UPDATE: "1"
       #fastlane variables
       LC_ALL: "en_US.UTF-8"
@@ -23,14 +28,35 @@ references:
 
   #Hack general caching until circle does not support global env variables
   prepare_caching_file: &prepare_caching_file
-    run: echo "$GENERAL_CACHE_KEY" > ~/_caching_file
+    run: echo "<< pipeline.parameters.general-caching-key >>" > ~/_caching_file
 
-  gems_cache_key: &gems_cache_key Zapp-Platform-IOS-v1-{{ checksum "Gemfile.lock" }}
+  prepare_zapptool_version_file: &prepare_zapptool_version_file
+    run: echo "<< pipeline.parameters.zapptool-version >>" > ~/_zappToolVersion
+
+  triggered_by_zapp_only: &triggered_by_zapp_only
+    run:
+      name: Workflow Validation
+      command: |
+        echo $triggered_by
+        if [ "$triggered_by" != "zapp" ]; then 
+        echo "Skipping a workflow, can not work trigged by zapp only"
+             circleci-agent step halt
+        fi
+
+  stop_job_triggered_by_zapp: &stop_job_triggered_by_zapp
+    run:
+      name: Workflow Validation
+      command: |
+        if [ "$triggered_by" = "zapp" ]; then
+        echo "Skipping a workflow, can not work with triggered from zapp"
+            circleci-agent step halt
+        fi
+
+  gems_cache_key: &gems_cache_key GEMS.1.0-{{ checksum "~/_caching_file" }}-{{ checksum "Gemfile.lock" }}
   restore_gems: &restore_gems
     restore_cache:
       name: Bundler - restore cache
-      keys:
-        - *gems_cache_key
+      key: *gems_cache_key
 
   gems_install: &gems_install
     run:
@@ -44,12 +70,152 @@ references:
       name: Bundler - save cache
       key: *gems_cache_key
       paths:
-        - /usr/local/bundle
+        - .bundle
 
   set_ruby_version: &set_ruby_version
     run:
       name: Set Ruby Version
       command: echo 'chruby ruby-2.5.8' >> ~/.bash_profile
+
+  install_node: &install_node
+    run:
+      name: install node@12.0.0
+      command: |
+        set +e
+        touch $BASH_ENV
+        curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash
+        echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
+        echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+        echo nvm install 12.0.0 >> $BASH_ENV
+        echo nvm alias default 12.0.0 >> $BASH_ENV
+
+  whitch_ruby: &whitch_ruby
+    run:
+      name: Ruby - version
+      command: ruby -v
+
+  npm_login: &npm_login
+    run:
+      name: NPM login
+      command: npx npm-shell-login
+
+  npm_cache_key: &npm_cache_key Yarn.1.0-{{ checksum "~/_caching_file" }}-{{ checksum "yarn.lock" }}
+
+  prepare_npm_cache_file: &prepare_npm_cache_file
+    run:
+      name: "Prepare npm caching file: Copy yarn lock to main folder"
+      command: cp $TARGET_FOLDER/yarn.lock yarn.lock
+
+  restore_npm: &restore_npm
+    restore_cache:
+      name: Restore npm dependencies
+      key: *npm_cache_key
+
+  install_npm_dependencies: &install_npm_dependencies
+    run:
+      name: Install NPM dependencies
+      command: |
+        cd $TARGET_FOLDER
+        yarn
+
+  prepare_application_environment: &prepare_application_environment
+    run:
+      name: ZappTool - prepare application environment
+      command: |
+        targetFolder="ZappiOS"
+        if [ "$device_target" = apple_tv ]; then
+          targetFolder="ZappTvOS"
+        fi
+
+        cd $targetFolder
+        if [ "$bundle_identifier" ];
+        then
+          "../ZappTool/ZappTool"
+        else
+          yarn
+        fi
+        cd ..
+
+  save_npm: &save_npm
+    save_cache:
+      name: Saving NPM dependencies
+      key: *npm_cache_key
+      paths:
+        - ZappTvOS/node_modules
+        - ZappiOS/node_modules
+
+  prepare_pods_cache_file: &prepare_pods_cache_file
+    run:
+      name: "Prepare cocoapods caching file: Copy podfile.lock to main folder"
+      command: cp $TARGET_FOLDER/Podfile.lock Podfile.lock
+
+  cocoapods_cache_key: &cocoapods_cache_key CocoaPods-2.0-{{ checksum "~/_caching_file" }}-{{ checksum "Podfile.lock" }}
+
+  restore_pods: &restore_pods
+    restore_cache:
+      key: *cocoapods_cache_key
+
+  vesion_pods: &vesion_pods
+    run:
+      name: CocoaPods - version
+      command: bundle exec pod --version
+
+  install_pods: &install_pods
+    run:
+      name: CocoaPods - install default dependencies
+      command: |
+        echo $TARGET_FOLDER
+        cd $TARGET_FOLDER && bundle exec pod update && cd ..
+
+  save_pods: &save_pods
+    save_cache:
+      name: CocoaPods - save cache
+      key: *cocoapods_cache_key
+      paths:
+        - "~/.cocoapods/repos"
+
+  version_xcode: &version_xcode
+    run:
+      name: Current Xcode version
+      command: /usr/bin/xcodebuild -version
+
+  location_xcode: &location_xcode
+    run:
+      name: Xcode installed location
+      command: xcode-select -p
+
+  zapptool_cache_key: &zapptool_cache_key ZappTool-2.3-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
+
+  restore_zapptool: &restore_zapptool
+    restore_cache:
+      name: ZappTool - Restore cache
+      key: *zapptool_cache_key
+
+  zapptool_download: &zapptool_download
+    run:
+      name: ZappTool - Download if needed
+      command: |
+        if [ ! -d "ZappTool" ]; then
+          echo "Installing ZappTool"
+          curl -L "https://dl.bintray.com/applicaster-ltd/pods/ZappTool_v<< pipeline.parameters.zapptool-version >>.zip" > "ZappTool.zip"
+          mkdir ZappTool
+          unzip -o "ZappTool.zip" -d "ZappTool"
+          rm -rf "ZappTool.zip"
+        else
+          echo "ZappTool was cached"
+        fi
+
+  save_zapptool: &save_zapptool
+    save_cache:
+      name: ZappTool - save cache
+      key: *zapptool_cache_key
+      paths:
+        - "ZappTool"
+
+  version_zapptool: &version_zapptool
+    run:
+      name: ZappTool - version
+      command: "ZappTool/ZappTool -v"
 
   create_zapp_sdk: &create_zapp_sdk
     run:
@@ -65,7 +231,14 @@ references:
         echo "Creating SDK for platform:$ZAPP_SDK_PLATFORM"
         bundle exec rake zapp_sdks:create[$ZAPP_SDK_PLATFORM,$version,$CIRCLE_PROJECT_REPONAME]
         bundle exec rake zapp_sdks:publish_changelog[$ZAPP_SDK_PLATFORM,$version]
-        
+
+  validate_app_signing: &validate_app_signing
+    run:
+      name: Validate app signing
+      command: |
+        echo "\n-- Validating app signing --"
+        bundle exec fastlane ios validate_app_signing
+
   release_zapp_sdk_workflow: &release_zapp_sdk_workflow
     - *prepare_caching_file
     - checkout
@@ -75,169 +248,149 @@ references:
     - *save_gems
     - *create_zapp_sdk
 jobs:
-  build:
+  pre_cache_ios:
     <<: *mac_config
-
+    environment:
+      device_target: universal
+      TARGET_FOLDER: ZappiOS
     steps:
-      - *prepare_caching_file
-      - run: echo "$ZAPPTOOL_VERSION" > ~/_zappToolVersion
+      - *stop_job_triggered_by_zapp
       - checkout
 
+      - *prepare_caching_file
+      - *prepare_zapptool_version_file
+      - *prepare_pods_cache_file
+      - *prepare_npm_cache_file
+
+      - *restore_zapptool
+      - *zapptool_download
+      - *save_zapptool
+      - *version_zapptool
+
       - *set_ruby_version
-
-      - run:
-          name: Ruby - version
-          command: ruby -v
-
-      - run:
-          name: install node@12.0.0
-          command: |
-            set +e
-            touch $BASH_ENV
-            curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash
-            echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
-            echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-            echo nvm install 12.0.0 >> $BASH_ENV
-            echo nvm alias default 12.0.0 >> $BASH_ENV
-
-      - restore_cache:
-          keys:
-            - ZappTool-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
-
-      - run:
-          name: ZappTool - Download
-          command: |
-            if [ ! -d "${HOME}/ZappTool" ]; then
-              echo "Installing ZappTool"
-              curl -L "https://dl.bintray.com/applicaster-ltd/pods/ZappTool_v${ZAPPTOOL_VERSION}.zip" > "${HOME}/ZappTool.zip"
-              mkdir ${HOME}/ZappTool
-              unzip -o "${HOME}/ZappTool.zip" -d "${HOME}/ZappTool"
-              rm -rf "${HOME}/ZappTool.zip"
-            else
-              echo "ZappTool was cached"
-            fi
-
-      - save_cache:
-          name: ZappTool - save cache
-          key: ZappTool-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
-          paths:
-            - "${HOME}/ZappTool"
-
-      - run:
-          name: ZappTool - version
-          command: "${HOME}/ZappTool/ZappTool -v"
-
+      - *whitch_ruby
+      - *install_node
       - *restore_gems
       - *gems_install
       - *save_gems
 
-      - run:
-          name: Validate app signing
-          command: |
-            echo "\n-- Validating app signing --"
-            bundle exec fastlane ios validate_app_signing
+      - *npm_login
+      - *restore_npm
+      - *install_npm_dependencies
+      - *save_npm
 
-      # Login NPM
-      - run:
-          name: NPM login
-          command: npx npm-shell-login
+      - *restore_pods
+      - *vesion_pods
+      - *install_pods
+      - *save_pods
 
-      - restore_cache:
-          name: Restore npm dependencies
-          key: YARN-{{ checksum "~/_caching_file" }}-{{ checksum "ZappiOS/yarn.lock" }}
+      - *version_xcode
+      - *location_xcode
 
-      - run:
-          name: ZappTool - prepare application environment
-          command: |
-            targetFolder="ZappiOS"
-            if [ "$device_target" = apple_tv ]; then
-              targetFolder="ZappTvOS"
-            fi
+  pre_cache_tvos:
+    <<: *mac_config
+    environment:
+      device_target: apple_tv
+      TARGET_FOLDER: "ZappTvOS"
+    steps:
+      - *stop_job_triggered_by_zapp
+      - checkout
 
-            cd $targetFolder
-            if [ "$bundle_identifier" ];
-            then
-              "${HOME}/ZappTool/ZappTool"
-            else
-              yarn
-            fi
-            cd ..
+      - *prepare_caching_file
+      - *prepare_zapptool_version_file
+      - *prepare_pods_cache_file
+      - *prepare_npm_cache_file
 
-      - save_cache:
-          name: Saving NPM dependencies
-          key: YARN-{{ checksum "~/_caching_file" }}-{{ checksum "ZappiOS/yarn.lock" }}
-          paths:
-            - ./node_modules
+      - *restore_zapptool
+      - *zapptool_download
+      - *save_zapptool
+      - *version_zapptool
 
-      # Restore Cocoapods cache, save cache on lower level, after pod install
-      - restore_cache:
-          keys:
-            - CocoaPods-{{ checksum "~/_caching_file" }}-{{ .Branch }}-{{ .Revision }}
-            - CocoaPods-{{ checksum "~/_caching_file" }}-{{ .Branch }}-
-            - CocoaPods-{{ checksum "~/_caching_file" }}-
+      - *set_ruby_version
+      - *whitch_ruby
+      - *install_node
+      - *restore_gems
+      - *gems_install
+      - *save_gems
 
-      - run:
-          name: CocoaPods - version
-          command: bundle exec pod --version
+      - *npm_login
+      - *restore_npm
+      - *install_npm_dependencies
+      - *save_npm
 
-      # Pod install
+      - *restore_pods
+      - *vesion_pods
+      - *install_pods
+      - *save_pods
+
+      - *version_xcode
+      - *location_xcode
+
+  build:
+    <<: *mac_config
+    steps:
+      - *triggered_by_zapp_only
       - run:
           name: CocoaPods - install default dependencies
           command: |
-            targetFolder="ZappiOS"
             if [ "$device_target" = apple_tv ]; then
-              targetFolder="ZappTvOS"
+              echo 'export TARGET_FOLDER="ZappTvOS"' >> $BASH_ENV
+            else 
+              echo 'export TARGET_FOLDER="ZappiOS"' >> $BASH_ENV
             fi
-            cd $targetFolder && bundle exec pod update && cd ..
 
-      # Cache CocoaPods
-      - save_cache:
-          name: CocoaPods - save cache
-          key: CocoaPods-{{ checksum "~/_caching_file" }}-{{ .Branch }}-{{ .Revision }}
-          paths:
-            - "~/.cocoapods/repos/cocoapods-"
+      - checkout
 
-      # Set Xcode version
-      - run:
-          name: Current Xcode version
-          command: /usr/bin/xcodebuild -version
+      - *prepare_caching_file
+      - *prepare_zapptool_version_file
+      - *prepare_pods_cache_file
+      - *prepare_npm_cache_file
 
-      # Print Xcode location
-      - run:
-          name: Xcode installed location
-          command: xcode-select -p
-
+      - *restore_zapptool
+      - *zapptool_download
+      - *version_zapptool
+      - *set_ruby_version
+      - *whitch_ruby
+      - *install_node
+      - *restore_gems
+      - *gems_install
+      - *npm_login
+      - *restore_npm
+      - *validate_app_signing
+      - *prepare_application_environment
+      - *restore_pods
+      - *vesion_pods
+      - *install_pods
+      - *version_xcode
+      - *location_xcode
       - deploy:
           name: Prepare Build environment
           command: |
             bundle exec fastlane ios prepare_environment
-
       - deploy:
           name: Build App
           command: |
             bundle exec fastlane ios build
-
       - deploy:
           name: Building development project
           command: |
-            if [ "$build_dev_project" = true ]; then	
-              # compress the app	
-              env_commit=$(git rev-parse HEAD)	
-              epoch_time=$(date +%s)	
-              zipped_project_file_name="${epoch_time}_${env_commit}.zip"	
-              target="ios"	
-              if [ "$device_target" = apple_tv ]; then	
-                target="tvos"	
-              fi	
-              # using zip	
-              echo; echo	
-              echo "Compressing using zip..."	
-              zip -rq "${zipped_project_file_name}" -@r < "$(pwd)/dev_project_whitelist_${target}.txt"	
-              bundle exec rake zapp_sdks:upload_dev_project["$(pwd)/${zipped_project_file_name}"]	
-            else	
-              echo "Building standard app, not for external development environment! Step will be skipped"	
+            if [ "$build_dev_project" = true ]; then
+              # compress the app
+              env_commit=$(git rev-parse HEAD)
+              epoch_time=$(date +%s)
+              zipped_project_file_name="${epoch_time}_${env_commit}.zip"
+              target="ios"
+              if [ "$device_target" = apple_tv ]; then
+                target="tvos"
+              fi
+              # using zip
+              echo; echo
+              echo "Compressing using zip..."
+              zip -rq "${zipped_project_file_name}" -@r < "$(pwd)/dev_project_whitelist_${target}.txt"
+              bundle exec rake zapp_sdks:upload_dev_project["$(pwd)/${zipped_project_file_name}"]
+            else
+              echo "Building standard app, not for external development environment! Step will be skipped"
             fi
-
       - run:
           name: Publishing builds to Zapp
           command: |
@@ -246,18 +399,6 @@ jobs:
             else
               bundle exec rake publish_to_zapp:update_zapp_version
             fi
-
-      # Temporary removed until will not be fully prepared
-      # - deploy:
-      #     name: Building Zapp-App - Tests
-      #     command: |
-      #       if [ -z "$bundle_identifier" ]; then
-      #         echo "Test will be started"
-      #         bundle exec fastlane ios test
-      #       fi
-
-      - store_artifacts:
-          path: ./CircleArtifacts
 
   create_ios_mobile_sdk:
     <<: *mac_config
@@ -271,7 +412,6 @@ jobs:
       - *gems_install
       - *save_gems
       - *create_zapp_sdk
-
   create_tvos_sdk:
     <<: *mac_config
     environment:
@@ -285,6 +425,7 @@ jobs:
       - *save_gems
       - *create_zapp_sdk
 
+# Solution two make seperate files for ci https://github.com/samsalisbury/circleci-multi-file-config
 workflows:
   version: 2
   build_from_branch_and_tag:
@@ -293,10 +434,22 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - pre_cache_ios:
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              only: /.*/
+      - pre_cache_tvos:
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              only: /.*/
       - hold_create_ios_mobile_sdk:
           type: approval
           requires:
-            - build
+            - pre_cache_ios
           filters:
             branches:
               ignore: /.*/
@@ -313,7 +466,7 @@ workflows:
       - hold_create_tvos_sdk:
           type: approval
           requires:
-            - build
+            - pre_cache_tvos
           filters:
             branches:
               ignore: /.*/

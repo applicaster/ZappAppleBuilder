@@ -1,0 +1,6 @@
+framework module ZappApple {
+  umbrella header "ZappApple-umbrella.h"
+
+  export *
+  module * { export * }
+}

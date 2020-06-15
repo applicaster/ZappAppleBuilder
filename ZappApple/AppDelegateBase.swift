@@ -117,7 +117,7 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
                 ZappStorageKeys.pluginConfigurationUrl: kPluginConfigurationsUrl.replaceUrlHost(to: FeaturesCustomization.s3Hostname()),
                 ZappStorageKeys.riversUrl: kRiversUrl.replaceUrlHost(to: FeaturesCustomization.s3Hostname()),
                 ZappStorageKeys.appFamilyId: kAppFamilyId,
-                ZappStorageKeys.store: kStore,
+//                ZappStorageKeys.store: kStore,
         ]
     }
 
