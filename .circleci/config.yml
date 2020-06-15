@@ -110,7 +110,7 @@ references:
   prepare_npm_cache_file: &prepare_npm_cache_file
     run:
       name: "Prepare npm caching file: Copy yarn lock to main folder"
-      command: cp $TARGET_FOLDER/yarn.lock
+      command: cp "${TARGET_FOLDER}/yarn.lock"
 
   restore_npm: &restore_npm
     restore_cache:
