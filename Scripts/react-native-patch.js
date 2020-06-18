@@ -139,7 +139,7 @@ const TVOS_FILES_TO_PATCH = [
     args: {
       lookUpString: "// Recognizers for Apple TV remote buttons",
       correctString:
-        "// Recognizers for Apple TV remote buttons // Menu\n [self addTapGestureRecognizerWithSelector:@selector(menuPressed: )\n pressType: UIPressTypeMenu\n name: RCTTVRemoteEventMenu];",
+        "// Recognizers for Apple TV remote buttons\n // Menu\n [self addTapGestureRecognizerWithSelector:@selector(menuPressed: )\n pressType: UIPressTypeMenu\n name: RCTTVRemoteEventMenu];",
     },
   },
   {
