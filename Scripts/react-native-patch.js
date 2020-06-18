@@ -137,10 +137,9 @@ const TVOS_FILES_TO_PATCH = [
     filePath: "./React/Base/RCTTVRemoteHandler.m",
     operation: replaceStringInFile,
     args: {
-      lookUpString:
-        "_tvRemoteGestureRecognizers = [NSMutableDictionary dictionary]",
+      lookUpString: "// Recognizers for Apple TV remote buttons",
       correctString:
-        "_tvRemoteGestureRecognizers = [NSMutableDictionary dictionary]\n // Recognizers for Apple TV remote buttons // Menu\n [self addTapGestureRecognizerWithSelector:@selector(menuPressed: )\n pressType: UIPressTypeMenu\n name: RCTTVRemoteEventMenu];",
+        "// Recognizers for Apple TV remote buttons // Menu\n [self addTapGestureRecognizerWithSelector:@selector(menuPressed: )\n pressType: UIPressTypeMenu\n name: RCTTVRemoteEventMenu];",
     },
   },
   {
