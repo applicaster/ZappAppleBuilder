@@ -166,6 +166,8 @@ class Store < BuildType
     )
 
     # add support for push notifications
+    puts(@projectHelper.plugins_for_type("push"))
+    
     if @projectHelper.plugins_for_type("push").count > 0
       @projectHelper.change_system_capability(
         capability: 'com.apple.Push',
