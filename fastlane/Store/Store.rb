@@ -175,6 +175,12 @@ class Store < BuildType
     else 
       # if not plugin attached - delete notifications entitlements if exists
       remove_key_from_entitlements(@projectHelper.name.to_s, 'Release', 'aps-environment')
+      
+      #remove references for didRegisterForRemoteNotificationsWithDeviceToken
+      filename = "#{@projectHelper.path}/#{@projectHelper.name}/AppDelegate.swift"
+      text = File.read(filename) 
+      content = text.gsub("didRegisterForRemoteNotificationsWithDeviceToken ", "didooooooooooooooooooooooooWithooooooooooooToken ")
+      File.open(filename, "w") { |file| file << content }
     end
 
     # add AccessWiFi if needed
