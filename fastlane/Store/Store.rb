@@ -178,13 +178,14 @@ class Store < BuildType
       
       #remove references for didRegisterForRemoteNotificationsWithDeviceToken
       filename = "#{@projectHelper.path}/#{@projectHelper.name}/AppDelegate.swift"
+      puts(filename)
       text = File.read(filename) 
       #didRegisterForRemoteNotificationsWithDeviceToken
       content = text.gsub("didRegisterForRemoteNotificationsWithDeviceToken ", "didooooooooooooooooooooooooWithooooooooooooToken ")
-      content = text.gsub("didRegisterForRemoteNotificationsWithDeviceToken: deviceToken", "didFinishLaunchingWithOptions: nil")
+      content = content.gsub("didRegisterForRemoteNotificationsWithDeviceToken: deviceToken", "didFinishLaunchingWithOptions: nil")
       #didFailToRegisterForRemoteNotificationsWithError
-      content = text.gsub("didFailToRegisterForRemoteNotificationsWithError ", "didooooooooooooooooooooooooWithooooooooooooError ")
-      content = text.gsub("didFailToRegisterForRemoteNotificationsWithError: error", "didFinishLaunchingWithOptions: nil")
+      content = content.gsub("didFailToRegisterForRemoteNotificationsWithError ", "didooooooooooooooooooooooooWithooooooooooooError ")
+      content = content.gsub("didFailToRegisterForRemoteNotificationsWithError: error", "didFinishLaunchingWithOptions: nil")
       
       File.open(filename, "w") { |file| file << content }
     end
