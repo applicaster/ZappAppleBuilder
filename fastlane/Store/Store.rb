@@ -175,19 +175,16 @@ class Store < BuildType
     else 
       # if not plugin attached - delete notifications entitlements if exists
       remove_key_from_entitlements(@projectHelper.name.to_s, 'Release', 'aps-environment')
-      
-      #remove references for didRegisterForRemoteNotificationsWithDeviceToken
-      filename = "#{@projectHelper.path}/#{@projectHelper.name}/AppDelegate.swift"
-      puts(filename)
-      text = File.read(filename) 
-      #didRegisterForRemoteNotificationsWithDeviceToken
-      content = text.gsub("didRegisterForRemoteNotificationsWithDeviceToken ", "didooooooooooooooooooooooooWithooooooooooooToken ")
-      content = content.gsub("didRegisterForRemoteNotificationsWithDeviceToken: deviceToken", "didFinishLaunchingWithOptions: nil")
-      #didFailToRegisterForRemoteNotificationsWithError
-      content = content.gsub("didFailToRegisterForRemoteNotificationsWithError ", "didooooooooooooooooooooooooWithooooooooooooError ")
-      content = content.gsub("didFailToRegisterForRemoteNotificationsWithError: error", "didFinishLaunchingWithOptions: nil")
-      
-      File.open(filename, "w") { |file| file << content }
+      # remove remote notification background mode
+      remove_background_modes(
+        xcodeproj: @projectHelper.xcodeproj_path,
+        plist_path: @projectHelper.plist_inner_path,
+        modes_to_remove: [
+          {
+            name: "remote-notification"
+          }
+        ]
+      )
     end
 
     # add AccessWiFi if needed
