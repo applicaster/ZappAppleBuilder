@@ -45,7 +45,7 @@ class AppCenterHelper < BaseHelper
         api_token: app_center_api_token,
         owner_name: app_center_owner_name,
         destinations: app_distribution_group,
-        destination_type: "group",
+        destination_type: 'group',
         app_os: app_os,
         app_platform: app_platform,
         app_display_name: app_display_name,
@@ -54,7 +54,7 @@ class AppCenterHelper < BaseHelper
         dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@projectHelper.scheme}-#{build_type}.app.dSYM.zip",
         notify_testers: false
       )
-  
+
       # save uploaded app info to file for future use
       save_build_params_for_type(
         bundle_identifier: options[:bundle_identifier],

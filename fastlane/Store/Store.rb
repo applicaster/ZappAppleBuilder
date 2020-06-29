@@ -112,7 +112,6 @@ class Store < BuildType
       appstore_username: itunesconnect_username,
       appstore_password: itunesconnect_password
     )
-
   end
 
   def prepare_signing
@@ -166,13 +165,13 @@ class Store < BuildType
     )
 
     # add support for push notifications
-    if @projectHelper.plugins_for_type("push_provider").count > 0
+    if @projectHelper.plugins_for_type('push_provider').count > 0
       @projectHelper.change_system_capability(
         capability: 'com.apple.Push',
         old: 0,
         new: 1
       )
-    else 
+    else
       # if not plugin attached - delete notifications entitlements if exists
       remove_key_from_entitlements(@projectHelper.name.to_s, 'Release', 'aps-environment')
       # remove remote notification background mode
@@ -181,7 +180,7 @@ class Store < BuildType
         plist_path: @projectHelper.plist_inner_path,
         modes_to_remove: [
           {
-            name: "remote-notification"
+            name: 'remote-notification'
           }
         ]
       )

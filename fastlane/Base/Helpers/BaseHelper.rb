@@ -97,13 +97,13 @@ class BaseHelper
 
   def remove_background_modes(options)
     current(__callee__.to_s)
-    modes_to_remove=options[:modes_to_remove]
+    modes_to_remove = options[:modes_to_remove]
     @fastlane.update_info_plist(
       xcodeproj: options[:xcodeproj],
       plist_path: options[:plist_path],
-      block: proc do |plist|  
+      block: proc do |plist|
         modes_to_remove.each do |item|
-          plist["UIBackgroundModes"].delete(item[:name])
+          plist['UIBackgroundModes'].delete(item[:name])
         end
       end
     )

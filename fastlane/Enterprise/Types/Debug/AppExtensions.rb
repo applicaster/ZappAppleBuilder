@@ -27,9 +27,7 @@ class EnterpriseDebugAppExtensions < AppExtensions
       supported_extension_for_type = supported_app_extensions[extension_type.to_s]
       puts("supported_extension_for_type: #{supported_extension_for_type}")
 
-      unless supported_extension_for_type.nil?
-        entension_enabled = supported_extension_for_type["#{build_type}_enabled"]
-      end
+      entension_enabled = supported_extension_for_type["#{build_type}_enabled"] unless supported_extension_for_type.nil?
     end
 
     if entension_enabled
