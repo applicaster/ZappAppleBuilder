@@ -182,7 +182,7 @@ class BuildType < BaseHelper
       hasCertificate = false
       provisioning_profile_certificates.each do |raw|
         certificate = OpenSSL::X509::Certificate.new(raw.string)
-        hasCertificate = true if certificate.subject == p12.certificate.subject
+        hasCertificate = true if certificate.public_key.to_s == p12.certificate.public_key.to_s
       end
 
       error_message = 'Provisioning Profile is not signed with provided certificate'
