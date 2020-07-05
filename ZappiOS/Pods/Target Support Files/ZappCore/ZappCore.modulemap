@@ -1,0 +1,6 @@
+framework module ZappCore {
+  umbrella header "ZappCore-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -7,14 +7,21 @@ require 'openssl'
 require 'date'
 require 'colorize'
 require 'plist'
+require 'json'
 
 import 'Base/Helpers/EnvironmentHelper.rb'
 
 class BaseHelper
   @@envHelper = EnvironmentHelper.new
 
+  attr_accessor :fastlane
+
+  def initialize(options = {})
+    @fastlane = options[:fastlane]
+  end
+
   def sh(command)
-    Actions.sh(command)
+    @fastlane.sh(command)
   end
 
   def params_folder_path
@@ -44,14 +51,14 @@ class BaseHelper
 
   def delete_keychain(options)
     current(__callee__.to_s)
-    Actions::DeleteKeychainAction.run(
+    @fastlane.delete_keychain(
       name: options[:name]
     )
   end
 
   def update_url_schemes(options)
     current(__callee__.to_s)
-    Actions::UpdateUrlSchemesAction.run(
+    @fastlane.update_url_schemes(
       path: (options[:plist_path]).to_s,
       update_url_schemes: proc do |schemes|
         schemes + [(options[:scheme]).to_s]
@@ -61,7 +68,7 @@ class BaseHelper
 
   def get_plist_value(options)
     current(__callee__.to_s)
-    Actions::GetInfoPlistValueAction.run(
+    @fastlane.get_info_plist_value(
       path: options[:plist_path],
       key: options[:key]
     )
@@ -69,7 +76,7 @@ class BaseHelper
 
   def update_app_identifier(options)
     current(__callee__.to_s)
-    Actions::UpdateAppIdentifierAction.run(
+    @fastlane.update_app_identifier(
       xcodeproj: options[:xcodeproj],
       plist_path: options[:plist_path],
       app_identifier: options[:app_identifier]
@@ -78,7 +85,7 @@ class BaseHelper
 
   def update_info_plist_versions(options)
     current(__callee__.to_s)
-    Actions::UpdateInfoPlistAction.run(
+    @fastlane.update_info_plist(
       xcodeproj: options[:xcodeproj],
       plist_path: options[:plist_path],
       block: lambda do |plist|
@@ -90,7 +97,7 @@ class BaseHelper
 
   def reset_info_plist_bundle_identifier(options)
     current(__callee__.to_s)
-    Actions::UpdateInfoPlistAction.run(
+    @fastlane.update_info_plist(
       xcodeproj: options[:xcodeproj],
       plist_path: options[:plist_path],
       block: lambda do |plist|
@@ -101,7 +108,7 @@ class BaseHelper
 
   def update_project_team(options)
     current(__callee__.to_s)
-    Actions::UpdateProjectTeamAction.run(
+    @fastlane.update_project_team(
       path: options[:xcodeproj],
       teamid: options[:teamid]
     )
@@ -110,7 +117,7 @@ class BaseHelper
   def create_app_on_dev_portal(options)
     current(__callee__.to_s)
     # create app on developer portal with new identifier for notification extension
-    Actions::ProduceAction.run(
+    @fastlane.produce(
       username: (options[:username]).to_s,
       app_identifier: (options[:bundle_identifier]).to_s,
       team_id: (options[:team_id]).to_s,
@@ -130,19 +137,37 @@ class BaseHelper
     )
   end
 
+  def s3_upload(options)
+    current(__callee__.to_s)
+    @fastlane.aws_s3(
+      access_key: @@envHelper.aws_access_key,
+      secret_access_key: @@envHelper.aws_secret_access_key,
+      bucket: @@envHelper.s3_bucket_name,
+      region: @@envHelper.aws_region,
+      ipa: (options[:ipa]).to_s,
+      dsym: (options[:dsym]).to_s,
+      path: "#{@@envHelper.s3_generic_upload_path(options[:bundle_identifier])}/",
+      upload_metadata: true,
+      html_in_folder: true,
+      html_template_path: "#{@@envHelper.root_path}/rake/templates/s3_ipa.html.erb",
+      version_file_name: "#{@@envHelper.s3_generic_upload_path(options[:bundle_identifier])}/version_distribution.json"
+    )
+  end
+
   def enterprise_debug_create_provisioning_profile(options)
     current(__callee__.to_s)
-    sh('fastlane sigh ' \
-      "--username \"#{options[:username]}\" " \
-      "--app_identifier \"#{options[:bundle_identifier]}\" " \
-      "--team_id \"#{options[:team_id]}\" " \
-      "--provisioning_name \"#{options[:bundle_identifier]} prov profile\" " \
-      "--cert_owner_name \"#{options[:team_name]}\" " \
-      "--filename \"#{options[:bundle_identifier]}.mobileprovision\" " \
-      "--platform \"#{@@envHelper.platform_name}\" ")
+    @fastlane.sigh(
+      username: options[:username],
+      app_identifier: options[:bundle_identifier],
+      team_id: options[:team_id],
+      provisioning_name: "#{options[:bundle_identifier]} prov profile",
+      cert_owner_name: options[:team_name],
+      filename: "#{options[:bundle_identifier]}.mobileprovision",
+      platform: @@envHelper.platform_name
+    )
 
-    provisioning_profile = get_provisioning_profile_content("#{@@envHelper.root_path}/fastlane/#{options[:bundle_identifier]}.mobileprovision")
-	  provisioning_profile_uuid_value = provisioning_profile["UUID"]
+    provisioning_profile = get_provisioning_profile_content("#{@@envHelper.root_path}/#{options[:bundle_identifier]}.mobileprovision")
+    provisioning_profile_uuid_value = provisioning_profile['UUID']
     save_param_to_file("#{options[:bundle_identifier]}_PROFILE_UDID", provisioning_profile_uuid_value.to_s)
 
     # delete Invalid provisioning profiles for the same app
@@ -157,7 +182,7 @@ class BaseHelper
     Spaceship::Portal.client.team_id = options[:team_id]
 
     profiles = Spaceship::Portal::ProvisioningProfile.all.find_all do |profile|
-      (profile.status == 'Invalid' or profile.status == 'Expired') && profile.app.bundle_id == options[:bundle_identifier]
+      ((profile.status == 'Invalid') || (profile.status == 'Expired')) && profile.app.bundle_id == options[:bundle_identifier]
     end
 
     profiles.each do |profile|
@@ -168,7 +193,7 @@ class BaseHelper
 
   def copy_artifacts(options)
     current(__callee__.to_s)
-    Actions::CopyArtifactsAction.run(
+    @fastlane.copy_artifacts(
       target_path: options[:target_path],
       artifacts: options[:artifacts]
     )
@@ -176,7 +201,7 @@ class BaseHelper
 
   def import_certificate(options)
     current(__callee__.to_s)
-    Actions::ImportCertificateAction.run(
+    @fastlane.import_certificate(
       certificate_path: options[:certificate_path],
       certificate_password: options[:certificate_password],
       keychain_name: options[:keychain_name],
@@ -186,7 +211,7 @@ class BaseHelper
 
   def create_push_certificate(options)
     current(__callee__.to_s)
-    Actions::GetPushCertificateAction.run(
+    @fastlane.get_push_certificate(
       username: (options[:username]).to_s,
       team_id: (options[:team_id]).to_s,
       team_name: (options[:team_name]).to_s,
@@ -237,11 +262,19 @@ class BaseHelper
   end
 
   def get_provisioning_profile_content(path)
-    # get provisioning profile data
     filename = './provisioning_profile.plist'
     sh("security cms -D -i #{path} > #{filename}")
     provisioning_profile = Plist.parse_xml(filename.to_s) if File.exist? filename.to_s
     File.delete(filename.to_s)
     provisioning_profile
+  end
+
+  def get_plist_content(path)
+    Plist.parse_xml(path.to_s) if File.exist? path.to_s
+  end
+
+  def get_json_content(path)
+    json = File.read(path.to_s).strip if File.exist? path.to_s
+    JSON.parse(json)
   end
 end

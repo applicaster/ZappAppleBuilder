@@ -45,7 +45,6 @@
 		0F5EC5A024756F3C00F994B9 /* SFProDisplay-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F5EC57C24756F3C00F994B9 /* SFProDisplay-Medium.otf */; };
 		1526CA20C41058B2832FE233 /* Pods_ZappiOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48BCB8F0F692A4D55E8D12E9 /* Pods_ZappiOSTests.framework */; };
 		1D18FB6823CFB6F00018D15E /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D18FB6723CFB6F00018D15E /* NotificationService.swift */; };
-		1D18FB7523CFB76F0018D15E /* NotificationService+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D18FB7123CFB76F0018D15E /* NotificationService+Helper.swift */; };
 		1D30F68223CB297F00DDD86F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30F68123CB297F00DDD86F /* AppDelegate.swift */; };
 		1D30F68923CB297F00DDD86F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D30F68723CB297F00DDD86F /* Main.storyboard */; };
 		1D30F68B23CB298000DDD86F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D30F68A23CB298000DDD86F /* Assets.xcassets */; };
@@ -153,7 +152,6 @@
 		1D18FB6523CFB6F00018D15E /* NotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D18FB6723CFB6F00018D15E /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		1D18FB6923CFB6F00018D15E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1D18FB7123CFB76F0018D15E /* NotificationService+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NotificationService+Helper.swift"; sourceTree = "<group>"; };
 		1D18FB7323CFB76F0018D15E /* NotificationServiceExtension-Release.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "NotificationServiceExtension-Release.entitlements"; sourceTree = "<group>"; };
 		1D18FB7423CFB76F0018D15E /* NotificationServiceExtension-Debug.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "NotificationServiceExtension-Debug.entitlements"; sourceTree = "<group>"; };
 		1D30F67E23CB297F00DDD86F /* ZappiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZappiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -290,7 +288,6 @@
 			isa = PBXGroup;
 			children = (
 				1D18FB7223CFB76F0018D15E /* Entitlements */,
-				1D18FB7123CFB76F0018D15E /* NotificationService+Helper.swift */,
 				1D18FB6723CFB6F00018D15E /* NotificationService.swift */,
 				1D18FB6923CFB6F00018D15E /* Info.plist */,
 			);
@@ -863,7 +860,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D18FB7523CFB76F0018D15E /* NotificationService+Helper.swift in Sources */,
 				1D18FB6823CFB6F00018D15E /* NotificationService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1030,7 +1026,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1160,6 +1156,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.applicaster.ZappiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "$(MAIN_PROV_PROFILE_SPECIFIER)";
+				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OBJC_BRIDGING_HEADER = "ZappiOS/ZappiOS-Bridging-Header.h";
 			};
 			name = Release;

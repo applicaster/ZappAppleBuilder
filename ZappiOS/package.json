@@ -30,7 +30,7 @@
     "react-native": "0.62.2"
   },
   "devDependencies": {
-    "@applicaster/zapplicaster-cli": "4.0.0-rc.1",
+    "@applicaster/zapplicaster-cli": "4.0.0-rc.2",
     "flipper-plugin-react-native-performance": "^0.4.3"
   },
   "repository": {

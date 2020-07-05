@@ -1,0 +1,6 @@
+framework module ZappPushPluginsSDK {
+  umbrella header "ZappPushPluginsSDK-umbrella.h"
+
+  export *
+  module * { export * }
+}
