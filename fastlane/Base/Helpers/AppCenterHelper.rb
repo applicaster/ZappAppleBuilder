@@ -59,8 +59,8 @@ class AppCenterHelper < BaseHelper
       save_build_params_for_type(
         bundle_identifier: options[:bundle_identifier],
         zapp_build_type: options[:zapp_build_type],
-        app_name: options[:app_name],
-        app_secret: options[:app_secret],
+        app_name: app_name,
+        app_secret: app_secret,
         build_information: @fastlane.lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]
       )
     end
