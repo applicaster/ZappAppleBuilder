@@ -14,7 +14,6 @@ class Store < BuildType
     super
     prepare_signing
     prepare_build
-    @appCenterHelper.fetch_identifiers(@@envHelper.bundle_identifier)
   end
 
   def build
