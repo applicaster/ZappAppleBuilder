@@ -21,8 +21,8 @@ end
 puts("\n\nCocoaPods preparing for platform: tvOS\n\n")
 
 def shared_pods
-    pod 'ZappCore', '= 0.9.17'
-    pod 'ZappApple', '= 0.7.21'
+    pod 'ZappCore', '= 0.9.18'
+    pod 'ZappApple', '= 0.7.22'
     pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
     # Zaptool pods - Do not remove or change.
 
