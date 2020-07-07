@@ -39,15 +39,15 @@ class AppExtensions < BaseHelper
     extension_info_plist_inner_path = options[:extension_info_plist_inner_path]
     extension_info_plist_path = options[:extension_info_plist_path]
 
-    entension_enabled = false
+    extension_enabled = false
     plist_content = get_plist_content("#{@projectHelper.customizations_folder_path}/FeaturesCustomization.plist")
     supported_app_extensions = plist_content['SupportedAppExtensions']
     unless supported_app_extensions.nil?
       supported_extension_for_type = supported_app_extensions[extension_type.to_s]
-      entension_enabled = supported_extension_for_type["#{build_type}_enabled"] unless supported_extension_for_type.nil?
+      extension_enabled = supported_extension_for_type["#{build_type}_enabled"] unless supported_extension_for_type.nil?
     end
 
-    if entension_enabled
+    if extension_enabled
       # print extension enabled
       sh("echo '#{extension_type} enabled'")
 
