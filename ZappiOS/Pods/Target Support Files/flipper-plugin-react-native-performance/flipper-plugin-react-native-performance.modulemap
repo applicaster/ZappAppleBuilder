@@ -1,0 +1,6 @@
+framework module flipper_plugin_react_native_performance {
+  umbrella header "flipper-plugin-react-native-performance-umbrella.h"
+
+  export *
+  module * { export * }
+}
