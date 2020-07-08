@@ -60,6 +60,7 @@
 		1D68DC412483B16000844CB3 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D68DC402483B16000844CB3 /* UserNotificationsUI.framework */; };
 		1D68DC442483B16000844CB3 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D68DC432483B16000844CB3 /* NotificationViewController.swift */; };
 		1D68DC472483B16000844CB3 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D68DC452483B16000844CB3 /* MainInterface.storyboard */; };
+		32636CEA116811F2E788FD98 /* Pods_NotificationContentExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE45E241DA058A38504F4D /* Pods_NotificationContentExtension.framework */; };
 		4054F78724291A0B00CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4054F78624291A0B00CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift */; };
 		40EE124F2409CEED00B052C2 /* FirebaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EE124E2409CEED00B052C2 /* FirebaseHandler.swift */; };
 		40FB300923F1A69800B76AD0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40FB300823F1A69800B76AD0 /* GoogleService-Info.plist */; };
@@ -149,6 +150,7 @@
 		0F5EC57A24756F3C00F994B9 /* SFProDisplay-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProDisplay-RegularItalic.otf"; sourceTree = "<group>"; };
 		0F5EC57B24756F3C00F994B9 /* SFProText-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Black.otf"; sourceTree = "<group>"; };
 		0F5EC57C24756F3C00F994B9 /* SFProDisplay-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProDisplay-Medium.otf"; sourceTree = "<group>"; };
+		19F62EC577CB11CE25A82C24 /* Pods-NotificationContentExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationContentExtension.release.xcconfig"; path = "Target Support Files/Pods-NotificationContentExtension/Pods-NotificationContentExtension.release.xcconfig"; sourceTree = "<group>"; };
 		1D18FB6523CFB6F00018D15E /* NotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D18FB6723CFB6F00018D15E /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		1D18FB6923CFB6F00018D15E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 		1D68DC482483B16000844CB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D68DC532483D88100844CB3 /* NotificationContentExtension-Debug.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "NotificationContentExtension-Debug.entitlements"; sourceTree = "<group>"; };
 		1D68DC542483D88100844CB3 /* NotificationContentExtension-Release.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "NotificationContentExtension-Release.entitlements"; sourceTree = "<group>"; };
+		29FF41560500977D816BE342 /* Pods-NotificationContentExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationContentExtension.debug.xcconfig"; path = "Target Support Files/Pods-NotificationContentExtension/Pods-NotificationContentExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		4054F78624291A0B00CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+UNUserNotificationCenterDelegate.swift"; sourceTree = "<group>"; };
 		40EE124E2409CEED00B052C2 /* FirebaseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHandler.swift; sourceTree = "<group>"; };
 		40FB300823F1A69800B76AD0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "ZappiOS/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -193,6 +196,7 @@
 		A0465E6BC9CB29C5CE647130 /* Pods_NotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9C5D8DDDBA59C5D9F3C5B4B /* Pods-ZappiOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZappiOSTests.debug.xcconfig"; path = "Target Support Files/Pods-ZappiOSTests/Pods-ZappiOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B3D8A83C14589D0BC983D218 /* Pods-ZappiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZappiOS.release.xcconfig"; path = "Target Support Files/Pods-ZappiOS/Pods-ZappiOS.release.xcconfig"; sourceTree = "<group>"; };
+		E1CE45E241DA058A38504F4D /* Pods_NotificationContentExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NotificationContentExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +239,7 @@
 			files = (
 				1D68DC412483B16000844CB3 /* UserNotificationsUI.framework in Frameworks */,
 				1D68DC3F2483B16000844CB3 /* UserNotifications.framework in Frameworks */,
+				32636CEA116811F2E788FD98 /* Pods_NotificationContentExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,6 +388,7 @@
 				A0465E6BC9CB29C5CE647130 /* Pods_NotificationServiceExtension.framework */,
 				1D68DC3E2483B16000844CB3 /* UserNotifications.framework */,
 				1D68DC402483B16000844CB3 /* UserNotificationsUI.framework */,
+				E1CE45E241DA058A38504F4D /* Pods_NotificationContentExtension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -462,6 +468,8 @@
 				9DE1E4F2BB238AD9FBF3544E /* Pods-ZappiOSTests.release.xcconfig */,
 				921EE6DFD8C836B3E72DEEF7 /* Pods-NotificationServiceExtension.debug.xcconfig */,
 				02DA1D072AF84F692D5B222C /* Pods-NotificationServiceExtension.release.xcconfig */,
+				29FF41560500977D816BE342 /* Pods-NotificationContentExtension.debug.xcconfig */,
+				19F62EC577CB11CE25A82C24 /* Pods-NotificationContentExtension.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -496,7 +504,6 @@
 				1D30F67B23CB297F00DDD86F /* Frameworks */,
 				1D30F67C23CB297F00DDD86F /* Resources */,
 				1D3FE37823D8C495002B5E30 /* Copy App Resources */,
-				98084FA0981C9CFDEFCDDA79 /* [CP] Embed Pods Frameworks */,
 				776F1B4BBF70BACD1B9DCC54 /* [CP] Copy Pods Resources */,
 				1D30F6C323CB469100DDD86F /* Run xcode fix */,
 				1DD19CBD241E7B3200D77827 /* Embed App Extensions */,
@@ -554,6 +561,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D68DC4E2483B16000844CB3 /* Build configuration list for PBXNativeTarget "NotificationContentExtension" */;
 			buildPhases = (
+				36862C74F63D7B5D95349111 /* [CP] Check Pods Manifest.lock */,
 				1D68DC392483B16000844CB3 /* Sources */,
 				1D68DC3A2483B16000844CB3 /* Frameworks */,
 				1D68DC3B2483B16000844CB3 /* Resources */,
@@ -775,6 +783,28 @@
 			shellPath = /bin/sh;
 			shellScript = "# Remove not needed resources\nfind \"${SRCROOT}/quick_brick/assets/ios\" -type f -name 'Default-*.png' -delete\nfind \"${SRCROOT}/${PRODUCT_NAME}/Resources\" -type f -name 'Default-L*.png' -delete\n# Copy resourses to app\ncp -r \"${SRCROOT}/quick_brick/assets/ios/\" \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\ncp -r \"${SRCROOT}/${PRODUCT_NAME}/Resources/\" \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n";
 		};
+		36862C74F63D7B5D95349111 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NotificationContentExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4BD0D54AEBDE78FF4EA4E19D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -834,23 +864,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ZappiOS/Pods-ZappiOS-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		98084FA0981C9CFDEFCDDA79 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ZappiOS/Pods-ZappiOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ZappiOS/Pods-ZappiOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ZappiOS/Pods-ZappiOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1257,6 +1270,7 @@
 		};
 		1D68DC4C2483B16000844CB3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 29FF41560500977D816BE342 /* Pods-NotificationContentExtension.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_ENTITLEMENTS = "$(TARGET_NAME)/Entitlements/$(TARGET_NAME)-Debug.entitlements";
@@ -1281,6 +1295,7 @@
 		};
 		1D68DC4D2483B16000844CB3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 19F62EC577CB11CE25A82C24 /* Pods-NotificationContentExtension.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_ENTITLEMENTS = "$(TARGET_NAME)/Entitlements/$(TARGET_NAME)-Release.entitlements";
