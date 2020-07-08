@@ -4,17 +4,107 @@
 
 ## SDK supports only UI Framework: QuickBrick
 
-### QuickBrick version: [2.3.0](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#2020-03-09)
+### QuickBrick version: [4.0.0](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#2020-03-09)
 
-### React Native version: 0.59.10
+## [iOS:21.0.0](https://github.com/applicaster/ZappAppleBuilder/tree/21.0.0) (2020-7-8)
+
+[Full Changelog](https://github.com/applicaster/ZappAppleBuilder/compare/20.1.2...21.0.0)
+
+## [tvOS:13.0.0](https://github.com/applicaster/ZappAppleBuilder/tree/13.0.0) (2020-7-8)
+
+[Full Changelog](https://github.com/applicaster/ZappAppleBuilder/compare/12.1.0...13.0.0)
+
+#### React Native version: 0.62.2
+
+### Instruments
+
+- [Xcode](https://developer.apple.com): 11.4.0
+- [Fastlane](https://fastlane.tools): 2.150.0
+- [CocoaPods](https://github.com/CocoaPods/CocoaPods): 1.9.3
+- [ZappTool](https://github.com/applicaster/ZappTool): 3.10.0
+
+### Dependencies
+
+- [ZappCore](https://github.com/applicaster/ZappAppleBuilder): 0.9.18
+- [ZappApple](https://github.com/applicaster/ZappAppleBuilder): 0.7.22
+- [(iOS) ZappPlugins](https://github.com/applicaster/ZappPlugins.2.0-iOS): 11.7.0
+- [(iOS) ZappPushPluginsSDK](https://github.com/applicaster/ZappPushPluginsSDK-iOS): 11.0.1
+- [(iOS) ZappAnalyticsPluginsSDK](https://github.com/applicaster/ZappAnalyticsPluginsSDK-iOS): 11.0.0
+
+### Features
+
+- Add correct appname to appcenter post [#81](https://github.com/applicaster/ZappAppleBuilder/pull/81) ([alexzchut](https://github.com/alexzchut))
+- Add support new key for session storage adverisingIdentifier [#79](https://github.com/applicaster/ZappAppleBuilder/pull/79) ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Add applicaster logo to s3 template [#77](https://github.com/applicaster/ZappAppleBuilder/pull/77) ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Enabling remote menu button [#76](https://github.com/applicaster/ZappAppleBuilder/pull/76) ([slavo3dev](https://github.com/slavo3dev))
+- Optimization of the build time [#75](https://github.com/applicaster/ZappAppleBuilder/pull/75) ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Disable push notification on project level for STORE build [#74](https://github.com/applicaster/ZappAppleBuilder/pull/74) ([alexzchut](https://github.com/alexzchut))
+- Add manual step for publishing Zapp SDK [#70](https://github.com/applicaster/ZappAppleBuilder/pull/70) ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Prepare app env enterprise build [#65](https://github.com/applicaster/ZappAppleBuilder/pull/65) ([alexzchut](https://github.com/alexzchut))
+- Adding device params [#63](https://github.com/applicaster/ZappAppleBuilder/pull/63) ([alexzchut](https://github.com/alexzchut))
+- Bug-Zpp-2412: Fix path for ios splash video [#60](https://github.com/applicaster/ZappAppleBuilder/pull/60) ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Add system fonts to iOS project [#59](https://github.com/applicaster/ZappAppleBuilder/pull/59) ([f-roland](https://github.com/f-roland))
+- Update RN 0.62.2 ([alexzchut](https://github.com/alexzchut))
+- Adding changes to support the s3 hostname  [#52](https://github.com/applicaster/ZappAppleBuilder/pull/52) ([alexzchut](https://github.com/alexzchut))
+- Update the react native patch with the tvOS microphone dictation [51](https://github.com/applicaster/ZappAppleBuilder/pull/51) ([Aethiss](https://github.com/aethiss))
+
+
+
+
+***
+
+### QuickBrick version: [2.4.0](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#2020-03-09)
+
+## [iOS:20.1.2](https://github.com/applicaster/ZappAppleBuilder/tree/20.1.2) (2020-4-1)
+
+[Full Changelog](https://github.com/applicaster/ZappAppleBuilder/compare/20.0.0...20.1.2)
+
+## [tvOS:12.1.0](https://github.com/applicaster/ZappAppleBuilder/tree/12.1.0) (2020-4-1)
+
+[Full Changelog](https://github.com/applicaster/ZappAppleBuilder/compare/12.0.0...12.1.0)
+
+#### React Native version: 0.59.10
+
+### Instruments
+
+- [Xcode](https://developer.apple.com): 11.4.0
+- [Fastlane](https://fastlane.tools): 2.144.0
+- [CocoaPods](https://github.com/CocoaPods/CocoaPods): 1.9.1
+- [ZappTool](https://github.com/applicaster/ZappTool): 3.9.6
+
+### Dependencies
+
+- [ZappCore](https://github.com/applicaster/ZappAppleBuilder): 0.9.3
+- [ZappApple](https://github.com/applicaster/ZappAppleBuilder): 0.7.5
+- [(iOS) ZappPlugins](https://github.com/applicaster/ZappPlugins.2.0-iOS): 11.6.1
+- [(iOS) ZappPushPluginsSDK](https://github.com/applicaster/ZappPushPluginsSDK-iOS): 11.0.1
+- [(iOS) ZappAnalyticsPluginsSDK](https://github.com/applicaster/ZappAnalyticsPluginsSDK-iOS): 11.0.0
+
+### Features
+
+- Add support rich Push Notification Extension [#37](https://github.com/applicaster/ZappAppleBuilder/pull/37) ([alexzchut](https://github.com/alexzchut))
+- Add support Local Notification support [#38](https://github.com/applicaster/ZappAppleBuilder/pull/38)   ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Pass new key to Session Storage `app_family_id` [#39](https://github.com/applicaster/ZappAppleBuilder/pull/39) ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Bump new zapptool version `3.9.6` [#40](https://github.com/applicaster/ZappAppleBuilder/pull/40)([kononenkoAnton](https://github.com/kononenkoAnton))
+- Enable status bar can be controlled from Java Script Side [#42](https://github.com/applicaster/ZappAppleBuilder/pull/42) ([f-roland](https://github.com/f-roland))
+- Remove custom entitlements for enterprise builds, that cause build fail [#45](https://github.com/applicaster/ZappAppleBuilder/pull/45) ([alexzchut](https://github.com/alexzchut))
+- Bump CocoaPods version CocoaPods 1.9.1 [#46](https://github.com/applicaster/ZappAppleBuilder/pull/46) ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Migrate project to support xCode 11.4.0 [#47](https://github.com/applicaster/ZappAppleBuilder/pull/47)([kononenkoAnton](https://github.com/kononenkoAnton))
+- Bump fastlane to 2.144.0 [kononenkoAnton](https://github.com/kononenkoAnton))
+
+
+
+***
 
 ## [iOS:20.0.0](https://github.com/applicaster/ZappAppleBuilder.git/tree/20.0.0) (2019-3-9)
 
 [Full Changelog](https://github.com/applicaster/ZappAppleBuilder.git/tree/20.0.0)
 
-## [tvOS:14.0.0](https://github.com/applicaster/ZappAppleBuilder.git/tree/14.0.0) (2019-3-9)
+## [tvOS:12.0.0](https://github.com/applicaster/ZappAppleBuilder.git/tree/12.0.0) (2019-3-9)
 
-[Full Changelog](https://github.com/applicaster/ZappAppleBuilder.git/tree/14.0.0)
+[Full Changelog](https://github.com/applicaster/ZappAppleBuilder.git/tree/12.0.0)
+
+#### React Native version: 0.59.10
 
 ### Dependencies
 
@@ -23,8 +113,6 @@
 - [(iOS) ZappPlugins](https://github.com/applicaster/ZappPlugins.2.0-iOS): 11.6.1
 - [(iOS) ZappPushPluginsSDK](https://github.com/applicaster/ZappPushPluginsSDK-iOS): 11.0.1
 - [(iOS) ZappAnalyticsPluginsSDK](https://github.com/applicaster/ZappAnalyticsPluginsSDK-iOS): 11.0.0
-
-### Features
 
 **iOS application support!**
 
