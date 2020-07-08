@@ -20,7 +20,7 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
-  - QuickBrickApple (1.2.0):
+  - QuickBrickApple (4.0.0-2):
     - React
     - React-RCTLinking
     - ZappCore
@@ -246,13 +246,13 @@ PODS:
     - React-jsi (= 0.62.2-0)
     - ReactCommon/callinvoker (= 0.62.2-0)
   - Yoga (1.14.0)
-  - ZappApple (0.7.21):
+  - ZappApple (0.7.22):
     - AppCenter/Analytics (= 3.0.0)
     - AppCenter/Distribute (= 3.0.0)
     - DeviceKit (= 3.2.0)
     - ReachabilitySwift (= 5.0.0)
     - ZappCore
-  - ZappCore (0.9.16)
+  - ZappCore (0.9.18)
 
 DEPENDENCIES:
   - DoubleConversion (from `./node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
@@ -284,14 +284,14 @@ DEPENDENCIES:
   - ReactCommon/callinvoker (from `./node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `./node_modules/react-native/ReactCommon`)
   - Yoga (from `./node_modules/react-native/ReactCommon/yoga`)
-  - ZappApple (= 0.7.21)
-  - ZappCore (= 0.9.16)
+  - ZappApple (= 0.7.22)
+  - ZappCore (= 0.9.18)
 
 SPEC REPOS:
   "git@github.com:applicaster/CocoaPods.git":
     - ZappApple
     - ZappCore
-  trunk:
+  https://cdn.cocoapods.org/:
     - boost-for-react-native
     - DeviceKit
     - ReachabilitySwift
@@ -358,7 +358,7 @@ SPEC CHECKSUMS:
   FBReactNativeSpec: 89412591bc63798fa9831e2886f50032b6b8da4e
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
-  QuickBrickApple: 43f9b5084e06682195169560d981a68a0a40380c
+  QuickBrickApple: e05ec8c276d1a753eddac75cdfdbd897dd6fd43f
   RCTRequired: 0fba962213efd60d69d2979b230ef07643e88942
   RCTTypeSafety: 975573b67a2f0b1a3dd9b7e0f8ac2e07924ba189
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
@@ -380,9 +380,9 @@ SPEC CHECKSUMS:
   React-RCTVibration: 9297dbae8760f1f536ef29e71bfcff23c121e1b9
   ReactCommon: 4520755b5a8921156f0bca32157da837640c2ae6
   Yoga: 2b7639f79fddf5026153af56851b832318942330
-  ZappApple: 6d54222b85d92c8565df9afed7ac7112401537c3
-  ZappCore: 8d057418e422657f7521689b6a2844e31baede88
+  ZappApple: b3e2c76cf0566e82ef3ee3b0002cbee7b78005ee
+  ZappCore: cc45ec2514e5cf879593a58e60b1815a7abe0048
 
-PODFILE CHECKSUM: b6cc46a0c95c194695b8af6cdf311243e4442c46
+PODFILE CHECKSUM: ebef71643ef12d74c9682432d2fca447cc30059f
 
 COCOAPODS: 1.9.3

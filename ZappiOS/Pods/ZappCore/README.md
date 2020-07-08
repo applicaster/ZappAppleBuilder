@@ -28,11 +28,11 @@ This respository is the main container for general frameworks and plugins for [Z
 
 ## :fax: Frameworks List
 
-##### ZappCore: *0.9.16*
+##### ZappCore: *0.9.18*
 - **Description:** Contain plugin protocols, helper methods that can be used by any Zapp plugin or framework
 - [**Documentation**](https://applicaster.github.io/AppleApplicasterFrameworks/ZappCore/index.html)
 
-##### ZappApple: *0.7.18*
+##### ZappApple: *0.7.22*
 - **Description:** Contain data stucture to start Zapp application.
 - [**Documentation**](https://applicaster.github.io/AppleApplicasterFrameworks/ZappApple/index.html)
 
@@ -40,7 +40,7 @@ This respository is the main container for general frameworks and plugins for [Z
 
 #### Type: Analytics
 
-##### Google Analytics Web Based API: *0.7.2*
+##### Google Analytics Web Based API: *0.7.3*
 - **Description:** This plugin allow to add Google Analytics as agent.
 - [**Documentation**](https://applicaster.github.io/AppleApplicasterFrameworks/ZappGoogleAnalytics/index.html)
 - **Manifest:**
@@ -49,7 +49,7 @@ This respository is the main container for general frameworks and plugins for [Z
 
 #### Type: Crashlogs
 
-##### MS App Center: *4.5.1*
+##### MS App Center: *4.5.2*
 - **Description:** [App center](https://appcenter.ms) crash logs service.
 - [**Documentation**](https://applicaster.github.io/AppleApplicasterFrameworks/ZappCrashlogsMsAppCenter/index.html)
 - **Manifest:**
@@ -57,7 +57,7 @@ This respository is the main container for general frameworks and plugins for [Z
 
 #### Type: Player Dependant
 
-##### Google Interactive Media Ads: *0.9.0*
+##### Google Interactive Media Ads: *0.10.2*
 - **Description:** This plugin allow to add Google Interactive Media Ads to supported players.
 - [**Documentation**](https://applicaster.github.io/AppleApplicasterFrameworks/ZappGoogleInteractiveMediaAds/index.html)
 - **Manifest:**
@@ -66,21 +66,21 @@ This respository is the main container for general frameworks and plugins for [Z
 
 #### Type: General
 
-##### Apple Video Subscription Registration: *0.1.10*
+##### Apple Video Subscription Registration: *0.1.11*
 - **Description:** This plugin subscribe the user to the video subscription in order to get shared content for iOS and tvOS.
 - [**Documentation**](https://applicaster.github.io/AppleApplicasterFrameworks/ZappAppleVideoSubscriptionRegistration/index.html)
 - **Manifest:**
   - [iOS](https://zapp.applicaster.com/admin/plugin_versions?id=video_subscription_registration_apple&platform=ios)
   - [tvOS](https://zapp.applicaster.com/admin/plugin_versions?id=video_subscription_registration_apple&platform=tvos)
 
-##### Apple Video Now Playing Info: *0.1.7*
+##### Apple Video Now Playing Info: *0.1.8*
 - **Description:** This plugin saves current played item metadata to be accessible on other device (saved on iOS to use on tvOS and vice versa).
 - [**Documentation**](https://applicaster.github.io/AppleApplicasterFrameworks/ZappAppleVideoNowPlayingInfo/index.html)
 - **Manifest:**
   - [iOS](https://zapp.applicaster.com/admin/plugin_versions?id=video_playing_now_apple&platform=ios)
   - [tvOS](https://zapp.applicaster.com/admin/plugin_versions?id=video_playing_now_apple&platform=tvos)
 
-##### Apple Video Subscriber SSO: *0.1.10*
+##### Apple Video Subscriber SSO: *0.1.12*
 - **Description:** This plugin performs as player prehook to login to the TV Provider before player starts.
 - [**Documentation**](https://applicaster.github.io/AppleApplicasterFrameworks/ZappAppleVideoSubscriberSSO/index.html)
 - **Manifest:**
@@ -88,7 +88,7 @@ This respository is the main container for general frameworks and plugins for [Z
   - [tvOS](https://zapp.applicaster.com/admin/plugin_versions?id=video_subscriber_sso_apple&platform=tvos)
 
 
-##### General Local Notification: *0.1.4*
+##### General Local Notification: *0.1.5*
   - **Description:** This plugin allow to control Local Notification events for iOS and tvOS.
   - [**Documentation**](https://applicaster.github.io/AppleApplicasterFrameworks/ZappLocalNotifications/index.html)
   - [**API**](https://applicaster.github.io/AppleApplicasterFrameworks/NotGeneratedDocs/LocalNotifications/LocalNotifications.html)
@@ -96,7 +96,7 @@ This respository is the main container for general frameworks and plugins for [Z
     - [iOS](https://zapp.applicaster.com/admin/plugin_versions?id=generic_local_notifications&platform=ios)
     - [tvOS](https://zapp.applicaster.com/admin/plugin_versions?id=generic_local_notifications&platform=tvos)
 
-##### Chromecast: *0.1.7*
+##### Chromecast: *0.1.11*
   - **Description:** This plugin allow to add Chromecast functionality for iOS and Android.
   - [**Documentation**](https://applicaster.github.io/AppleApplicasterFrameworks/ZappChromecast/index.html)
   - [**API**](https://applicaster.github.io/AppleApplicasterFrameworks/NotGeneratedDocs/ZappChromecast/ZappChromecast.html)

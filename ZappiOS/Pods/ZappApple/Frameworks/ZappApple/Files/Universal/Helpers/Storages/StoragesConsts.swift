@@ -32,6 +32,7 @@ public struct ZappStorageKeys {
     public static let tvOS = "tvOS"
     public static let iOS = "iOS"
     public static let idfa = "idfa"
+    public static let advertisingIdentifier = "advertisingIdentifier"
     public static let deviceType = "deviceType"
     public static let deviceWidth = "deviceWidth"
     public static let deviceHeight = "deviceHeight"
