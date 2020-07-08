@@ -23,11 +23,11 @@
     "reset": "rm -rf quick_brick/* quick_brick/.babelrc"
   },
   "dependencies": {
+    "@applicaster/quick-brick-native-apple" : "4.0.0",
     "@react-native-community/cli-platform-ios": "^4.7.0",
     "@react-native-community/netinfo": "^5.9.0",
     "react": "16.11.0",
     "react-native": "0.62.2"
-    "@applicaster/quick-brick-native-apple" : "4.0.0",
   },
   "devDependencies": {
     "flipper-plugin-react-native-performance": "^0.4.3"
