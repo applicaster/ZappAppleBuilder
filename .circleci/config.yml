@@ -5,7 +5,7 @@ parameters:
     default: "3.10.0"
   general-caching-key:
     type: string
-    default: "ZappApple_Cache_1.0.5"
+    default: "ZappApple_Cache_1.0.6"
 notify:
   webhooks:
     - url: https://zapp.applicaster.com/callbacks/build_status/circleci_builds
