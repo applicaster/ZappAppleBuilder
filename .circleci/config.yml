@@ -5,7 +5,7 @@ parameters:
     default: "3.10.0"
   general-caching-key:
     type: string
-    default: "ZappApple_Cache_1.0.5"
+    default: "ZappApple_Cache_1.0.8"
 notify:
   webhooks:
     - url: https://zapp.applicaster.com/callbacks/build_status/circleci_builds
@@ -14,7 +14,7 @@ references:
   mac_config: &mac_config
     working_directory: *workspace_root
     macos:
-      xcode: "11.4.0"
+      xcode: "11.5.0"
     shell: /bin/bash --login -eo pipefail
 
     environment:
