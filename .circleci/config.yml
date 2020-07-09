@@ -403,7 +403,7 @@ jobs:
   create_ios_mobile_sdk:
     <<: *mac_config
     environment:
-      ZAPP_SDK_PLATFORM: ios_for_quickbrick
+      ZAPP_SDK_PLATFORM: ios
     steps:
       - *prepare_caching_file
       - checkout
@@ -415,7 +415,7 @@ jobs:
   create_tvos_sdk:
     <<: *mac_config
     environment:
-      ZAPP_SDK_PLATFORM: tvos_for_quickbrick
+      ZAPP_SDK_PLATFORM: tvos
     steps:
       - *prepare_caching_file
       - checkout
