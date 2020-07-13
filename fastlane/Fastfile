@@ -98,7 +98,7 @@ def set_device_family
 
 def install_awscli_if_needed
   envHelper = EnvironmentHelper.new
-  unless envHelper.bundle_identifier.to_s.strip.empty?
+  unless envHelper.bundle_identifier.to_s.strip.empty? && !File.exist?("awscli-bundle.zip")
       puts('Installing S3 AWS')
       sh("curl 'https://s3.amazonaws.com/aws-cli/awscli-bundle.zip' -o 'awscli-bundle.zip'")
       sh("unzip awscli-bundle.zip")
