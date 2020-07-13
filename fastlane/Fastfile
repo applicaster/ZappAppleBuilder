@@ -52,7 +52,6 @@ platform :ios do
 
   before_all do
     set_device_family
-    install_awscli_if_needed
     create_temp_keychain
   end
 
@@ -95,17 +94,6 @@ def set_device_family
   ENV['DEVICE_FAMILY'] = '1' if device_family == 'iphone'
   ENV['DEVICE_FAMILY'] = '2' if device_family == 'ipad'
   end
-
-def install_awscli_if_needed
-  envHelper = EnvironmentHelper.new
-  unless envHelper.bundle_identifier.to_s.strip.empty? && !File.exist?("awscli-bundle.zip")
-      puts('Installing S3 AWS')
-      sh("curl 'https://s3.amazonaws.com/aws-cli/awscli-bundle.zip' -o 'awscli-bundle.zip'")
-      sh("unzip awscli-bundle.zip")
-      sh("sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws")
-      sh ("aws --version")
-  end
-end
 
 def save_param_to_file(name, value)
   folder_name = "#{ENV['PWD']}/.fastlane_params"
