@@ -1649,6 +1649,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-5.9.0.tgz#8bf2b96ce66ecaacab5a1f6f88b41526c9331481"
   integrity sha512-rzchLeRkJRXw7ILO4OAMqVP33hEJ754FN2qf85+V1th9ozelXezh4DX90lmxk0PgJpZMwHXUNqS2ltsrzmahXg==
 
+"@react-native-community/viewpager@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/viewpager/-/viewpager-3.3.0.tgz#e613747a43a31a6f3278f817ba96fdaaa7941f23"
+  integrity sha512-tyzh79l4t/hxiyS9QD3LRmWMs8KVkZzjrkQ8U8+8To1wmvVCBtp8BenvNsDLTBO7CpO/YmiThpmIdEZMr1WuVw==
+
 "@types/color-name@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
