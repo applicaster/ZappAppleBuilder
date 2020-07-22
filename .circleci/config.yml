@@ -184,6 +184,15 @@ references:
       name: Xcode installed location
       command: xcode-select -p
 
+  install_awscli: &install_awscli
+    run:
+      name: AWSCLI - Installing S3 AWS
+      command: |
+        curl 'https://s3.amazonaws.com/aws-cli/awscli-bundle.zip' -o 'awscli-bundle.zip'
+        unzip awscli-bundle.zip
+        sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+        aws --version
+
   zapptool_cache_key: &zapptool_cache_key ZappTool-2.3-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
 
   restore_zapptool: &restore_zapptool
@@ -279,6 +288,8 @@ jobs:
       - *install_npm_dependencies
       - *save_npm
 
+      - *install_awscli
+
       - *restore_pods
       - *vesion_pods
       - *install_pods
@@ -318,6 +329,8 @@ jobs:
       - *install_npm_dependencies
       - *save_npm
 
+      - *install_awscli
+
       - *restore_pods
       - *vesion_pods
       - *install_pods
@@ -356,6 +369,7 @@ jobs:
       - *gems_install
       - *npm_login
       - *restore_npm
+      - *install_awscli
       - *validate_app_signing
       - *prepare_application_environment
       - *restore_pods
