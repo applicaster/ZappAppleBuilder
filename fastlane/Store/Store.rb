@@ -20,17 +20,27 @@ class Store < BuildType
     current(__callee__.to_s)
     # get provisioning profiles specifiers
     main_prov_profile_specifier = provisioning_profile_uuid
-    notification_service_extension_prov_profile_specifier = @appExtensions.provisioning_profile_uuid(@appExtensions.notification_service_extension_key)
-    notification_content_extension_prov_profile_specifier = @appExtensions.provisioning_profile_uuid(@appExtensions.notification_content_extension_key)
 
-    export_options = {
-      compileBitcode: true,
-      provisioningProfiles: {
-        @@envHelper.bundle_identifier => main_prov_profile_specifier,
-        @appExtensions.notification_service_extension_bundle_identifier => notification_service_extension_prov_profile_specifier.to_s,
-        @appExtensions.notification_content_extension_bundle_identifier => notification_content_extension_prov_profile_specifier.to_s
+    if @@envHelper.isTvOS
+      export_options = {
+        compileBitcode: true,
+        provisioningProfiles: {
+          @@envHelper.bundle_identifier => main_prov_profile_specifier
+        }
       }
-    }
+    else 
+      notification_service_extension_prov_profile_specifier = @appExtensions.provisioning_profile_uuid(@appExtensions.notification_service_extension_key)
+      notification_content_extension_prov_profile_specifier = @appExtensions.provisioning_profile_uuid(@appExtensions.notification_content_extension_key)
+    
+      export_options = {
+        compileBitcode: true,
+        provisioningProfiles: {
+          @@envHelper.bundle_identifier => main_prov_profile_specifier,
+          @appExtensions.notification_service_extension_bundle_identifier => notification_service_extension_prov_profile_specifier.to_s,
+          @appExtensions.notification_content_extension_bundle_identifier => notification_content_extension_prov_profile_specifier.to_s
+        }
+      }
+    end
 
     build_export_options = 'store_build_export_options'
     save_param_to_file(build_export_options, export_options.to_plist)
