@@ -8,11 +8,15 @@
 
 import Foundation
 
+import DeviceKit
 import React
 import UIKit
 import ZappApple
 import ZappCore
-import DeviceKit
+
+import LoggerInfo
+import Reporter
+import XrayLogger
 
 public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnectorProtocol, AppDelegateProtocol {
     public var connectorInstance: FacadeConnector? {
@@ -42,15 +46,38 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         self.launchOptions = launchOptions
 
         let defaultStorageParams = storagesDefaultParams()
+
+        XrayLogger.sharedInstance.addSink(identifier: "console",
+                                          sink: Console(logType: .print))
+        let fileJSONSink = FileJSON()
+        XrayLogger.sharedInstance.addSink(identifier: "fileJSON",
+                                          sink: FileJSON())
+        let inMemorySink = InMemory()
+        XrayLogger.sharedInstance.addSink(identifier: "inMemorySink",
+                                          sink: inMemorySink)
+        Reporter.setDefaultData(emails: ["a.kononenko@applicaster.com"],
+                                url: fileJSONSink.fileURL,
+                                contexts: defaultStorageParams)
+
         StorageInitialization.initializeDefaultValues(sessionStorage: defaultStorageParams,
                                                       localStorage: defaultStorageParams)
         FirebaseHandler.configure()
         rootController = RootController()
         rootController?.appDelegate = self
 
+        let gesture = GTGestureRecognizer(target: self, action: #selector(presentLoggerInfo))
+        window?.addGestureRecognizer(gesture)
+        
         return true
     }
 
+    @objc func presentLoggerInfo() {
+        let loggerNavController = LoggerNavigationController.loggerNavigationController()
+        UIApplication.shared.windows.first?.rootViewController?.present(loggerNavController,
+                                                                        animated: true,
+                                                                        completion: nil)
+    }
+    
     public func applicationDidBecomeActive(_ application: UIApplication) {
         UIApplication.shared.applicationIconBadgeNumber = 0
     }
@@ -74,7 +101,7 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
                                                                         hooksPlugins: nil,
                                                                         completion: {
                                                                             // do nothing special on completion
-            })
+                                                                        })
             return true
         } else {
             return uiLayerPluginDelegate?.applicationDelegate?.application?(application,
