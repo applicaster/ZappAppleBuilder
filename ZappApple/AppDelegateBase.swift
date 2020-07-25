@@ -19,6 +19,8 @@ import Reporter
 import XrayLogger
 
 public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnectorProtocol, AppDelegateProtocol {
+    let rootLogger = Logger.getLogger()
+
     public var connectorInstance: FacadeConnector? {
         return rootController?.facadeConnector
     }
@@ -46,6 +48,21 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         self.launchOptions = launchOptions
 
         let defaultStorageParams = storagesDefaultParams()
+        prepareLogger()
+        StorageInitialization.initializeDefaultValues(sessionStorage: defaultStorageParams,
+                                                      localStorage: defaultStorageParams)
+        FirebaseHandler.configure()
+        rootController = RootController()
+        rootController?.appDelegate = self
+
+        let gesture = GTGestureRecognizer(target: self, action: #selector(presentLoggerInfo))
+        window?.addGestureRecognizer(gesture)
+
+        return true
+    }
+
+    func prepareLogger() {
+        let defaultStorageParams = storagesDefaultParams()
 
         XrayLogger.sharedInstance.addSink(identifier: "console",
                                           sink: Console(logType: .print))
@@ -58,17 +75,10 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         Reporter.setDefaultData(emails: ["a.kononenko@applicaster.com"],
                                 url: fileJSONSink.fileURL,
                                 contexts: defaultStorageParams)
+        rootLogger?.context = defaultStorageParams
 
-        StorageInitialization.initializeDefaultValues(sessionStorage: defaultStorageParams,
-                                                      localStorage: defaultStorageParams)
-        FirebaseHandler.configure()
-        rootController = RootController()
-        rootController?.appDelegate = self
-
-        let gesture = GTGestureRecognizer(target: self, action: #selector(presentLoggerInfo))
-        window?.addGestureRecognizer(gesture)
-        
-        return true
+        rootLogger?.logEvent(message: "XrayLogger has been intialized",
+                             category: "")
     }
 
     @objc func presentLoggerInfo() {
@@ -77,7 +87,7 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
                                                                         animated: true,
                                                                         completion: nil)
     }
-    
+
     public func applicationDidBecomeActive(_ application: UIApplication) {
         UIApplication.shared.applicationIconBadgeNumber = 0
     }
