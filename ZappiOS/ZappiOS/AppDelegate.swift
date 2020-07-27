@@ -14,8 +14,8 @@ import ZappCore
 
 #if DEBUG && targetEnvironment(simulator)
     #if FB_SONARKIT_ENABLED
-        import FlipperKit
         import flipper_plugin_react_native_performance
+        import FlipperKit
     #endif
 #endif
 
@@ -27,20 +27,17 @@ class AppDelegate: AppDelegateBase {
 
     override func application(_ application: UIApplication,
                               didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        initializeFlipper(with: application)
-
+        // Init ms app center
+        appCenterHandler.configure()
+        UNUserNotificationCenter.current().delegate = self
         let retVal = super.application(application,
                                        didFinishLaunchingWithOptions: launchOptions)
 
-        UNUserNotificationCenter.current().delegate = self
-
-        // Init ms app center
-        appCenterHandler.configure()
-
+        initializeFlipper(with: application)
         return retVal
     }
 
-    public override func handleDelayedEventsIfNeeded() {
+    override public func handleDelayedEventsIfNeeded() {
         super.handleDelayedEventsIfNeeded()
         if isApplicationReady,
             let remoteUserInfo = remoteUserInfo {

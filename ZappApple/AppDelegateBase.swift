@@ -46,15 +46,15 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
                             didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         self.launchOptions = launchOptions
+        rootController = RootController()
+        rootController?.appDelegate = self
+        rootController?.reloadApplication()
+        prepareLogger()
 
         let defaultStorageParams = storagesDefaultParams()
-        prepareLogger()
         StorageInitialization.initializeDefaultValues(sessionStorage: defaultStorageParams,
                                                       localStorage: defaultStorageParams)
         FirebaseHandler.configure()
-        rootController = RootController()
-        rootController?.appDelegate = self
-
         let gesture = GTGestureRecognizer(target: self, action: #selector(presentLoggerInfo))
         window?.addGestureRecognizer(gesture)
 
@@ -75,10 +75,9 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         Reporter.setDefaultData(emails: ["a.kononenko@applicaster.com"],
                                 url: fileJSONSink.fileURL,
                                 contexts: defaultStorageParams)
+
         rootLogger?.context = defaultStorageParams
 
-        rootLogger?.logEvent(message: "XrayLogger has been intialized",
-                             category: "")
     }
 
     @objc func presentLoggerInfo() {
