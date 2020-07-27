@@ -17,6 +17,7 @@
     "postinstall": "yarn patch:react",
     "start:ios": "yarn run:ios & yarn start",
     "quick-brick:build:tvos": "cd quick_brick && yarn build && cd .. && yarn copy:bundle:tvos",
+    "quick-brick:build:tvos:debug": "cd quick_brick && yarn build:debug && cd .. && yarn copy:bundle:tvos",
     "quick-brick:prepare": "node_modules/.bin/zapplicaster-cli prepare -y",
     "patch:react": "node ./../Scripts/react-native-patch.js \"ZappTvOS\"",
     "copy:bundle:tvos": "cp ./quick_brick/ios/main.* ./ZappTvOS/Resources",
