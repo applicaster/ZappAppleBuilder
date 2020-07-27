@@ -36,5 +36,8 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/applicaster/ZappAppleBuilder.git"
+  },
+  "resolutions": {
+    "lodash": "^4.17.19"
   }
 }
