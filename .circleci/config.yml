@@ -130,7 +130,21 @@ references:
         cd $targetFolder
         if [ "$bundle_identifier" ];
         then
-          "../ZappTool/ZappTool"
+
+          ZAPPTOOL_FLAGS=""
+
+          if [ -z "$react_native_packager_root" ];
+          then;
+            HOST_URL=$react_native_packager_root
+            ZAPPTOOL_FLAGS="${ZAPPTOOL_FLAGS} -rn ${HOST_URL}"
+          fi;
+
+          if [ -z "$skip_bundle_minification" ];
+          then;
+            ZAPPTOOL_FLAGS="${ZAPPTOOL_FLAGS} -sbm"
+          fi;
+
+          "../ZappTool/ZappTool ${ZAPPTOOL_FLAGS}"
         else
           yarn
         fi
