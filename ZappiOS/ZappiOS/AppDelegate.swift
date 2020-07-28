@@ -105,4 +105,18 @@ class AppDelegate: AppDelegateBase {
             #endif
         #endif
     }
+
+    func application(_ application: UIApplication,
+                     performActionFor shortcutItem: UIApplicationShortcutItem,
+                     completionHandler: @escaping (Bool) -> Void) {
+        guard let urlString = shortcutItem.userInfo?["url"] as? String,
+            let url = URL(string: urlString) else {
+            return
+        }
+
+        if UrlSchemeHandler.handle(with: rootController,
+                                   application: application,
+                                   open: url) {
+        }
+    }
 }
