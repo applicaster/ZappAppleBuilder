@@ -14,13 +14,7 @@ import UIKit
 import ZappApple
 import ZappCore
 
-import LoggerInfo
-import Reporter
-import XrayLogger
-
 public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnectorProtocol, AppDelegateProtocol {
-    let rootLogger = Logger.getLogger()
-
     public var connectorInstance: FacadeConnector? {
         return rootController?.facadeConnector
     }
@@ -49,42 +43,13 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         rootController = RootController()
         rootController?.appDelegate = self
         rootController?.reloadApplication()
-        prepareLogger()
 
         let defaultStorageParams = storagesDefaultParams()
         StorageInitialization.initializeDefaultValues(sessionStorage: defaultStorageParams,
                                                       localStorage: defaultStorageParams)
         FirebaseHandler.configure()
-        let gesture = GTGestureRecognizer(target: self, action: #selector(presentLoggerInfo))
-        window?.addGestureRecognizer(gesture)
 
         return true
-    }
-
-    func prepareLogger() {
-        let defaultStorageParams = storagesDefaultParams()
-
-        XrayLogger.sharedInstance.addSink(identifier: "console",
-                                          sink: Console(logType: .print))
-        let fileJSONSink = FileJSON()
-        XrayLogger.sharedInstance.addSink(identifier: "fileJSON",
-                                          sink: FileJSON())
-        let inMemorySink = InMemory()
-        XrayLogger.sharedInstance.addSink(identifier: "inMemorySink",
-                                          sink: inMemorySink)
-        Reporter.setDefaultData(emails: ["a.kononenko@applicaster.com"],
-                                url: fileJSONSink.fileURL,
-                                contexts: defaultStorageParams)
-
-        rootLogger?.context = defaultStorageParams
-
-    }
-
-    @objc func presentLoggerInfo() {
-        let loggerNavController = LoggerNavigationController.loggerNavigationController()
-        UIApplication.shared.windows.first?.rootViewController?.present(loggerNavController,
-                                                                        animated: true,
-                                                                        completion: nil)
     }
 
     public func applicationDidBecomeActive(_ application: UIApplication) {
