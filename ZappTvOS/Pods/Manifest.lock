@@ -246,13 +246,13 @@ PODS:
     - React-jsi (= 0.62.2-0)
     - ReactCommon/callinvoker (= 0.62.2-0)
   - Yoga (1.14.0)
-  - ZappApple (0.7.22):
+  - ZappApple (0.8.3):
     - AppCenter/Analytics (= 3.0.0)
     - AppCenter/Distribute (= 3.0.0)
     - DeviceKit (= 3.2.0)
     - ReachabilitySwift (= 5.0.0)
     - ZappCore
-  - ZappCore (0.9.18)
+  - ZappCore (0.13.2)
 
 DEPENDENCIES:
   - DoubleConversion (from `./node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
@@ -284,14 +284,11 @@ DEPENDENCIES:
   - ReactCommon/callinvoker (from `./node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `./node_modules/react-native/ReactCommon`)
   - Yoga (from `./node_modules/react-native/ReactCommon/yoga`)
-  - ZappApple (= 0.7.22)
-  - ZappCore (= 0.9.18)
+  - "ZappApple (from `./node_modules/@applicaster/zapp-apple/apple/ZappApple.podspec`)"
+  - "ZappCore (from `./node_modules/@applicaster/zapp-core/apple/ZappCore.podspec`)"
 
 SPEC REPOS:
-  "git@github.com:applicaster/CocoaPods.git":
-    - ZappApple
-    - ZappCore
-  https://cdn.cocoapods.org/:
+  trunk:
     - boost-for-react-native
     - DeviceKit
     - ReachabilitySwift
@@ -349,6 +346,10 @@ EXTERNAL SOURCES:
     :path: "./node_modules/react-native/ReactCommon"
   Yoga:
     :path: "./node_modules/react-native/ReactCommon/yoga"
+  ZappApple:
+    :path: "./node_modules/@applicaster/zapp-apple/apple/ZappApple.podspec"
+  ZappCore:
+    :path: "./node_modules/@applicaster/zapp-core/apple/ZappCore.podspec"
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
@@ -380,9 +381,9 @@ SPEC CHECKSUMS:
   React-RCTVibration: 9297dbae8760f1f536ef29e71bfcff23c121e1b9
   ReactCommon: 4520755b5a8921156f0bca32157da837640c2ae6
   Yoga: 2b7639f79fddf5026153af56851b832318942330
-  ZappApple: b3e2c76cf0566e82ef3ee3b0002cbee7b78005ee
-  ZappCore: cc45ec2514e5cf879593a58e60b1815a7abe0048
+  ZappApple: c4ea0ab086f613b0b9c531ec92b0e5821d13c40b
+  ZappCore: 46a2ef22302151b84551042318dcbbcbe5bdc519
 
-PODFILE CHECKSUM: ebef71643ef12d74c9682432d2fca447cc30059f
+PODFILE CHECKSUM: 79a6376e13f7ef50adc56da8b180888f0d618860
 
 COCOAPODS: 1.9.3

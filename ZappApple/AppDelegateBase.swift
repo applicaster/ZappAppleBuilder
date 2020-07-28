@@ -8,11 +8,11 @@
 
 import Foundation
 
+import DeviceKit
 import React
 import UIKit
 import ZappApple
 import ZappCore
-import DeviceKit
 
 public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnectorProtocol, AppDelegateProtocol {
     public var connectorInstance: FacadeConnector? {
@@ -40,13 +40,14 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
                             didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         self.launchOptions = launchOptions
+        rootController = RootController()
+        rootController?.appDelegate = self
+        rootController?.reloadApplication()
 
         let defaultStorageParams = storagesDefaultParams()
         StorageInitialization.initializeDefaultValues(sessionStorage: defaultStorageParams,
                                                       localStorage: defaultStorageParams)
         FirebaseHandler.configure()
-        rootController = RootController()
-        rootController?.appDelegate = self
 
         return true
     }
@@ -74,7 +75,7 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
                                                                         hooksPlugins: nil,
                                                                         completion: {
                                                                             // do nothing special on completion
-            })
+                                                                        })
             return true
         } else {
             return uiLayerPluginDelegate?.applicationDelegate?.application?(application,
