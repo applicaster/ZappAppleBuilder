@@ -42,11 +42,11 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         self.launchOptions = launchOptions
         rootController = RootController()
         rootController?.appDelegate = self
-        rootController?.reloadApplication()
-
         let defaultStorageParams = storagesDefaultParams()
         StorageInitialization.initializeDefaultValues(sessionStorage: defaultStorageParams,
                                                       localStorage: defaultStorageParams)
+        rootController?.reloadApplication()
+
         FirebaseHandler.configure()
 
         return true
