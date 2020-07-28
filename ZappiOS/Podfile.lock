@@ -260,7 +260,7 @@ PODS:
   - Yoga (1.14.0)
   - ZappAnalyticsPluginsSDK (11.0.0):
     - ZappPlugins
-  - ZappApple (0.8.4):
+  - ZappApple (0.8.5):
     - AppCenter/Analytics (= 3.0.0)
     - AppCenter/Distribute (= 3.0.0)
     - DeviceKit (= 3.2.0)
@@ -425,7 +425,7 @@ SPEC CHECKSUMS:
   XrayLogger: a1b81754ed1b0086dd58a2a942d20488f94df0a0
   Yoga: 3ebccbdd559724312790e7742142d062476b698e
   ZappAnalyticsPluginsSDK: 0b33b53031e6c1a3c32b4ff25fb63d6e78d8380f
-  ZappApple: 443553acf240d2529d2281de99bb995ad7213455
+  ZappApple: 0e62bb371d36553ec4165f27a713928dcd3f0c6e
   ZappCore: 46a2ef22302151b84551042318dcbbcbe5bdc519
   ZappPlugins: b1a3da054cae582240d2c2ba782479dea515b7c4
   ZappPushPluginsSDK: 8d4e0402d2ebb94974aa88807885db70d6d976e4
