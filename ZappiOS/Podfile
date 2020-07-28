@@ -26,8 +26,8 @@ def shared_pods
     pod 'ZappPlugins', '= 11.7.0'
     pod 'ZappPushPluginsSDK', '= 11.0.1'
     pod 'ZappAnalyticsPluginsSDK', '= 11.0.0'
-    pod 'ZappCore', '= 0.9.18'
-    pod 'ZappApple', '= 0.7.22'
+    pod 'ZappCore', '= 0.13.1'
+    pod 'ZappApple', '= 0.8.1'
     pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
     # Zaptool pods - Do not remove or change.
 
