@@ -144,7 +144,7 @@ references:
             ZAPPTOOL_FLAGS="${ZAPPTOOL_FLAGS} -sbm"
           fi;
 
-          "../ZappTool/ZappTool ${ZAPPTOOL_FLAGS}"
+          "../ZappTool/ZappTool${ZAPPTOOL_FLAGS}"
         else
           yarn
         fi
