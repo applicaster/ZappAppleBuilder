@@ -28,8 +28,10 @@ class AppDelegate: AppDelegateBase {
 
     override func application(_ application: UIApplication,
                               didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        // Clear all shortcuts during app start, to make plugin that may be dissable will not add any one
         UIApplication.shared.shortcutItems = []
-        // Init ms app center
+        
         appCenterHandler.configure()
         UNUserNotificationCenter.current().delegate = self
         let retVal = super.application(application,
