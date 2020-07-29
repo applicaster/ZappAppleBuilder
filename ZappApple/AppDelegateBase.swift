@@ -40,13 +40,14 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
                             didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         self.launchOptions = launchOptions
-
+        rootController = RootController()
+        rootController?.appDelegate = self
         let defaultStorageParams = storagesDefaultParams()
         StorageInitialization.initializeDefaultValues(sessionStorage: defaultStorageParams,
                                                       localStorage: defaultStorageParams)
+        rootController?.reloadApplication()
+
         FirebaseHandler.configure()
-        rootController = RootController()
-        rootController?.appDelegate = self
 
         return true
     }
