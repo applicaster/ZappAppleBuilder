@@ -249,14 +249,14 @@ PODS:
     - XrayLogger/Core (= 0.0.1)
   - XrayLogger/Core (0.0.1)
   - Yoga (1.14.0)
-  - ZappApple (0.8.5):
+  - ZappApple (0.8.11):
     - AppCenter/Analytics (= 3.0.0)
     - AppCenter/Distribute (= 3.0.0)
     - DeviceKit (= 3.2.0)
     - ReachabilitySwift (= 5.0.0)
     - XrayLogger
     - ZappCore
-  - ZappCore (0.13.2)
+  - ZappCore (0.13.3)
 
 DEPENDENCIES:
   - DoubleConversion (from `./node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
@@ -395,8 +395,8 @@ SPEC CHECKSUMS:
   ReactCommon: 4520755b5a8921156f0bca32157da837640c2ae6
   XrayLogger: a1b81754ed1b0086dd58a2a942d20488f94df0a0
   Yoga: 2b7639f79fddf5026153af56851b832318942330
-  ZappApple: 0e62bb371d36553ec4165f27a713928dcd3f0c6e
-  ZappCore: 46a2ef22302151b84551042318dcbbcbe5bdc519
+  ZappApple: f535798c7835c6526f272cb8b74e68ad536121d7
+  ZappCore: 0e0be8807fa22b92cc37db777e6bbb74a279c9eb
 
 PODFILE CHECKSUM: c9deaddd49374a4664a2fa75cebe1f86ea5add7d
 

@@ -24,10 +24,14 @@ class AppDelegate: AppDelegateBase {
     var appCenterHandler = MsAppCenterHandler()
 
     var localNotificatioResponse: UNNotificationResponse?
+    var shortcutItem: UIApplicationShortcutItem?
 
     override func application(_ application: UIApplication,
                               didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Init ms app center
+        
+        // Clear all shortcuts during app start, to make plugin that may be dissable will not add any one
+        UIApplication.shared.shortcutItems = []
+        
         appCenterHandler.configure()
         UNUserNotificationCenter.current().delegate = self
         let retVal = super.application(application,
@@ -49,6 +53,12 @@ class AppDelegate: AppDelegateBase {
                                    didReceive: localNotificatioResponse) {
                 // do nothing special on completion
             }
+        }
+
+        if let shortcutItem = shortcutItem {
+            application(UIApplication.shared, performActionFor: shortcutItem, completionHandler: { _ in
+                // do nothing special on completion
+            })
         }
     }
 
@@ -104,5 +114,36 @@ class AppDelegate: AppDelegateBase {
                 client?.start()
             #endif
         #endif
+    }
+
+    func application(_ application: UIApplication,
+                     performActionFor shortcutItem: UIApplicationShortcutItem,
+                     completionHandler: @escaping (Bool) -> Void) {
+        if isApplicationReady {
+            self.shortcutItem = nil
+            let namespaceKey = "namespace"
+            if let userInfo = shortcutItem.userInfo,
+                let namespace = userInfo["namespace"] as? String {
+                for current in userInfo {
+                    if current.key == namespaceKey {
+                        continue
+                    }
+                    if let string = current.value as? String {
+                        SessionStorage.sharedInstance.set(key: current.key,
+                                                          value: string,
+                                                          namespace: namespace)
+                    }
+                    if let number = current.value as? NSNumber {
+                        SessionStorage.sharedInstance.set(key: current.key,
+                                                          value: number.stringValue,
+                                                          namespace: namespace)
+                    }
+                }
+            }
+            completionHandler(true)
+
+        } else {
+            self.shortcutItem = shortcutItem
+        }
     }
 }
