@@ -11,10 +11,13 @@ import Foundation
 import DeviceKit
 import React
 import UIKit
+import XrayLogger
 import ZappApple
 import ZappCore
 
 public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnectorProtocol, AppDelegateProtocol {
+    lazy var logger = Logger.getLogger(for: ApplicationLoading.subsystem)
+
     public var connectorInstance: FacadeConnector? {
         return rootController?.facadeConnector
     }
@@ -38,11 +41,17 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
 
     public func application(_ application: UIApplication,
                             didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         self.launchOptions = launchOptions
+
         rootController = RootController()
         rootController?.appDelegate = self
+
         let defaultStorageParams = storagesDefaultParams()
+
+        prepareLogger(defaultContext: defaultStorageParams)
+        logger?.debugLog(template: ApplicationLoading.didFinishLaunching,
+                         data: ["launch_options": launchOptions.debugDescription])
+        
         StorageInitialization.initializeDefaultValues(sessionStorage: defaultStorageParams,
                                                       localStorage: defaultStorageParams)
         rootController?.reloadApplication()
@@ -52,13 +61,23 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         return true
     }
 
+    func prepareLogger(defaultContext: [String: Any]) {
+        let rootLogger = Logger.getLogger()
+        rootLogger?.context = defaultContext
+        logger?.verboseLog(template: ApplicationLoading.loggerIntialized)
+    }
+
     public func applicationDidBecomeActive(_ application: UIApplication) {
         UIApplication.shared.applicationIconBadgeNumber = 0
+        logger?.debugLog(template: ApplicationLoading.applicationBecomeActive,
+                         data: ["icon_badge_number": "0"])
     }
 
     public func handleDelayedEventsIfNeeded() {
         if isApplicationReady {
             if let url = urlSchemeUrl {
+                logger?.debugLog(template: ApplicationLoading.handleDelayedURLScheme,
+                                 data: ["url": url.absoluteString])
                 _ = application(UIApplication.shared,
                                 open: url,
                                 options: urlSchemeOptions ?? [:])
@@ -137,13 +156,18 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
             urlSchemeUrl = nil
             urlSchemeOptions = nil
             rootController?.pluginsManager.analytics.trackURL(url: url)
-
+            logger?.debugLog(template: ApplicationLoading.handleURLScheme,
+                             data: ["url": url.absoluteString,
+                                    "options": options])
             if UrlSchemeHandler.handle(with: rootController,
                                        application: app,
                                        open: url,
                                        options: options) {
                 return true
             } else {
+                logger?.debugLog(template: ApplicationLoading.handleURLSchemeDelegate,
+                                 data: ["url": url.absoluteString,
+                                        "options": options])
                 return uiLayerPluginDelegate?.applicationDelegate?.application?(app,
                                                                                 open: url,
                                                                                 options: options) ?? true
@@ -152,6 +176,9 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         } else {
             urlSchemeUrl = url
             urlSchemeOptions = options
+            logger?.debugLog(template: ApplicationLoading.delayURLScheme,
+                             data: ["url": url.absoluteString,
+                                    "options": options])
             return true
         }
     }
