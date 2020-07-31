@@ -15,6 +15,7 @@ references:
     working_directory: *workspace_root
     macos:
       xcode: "11.5.0"
+    resource_class: large
     shell: /bin/bash --login -eo pipefail
 
     environment:
