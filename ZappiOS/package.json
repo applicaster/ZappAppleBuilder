@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@applicaster/zapp-core": "0.13.3",
-    "@applicaster/zapp-apple": "0.8.12",
+    "@applicaster/zapp-apple": "0.8.13",
     "@applicaster/quick-brick-native-apple": "4.0.0-2",
     "@react-native-community/cli-platform-ios": "^4.7.0",
     "@react-native-community/netinfo": "^5.9.0",
