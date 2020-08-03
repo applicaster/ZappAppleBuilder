@@ -16,7 +16,7 @@ import ZappApple
 import ZappCore
 
 public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnectorProtocol, AppDelegateProtocol {
-    lazy var logger = Logger.getLogger(for: ApplicationLoading.subsystem)
+    lazy var logger = Logger.getLogger(for: AppDelegateLogs.subsystem)
 
     public var connectorInstance: FacadeConnector? {
         return rootController?.facadeConnector
@@ -49,9 +49,9 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         let defaultStorageParams = storagesDefaultParams()
 
         prepareLogger(defaultContext: defaultStorageParams)
-        logger?.debugLog(template: ApplicationLoading.didFinishLaunching,
+        logger?.debugLog(template: AppDelegateLogs.didFinishLaunching,
                          data: ["launch_options": launchOptions.debugDescription])
-        
+
         StorageInitialization.initializeDefaultValues(sessionStorage: defaultStorageParams,
                                                       localStorage: defaultStorageParams)
         rootController?.reloadApplication()
@@ -64,19 +64,21 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
     func prepareLogger(defaultContext: [String: Any]) {
         let rootLogger = Logger.getLogger()
         rootLogger?.context = defaultContext
-        logger?.verboseLog(template: ApplicationLoading.loggerIntialized)
+
+        let logsLogger = Logger.getLogger(for: LoggerLogs.subsystem)
+        logsLogger?.verboseLog(template: LoggerLogs.loggerIntialized)
     }
 
     public func applicationDidBecomeActive(_ application: UIApplication) {
         UIApplication.shared.applicationIconBadgeNumber = 0
-        logger?.debugLog(template: ApplicationLoading.applicationBecomeActive,
+        logger?.debugLog(template: AppDelegateLogs.applicationBecomeActive,
                          data: ["icon_badge_number": "0"])
     }
 
     public func handleDelayedEventsIfNeeded() {
         if isApplicationReady {
             if let url = urlSchemeUrl {
-                logger?.debugLog(template: ApplicationLoading.handleDelayedURLScheme,
+                logger?.debugLog(template: AppDelegateLogs.handleDelayedURLScheme,
                                  data: ["url": url.absoluteString])
                 _ = application(UIApplication.shared,
                                 open: url,
@@ -156,7 +158,7 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
             urlSchemeUrl = nil
             urlSchemeOptions = nil
             rootController?.pluginsManager.analytics.trackURL(url: url)
-            logger?.debugLog(template: ApplicationLoading.handleURLScheme,
+            logger?.debugLog(template: AppDelegateLogs.handleURLScheme,
                              data: ["url": url.absoluteString,
                                     "options": options])
             if UrlSchemeHandler.handle(with: rootController,
@@ -165,7 +167,7 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
                                        options: options) {
                 return true
             } else {
-                logger?.debugLog(template: ApplicationLoading.handleURLSchemeDelegate,
+                logger?.debugLog(template: AppDelegateLogs.handleURLSchemeDelegate,
                                  data: ["url": url.absoluteString,
                                         "options": options])
                 return uiLayerPluginDelegate?.applicationDelegate?.application?(app,
@@ -176,7 +178,7 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         } else {
             urlSchemeUrl = url
             urlSchemeOptions = options
-            logger?.debugLog(template: ApplicationLoading.delayURLScheme,
+            logger?.debugLog(template: AppDelegateLogs.delayURLScheme,
                              data: ["url": url.absoluteString,
                                     "options": options])
             return true

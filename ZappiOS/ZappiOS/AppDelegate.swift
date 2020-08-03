@@ -30,7 +30,7 @@ class AppDelegate: AppDelegateBase {
                               didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Clear all shortcuts during app start, to make plugin that may be dissable will not add any one
         UIApplication.shared.shortcutItems = []
-        logger?.debugLog(template: ApplicationLoading.didFinishLaunchingClearShortcuts)
+        logger?.debugLog(template: AppDelegateLogs.didFinishLaunchingClearShortcuts)
 
         appCenterHandler.configure()
         UNUserNotificationCenter.current().delegate = self
@@ -38,8 +38,8 @@ class AppDelegate: AppDelegateBase {
                                        didFinishLaunchingWithOptions: launchOptions)
 
         let flipperStarted = initializeFlipper(with: application)
-        logger?.debugLog(template: ApplicationLoading.didFinishLaunchingFlipper,
-                         data: ["flipper_started": flipperStarted ? "1" : "0"])
+        logger?.debugLog(template: AppDelegateLogs.didFinishLaunchingFlipper,
+                         data: ["flipper_started": flipperStarted ? true : false])
         return retVal
     }
 
@@ -47,14 +47,14 @@ class AppDelegate: AppDelegateBase {
         super.handleDelayedEventsIfNeeded()
         if isApplicationReady,
             let remoteUserInfo = remoteUserInfo {
-            logger?.debugLog(template: ApplicationLoading.handleDelayedRemoteUserInfo,
+            logger?.debugLog(template: AppDelegateLogs.handleDelayedRemoteUserInfo,
                              data: ["remote_info": remoteUserInfo])
 
             application(UIApplication.shared,
                         didReceiveRemoteNotification: remoteUserInfo) { _ in }
         }
         if let localNotificatioResponse = localNotificatioResponse {
-            logger?.debugLog(template: ApplicationLoading.handleDelayedLocalNotification,
+            logger?.debugLog(template: AppDelegateLogs.handleDelayedLocalNotification,
                              data: ["identifier": localNotificatioResponse.notification.request.identifier,
                                     "date": localNotificatioResponse.notification.date.debugDescription,
                                     "user_info": localNotificatioResponse.notification.request.content.userInfo])
@@ -65,7 +65,7 @@ class AppDelegate: AppDelegateBase {
         }
 
         if let shortcutItem = shortcutItem {
-            logger?.debugLog(template: ApplicationLoading.handleDelayedShortcut,
+            logger?.debugLog(template: AppDelegateLogs.handleDelayedShortcut,
                              data: ["type": shortcutItem.type,
                                     "user_info": shortcutItem.userInfo.debugDescription])
             application(UIApplication.shared, performActionFor: shortcutItem, completionHandler: { _ in
@@ -82,19 +82,19 @@ class AppDelegate: AppDelegateBase {
     public func application(_ application: UIApplication,
                             didReceiveRemoteNotification userInfo: [AnyHashable: Any],
                             fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        logger?.debugLog(template: ApplicationLoading.handleRemoteNotificaton,
+        logger?.debugLog(template: AppDelegateLogs.handleRemoteNotificaton,
                          data: ["user_info": userInfo])
 
         if isApplicationReady {
             remoteUserInfo = nil
-            logger?.debugLog(template: ApplicationLoading.delayRemoteNotificaton,
+            logger?.debugLog(template: AppDelegateLogs.handleRemoteNotificatonDelegate,
                              data: ["user_info": userInfo])
             uiLayerPluginDelegate?.applicationDelegate?.application?(application,
                                                                      didReceiveRemoteNotification: userInfo,
                                                                      fetchCompletionHandler: completionHandler)
 
         } else {
-            logger?.debugLog(template: ApplicationLoading.delayRemoteNotificaton,
+            logger?.debugLog(template: AppDelegateLogs.delayRemoteNotificaton,
                              data: ["user_info": userInfo])
             remoteUserInfo = userInfo
             completionHandler(UIBackgroundFetchResult.newData)
@@ -102,13 +102,13 @@ class AppDelegate: AppDelegateBase {
     }
 
     public func applicationWillResignActive(_ application: UIApplication) {
-        logger?.verboseLog(template: ApplicationLoading.applicationWillResignActive)
+        logger?.verboseLog(template: AppDelegateLogs.applicationWillResignActive)
         uiLayerPluginDelegate?.applicationDelegate?.applicationWillResignActive?(application)
     }
 
     public func application(_ application: UIApplication,
                             didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        logger?.verboseLog(template: ApplicationLoading.applicationWillResignActive,
+        logger?.verboseLog(template: AppDelegateLogs.applicationDidRegisterRemoteNotification,
                            data: ["device_token": deviceToken])
         rootController?.pluginsManager.push.registerDeviceToken(data: deviceToken)
         uiLayerPluginDelegate?.applicationDelegate?.application?(application,
@@ -117,7 +117,7 @@ class AppDelegate: AppDelegateBase {
 
     public func application(_ application: UIApplication,
                             didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        logger?.warningLog(template: ApplicationLoading.applicationDidFailRegisterRemoteNotification,
+        logger?.warningLog(template: AppDelegateLogs.applicationDidFailRegisterRemoteNotification,
                            data: ["error": error.localizedDescription])
         uiLayerPluginDelegate?.applicationDelegate?.application?(application,
                                                                  didFailToRegisterForRemoteNotificationsWithError: error)
@@ -169,13 +169,13 @@ class AppDelegate: AppDelegateBase {
                 }
             }
 
-            logger?.warningLog(template: ApplicationLoading.handleShortcut,
+            logger?.warningLog(template: AppDelegateLogs.handleShortcut,
                                data: ["user_info": userInfoToShare])
 
             completionHandler(true)
 
         } else {
-            logger?.warningLog(template: ApplicationLoading.delayShortcut,
+            logger?.warningLog(template: AppDelegateLogs.delayShortcut,
                                data: ["type": shortcutItem.type,
                                       "user_info": shortcutItem.userInfo.debugDescription])
             self.shortcutItem = shortcutItem
