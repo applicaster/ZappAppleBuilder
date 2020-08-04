@@ -45,10 +45,10 @@
   resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-native-apple/-/quick-brick-native-apple-4.0.0-2.tgz#3aa95882b9e73e0e9b9388954cafae987e2395c2"
   integrity sha512-pKAWaW53W/jsiENd9kkVDhUclx3HGcw/2twiPUwmfNuf5UQWT9YJ0EWOq7WXY5iGaL0QoIilaHVZ5d00QFr5wQ==
 
-"@applicaster/zapp-apple@0.8.15":
-  version "0.8.15"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-apple/-/zapp-apple-0.8.15.tgz#a895a833f9fcbf67beb7adc2e2a160f332dc24d2"
-  integrity sha512-E6f5CjLRtDpuxinqsotddpTODGHTLtLR1Ylxd31Qwk35qVaQHbD5cwoYMMT3ifiCLKOlTD5et/fGKQX+BEnJvQ==
+"@applicaster/zapp-apple@0.8.16":
+  version "0.8.16"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-apple/-/zapp-apple-0.8.16.tgz#9266c7779ae6c54e77596bab4843898963a3150b"
+  integrity sha512-EN75VWYoWOaG958MWlBRFa9ngq0Jnqe45EgUDNvjV79qg8+mXb3q7IpEgyHc+Rlq36QjBB+OnbrNI1o2zijJCA==
 
 "@applicaster/zapp-core@0.13.3":
   version "0.13.3"
