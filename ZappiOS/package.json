@@ -28,7 +28,8 @@
   "dependencies": {
     "@applicaster/crash-logs-ms-app-center-apple": "4.9.0",
     "@applicaster/quick-brick-native-apple": "4.0.0-2",
-    "@applicaster/zapp-apple": "0.8.15",
+    "@applicaster/quick-brick-xray": "0.1.0-alpha.6",
+    "@applicaster/zapp-apple": "0.8.16",
     "@applicaster/zapp-core": "0.13.3",
     "@applicaster/zapp-react-native-default-player": "3.0.0",
     "@react-native-community/cli-platform-ios": "^4.7.0",
@@ -40,7 +41,7 @@
     "react-native-svg": "9.13.6"
   },
   "devDependencies": {
-    "@applicaster/zapplicaster-cli": "^4.0.1-rc.17",
+    "@applicaster/zapplicaster-cli": "4.0.1-rc.18",
     "flipper-plugin-react-native-performance": "^0.4.3"
   },
   "name": "ZappAppleBuilder",
