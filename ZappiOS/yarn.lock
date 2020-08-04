@@ -183,13 +183,6 @@
   dependencies:
     "@applicaster/x-ray" "git://github.com/applicaster/x-ray.git"
 
-"@applicaster/quick-brick-xray@0.1.0-alpha.6":
-  version "0.1.0-alpha.6"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-xray/-/quick-brick-xray-0.1.0-alpha.6.tgz#d9fe446dd0149e235c763059e572da132cf9efc9"
-  integrity sha512-NV8Yyg2zKRf/CYvhM+A+xSObJhjFdSBO6lyyRWORl0dKtCRsh8JmF+9uLHOSVzQIbZXZ0UqjBI3XL1lHATYFLw==
-  dependencies:
-    "@applicaster/x-ray" "git://github.com/applicaster/x-ray.git"
-
 "@applicaster/x-ray@git://github.com/applicaster/x-ray.git":
   version "0.0.1-alpha"
   resolved "git://github.com/applicaster/x-ray.git#2dca69d55809270018d1cb72fd8d888b6bf35d93"
@@ -455,7 +448,7 @@
     prop-types "^15.0.0"
     ramda "0.26.1"
 
-"@applicaster/zapplicaster-cli@4.0.1-rc.18":
+"@applicaster/zapplicaster-cli@^4.0.1-rc.18":
   version "4.0.1-rc.18"
   resolved "https://registry.yarnpkg.com/@applicaster/zapplicaster-cli/-/zapplicaster-cli-4.0.1-rc.18.tgz#12e145ef4a9ae09410e4d99b74f8f739cbbb4924"
   integrity sha512-rkOkpj1c2YGIVFv3YZ+fuLsJy2kfv1D4vuDR/QtOjSqZoJrr4oHOQ1+jdiowv2i6NczhJcp5cCyW05/3xnfFfw==
