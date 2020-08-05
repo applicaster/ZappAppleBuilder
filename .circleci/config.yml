@@ -156,7 +156,7 @@ references:
           ls ..
 
           ls ../ZappTool
-          "../ZappTool/ZappTool ${ZAPPTOOL_FLAGS}"
+          ../ZappTool/ZappTool "${ZAPPTOOL_FLAGS}"
         else
           yarn
         fi
