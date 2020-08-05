@@ -133,7 +133,7 @@ references:
         then
 
           ZAPPTOOL_FLAGS=""
-          ehco REACT_NATIVE_PACKAGER_ROOT
+          echo REACT_NATIVE_PACKAGER_ROOT
           echo $REACT_NATIVE_PACKAGER_ROOT"
           if [ -z "$REACT_NATIVE_PACKAGER_ROOT" ];
           then
@@ -142,7 +142,7 @@ references:
             ZAPPTOOL_FLAGS="${ZAPPTOOL_FLAGS} -rn ${HOST_URL}"
           fi;
 
-          ehco SKIP_BUNDLE_MINIFICATION
+          echo SKIP_BUNDLE_MINIFICATION
           echo $SKIP_BUNDLE_MINIFICATION"
           if [ -z "$SKIP_BUNDLE_MINIFICATION" ];
           then
