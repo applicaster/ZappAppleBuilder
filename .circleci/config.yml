@@ -135,14 +135,10 @@ references:
           ZAPPTOOL_FLAGS=""
           if [ ! -z "$react_native_packager_root" ];
           then
-            echo Inside
             HOST_URL=$react_native_packager_root
             ZAPPTOOL_FLAGS="${ZAPPTOOL_FLAGS} -rn ${HOST_URL}"
-          fi;
-
-          if [ "$skip_bundle_minification" -eq true];
+          elif [ "$skip_bundle_minification" -eq true ];
           then
-            echo Inside
             ZAPPTOOL_FLAGS="${ZAPPTOOL_FLAGS} -sbm"
           fi;
           
