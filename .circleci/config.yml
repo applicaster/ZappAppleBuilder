@@ -137,7 +137,9 @@ references:
           then
             HOST_URL=$react_native_packager_root
             ZAPPTOOL_FLAGS="${ZAPPTOOL_FLAGS} -rn ${HOST_URL}"
-          elif [ "$skip_bundle_minification" -eq true ];
+          fi;
+
+          if [ "$skip_bundle_minification" -eq "true"];
           then
             ZAPPTOOL_FLAGS="${ZAPPTOOL_FLAGS} -sbm"
           fi;
