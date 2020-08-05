@@ -144,7 +144,7 @@ references:
 
           echo skip_bundle_minification
           echo $skip_bundle_minification"
-          if [ "$skip_bundle_minification" -eq "true"];
+          if [ "$skip_bundle_minification" -eq true];
           then
             echo Inside
             ZAPPTOOL_FLAGS="${ZAPPTOOL_FLAGS} -sbm"
