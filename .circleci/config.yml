@@ -139,7 +139,7 @@ references:
             ZAPPTOOL_FLAGS="${ZAPPTOOL_FLAGS} -rn ${HOST_URL}"
           fi;
 
-          if [ "$skip_bundle_minification" -eq "true" ];
+          if [ "$skip_bundle_minification" = true ];
           then
             ZAPPTOOL_FLAGS="${ZAPPTOOL_FLAGS} -sbm"
           fi;
