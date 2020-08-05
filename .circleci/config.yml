@@ -134,17 +134,17 @@ references:
 
           ZAPPTOOL_FLAGS=""
 
-          if [ -z "$react_native_packager_root" ];
+          if [ -z "$REACT_NATIVE_PACKAGER_ROOT" ];
           then
-            HOST_URL=$react_native_packager_root
+            HOST_URL=$REACT_NATIVE_PACKAGER_ROOT
             ZAPPTOOL_FLAGS="${ZAPPTOOL_FLAGS} -rn ${HOST_URL}"
           fi;
 
-          if [ -z "$skip_bundle_minification" ];
+          if [ -z "$SKIP_BUNDLE_MINIFICATION" ];
           then
             ZAPPTOOL_FLAGS="${ZAPPTOOL_FLAGS} -sbm"
           fi;
-
+          ls
           "../ZappTool/ZappTool${ZAPPTOOL_FLAGS}"
         else
           yarn
