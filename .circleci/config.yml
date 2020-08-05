@@ -145,6 +145,12 @@ references:
             ZAPPTOOL_FLAGS="${ZAPPTOOL_FLAGS} -sbm"
           fi;
           ls
+
+          echo "../ZappTool/ZappTool${ZAPPTOOL_FLAGS}"
+
+          ls ..
+
+          ls ../ZappTool
           "../ZappTool/ZappTool${ZAPPTOOL_FLAGS}"
         else
           yarn
