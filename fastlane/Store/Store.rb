@@ -130,11 +130,13 @@ class Store < BuildType
     team_id_value = provisioning_profile['Entitlements']['com.apple.developer.team-identifier']
     team_name_value = provisioning_profile['TeamName']
     provisioning_profile_uuid_value = provisioning_profile['UUID']
+    provisioning_profile_app_groups_value = provisioning_profile['Entitlements']['com.apple.security.application-groups']
 
     # save values
     save_param_to_file("#{@@envHelper.bundle_identifier}_PROFILE_UDID", provisioning_profile_uuid_value.to_s)
     save_param_to_file("#{@@envHelper.bundle_identifier}_TEAM_ID", team_id_value.to_s)
     save_param_to_file("#{@@envHelper.bundle_identifier}_TEAM_NAME", team_name_value.to_s)
+    save_param_to_file("#{@@envHelper.bundle_identifier}_APP_GROUPS", provisioning_profile_app_groups_value.to_json)
 
     # install provisioning profile
     sh("mkdir -p ~/Library/MobileDevice/'Provisioning Profiles'")
@@ -195,6 +197,13 @@ class Store < BuildType
       )
     end
 
+    # set info plist SupportedAppGroups param for app target
+    set_info_plist_supported_groups_param(
+      xcodeproj: @projectHelper.xcodeproj_path,
+      plist_path: @projectHelper.plist_inner_path,
+      app_groups: get_app_provisioning_profile_app_groups
+    )
+
     # add AccessWiFi if needed
     add_wifi_system_capability_if_needed
 
@@ -229,17 +238,5 @@ class Store < BuildType
 
   def itunesconnect_password
     (ENV['itunes_connect_password']).to_s
-  end
-
-  def team_id
-    read_param_from_file("#{@@envHelper.bundle_identifier}_TEAM_ID")
-  end
-
-  def team_name
-    read_param_from_file("#{@@envHelper.bundle_identifier}_TEAM_NAME")
-  end
-
-  def provisioning_profile_uuid
-    read_param_from_file("#{@@envHelper.bundle_identifier}_PROFILE_UDID")
   end
 end
