@@ -31,6 +31,7 @@ def shared_pods
     pod 'ZappApple', :path => './node_modules/@applicaster/zapp-apple/apple/ZappApple.podspec'
     pod 'XrayLogger', :git => 'https://github.com/applicaster/x-ray.git', :tag => '0.0.2-alpha'
     pod 'react-native-viewpager', :path => 'node_modules/@react-native-community/viewpager/react-native-viewpager.podspec'
+    pod 'react-native-webview', :path => './node_modules/react-native-webview/react-native-webview.podspec'
     # Zaptool pods - Do not remove or change.
 
 end
