@@ -161,6 +161,15 @@ const TVOS_FILES_TO_PATCH = [
       correctString: "",
     },
   },
+  {
+    filePath: "./Libraries/Text/TextInput/RCTBaseTextInputView.m",
+    operation: replaceStringInFile,
+    args: {
+      lookUpString: "  if (shouldFallbackToBareTextComparison) {",
+      correctString:
+        "  #if TARGET_OS_TV\n    shouldFallbackToBareTextComparison = YES;\n  #endif\n  if (shouldFallbackToBareTextComparison) {",
+    },
+  },
 ];
 async function run() {
   var platform_install_folder = process.argv.slice(2);
