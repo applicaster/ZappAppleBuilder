@@ -177,10 +177,10 @@
     react "16.11.0"
     react-native "0.62.2"
 
-"@applicaster/zapp-apple@0.9.1":
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-apple/-/zapp-apple-0.9.1.tgz#65817ac1d9968748d0680cea224631dd74237d01"
-  integrity sha512-ekMda7jxvT1NK5cMA9QxOzHlK1X9PM9eCDQMg7ho1Z2m4Pi+Yph7Ox/0zSV0Q0FXegYSoMaxzk9AlMBaw+9xyA==
+"@applicaster/zapp-apple@0.9.2":
+  version "0.9.2"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-apple/-/zapp-apple-0.9.2.tgz#1bdc52598760c966dfd4d858955c89301cafb535"
+  integrity sha512-UO6pwZ4B7lShbV50blPWb1qvXsuAuo06nv2QpYifw3QFAXMcEl9dCBGQJQ9HecOQcURJfzCI9Wlz2fLBFRvyJA==
 
 "@applicaster/zapp-core@0.13.4":
   version "0.13.4"
