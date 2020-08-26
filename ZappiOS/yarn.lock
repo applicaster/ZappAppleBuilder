@@ -177,15 +177,15 @@
     react "16.11.0"
     react-native "0.62.2"
 
-"@applicaster/zapp-apple@0.8.17":
-  version "0.8.17"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-apple/-/zapp-apple-0.8.17.tgz#8a0e48bbab20cc3ddb0bdc83918d02a33b1cd7a0"
-  integrity sha512-8j9BaInSpSy43CEOUI+uXAizb7XgBsSrBIGxj35XY5KVLtA0Odw4CpXR6jtrEzMbLUzNGVFXO/1fqDgM3hLmLA==
+"@applicaster/zapp-apple@0.9.1":
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-apple/-/zapp-apple-0.9.1.tgz#65817ac1d9968748d0680cea224631dd74237d01"
+  integrity sha512-ekMda7jxvT1NK5cMA9QxOzHlK1X9PM9eCDQMg7ho1Z2m4Pi+Yph7Ox/0zSV0Q0FXegYSoMaxzk9AlMBaw+9xyA==
 
-"@applicaster/zapp-core@0.13.3":
-  version "0.13.3"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-core/-/zapp-core-0.13.3.tgz#ac209a2a842590b79e2fc3479c97c3190d8edc73"
-  integrity sha512-zleO7tvg5w4WUzW2a3MXmIEw/iLKFot3OZkiM9dMSC5bkL/3PWoD/GsuzpewRpSfBNAENnZ1kHzIKW9YY9FUPw==
+"@applicaster/zapp-core@0.13.4":
+  version "0.13.4"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-core/-/zapp-core-0.13.4.tgz#26310efb50c2dd0bc90e6b602e08ac5088a435f2"
+  integrity sha512-gTiJsWz78HAHn4jPCsq7iMDjN1uBC4PN8uoUz9Kj9mm+Yf3cengJ4rLqUz0Xb8HkytQYj+7tsFfO+t2Xec/36g==
 
 "@applicaster/zapp-pipes-dev-kit@^1.4.1":
   version "1.4.1"
