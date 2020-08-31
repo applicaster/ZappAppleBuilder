@@ -25,8 +25,8 @@ public class FirebaseHandler: NSObject {
                 return
             }
 
-            let logger = Logger.getLogger(for: ApplicationLoading.subsystem)
-            logger?.debugLog(template: ApplicationLoading.firebaseConfigure)
+            let logger = Logger.getLogger(for: FirebaseLogs.subsystem)
+            logger?.debugLog(template: FirebaseLogs.firebaseConfigure)
             FirebaseApp.configure()
 
         #endif
