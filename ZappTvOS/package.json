@@ -24,7 +24,7 @@
     "reset": "rm -rf quick_brick/* quick_brick/.babelrc"
   },
   "dependencies": {
-    "@applicaster/zapp-apple": "0.9.3",
+    "@applicaster/zapp-apple": "0.9.4",
     "@applicaster/zapp-core": "0.13.5",
     "@applicaster/quick-brick-native-apple": "4.0.0-2",
     "@react-native-community/cli-platform-ios": "^4.7.0",
