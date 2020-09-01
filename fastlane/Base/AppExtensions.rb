@@ -75,10 +75,22 @@ class AppExtensions < BaseHelper
         xcodeproj: @projectHelper.xcodeproj_path,
         plist_path: extension_info_plist_inner_path
       )
+
+      # set info plist SupportedAppGroups param for extension target
+      set_info_plist_supported_groups_param(
+        xcodeproj: @projectHelper.xcodeproj_path,
+        plist_path: extension_info_plist_inner_path,
+        app_groups: get_app_provisioning_profile_app_groups
+      )
+
       update_app_identifier(
         xcodeproj: @projectHelper.xcodeproj_path,
         plist_path: extension_info_plist_inner_path,
         app_identifier: extension_bundle_identifier
+      )
+
+      add_extension_to_project(
+        extension_target_name.to_s
       )
 
     else
