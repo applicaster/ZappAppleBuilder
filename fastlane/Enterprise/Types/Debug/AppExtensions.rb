@@ -33,7 +33,8 @@ class EnterpriseDebugAppExtensions < AppExtensions
         extension_target_name: extension_target_name,
         extension_bundle_identifier: extension_bundle_identifier,
         extension_info_plist_inner_path: extension_info_plist_inner_path,
-        extension_info_plist_path: extension_info_plist_path
+        extension_info_plist_path: extension_info_plist_path,
+        app_bunlde_identifier: app_bundle_identifier
       )
 
       # create app for the notifications

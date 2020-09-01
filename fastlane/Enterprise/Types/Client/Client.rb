@@ -168,7 +168,7 @@ class EnterpriseClient < BuildTypeEnterprise
     set_info_plist_supported_groups_param(
       xcodeproj: @projectHelper.xcodeproj_path,
       plist_path: @projectHelper.plist_inner_path,
-      app_groups: get_app_provisioning_profile_app_groups
+      app_groups: get_app_provisioning_profile_app_groups(@@envHelper.bundle_identifier)
     )
 
     prepare_extensions
@@ -184,7 +184,8 @@ class EnterpriseClient < BuildTypeEnterprise
       extension_target_name: @appExtensions.notification_service_extension_target_name,
       extension_bundle_identifier: @appExtensions.notification_service_extension_bundle_identifier,
       extension_info_plist_inner_path: @appExtensions.notification_service_extension_info_plist_inner_path,
-      extension_info_plist_path: @appExtensions.notification_service_extension_info_plist_path
+      extension_info_plist_path: @appExtensions.notification_service_extension_info_plist_path,
+      app_bunlde_identifier: @@envHelper.bundle_identifier
     )
 
     @appExtensions.prepare_notification_extension(
@@ -193,7 +194,8 @@ class EnterpriseClient < BuildTypeEnterprise
       extension_target_name: @appExtensions.notification_content_extension_target_name,
       extension_bundle_identifier: @appExtensions.notification_content_extension_bundle_identifier,
       extension_info_plist_inner_path: @appExtensions.notification_content_extension_info_plist_inner_path,
-      extension_info_plist_path: @appExtensions.notification_content_extension_info_plist_path
+      extension_info_plist_path: @appExtensions.notification_content_extension_info_plist_path,
+      app_bunlde_identifier: @@envHelper.bundle_identifier
     )
   end
 end

@@ -38,6 +38,7 @@ class AppExtensions < BaseHelper
     extension_bundle_identifier = options[:extension_bundle_identifier]
     extension_info_plist_inner_path = options[:extension_info_plist_inner_path]
     extension_info_plist_path = options[:extension_info_plist_path]
+    app_bunlde_identifier = options[:app_bunlde_identifier]
 
     extension_enabled = false
     plist_content = get_plist_content("#{@projectHelper.customizations_folder_path}/FeaturesCustomization.plist")
@@ -80,7 +81,7 @@ class AppExtensions < BaseHelper
       set_info_plist_supported_groups_param(
         xcodeproj: @projectHelper.xcodeproj_path,
         plist_path: extension_info_plist_inner_path,
-        app_groups: get_app_provisioning_profile_app_groups
+        app_groups: get_app_provisioning_profile_app_groups(app_bunlde_identifier)
       )
 
       update_app_identifier(
