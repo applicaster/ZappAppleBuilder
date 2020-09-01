@@ -90,6 +90,30 @@ class EnterpriseDebug < BuildTypeEnterprise
     delete_keychain(
       name: @@envHelper.keychain_name
     )
+
+    # delete Invalid provisioning profiles for app
+    delete_invalid_provisioning_profiles(
+      username: username,
+      team_id: team_id,
+      team_name: team_name,
+      bundle_identifier: app_bundle_identifier
+    )
+
+    # delete Invalid provisioning profiles for notification service extension
+    delete_invalid_provisioning_profiles(
+      username: username,
+      team_id: team_id,
+      team_name: team_name,
+      bundle_identifier: notifications_service_extension_bundle_identifier
+    )
+
+    # delete Invalid provisioning profiles for notification content extension
+    delete_invalid_provisioning_profiles(
+      username: username,
+      team_id: team_id,
+      team_name: team_name,
+      bundle_identifier: notifications_content_extension_bundle_identifier
+    )
   end
 
   def prepare_build
@@ -146,6 +170,9 @@ class EnterpriseDebug < BuildTypeEnterprise
         team_name: team_name,
         bundle_identifier: app_bundle_identifier
       )
+
+      # save APP_GROUPS param
+      save_param_to_file("#{app_bundle_identifier}_APP_GROUPS", [group_name(app_bundle_identifier).to_s].to_json)
 
       # set info plist SupportedAppGroups param for app target
       set_info_plist_supported_groups_param(
