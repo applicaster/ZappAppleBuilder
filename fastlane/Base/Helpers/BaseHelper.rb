@@ -194,9 +194,6 @@ class BaseHelper
     provisioning_profile = get_provisioning_profile_content("#{@@envHelper.root_path}/#{options[:bundle_identifier]}.mobileprovision")
     provisioning_profile_uuid_value = provisioning_profile['UUID']
     save_param_to_file("#{options[:bundle_identifier]}_PROFILE_UDID", provisioning_profile_uuid_value.to_s)
-
-    # delete Invalid provisioning profiles for the same app
-    delete_invalid_provisioning_profiles(options)
   end
 
   def delete_invalid_provisioning_profiles(options)
@@ -303,8 +300,9 @@ class BaseHelper
     JSON.parse(json)
   end
 
-  def get_app_provisioning_profile_app_groups
-    json = read_param_from_file("#{@@envHelper.bundle_identifier}_APP_GROUPS")
+  def get_app_provisioning_profile_app_groups(bundle_identifier)
+    current(__callee__.to_s)
+    json = read_param_from_file("#{bundle_identifier}_APP_GROUPS")
     JSON.parse(json)
   end
 
