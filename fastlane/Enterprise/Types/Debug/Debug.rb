@@ -63,7 +63,7 @@ class EnterpriseDebug < BuildTypeEnterprise
               "DEBUG_ENABLED_GCC='DEBUG=1' "\
               "DEBUG_ENABLED_SWIFT='-DDEBUG' "\
               "DEBUG_ENABLED_SCRIPTS='Debug' "\
-              "PROVISIONING_PROFILE='#{main_prov_profile_specifier}' "\
+              "MAIN_PROV_PROFILE_SPECIFIER='#{main_prov_profile_specifier}' "\
               "NOTIFICATION_SERVICE_EXTENSION_PROV_PROFILE_SPECIFIER='#{notification_service_extension_prov_profile_specifier}' "\
               "NOTIFICATION_CONTENT_EXTENSION_PROV_PROFILE_SPECIFIER='#{notification_content_extension_prov_profile_specifier}' "\
               "DEBUG_INFORMATION_FORMAT='dwarf-with-dsym'",
@@ -93,7 +93,7 @@ class EnterpriseDebug < BuildTypeEnterprise
   end
 
   def prepare_build
-    prepare_app_for_build
+    prepare_ent_app_for_build
 
     # update app base parameters in FeaturesCustomization.json
     update_parameters_in_feature_optimization_json
@@ -145,6 +145,13 @@ class EnterpriseDebug < BuildTypeEnterprise
         team_id: team_id,
         team_name: team_name,
         bundle_identifier: app_bundle_identifier
+      )
+
+      # set info plist SupportedAppGroups param for app target
+      set_info_plist_supported_groups_param(
+        xcodeproj: @projectHelper.xcodeproj_path,
+        plist_path: @projectHelper.plist_inner_path,
+        app_groups: [group_name(app_bundle_identifier).to_s]
       )
 
       # prepare app extensions

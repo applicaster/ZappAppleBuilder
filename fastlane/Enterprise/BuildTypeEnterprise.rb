@@ -16,7 +16,7 @@ class BuildTypeEnterprise < BuildType
     )
   end
 
-  def prepare_app_for_build
+  def prepare_ent_app_for_build
     # delete spotlight subscription entitlements if exists
     remove_key_from_entitlements(@projectHelper.name.to_s, 'Release', 'com.apple.smoot.subscriptionservice')
     # delete sso entitlements if exists

@@ -284,4 +284,16 @@ class BuildType < BaseHelper
       @appCenterHelper.upload_app(options)
     end
   end
+
+  def team_id
+    read_param_from_file("#{@@envHelper.bundle_identifier}_TEAM_ID")
+  end
+
+  def team_name
+    read_param_from_file("#{@@envHelper.bundle_identifier}_TEAM_NAME")
+  end
+
+  def provisioning_profile_uuid
+    read_param_from_file("#{@@envHelper.bundle_identifier}_PROFILE_UDID")
+  end
 end

@@ -120,6 +120,17 @@ class BaseHelper
     )
   end
 
+  def set_info_plist_supported_groups_param(options)
+    current(__callee__.to_s)
+    @fastlane.update_info_plist(
+      xcodeproj: options[:xcodeproj],
+      plist_path: options[:plist_path],
+      block: lambda do |plist|
+        plist['SupportedAppGroups'] = options[:app_groups]
+      end
+    )
+  end
+
   def update_project_team(options)
     current(__callee__.to_s)
     @fastlane.update_project_team(
@@ -290,5 +301,14 @@ class BaseHelper
   def get_json_content(path)
     json = File.read(path.to_s).strip if File.exist? path.to_s
     JSON.parse(json)
+  end
+
+  def get_app_provisioning_profile_app_groups
+    json = read_param_from_file("#{@@envHelper.bundle_identifier}_APP_GROUPS")
+    JSON.parse(json)
+  end
+
+  def group_name(app_bundle_identifier)
+    "group.#{app_bundle_identifier}"
   end
 end

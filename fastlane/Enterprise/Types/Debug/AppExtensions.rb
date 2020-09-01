@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 class EnterpriseDebugAppExtensions < AppExtensions
-  def group_name(app_bundle_identifier)
-    "group.#{app_bundle_identifier}"
-  end
-
   def extension_prepare(options)
     username = options[:username]
     team_id = options[:team_id]
@@ -64,24 +60,29 @@ class EnterpriseDebugAppExtensions < AppExtensions
         bundle_identifier: extension_bundle_identifier
       )
 
-      # add group to entitlements
+      # add group to entitlements for app target
       update_group_identifiers(
         target: @projectHelper.name.to_s,
         build_type: 'Release',
         groups: [group_name(app_bundle_identifier).to_s]
       )
 
+      # add group to entitlements for extension target
       update_group_identifiers(
         target: extension_target_name.to_s,
         build_type: 'Release',
         groups: [group_name(app_bundle_identifier).to_s]
       )
 
-      add_extension_to_project(
-        extension_target_name.to_s
+      # set info plist SupportedAppGroups param for extension target
+      set_info_plist_supported_groups_param(
+        xcodeproj: @projectHelper.xcodeproj_path,
+        plist_path: extension_info_plist_inner_path,
+        app_groups: [group_name(app_bundle_identifier).to_s]
       )
 
     else
+      
       # notification extension disabled
       sh("echo '#{extension_type} disabled'")
     end
