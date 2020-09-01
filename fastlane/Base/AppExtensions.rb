@@ -89,6 +89,10 @@ class AppExtensions < BaseHelper
         app_identifier: extension_bundle_identifier
       )
 
+      add_extension_to_project(
+        extension_target_name.to_s
+      )
+
     else
       # notification extension disabled
       sh("echo '#{extension_type} disabled'")

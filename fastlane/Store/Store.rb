@@ -61,7 +61,7 @@ class Store < BuildType
            "NOTIFICATION_SERVICE_EXTENSION_PROV_PROFILE_SPECIFIER='#{notification_service_extension_prov_profile_specifier}' "\
            "NOTIFICATION_CONTENT_EXTENSION_PROV_PROFILE_SPECIFIER='#{notification_content_extension_prov_profile_specifier}' "\
            "DEBUG_INFORMATION_FORMAT='dwarf-with-dsym' "\
-           "PROVISIONING_PROFILE_SPECIFIER='#{main_prov_profile_specifier}'",
+           "MAIN_PROV_PROFILE_SPECIFIER='#{main_prov_profile_specifier}'",
       export_team_id: team_id,
       export_method: 'app-store',
       export_options: saved_param_filename(build_export_options)

@@ -54,7 +54,7 @@ class EnterpriseClient < BuildTypeEnterprise
       output_name: "#{@projectHelper.scheme}-Enterprise",
       build_path: @projectHelper.build_path,
       derived_data_path: @projectHelper.build_path,
-      xcargs: "PROVISIONING_PROFILE='#{main_prov_profile_specifier}' "\
+      xcargs: "MAIN_PROV_PROFILE_SPECIFIER='#{main_prov_profile_specifier}' "\
            "NOTIFICATION_SERVICE_EXTENSION_PROV_PROFILE_SPECIFIER='#{notification_service_extension_prov_profile_specifier}' "\
            "NOTIFICATION_CONTENT_EXTENSION_PROV_PROFILE_SPECIFIER='#{notification_content_extension_prov_profile_specifier}' "\
            "DEBUG_INFORMATION_FORMAT='dwarf-with-dsym'",

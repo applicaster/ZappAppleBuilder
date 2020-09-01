@@ -63,7 +63,7 @@ class EnterpriseDebug < BuildTypeEnterprise
               "DEBUG_ENABLED_GCC='DEBUG=1' "\
               "DEBUG_ENABLED_SWIFT='-DDEBUG' "\
               "DEBUG_ENABLED_SCRIPTS='Debug' "\
-              "PROVISIONING_PROFILE='#{main_prov_profile_specifier}' "\
+              "MAIN_PROV_PROFILE_SPECIFIER='#{main_prov_profile_specifier}' "\
               "NOTIFICATION_SERVICE_EXTENSION_PROV_PROFILE_SPECIFIER='#{notification_service_extension_prov_profile_specifier}' "\
               "NOTIFICATION_CONTENT_EXTENSION_PROV_PROFILE_SPECIFIER='#{notification_content_extension_prov_profile_specifier}' "\
               "DEBUG_INFORMATION_FORMAT='dwarf-with-dsym'",
