@@ -26,9 +26,7 @@
     "reset": "rm -rf quick_brick/* quick_brick/.babelrc"
   },
   "dependencies": {
-    "@applicaster/zapp-core": "0.13.3",
-    "@applicaster/zapp-apple": "0.8.13",
-    "@applicaster/quick-brick-native-apple": "4.0.0-2",
+    "@applicaster/quick-brick-native-apple": "4.1.0",
     "@applicaster/zapp-apple": "0.9.4",
     "@applicaster/zapp-core": "0.13.5",
     "@react-native-community/cli-platform-ios": "^4.7.0",
@@ -41,7 +39,7 @@
     "react-native-linear-gradient": "2.5.6"
   },
   "devDependencies": {
-    "@applicaster/zapplicaster-cli": "^4.0.1-rc.18",
+    "@applicaster/zapplicaster-cli": "4.1.0",
     "flipper-plugin-react-native-performance": "^0.4.3"
   },
   "name": "ZappAppleBuilder",
