@@ -81,6 +81,8 @@
 	<string>The app uses the microphone in order to share video recordings.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>The app uses the Photo library so you can share (by choosing to) photos on live events or save photos to your library.</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>This identifier will be used to deliver personalized ads to you.</string>
 	<key>TwitterKey</key>
 	<string></string>
 	<key>TwitterSecret</key>
@@ -126,7 +128,6 @@
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>audio</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchImages~ipad</key>

@@ -1,19 +1,22 @@
 {
-  "name": "ZappAppleBuilder",
-  "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "private": true,
+  "version": "1.0.0",
   "author": "",
+  "resolutions": {
+    "lodash": "^4.17.19"
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/applicaster/ZappAppleBuilder/issues"
   },
+  "main": "index.js",
   "homepage": "https://github.com/applicaster/ZappAppleBuilder#readme",
   "keywords": [],
   "scripts": {
     "start": "cd quick_brick && yarn start",
     "run:ios": "node_modules/.bin/react-native run-ios --project-path . --scheme ZappiOS --configuration Debug --simulator \"iPhone 11\"",
+    "quick-brick:build:ios:debug": "cd quick_brick && yarn build:ios:debug && cd .. && yarn copy:bundle:ios",
     "postinstall": "yarn patch:react",
     "start:ios": "yarn run:ios & yarn start",
     "quick-brick:build:ios": "cd quick_brick && yarn build:ios && cd .. && yarn copy:bundle:ios",
@@ -23,18 +26,23 @@
     "reset": "rm -rf quick_brick/* quick_brick/.babelrc"
   },
   "dependencies": {
-    "@applicaster/zapp-core": "0.13.3",
-    "@applicaster/zapp-apple": "0.8.13",
-    "@applicaster/quick-brick-native-apple": "4.0.0-2",
+    "@applicaster/quick-brick-native-apple": "4.1.0",
+    "@applicaster/zapp-apple": "0.9.4",
+    "@applicaster/zapp-core": "0.13.5",
     "@react-native-community/cli-platform-ios": "^4.7.0",
     "@react-native-community/netinfo": "^5.9.0",
+    "@react-native-community/viewpager": "3.3.0",
     "react": "16.11.0",
-    "react-native": "0.62.2"
+    "react-native": "0.62.2",
+    "react-native-svg": "9.13.6",
+    "react-native-webview": "9.1.1",
+    "react-native-linear-gradient": "2.5.6"
   },
   "devDependencies": {
-    "@applicaster/zapplicaster-cli": "4.0.0",
+    "@applicaster/zapplicaster-cli": "4.1.0",
     "flipper-plugin-react-native-performance": "^0.4.3"
   },
+  "name": "ZappAppleBuilder",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/applicaster/ZappAppleBuilder.git"
