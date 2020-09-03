@@ -1,6 +1,0 @@
-framework module ZappPlugins {
-  umbrella header "ZappPlugins-umbrella.h"
-
-  export *
-  module * { export * }
-}

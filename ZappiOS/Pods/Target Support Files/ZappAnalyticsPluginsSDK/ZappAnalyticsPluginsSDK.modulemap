@@ -1,6 +1,0 @@
-framework module ZappAnalyticsPluginsSDK {
-  umbrella header "ZappAnalyticsPluginsSDK-umbrella.h"
-
-  export *
-  module * { export * }
-}

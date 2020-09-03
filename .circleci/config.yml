@@ -2,10 +2,10 @@ version: 2.1
 parameters:
   zapptool-version:
     type: string
-    default: "3.10.0"
+    default: "3.11.1"
   general-caching-key:
     type: string
-    default: "ZappApple_Cache_1.0.5"
+    default: "ZappApple_Cache_1.0.8"
 notify:
   webhooks:
     - url: https://zapp.applicaster.com/callbacks/build_status/circleci_builds
@@ -14,7 +14,8 @@ references:
   mac_config: &mac_config
     working_directory: *workspace_root
     macos:
-      xcode: "11.4.0"
+      xcode: "11.5.0"
+    resource_class: large
     shell: /bin/bash --login -eo pipefail
 
     environment:
@@ -130,7 +131,22 @@ references:
         cd $targetFolder
         if [ "$bundle_identifier" ];
         then
-          "../ZappTool/ZappTool"
+
+          ZAPPTOOL_FLAGS=""
+          if [ ! -z "$react_native_packager_root" ];
+          then
+            HOST_URL=$react_native_packager_root
+            ZAPPTOOL_FLAGS="${ZAPPTOOL_FLAGS} -rn ${HOST_URL}"
+          fi;
+
+          if [ "$skip_bundle_minification" = true ];
+          then
+            ZAPPTOOL_FLAGS="${ZAPPTOOL_FLAGS} -sbm"
+          fi;
+          
+          echo "../ZappTool/ZappTool${ZAPPTOOL_FLAGS}"
+
+          ../ZappTool/ZappTool "${ZAPPTOOL_FLAGS}"
         else
           yarn
         fi
@@ -183,6 +199,15 @@ references:
     run:
       name: Xcode installed location
       command: xcode-select -p
+
+  install_awscli: &install_awscli
+    run:
+      name: AWSCLI - Installing S3 AWS
+      command: |
+        curl 'https://s3.amazonaws.com/aws-cli/awscli-bundle.zip' -o 'awscli-bundle.zip'
+        unzip awscli-bundle.zip
+        sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+        aws --version
 
   zapptool_cache_key: &zapptool_cache_key ZappTool-2.3-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
 
@@ -279,6 +304,8 @@ jobs:
       - *install_npm_dependencies
       - *save_npm
 
+      - *install_awscli
+
       - *restore_pods
       - *vesion_pods
       - *install_pods
@@ -318,6 +345,8 @@ jobs:
       - *install_npm_dependencies
       - *save_npm
 
+      - *install_awscli
+
       - *restore_pods
       - *vesion_pods
       - *install_pods
@@ -356,6 +385,7 @@ jobs:
       - *gems_install
       - *npm_login
       - *restore_npm
+      - *install_awscli
       - *validate_app_signing
       - *prepare_application_environment
       - *restore_pods

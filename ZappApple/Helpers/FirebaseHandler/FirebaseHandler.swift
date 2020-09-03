@@ -7,6 +7,9 @@
 //
 
 import Foundation
+import XrayLogger
+import ZappApple
+
 #if canImport(FirebaseCore)
     import FirebaseCore
 #endif
@@ -21,18 +24,25 @@ public class FirebaseHandler: NSObject {
                 FirebaseHandler.hasValidConfiguration() == true else {
                 return
             }
+
+            let logger = Logger.getLogger(for: FirebaseLogs.subsystem)
+            logger?.debugLog(template: FirebaseLogs.firebaseConfigure)
             FirebaseApp.configure()
+
         #endif
     }
 
     public class func hasValidConfiguration() -> Bool {
+        let logger = Logger.getLogger(for: FirebaseLogs.subsystem)
+
         guard let path = Bundle.main.path(forResource: kGoogleServiceFileName,
                                           ofType: kGoogleServicePlistExtension),
             let content = NSDictionary(contentsOfFile: path),
             content.count > 0 else {
+            logger?.warningLog(template: FirebaseLogs.firebaseConfigureHasNoValidConfiguration)
             return false
         }
-
+        logger?.debugLog(template: FirebaseLogs.firebaseConfigureHasValidConfiguration)
         return true
     }
 }
