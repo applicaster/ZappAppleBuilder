@@ -651,8 +651,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MAIN_PROV_PROFILE_SPECIFIER = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.applicaster.ZappTvOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "$(MAIN_PROV_PROFILE_SPECIFIER)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ZappTvOS/ZappTvOS-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 11.0;
@@ -672,8 +674,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MAIN_PROV_PROFILE_SPECIFIER = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.applicaster.ZappTvOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "$(MAIN_PROV_PROFILE_SPECIFIER)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ZappTvOS/ZappTvOS-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 11.0;
