@@ -29,7 +29,7 @@ def shared_pods
     pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
     pod 'ZappCore', :path => './node_modules/@applicaster/zapp-core/apple/ZappCore.podspec'
     pod 'ZappApple', :path => './node_modules/@applicaster/zapp-apple/apple/ZappApple.podspec'
-    pod 'XrayLogger', :path: './node_modules/@applicaster/x-ray/apple/XrayLogger.podspec'
+    pod 'XrayLogger', :path => './node_modules/@applicaster/x-ray/apple/XrayLogger.podspec'
     pod 'react-native-viewpager', :path => 'node_modules/@react-native-community/viewpager/react-native-viewpager.podspec'
     pod 'react-native-webview', :path => './node_modules/react-native-webview/react-native-webview.podspec'
     # Zaptool pods - Do not remove or change.
