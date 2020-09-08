@@ -172,6 +172,13 @@
   dependencies:
     "@applicaster/x-ray" "0.0.1-alpha"
 
+"@applicaster/quick-brick-xray@0.1.0-alpha.9":
+  version "0.1.0-alpha.9"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-xray/-/quick-brick-xray-0.1.0-alpha.9.tgz#ec01739edfc2f03d03d1dad41187263391691f19"
+  integrity sha512-dlooMBTht1vCrDPAq4RwPXZtuxPXOOcyQjbEDMdi5LNMOOawk2+thQW+su2+Zs3Yl/onqOozVNqbzlcQlUD1Mw==
+  dependencies:
+    "@applicaster/x-ray" "git://github.com/applicaster/x-ray.git"
+
 "@applicaster/react-native-fast-image@8.3.2-1":
   version "8.3.2-1"
   resolved "https://registry.yarnpkg.com/@applicaster/react-native-fast-image/-/react-native-fast-image-8.3.2-1.tgz#b0d565c2b33e3d3a9311fd569869186d942951cd"
@@ -181,6 +188,10 @@
   version "0.0.1-alpha"
   resolved "https://registry.yarnpkg.com/@applicaster/x-ray/-/x-ray-0.0.1-alpha.tgz#c4e0cdb37fda023c227ec9da26a39fa8e1b163d3"
   integrity sha512-MO7vOzwHZbjvZvsr1p3r9hr/HDwuuD+JRpgQzh33Ij2T0hw67xz7BgXlUJKhTgxnk1+cvS3vUfR7GOFyt+j0WQ==
+
+"@applicaster/x-ray@git://github.com/applicaster/x-ray.git":
+  version "0.0.4-alpha"
+  resolved "git://github.com/applicaster/x-ray.git#9cf1df05ebeb5e00a53d16baa75822b5ecf6c3fb"
 
 "@applicaster/zapp-apple@0.9.6":
   version "0.9.6"

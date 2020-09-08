@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 local_build = ENV['triggered_by'].nil? && ENV['CIRCLECI'].nil?
 load 'Flipper' if local_build
 platform :ios, '11.0'
@@ -5,8 +7,8 @@ require_relative './node_modules/@react-native-community/cli-platform-ios/native
 require_relative '../scripts/autolink-react-dependencies.rb'
 
 require 'resolv-replace'
-install! 'cocoapods', :deterministic_uuids => false, :preserve_pod_file_structure => true
-use_frameworks! :linkage => :static
+install! 'cocoapods', deterministic_uuids: false, preserve_pod_file_structure: true
+use_frameworks! linkage: :static
 
 source 'git@github.com:applicaster/CocoaPods.git'
 source 'git@github.com:applicaster/CocoaPods-Private.git'
@@ -22,18 +24,17 @@ end
 puts("\n\nCocoaPods preparing for platform: iOS\n\n")
 
 def shared_pods
-    # This frameworks added to support backwards compatibility
-    pod 'ZappPlugins', '= 11.7.0'
-    pod 'ZappPushPluginsSDK', '= 11.0.1'
-    pod 'ZappAnalyticsPluginsSDK', '= 11.0.0'
-    pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
-    pod 'ZappCore', :path => './node_modules/@applicaster/zapp-core/apple/ZappCore.podspec'
-    pod 'ZappApple', :path => './node_modules/@applicaster/zapp-apple/apple/ZappApple.podspec'
-    pod 'XrayLogger', :git => 'https://github.com/applicaster/x-ray.git', :tag => '0.0.2-alpha'
-    pod 'react-native-viewpager', :path => 'node_modules/@react-native-community/viewpager/react-native-viewpager.podspec'
-    pod 'react-native-webview', :path => './node_modules/react-native-webview/react-native-webview.podspec'
-    # Zaptool pods - Do not remove or change.
-
+  # This frameworks added to support backwards compatibility
+  pod 'ZappPlugins', '= 11.7.0'
+  pod 'ZappPushPluginsSDK', '= 11.0.1'
+  pod 'ZappAnalyticsPluginsSDK', '= 11.0.0'
+  pod 'QuickBrickApple', path: './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
+  pod 'ZappCore', path: './node_modules/@applicaster/zapp-core/apple/ZappCore.podspec'
+  pod 'ZappApple', path: './node_modules/@applicaster/zapp-apple/apple/ZappApple.podspec'
+  pod 'XrayLogger', path: './node_modules/@applicaster/x-ray/apple/XrayLogger.podspec'
+  pod 'react-native-viewpager', path: 'node_modules/@react-native-community/viewpager/react-native-viewpager.podspec'
+  pod 'react-native-webview', path: './node_modules/react-native-webview/react-native-webview.podspec'
+  # Zaptool pods - Do not remove or change.
 end
 
 target 'ZappiOS' do
@@ -50,31 +51,30 @@ target 'ZappiOSTests' do
 end
 
 target 'NotificationServiceExtension' do
-    # Zaptool notification service extension pods - Do not remove or change.
+  # Zaptool notification service extension pods - Do not remove or change.
 end
 
 target 'NotificationContentExtension' do
-    # Zaptool notification content extension pods - Do not remove or change.
-
+  # Zaptool notification content extension pods - Do not remove or change.
 end
 
 post_install do |installer|
   flipper_post_install(installer) if local_build
 
-    installer.pods_project.targets.each do |target|
-        target.build_configurations.each do |config|
-            config.build_settings['APPLICATION_TARGET'] = "ZappiOS"
-            config.build_settings['ENABLE_BITCODE'] = 'YES'
-            config.build_settings['EXPANDED_CODE_SIGN_IDENTITY'] = ""
-            config.build_settings['CODE_SIGNING_REQUIRED'] = "NO"
-            config.build_settings['CODE_SIGNING_ALLOWED'] = "NO"
-            config.build_settings['OTHER_CFLAGS'] = ['$(inherited)', "-fembed-bitcode"]
-            config.build_settings['BITCODE_GENERATION_MODE']  = "bitcode"
-						# This works around a unit test issue introduced in Xcode 10.
-            # We only apply it to the Debug configuration to avoid bloating the app size
-            if config.name == "Debug" && defined?(target.product_type) && target.product_type == "com.apple.product-type.framework"
-                config.build_settings['ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES'] = "YES"
-						end
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['APPLICATION_TARGET'] = 'ZappiOS'
+      config.build_settings['ENABLE_BITCODE'] = 'YES'
+      config.build_settings['EXPANDED_CODE_SIGN_IDENTITY'] = ''
+      config.build_settings['CODE_SIGNING_REQUIRED'] = 'NO'
+      config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
+      config.build_settings['OTHER_CFLAGS'] = ['$(inherited)', '-fembed-bitcode']
+      config.build_settings['BITCODE_GENERATION_MODE'] = 'bitcode'
+      # This works around a unit test issue introduced in Xcode 10.
+      # We only apply it to the Debug configuration to avoid bloating the app size
+      if config.name == 'Debug' && defined?(target.product_type) && target.product_type == 'com.apple.product-type.framework'
+        config.build_settings['ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES'] = 'YES'
         end
     end
+  end
 end
