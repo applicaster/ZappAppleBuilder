@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 local_build = ENV['triggered_by'].nil? && ENV['CIRCLECI'].nil?
 load 'Flipper' if local_build
 platform :ios, '11.0'
@@ -34,7 +32,9 @@ def shared_pods
   pod 'XrayLogger', path: './node_modules/@applicaster/x-ray/apple/XrayLogger.podspec'
   pod 'react-native-viewpager', path: 'node_modules/@react-native-community/viewpager/react-native-viewpager.podspec'
   pod 'react-native-webview', path: './node_modules/react-native-webview/react-native-webview.podspec'
-  # Zaptool pods - Do not remove or change.
+  
+    # Zaptool pods - Do not remove or change.
+
 end
 
 target 'ZappiOS' do
