@@ -182,15 +182,20 @@
   resolved "https://registry.yarnpkg.com/@applicaster/x-ray/-/x-ray-0.0.1-alpha.tgz#c4e0cdb37fda023c227ec9da26a39fa8e1b163d3"
   integrity sha512-MO7vOzwHZbjvZvsr1p3r9hr/HDwuuD+JRpgQzh33Ij2T0hw67xz7BgXlUJKhTgxnk1+cvS3vUfR7GOFyt+j0WQ==
 
-"@applicaster/zapp-apple@0.9.4":
-  version "0.9.4"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-apple/-/zapp-apple-0.9.4.tgz#7ea850cd410f21db6987165c97e2d5b24a2cf912"
-  integrity sha512-L+6d8Q9k+h3j2mF5vKdtOzRhsS7Gg6095HJiSx5IQ3CFOcv4d5BO3MTcxkAY9U82N43K1nQCguCgVakBZ0y4aw==
+"@applicaster/x-ray@0.0.7-alpha":
+  version "0.0.7-alpha"
+  resolved "https://registry.yarnpkg.com/@applicaster/x-ray/-/x-ray-0.0.7-alpha.tgz#dee15f3ea3e879731dd4daaafc4b2f53c13adbb2"
+  integrity sha512-rahFpN9AG6Gt0MoXNVRHxNcsSrcbtifaED6H4iKnjgV6+PERd0xU8zgJi9YSHmKqwCFpKyHrnmG8qAg2oXOw8w==
 
-"@applicaster/zapp-core@0.13.5":
-  version "0.13.5"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-core/-/zapp-core-0.13.5.tgz#3dc075cae16d79341d2c59237ef62eafa393304e"
-  integrity sha512-azD5ZT3R/25oNV3o4Zh58RnhMU2tw4E0z9vozIZLz0FR8DaRDMCLr1t1lzgLwi2NJQNaiQoyYxUK34siYgMnAA==
+"@applicaster/zapp-apple@0.9.6":
+  version "0.9.6"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-apple/-/zapp-apple-0.9.6.tgz#eb18dcf0f2c1a8c4e834d5d3ec4261206a8f85be"
+  integrity sha512-x/Ulx/Dl0DqNn+Tt9x5z/mDsLPgKda1IsetjrAkkRzDDhk60UOsgtPPXzJnXdRwyb3auB1hBaI5kMZ+xS5kwkQ==
+
+"@applicaster/zapp-core@0.13.6":
+  version "0.13.6"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-core/-/zapp-core-0.13.6.tgz#75a56b7682990aa1a08902585170d6c12cbbc1f0"
+  integrity sha512-OYRTh/Vk5fw0ztIxOIMuQotXKFtrmHt0dVFT/v8UZXB0Znj2JqjKbDpy52qoDm6BpRBIEvJitlY9NtwmT9Vwpw==
 
 "@applicaster/zapp-pipes-dev-kit@^1.4.1":
   version "1.4.1"

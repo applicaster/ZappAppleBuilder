@@ -55,6 +55,17 @@ class BuildType < BaseHelper
       name: 'S3Hostname',
       value: @@envHelper.s3_hostname
     )
+
+    debug_environment = "YES"
+    if build_type == "enterprise" or build_type == "store"
+      debug_environment = "NO"
+    end
+ 
+    @projectHelper.update_features_customization(
+      name: 'DebugEnvironment',
+      value: debug_environment
+    )
+
   end
 
   def add_wifi_system_capability_if_needed

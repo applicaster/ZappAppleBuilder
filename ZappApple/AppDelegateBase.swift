@@ -140,6 +140,7 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
                 ZappStorageKeys.riversUrl: kRiversUrl.replaceUrlHost(to: FeaturesCustomization.s3Hostname()),
                 ZappStorageKeys.appFamilyId: kAppFamilyId,
                 ZappStorageKeys.store: kStore,
+                ZappStorageKeys.applicationEnvironment: FeaturesCustomization.isDebugEnvironment() ? "true" : "false",
         ]
     }
 
@@ -154,13 +155,14 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
     public func application(_ app: UIApplication,
                             open url: URL,
                             options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        let data = ["url": url.absoluteString,
+                    "options": options] as [String: Any]
         if isApplicationReady {
             urlSchemeUrl = nil
             urlSchemeOptions = nil
             rootController?.pluginsManager.analytics.trackURL(url: url)
             logger?.debugLog(template: AppDelegateLogs.handleURLScheme,
-                             data: ["url": url.absoluteString,
-                                    "options": options])
+                             data: data)
             if UrlSchemeHandler.handle(with: rootController,
                                        application: app,
                                        open: url,
@@ -168,8 +170,7 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
                 return true
             } else {
                 logger?.debugLog(template: AppDelegateLogs.handleURLSchemeDelegate,
-                                 data: ["url": url.absoluteString,
-                                        "options": options])
+                                 data: data)
                 return uiLayerPluginDelegate?.applicationDelegate?.application?(app,
                                                                                 open: url,
                                                                                 options: options) ?? true
@@ -179,8 +180,7 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
             urlSchemeUrl = url
             urlSchemeOptions = options
             logger?.debugLog(template: AppDelegateLogs.delayURLScheme,
-                             data: ["url": url.absoluteString,
-                                    "options": options])
+                             data: data)
             return true
         }
     }
