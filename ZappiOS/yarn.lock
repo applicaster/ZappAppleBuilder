@@ -182,10 +182,10 @@
   resolved "https://registry.yarnpkg.com/@applicaster/x-ray/-/x-ray-0.0.1-alpha.tgz#c4e0cdb37fda023c227ec9da26a39fa8e1b163d3"
   integrity sha512-MO7vOzwHZbjvZvsr1p3r9hr/HDwuuD+JRpgQzh33Ij2T0hw67xz7BgXlUJKhTgxnk1+cvS3vUfR7GOFyt+j0WQ==
 
-"@applicaster/x-ray@0.0.7-alpha":
-  version "0.0.7-alpha"
-  resolved "https://registry.yarnpkg.com/@applicaster/x-ray/-/x-ray-0.0.7-alpha.tgz#dee15f3ea3e879731dd4daaafc4b2f53c13adbb2"
-  integrity sha512-rahFpN9AG6Gt0MoXNVRHxNcsSrcbtifaED6H4iKnjgV6+PERd0xU8zgJi9YSHmKqwCFpKyHrnmG8qAg2oXOw8w==
+"@applicaster/x-ray@0.0.8-alpha":
+  version "0.0.8-alpha"
+  resolved "https://registry.yarnpkg.com/@applicaster/x-ray/-/x-ray-0.0.8-alpha.tgz#76e67f07763d621a441ac7701548ef636907eb9c"
+  integrity sha512-RJxXyW4C3ak/sDm5OwhL324zizGWMgKBmqcLY5fRb6z0Yn3GnQ6i9iw005X8QBL+mqANmL16GmCuhU/rFbQG5w==
 
 "@applicaster/zapp-apple@0.9.6":
   version "0.9.6"
