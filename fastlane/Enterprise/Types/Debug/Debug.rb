@@ -17,6 +17,10 @@ class EnterpriseDebug < BuildTypeEnterprise
     'debug'
   end
 
+  def download_signing_files
+    super
+  end
+
   def prepare_environment
     current(__callee__.to_s)
     super
@@ -205,7 +209,8 @@ class EnterpriseDebug < BuildTypeEnterprise
 
   def perform_signing_validation
     current(__callee__.to_s)
-
+    super
+    
     validate(
       certificate_path: certificate_path,
       certificate_password: ENV['KEY_PASSWORD']
