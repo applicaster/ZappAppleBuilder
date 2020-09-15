@@ -13,24 +13,11 @@ class BuildTypeFactory
 
   def prepare_environment
     # prepare only specific env to build
-    buildtypes = []
+    prepare_environment_build_types_for_use.each do |type|
 
-    case build_type
-    when 'enterprise'
-      buildtypes = [
-        EnterpriseClient.new(fastlane: @fastlane)
-      ]
-    when 'store'
-      buildtypes = [
-        Store.new(fastlane: @fastlane)
-      ]
-    when 'debug'
-      buildtypes = [
-        EnterpriseDebug.new(fastlane: @fastlane)
-      ]
-    end
+      # replace store to enterprise-client if needed
+      type = replace_store_to_enterprise_client_if_needed(type)
 
-    buildtypes.each do |type|
       puts("Prepare environment for #{type.class.name}")
       type.prepare_environment
     end
@@ -38,25 +25,13 @@ class BuildTypeFactory
 
   def perform_signing_validation
     # perform validation for all needed env
-    buildtypes = []
-    case build_type
-    when 'enterprise'
-      buildtypes = [
-        EnterpriseClient.new(fastlane: @fastlane),
-        EnterpriseDebug.new(fastlane: @fastlane)
-      ]
-    when 'store'
-      buildtypes = [
-        Store.new(fastlane: fastlane),
-        EnterpriseDebug.new(fastlane: @fastlane)
-      ]
-    when 'debug'
-      buildtypes = [
-        EnterpriseDebug.new(fastlane: @fastlane)
-      ]
-    end
+    build_types_for_use.each do |type|
+      # download signing files
+      type.download_signing_files
 
-    buildtypes.each do |type|
+      # replace store to enterprise-client if needed
+      type = replace_store_to_enterprise_client_if_needed(type)
+
       puts("Perform signing validation for #{type.class.name}".colorize(:yellow))
       type.perform_signing_validation
     end
@@ -64,30 +39,14 @@ class BuildTypeFactory
 
   def build
     # build each one of the env
-    buildtypes = []
-    curent_build_type = build_type
-    case curent_build_type
-    when 'enterprise'
-      buildtypes = [
-        EnterpriseClient.new(fastlane: @fastlane),
-        EnterpriseDebug.new(fastlane: @fastlane)
-      ]
-    when 'store'
-      buildtypes = [
-        Store.new(fastlane: fastlane),
-        EnterpriseDebug.new(fastlane: @fastlane)
-      ]
-    when 'debug'
-      buildtypes = [
-        EnterpriseDebug.new(fastlane: @fastlane)
-      ]
-    end
+    build_types_for_use.each do |type|
+      # replace store to enterprise-client if needed
+      type = replace_store_to_enterprise_client_if_needed(type)
 
-    buildtypes.each do |type|
       puts("Building for #{type.class.name}")
 
       # prepare env if this is not the initially requested build type (like store + debug =>> prepare debug)
-      type.prepare_environment if curent_build_type != type.build_type
+      type.prepare_environment if build_type != type.build_type
       type.build
     end
   end
@@ -103,5 +62,54 @@ class BuildTypeFactory
         'debug'
       end
     end
+  end
+
+  def prepare_environment_build_types_for_use
+    buildtypes = []
+    case build_type
+    when 'enterprise'
+      buildtypes = [
+        EnterpriseClient.new(fastlane: @fastlane)
+      ]
+    when 'store'
+      buildtypes = [
+        Store.new(fastlane: @fastlane)
+      ]
+    when 'debug'
+      buildtypes = [
+        EnterpriseDebug.new(fastlane: @fastlane)
+      ]
+    end
+    buildtypes
+  end
+
+  def build_types_for_use
+    buildtypes = []
+    case build_type
+    when 'enterprise'
+      buildtypes = [
+        EnterpriseClient.new(fastlane: @fastlane),
+        EnterpriseDebug.new(fastlane: @fastlane)
+      ]
+    when 'store'
+      buildtypes = [
+        Store.new(fastlane: fastlane),
+        EnterpriseDebug.new(fastlane: @fastlane)
+      ]
+    when 'debug'
+      buildtypes = [
+        EnterpriseDebug.new(fastlane: @fastlane)
+      ]
+    end
+    buildtypes
+  end
+
+  def replace_store_to_enterprise_client_if_needed(type)
+    if type.build_type == "store" && type.isEnterpriseBuild
+      puts("Switching to Enterprise client build".colorize(:red))
+
+      type = EnterpriseClient.new(fastlane: @fastlane)
+    end
+    type
   end
 end
