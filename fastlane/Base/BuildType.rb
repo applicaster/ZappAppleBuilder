@@ -32,6 +32,10 @@ class BuildType < BaseHelper
     fetch_app_center_identifiers
   end
 
+  def download_signing_files
+    # implement in child classes
+  end
+
   def perform_signing_validation
     # implement in child classes
   end
