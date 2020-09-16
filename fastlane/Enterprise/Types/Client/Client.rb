@@ -74,7 +74,7 @@ class EnterpriseClient < BuildTypeEnterprise
     upload_application(
       bundle_identifier: @@envHelper.bundle_identifier,
       build_type: 'Enterprise',
-      zapp_build_type: 'debug'
+      zapp_build_type: zapp_build_type
     )
   end
 
@@ -89,8 +89,7 @@ class EnterpriseClient < BuildTypeEnterprise
 
   def perform_signing_validation
     current(__callee__.to_s)
-    download_signing_files
-
+    super
     validate(
       certificate_path: @projectHelper.distribution_certificate_path,
       certificate_password: @@envHelper.debug_distribution_key_password,
@@ -138,7 +137,7 @@ class EnterpriseClient < BuildTypeEnterprise
     @appCenterHelper.update_app_secret(@@envHelper.bundle_identifier.to_s)
 
     # update firebase configuration
-    @@firebaseHelper.add_configuration_file('production')
+    @firebaseHelper.add_configuration_file('production')
 
     # update app identifier to the store one
     reset_info_plist_bundle_identifier(
@@ -198,4 +197,8 @@ class EnterpriseClient < BuildTypeEnterprise
       app_bunlde_identifier: @@envHelper.bundle_identifier
     )
   end
+
+  def zapp_build_type
+    @@envHelper.with_release == 'true' ? 'release' : 'debug'
+  end 
 end

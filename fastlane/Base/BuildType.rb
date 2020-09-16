@@ -32,6 +32,10 @@ class BuildType < BaseHelper
     fetch_app_center_identifiers
   end
 
+  def download_signing_files
+    # implement in child classes
+  end
+
   def perform_signing_validation
     # implement in child classes
   end
@@ -55,6 +59,17 @@ class BuildType < BaseHelper
       name: 'S3Hostname',
       value: @@envHelper.s3_hostname
     )
+
+    debug_environment = "YES"
+    if build_type == "enterprise" or build_type == "store"
+      debug_environment = "NO"
+    end
+ 
+    @projectHelper.update_features_customization(
+      name: 'DebugEnvironment',
+      value: debug_environment
+    )
+
   end
 
   def add_wifi_system_capability_if_needed
