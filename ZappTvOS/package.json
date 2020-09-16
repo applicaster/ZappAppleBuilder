@@ -19,6 +19,7 @@
     "quick-brick:build:tvos": "cd quick_brick && yarn build && cd .. && yarn copy:bundle:tvos",
     "quick-brick:build:tvos:debug": "cd quick_brick && yarn build:debug && cd .. && yarn copy:bundle:tvos",
     "quick-brick:prepare": "node_modules/.bin/zapplicaster-cli prepare -y",
+    "quick-brick:reset": "rm -rf quick_brick/*",
     "patch:react": "node ./../Scripts/react-native-patch.js \"ZappTvOS\"",
     "copy:bundle:tvos": "cp ./quick_brick/ios/main.* ./ZappTvOS/Resources",
     "reset": "rm -rf quick_brick/* quick_brick/.babelrc"
@@ -36,7 +37,7 @@
     "react-native-linear-gradient": "2.5.6"
   },
   "devDependencies": {
-    "@applicaster/zapplicaster-cli": "4.1.0"
+    "@applicaster/zapplicaster-cli": "4.1.1"
   },
   "repository": {
     "type": "git",

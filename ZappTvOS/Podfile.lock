@@ -249,14 +249,13 @@ PODS:
     - XrayLogger/Core (= 0.0.1)
   - XrayLogger/Core (0.0.1)
   - Yoga (1.14.0)
-  - ZappApple (0.8.11):
-    - AppCenter/Analytics (= 3.0.0)
+  - ZappApple (0.9.6):
     - AppCenter/Distribute (= 3.0.0)
     - DeviceKit (= 3.2.0)
     - ReachabilitySwift (= 5.0.0)
     - XrayLogger
     - ZappCore
-  - ZappCore (0.13.3)
+  - ZappCore (0.13.6)
 
 DEPENDENCIES:
   - DoubleConversion (from `./node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
@@ -287,13 +286,13 @@ DEPENDENCIES:
   - React-RCTVibration (from `./node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/callinvoker (from `./node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `./node_modules/react-native/ReactCommon`)
-  - XrayLogger (from `https://github.com/applicaster/x-ray.git`, tag `0.0.2-alpha`)
+  - "XrayLogger (from `./node_modules/@applicaster/x-ray/apple/XrayLogger.podspec`)"
   - Yoga (from `./node_modules/react-native/ReactCommon/yoga`)
   - "ZappApple (from `./node_modules/@applicaster/zapp-apple/apple/ZappApple.podspec`)"
   - "ZappCore (from `./node_modules/@applicaster/zapp-core/apple/ZappCore.podspec`)"
 
 SPEC REPOS:
-  trunk:
+  https://cdn.cocoapods.org/:
     - boost-for-react-native
     - DeviceKit
     - ReachabilitySwift
@@ -350,19 +349,13 @@ EXTERNAL SOURCES:
   ReactCommon:
     :path: "./node_modules/react-native/ReactCommon"
   XrayLogger:
-    :git: https://github.com/applicaster/x-ray.git
-    :tag: 0.0.2-alpha
+    :path: "./node_modules/@applicaster/x-ray/apple/XrayLogger.podspec"
   Yoga:
     :path: "./node_modules/react-native/ReactCommon/yoga"
   ZappApple:
     :path: "./node_modules/@applicaster/zapp-apple/apple/ZappApple.podspec"
   ZappCore:
     :path: "./node_modules/@applicaster/zapp-core/apple/ZappCore.podspec"
-
-CHECKOUT OPTIONS:
-  XrayLogger:
-    :git: https://github.com/applicaster/x-ray.git
-    :tag: 0.0.2-alpha
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
@@ -393,11 +386,11 @@ SPEC CHECKSUMS:
   React-RCTText: 97c0632cf8e200ba4dfface2e22dd372142858f1
   React-RCTVibration: 9297dbae8760f1f536ef29e71bfcff23c121e1b9
   ReactCommon: 4520755b5a8921156f0bca32157da837640c2ae6
-  XrayLogger: a1b81754ed1b0086dd58a2a942d20488f94df0a0
+  XrayLogger: 0eea77da5bfa6c2c1647644cae05e2dabbcdadf0
   Yoga: 2b7639f79fddf5026153af56851b832318942330
-  ZappApple: f535798c7835c6526f272cb8b74e68ad536121d7
-  ZappCore: 0e0be8807fa22b92cc37db777e6bbb74a279c9eb
+  ZappApple: d40ebb7a60061aa6ac25849eba723f08bfa1c95f
+  ZappCore: ace99c1cd37ea614819e234db677380625d9bd52
 
-PODFILE CHECKSUM: c9deaddd49374a4664a2fa75cebe1f86ea5add7d
+PODFILE CHECKSUM: 8042baabd7a49c1ab3c4f05b0d03b4eef76772b0
 
 COCOAPODS: 1.9.3
