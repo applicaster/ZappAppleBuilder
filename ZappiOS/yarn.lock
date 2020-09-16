@@ -177,15 +177,20 @@
   resolved "https://registry.yarnpkg.com/@applicaster/react-native-fast-image/-/react-native-fast-image-8.3.2-1.tgz#b0d565c2b33e3d3a9311fd569869186d942951cd"
   integrity sha512-L2RYxsv9CzCIgRMegjKkjbord1Zi0RcOKl39wnCXr60nHsRBTnL4BxX5sQwD4h5ZNF6lZDms5U5vxme+vMHpPQ==
 
+"@applicaster/x-ray@0.0.10-alpha":
+  version "0.0.10-alpha"
+  resolved "https://registry.yarnpkg.com/@applicaster/x-ray/-/x-ray-0.0.10-alpha.tgz#d697fe7d074a1148ac3a41ee459c2bdf590d8d43"
+  integrity sha512-a8WkuB2fslidf77wb0SUY0LyPtb2tiVBFIv5ogL/VL5sd9vvd52/RthpumrLr0XVmuvAQ0NwN/LW49oI/nwhkw==
+
 "@applicaster/x-ray@0.0.8-alpha":
   version "0.0.8-alpha"
   resolved "https://registry.yarnpkg.com/@applicaster/x-ray/-/x-ray-0.0.8-alpha.tgz#76e67f07763d621a441ac7701548ef636907eb9c"
   integrity sha512-RJxXyW4C3ak/sDm5OwhL324zizGWMgKBmqcLY5fRb6z0Yn3GnQ6i9iw005X8QBL+mqANmL16GmCuhU/rFbQG5w==
 
-"@applicaster/zapp-apple@0.9.6":
-  version "0.9.6"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-apple/-/zapp-apple-0.9.6.tgz#eb18dcf0f2c1a8c4e834d5d3ec4261206a8f85be"
-  integrity sha512-x/Ulx/Dl0DqNn+Tt9x5z/mDsLPgKda1IsetjrAkkRzDDhk60UOsgtPPXzJnXdRwyb3auB1hBaI5kMZ+xS5kwkQ==
+"@applicaster/zapp-apple@0.9.8":
+  version "0.9.8"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-apple/-/zapp-apple-0.9.8.tgz#5dfd2bb7f388caeb2b9b327f275bcc6d2db55c18"
+  integrity sha512-NdT8EAiADp6n2qqd9+xwHS0kEL0fjnbsodl8nIVxbpRy9uFX4045/TC7E5vSUURlsqDGQqO0H4byG1JpXT5mIA==
 
 "@applicaster/zapp-core@0.13.6":
   version "0.13.6"
