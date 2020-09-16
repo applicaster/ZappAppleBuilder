@@ -11,10 +11,8 @@ namespace :ms_app_center do
     :fetch_identifiers, :bundle_identifier
   ) do |_task, args|
     bundle_identifier = "#{args[:bundle_identifier]}"
-    bundle_identifier_enterprise = "com.applicaster.ent.#{args[:bundle_identifier]}"
     platform = "ios"
     get_app_data("#{bundle_identifier}", "#{platform}")
-    get_app_data("#{bundle_identifier_enterprise}", "#{platform}")
   end
 end
 
@@ -67,8 +65,9 @@ def fetch_app(bundle_identifier, platform)
         "-H \"Content-Type: application/json\" "\
         "-H \"X-API-Token: #{ENV['APPCENTER_API_TOKEN']}\" "
 
+  puts("--> cmd: #{cmd}")
   result = `#{cmd}`
-
+  puts("--> result: #{result}")
   failure = result.nil? || result["statusCode"] == 404
   raise "Failed to fetch app details" if failure
 
@@ -96,7 +95,9 @@ def fetch_app_distribution_groups(app_name)
         "-H \"Content-Type: application/json\" "\
         "-H \"X-API-Token: #{ENV['APPCENTER_API_TOKEN']}\" "
 
+  puts("--> cmd: #{cmd}")
   result = `#{cmd}`
+  puts("--> result: #{result}")
 
   failure = result.nil? || result["statusCode"] == 404
   raise "Failed to fetch app distribution_groups" if failure
@@ -111,7 +112,9 @@ def create_new_public_distribution_group(bundle_identifier, app_name)
         "-H \"Content-Type: application/json\" "\
         "-d '{ \"name\": \"All app users\", \"is_public\": true}'"
 
+  puts("--> cmd: #{cmd}")
   result = `#{cmd}`
+  puts("--> result: #{result}")
 
   failure = result.nil? || result["statusCode"] == 404
   raise "Failed to create new app distribution group" if failure
@@ -126,7 +129,9 @@ def create_new_app(bundle_identifier, platform)
         "-H \"Content-Type: application/json\" "\
         "-d '{ \"description\": \"#{ENV['app_name']}\", \"release_type\": \"Beta\", \"display_name\": \"#{ENV['app_name']}\", \"name\": \"#{platform}-#{bundle_identifier}\", \"os\": \"iOS\", \"platform\": \"Objective-C-Swift\"}'"
 
+  puts("--> cmd: #{cmd}")
   result = `#{cmd}`
+  puts("--> result: #{result}")
   app = JSON.parse(result)
 
   write_app_data_to_file("#{bundle_identifier}", "#{app['name']}", "appname")
