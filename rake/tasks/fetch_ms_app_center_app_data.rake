@@ -11,10 +11,8 @@ namespace :ms_app_center do
     :fetch_identifiers, :bundle_identifier
   ) do |_task, args|
     bundle_identifier = "#{args[:bundle_identifier]}"
-    bundle_identifier_enterprise = "com.applicaster.ent.#{args[:bundle_identifier]}"
     platform = "ios"
     get_app_data("#{bundle_identifier}", "#{platform}")
-    get_app_data("#{bundle_identifier_enterprise}", "#{platform}")
   end
 end
 
