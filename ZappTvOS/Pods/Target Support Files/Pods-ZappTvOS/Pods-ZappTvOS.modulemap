@@ -1,6 +1,0 @@
-framework module Pods_ZappTvOS {
-  umbrella header "Pods-ZappTvOS-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -102,6 +102,7 @@ class Store < BuildType
 
   def download_signing_files
     current(__callee__.to_s)
+
     # create new dir for files
     sh("mkdir -p \"#{@projectHelper.credentials_folder_path}\"")
     # download p12 and provisioning profile
@@ -111,7 +112,7 @@ class Store < BuildType
 
   def perform_signing_validation
     current(__callee__.to_s)
-    download_signing_files
+    super
 
     validate(
       certificate_path: @projectHelper.distribution_certificate_path,
@@ -240,5 +241,22 @@ class Store < BuildType
 
   def itunesconnect_password
     (ENV['itunes_connect_password']).to_s
+  end
+
+  def isEnterpriseBuild
+    current(__callee__.to_s)
+
+    provisioning_profile = get_provisioning_profile_content(@projectHelper.distribution_provisioning_profile_path)
+    provisioning_profile_is_enterprise = provisioning_profile['ProvisionsAllDevices']
+
+    puts("Checking if the provisioning profile related to Enterprise account - #{provisioning_profile_is_enterprise}".colorize(:red))
+
+    if provisioning_profile_is_enterprise == true
+      ENV['debug_distribution_key_password']=ENV['distribution_key_password']
+      ENV['debug_distribution_key_url']=ENV['distribution_key_url']
+      ENV['debug_provisioning_profile_url']=ENV['provisioning_profile_url']
+    end
+
+    provisioning_profile_is_enterprise
   end
 end

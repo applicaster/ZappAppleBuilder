@@ -21,14 +21,16 @@
     "start:ios": "yarn run:ios & yarn start",
     "quick-brick:build:ios": "cd quick_brick && yarn build:ios && cd .. && yarn copy:bundle:ios",
     "quick-brick:prepare": "node_modules/.bin/zapplicaster-cli prepare -y",
+    "quick-brick:reset": "rm -rf quick_brick/*",
     "patch:react": "node ./../Scripts/react-native-patch.js \"ZappiOS\"",
     "copy:bundle:ios": "cp ./quick_brick/ios/main.* ./ZappiOS/Resources",
     "reset": "rm -rf quick_brick/* quick_brick/.babelrc"
   },
   "dependencies": {
+    "@applicaster/x-ray": "0.0.10-alpha",
     "@applicaster/quick-brick-native-apple": "4.1.0",
-    "@applicaster/zapp-apple": "0.9.4",
-    "@applicaster/zapp-core": "0.13.5",
+    "@applicaster/zapp-apple": "0.9.8",
+    "@applicaster/zapp-core": "0.13.6",
     "@react-native-community/cli-platform-ios": "^4.7.0",
     "@react-native-community/netinfo": "^5.9.0",
     "@react-native-community/viewpager": "3.3.0",
@@ -39,7 +41,7 @@
     "react-native-linear-gradient": "2.5.6"
   },
   "devDependencies": {
-    "@applicaster/zapplicaster-cli": "4.1.0",
+    "@applicaster/zapplicaster-cli": "4.1.1",
     "flipper-plugin-react-native-performance": "^0.4.3"
   },
   "name": "ZappAppleBuilder",
