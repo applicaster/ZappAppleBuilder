@@ -69,12 +69,12 @@ async function processFile(
 
 const IOS_FILES_TO_PATCH = [
   {
-    filePath: "./react-native/Libraries/Image/RCTUIImageViewAnimated.m",
+    filePath: "./Libraries/Image/RCTUIImageViewAnimated.m",
     operation: replaceStringInFile,
     args: {
-      lookUpString: "layer.contents = (__bridge id)_currentFrame.CGImage;\n  }",
+      lookUpString: "    layer.contents = (__bridge id)_currentFrame.CGImage;",
       correctString:
-        "layer.contents = (__bridge id)_currentFrame.CGImage;\n  } else { [super displayLayer:layer]; }",
+        "    layer.contents = (__bridge id)_currentFrame.CGImage; } else { [super displayLayer:layer];",
     },
   },
   {
@@ -124,6 +124,15 @@ const IOS_FILES_TO_PATCH = [
 ];
 
 const TVOS_FILES_TO_PATCH = [
+  {
+    filePath: "./Libraries/Image/RCTUIImageViewAnimated.m",
+    operation: replaceStringInFile,
+    args: {
+      lookUpString: "    layer.contents = (__bridge id)_currentFrame.CGImage;",
+      correctString:
+        "    layer.contents = (__bridge id)_currentFrame.CGImage; } else { [super displayLayer:layer];",
+    },
+  },
   {
     filePath: "./React/CoreModules/RCTDevMenu.h",
     operation: replaceStringInFile,
