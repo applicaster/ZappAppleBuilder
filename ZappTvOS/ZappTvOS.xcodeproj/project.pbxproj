@@ -657,7 +657,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "$(MAIN_PROV_PROFILE_SPECIFIER)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ZappTvOS/ZappTvOS-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Debug;
 		};
@@ -680,7 +679,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "$(MAIN_PROV_PROFILE_SPECIFIER)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ZappTvOS/ZappTvOS-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Release;
 		};
@@ -702,7 +700,6 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZappTvOS.app/ZappTvOS";
-				TVOS_DEPLOYMENT_TARGET = 13.2;
 			};
 			name = Debug;
 		};
@@ -724,7 +721,6 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZappTvOS.app/ZappTvOS";
-				TVOS_DEPLOYMENT_TARGET = 13.2;
 			};
 			name = Release;
 		};
