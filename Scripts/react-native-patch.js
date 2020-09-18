@@ -45,9 +45,16 @@ function prepareReactPodspec(file) {
   return fileLines.join(BREAK_LINE);
 }
 
+function addReactCoreDependency(file) {
+  return replaceStringInFile(file, {
+    lookUpString: "s.dependency 'React'",
+    correctString: "s.dependency 'React'\n  s.dependency 'React-Core'",
+  });
+}
+
 async function processFile(
   react_native_install_folder,
-  { filePath, operation, args }
+  { filePath, operation, args = {}, options = {} }
 ) {
   const fullFilePath = resolve(react_native_install_folder, filePath);
   console.log(`processing ${fullFilePath}`);
@@ -62,8 +69,12 @@ async function processFile(
     console.log("done !\n");
     return;
   } catch (e) {
-    console.error(`couldn't process ${filePath} - ${e.message}`);
-    process.exit(1);
+    if (options.skipPatchIfFileIsMissing) {
+      console.warn(`file ${filePath} doesn't exist - skipping patch`);
+    } else {
+      console.error(`couldn't process ${filePath} - ${e.message}`);
+      process.exit(1);
+    }
   }
 }
 
@@ -188,7 +199,22 @@ const TVOS_FILES_TO_PATCH = [
         "  #if TARGET_OS_TV\n    shouldFallbackToBareTextComparison = YES;\n  #endif\n  if (shouldFallbackToBareTextComparison) {",
     },
   },
+  {
+    filePath: "../react-native-linear-gradient/BVLinearGradient.podspec",
+    operation: addReactCoreDependency,
+    options: {
+      skipPatchIfFileIsMissing: true,
+    },
+  },
+  {
+    filePath: "../react-native-blur/react-native-blur.podspec",
+    operation: addReactCoreDependency,
+    options: {
+      skipPatchIfFileIsMissing: true,
+    },
+  },
 ];
+
 async function run() {
   var platform_install_folder = process.argv.slice(2);
 
