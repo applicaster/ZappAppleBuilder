@@ -21,7 +21,7 @@ function replaceStringInFile(file, { lookUpString, correctString }) {
     .map((line) =>
       line.includes(lookUpString)
         ? line.replace(lookUpString, correctString)
-        : line,
+        : line
     )
     .join(BREAK_LINE);
 }
@@ -34,12 +34,12 @@ function prepareReactPodspec(file) {
   const updatedFile = replaceStringInFile(file, args);
   const fileLines = updatedFile.toString().split(BREAK_LINE);
   const ssIndex = fileLines.findIndex((l) =>
-    l.includes("ss.tvos.exclude_files"),
+    l.includes("ss.tvos.exclude_files")
   );
   fileLines.splice(
     ssIndex + 1,
     0,
-    '\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"React/Views/RCTWKWebView*",',
+    '\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"React/Views/RCTWKWebView*",'
   );
 
   return fileLines.join(BREAK_LINE);
@@ -47,7 +47,7 @@ function prepareReactPodspec(file) {
 
 async function processFile(
   react_native_install_folder,
-  { filePath, operation, args },
+  { filePath, operation, args }
 ) {
   const fullFilePath = resolve(react_native_install_folder, filePath);
   console.log(`processing ${fullFilePath}`);
@@ -68,6 +68,15 @@ async function processFile(
 }
 
 const IOS_FILES_TO_PATCH = [
+  {
+    filePath: "./Libraries/Image/RCTUIImageViewAnimated.m",
+    operation: replaceStringInFile,
+    args: {
+      lookUpString: "    layer.contents = (__bridge id)_currentFrame.CGImage;",
+      correctString:
+        "    layer.contents = (__bridge id)_currentFrame.CGImage; } else { [super displayLayer:layer];",
+    },
+  },
   {
     filePath: "./React/Base/RCTConvert.h",
     operation: replaceStringInFile,
@@ -115,6 +124,15 @@ const IOS_FILES_TO_PATCH = [
 ];
 
 const TVOS_FILES_TO_PATCH = [
+  {
+    filePath: "./Libraries/Image/RCTUIImageViewAnimated.m",
+    operation: replaceStringInFile,
+    args: {
+      lookUpString: "    layer.contents = (__bridge id)_currentFrame.CGImage;",
+      correctString:
+        "    layer.contents = (__bridge id)_currentFrame.CGImage; } else { [super displayLayer:layer];",
+    },
+  },
   {
     filePath: "./React/CoreModules/RCTDevMenu.h",
     operation: replaceStringInFile,
@@ -186,8 +204,8 @@ async function run() {
     async (fileToPatch) =>
       await processFile(
         react_native_install_folder(platform_install_folder),
-        fileToPatch,
-      ),
+        fileToPatch
+      )
   );
 }
 
