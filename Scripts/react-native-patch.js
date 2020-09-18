@@ -63,12 +63,7 @@ async function processFile(
   try {
     const file = await readFileAsync(fullFilePath);
     const fileContent = file.toString();
-    let updatedFile;
-    if (fullFilePath.includes("linear-gradient")) {
-      updatedFile = operation(file, args, true);
-    } else {
-      updatedFile = operation(file, args);
-    }
+    const updatedFile = operation(file, args);
 
     await writeFileAsync(fullFilePath, Buffer.from(updatedFile));
     console.log("done !\n");
