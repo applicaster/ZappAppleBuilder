@@ -137,10 +137,10 @@
   dependencies:
     ramda "^0.27.0"
 
-"@applicaster/quick-brick-native-apple@4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-native-apple/-/quick-brick-native-apple-4.1.0.tgz#45ba31c30ccc72f71a985c8807e789a249a9b1a7"
-  integrity sha512-bOyHCcW9RnSWNKETdK1k2XQmzzMoO/MC2nld+RQNAUMX3nkMy/HE4Cqfo1rF3gd8D8ijp+GZQv8Jyqkz+Rgt4A==
+"@applicaster/quick-brick-native-apple@4.1.2-rc.2":
+  version "4.1.2-rc.2"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-native-apple/-/quick-brick-native-apple-4.1.2-rc.2.tgz#37ecf78b4b96d43abbc3674fe5ae54c2b50136ca"
+  integrity sha512-VKV1WUuvTviD6DCWslfxPLihp8oBaMJEj7TD86WFd55uQIKhBCsA5KLs2j4zm8LTPOifp3E0XLow0KI/s/LICw==
 
 "@applicaster/quick-brick-tabs@1.0.0":
   version "1.0.0"
