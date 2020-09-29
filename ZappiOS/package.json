@@ -29,8 +29,8 @@
   "dependencies": {
     "@applicaster/x-ray": "0.0.13-alpha",
     "@applicaster/quick-brick-native-apple": "4.1.2-rc.2",
-    "@applicaster/zapp-apple": "0.9.8",
-    "@applicaster/zapp-core": "0.13.6",
+    "@applicaster/zapp-apple": "0.9.9",
+    "@applicaster/zapp-core": "0.13.7",
     "@react-native-community/cli-platform-ios": "^4.7.0",
     "@react-native-community/netinfo": "^5.9.0",
     "@react-native-community/viewpager": "3.3.0",
