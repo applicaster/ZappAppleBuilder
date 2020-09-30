@@ -8,6 +8,8 @@
 
 import Foundation
 import UserNotifications
+import ZappCore
+import SafariServices
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     public func userNotificationCenter(_ center: UNUserNotificationCenter,
@@ -25,9 +27,19 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             localNotificatioResponse = nil
             NotificationCenter.default.post(name: .kLocalNotificationRecievedNotification,
                                             object: response)
-            uiLayerPluginDelegate?.userNotificationCenterDelegate?.userNotificationCenter?(center,
-                                                                                           didReceive: response,
-                                                                                           withCompletionHandler: completionHandler)
+            
+            if let url = LocalNotificationResponseParser.urlToPresentModallyWithSafari(response: response),
+               let presenter = UIApplication.shared.keyWindow?.rootViewController {
+                presenter.present(SFSafariViewController(url: url), animated: true, completion: {
+                    completionHandler()
+                })
+            }
+            else {
+                uiLayerPluginDelegate?.userNotificationCenterDelegate?.userNotificationCenter?(center,
+                                                                                               didReceive: response,
+                                                                                               withCompletionHandler: completionHandler)
+            }
+
         } else {
             localNotificatioResponse = response
             completionHandler()
