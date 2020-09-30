@@ -108,8 +108,9 @@ class AppDelegate: AppDelegateBase {
 
     public func application(_ application: UIApplication,
                             didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let deviceTokenAsString = String(decoding: deviceToken, as: UTF8.self)
         logger?.verboseLog(template: AppDelegateLogs.applicationDidRegisterRemoteNotification,
-                           data: ["device_token": deviceToken])
+                           data: ["device_token": deviceTokenAsString])
         rootController?.pluginsManager.push.registerDeviceToken(data: deviceToken)
         uiLayerPluginDelegate?.applicationDelegate?.application?(application,
                                                                  didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
