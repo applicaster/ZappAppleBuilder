@@ -12,11 +12,10 @@ Make sure you fill out all the checklist below according to the provided guideli
 
 - _fill in this section with potential issues / limitations the reviewer(s) should know about_
 
-## Affected builders
+## Affected platform
 
 - [ ] iOS
 - [ ] tvOS
-- [ ] Universal
 
 ### Checklist
 
