@@ -1,7 +1,9 @@
-All Quick Brick pull requests should follow the following guidelines
+All ZappAppleBuilder pull requests should follow the following guidelines
 Make sure you fill out all the checklist below according to the provided guidelines - failing to do so might probably cause your PR to be rejected.
 
 ## Description
+
+[Jira Ticket](add your Jira ticket url here)
 
 - _fill in... (If you PR includes breaking changes please write it and make sure it was planned)_
 - _if your PR is based on another branch than master, indicate it here too_
@@ -10,10 +12,11 @@ Make sure you fill out all the checklist below according to the provided guideli
 
 - _fill in this section with potential issues / limitations the reviewer(s) should know about_
 
-## Affected packages
+## Affected builders
 
-- [ ] Native tvOS
-- [ ] QuickBrick App set up
+- [ ] iOS
+- [ ] tvOS
+- [ ] Universal
 
 ### Checklist
 
