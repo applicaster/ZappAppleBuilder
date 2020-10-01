@@ -88,9 +88,10 @@ PODS:
   - OpenSSL-Universal (1.0.2.19):
     - OpenSSL-Universal/Static (= 1.0.2.19)
   - OpenSSL-Universal/Static (1.0.2.19)
-  - QuickBrickApple (4.0.0-2):
+  - QuickBrickApple (4.1.2-rc.7):
     - React
     - React-RCTLinking
+    - XrayLogger
     - ZappCore
   - RCTRequired (0.62.2)
   - RCTTypeSafety (0.62.2):
@@ -332,13 +333,13 @@ PODS:
     - Yoga (~> 1.14)
   - ZappAnalyticsPluginsSDK (11.0.0):
     - ZappPlugins
-  - ZappApple (0.9.6):
+  - ZappApple (0.9.10):
     - AppCenter/Distribute (= 3.0.0)
     - DeviceKit (= 3.2.0)
     - ReachabilitySwift (= 5.0.0)
     - XrayLogger
     - ZappCore
-  - ZappCore (0.13.6)
+  - ZappCore (0.13.9)
   - ZappPlugins (11.7.0):
     - ZappCore
   - ZappPushPluginsSDK (11.0.1):
@@ -520,7 +521,7 @@ SPEC CHECKSUMS:
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
   OpenSSL-Universal: 8b48cc0d10c1b2923617dfe5c178aa9ed2689355
-  QuickBrickApple: e05ec8c276d1a753eddac75cdfdbd897dd6fd43f
+  QuickBrickApple: ccc3f9843a81ef01a84482a7bbe62bdd033391c2
   RCTRequired: cec6a34b3ac8a9915c37e7e4ad3aa74726ce4035
   RCTTypeSafety: 93006131180074cffa227a1075802c89a49dd4ce
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
@@ -550,8 +551,8 @@ SPEC CHECKSUMS:
   Yoga: 3ebccbdd559724312790e7742142d062476b698e
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
   ZappAnalyticsPluginsSDK: 0b33b53031e6c1a3c32b4ff25fb63d6e78d8380f
-  ZappApple: d40ebb7a60061aa6ac25849eba723f08bfa1c95f
-  ZappCore: ace99c1cd37ea614819e234db677380625d9bd52
+  ZappApple: 63240e80421c59c95ea7680b3de6deaa16e1cd77
+  ZappCore: ff45c96fd3ed199bcd639c2b8c01b027b1652fab
   ZappPlugins: b1a3da054cae582240d2c2ba782479dea515b7c4
   ZappPushPluginsSDK: 8d4e0402d2ebb94974aa88807885db70d6d976e4
 
