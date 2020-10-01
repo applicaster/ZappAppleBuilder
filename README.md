@@ -2,15 +2,15 @@
 
 ## Prerequisites
 
-- `Xcode >= 11.2.1`
-- `Cocoapods >= 1.8.4` and its prerequisites, see [Zapp-iOS prerequisites section](https://github.com/applicaster/zapp-ios)
-- `Zapptool >= 3.8.4`
+- `Xcode >= 12.0.0`
+- `Cocoapods >= 1.9.3` and its prerequisites, see [Zapp-iOS prerequisites section](https://github.com/applicaster/zapp-ios)
+- `Zapptool >= 3.11.1`
 
 ## Zapptool update (2 options)
- 1. Get latest version of 3.8.X 
- - `brew install -v https://raw.githubusercontent.com/applicaster/homebrew-tap/master/zapptool/zapptool@3.8.rb`
+ 1. Get latest version of 3.11.X 
+ - `brew install -v https://raw.githubusercontent.com/applicaster/homebrew-tap/master/zapptool/zapptool@3.11.rb`
  2. Get specific version 
- - `curl -L "https://dl.bintray.com/applicaster-ltd/pods/ZappTool_v3.8.4.zip`
+ - `curl -L "https://dl.bintray.com/applicaster-ltd/pods/ZappTool_v3.11.1.zip`
 
 ## Bundler updates
 - `bundle update` should be called from the root folder
@@ -20,6 +20,12 @@
   - **iOS** - switch to ZappiOS folder
   - **tvOS** - switch to ZappTvOS folder
 
+#### Closed QuickBrick bundle
+- run `zapptool -vi {{APP_VERSION_ID}} -pu`
+  - (Zapptool will call `yarn` and `pod update` and will get the project ready to use)
+- at this stage just open xcode and build application
+
+#### Open loccal QuickBrick bundle
 - run `zapptool -vi {{APP_VERSION_ID}} -pu -rn localhost:8081`
   - (Zapptool will call `yarn` and `pod update` and will get the project ready to use)
 
@@ -29,7 +35,7 @@
 
 - Check that the Prerequisites are met
 - prepare your quick brick app and start the react-native packager
-- Locate the `APP_VERSION_ID` in Zapp (platform - Apple TV, SDK - >= 6.0.0)
+- Locate the `APP_VERSION_ID`
 - `zapptool -vi {{APP_VERSION_ID}} -pu -rn localhost:8081`
 - For tvOS `open ZappTvOS.xcworkspace` located in ZappTvOS folder - not `.xcodeproj`!
 - For iOS `open ZappiOS.xcworkspace` located in ZappiOS folder - not `.xcodeproj`!
