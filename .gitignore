@@ -26,14 +26,17 @@ ZappiOS/ZappiOS/Info.plist
 ZappiOS/ZappiOS/Assets.xcassets/
 ZappiOS/ZappiOS/Customization/
 ZappiOS/quick_brick/
-
+ZappiOS/ZappiOS/Resources/
+ZappiOS/yarn-error.log
 
 ZappTvOS/ZappTvOS/Info.plist
 ZappTvOS/ZappTvOS/Assets.xcassets/
 ZappTvOS/ZappTvOS/Customization/
 ZappTvOS/quick_brick/
+ZappTvOS/ZappTvOS/Resources/
+ZappTvOS/yarn-error.log
 
-ZappiOS/ZappiOS/Resources/
+ZappApple/Customization/GAUICustomization.plist
 
 quick_brick/*
 
