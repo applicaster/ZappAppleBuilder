@@ -38,7 +38,10 @@
     "react-native": "0.62.2",
     "react-native-svg": "9.13.6",
     "react-native-webview": "9.1.1",
-    "react-native-linear-gradient": "2.5.6"
+    "react-native-linear-gradient": "2.5.6",
+    "husky": "^4.2.5",
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4"
   },
   "devDependencies": {
     "@applicaster/zapplicaster-cli": "4.1.1",
