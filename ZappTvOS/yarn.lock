@@ -177,10 +177,10 @@
   resolved "https://registry.yarnpkg.com/@applicaster/react-native-fast-image/-/react-native-fast-image-8.3.2-1.tgz#b0d565c2b33e3d3a9311fd569869186d942951cd"
   integrity sha512-L2RYxsv9CzCIgRMegjKkjbord1Zi0RcOKl39wnCXr60nHsRBTnL4BxX5sQwD4h5ZNF6lZDms5U5vxme+vMHpPQ==
 
-"@applicaster/x-ray@0.0.13-alpha":
-  version "0.0.13-alpha"
-  resolved "https://registry.yarnpkg.com/@applicaster/x-ray/-/x-ray-0.0.13-alpha.tgz#9f0840af5c76e20aff894d441810b952e8b904bc"
-  integrity sha512-owIu1QMHSECHybATST1Plfi63InSCHDnvHgndT2RK5tuTQ2oiz3DdibIHwLqI8SQGSXwaWfd+QS+ldyBD3abpw==
+"@applicaster/x-ray@0.0.14-alpha":
+  version "0.0.14-alpha"
+  resolved "https://registry.yarnpkg.com/@applicaster/x-ray/-/x-ray-0.0.14-alpha.tgz#a644c6e819e0289cca5c0fa5326d16192211c68a"
+  integrity sha512-8whEPj6Ze+B6+tx7ovBfn3+N4ySnApdDvBwMliLtxoAN6LpQVAlo5FTu6m/nvudisTTfO9qldxbuQUveMb/O9g==
 
 "@applicaster/x-ray@0.0.8-alpha":
   version "0.0.8-alpha"
