@@ -2,7 +2,7 @@ version: 2.1
 parameters:
   zapptool-version:
     type: string
-    default: "3.11.2"
+    default: "4.0.0"
   general-caching-key:
     type: string
     default: "ZappApple_Cache_1.0.8"
@@ -222,7 +222,7 @@ references:
       command: |
         if [ ! -d "ZappTool" ]; then
           echo "Installing ZappTool"
-          curl -L "https://dl.bintray.com/applicaster-ltd/pods/ZappTool_v<< pipeline.parameters.zapptool-version >>.zip" > "ZappTool.zip"
+          curl -L "https://assets-production.applicaster.com/zapp/helpers/zapptool/<< pipeline.parameters.zapptool-version >>/zapptool.zip" > "ZappTool.zip"
           mkdir ZappTool
           unzip -o "ZappTool.zip" -d "ZappTool"
           rm -rf "ZappTool.zip"
