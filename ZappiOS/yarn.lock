@@ -137,10 +137,10 @@
   dependencies:
     ramda "^0.27.0"
 
-"@applicaster/quick-brick-native-apple@4.1.2-rc.7":
-  version "4.1.2-rc.7"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-native-apple/-/quick-brick-native-apple-4.1.2-rc.7.tgz#a46beabd26b8d8a77aae7c8795b4a3301de4f64d"
-  integrity sha512-9JNWvxsdf1qK4vD8RcSX+npRJcmy2TQbwcgv+aN8CYNMKZXD3e+CgRbnwwgqomj1YNiJ9ay0VbZCh5+eVKts8Q==
+"@applicaster/quick-brick-native-apple@4.1.2-rc.12":
+  version "4.1.2-rc.12"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-native-apple/-/quick-brick-native-apple-4.1.2-rc.12.tgz#84d01e67ac0b9f6acf1bbcf361a9a9e1cc303dd8"
+  integrity sha512-z9UfGDarBWtCmcrH4sRzdkpTLRwTr5zF/WQb7Tn0oj6dOC+VNRiuOZWKhxAs14R8m/5gnlhyB4OG0v1Sio2DDA==
 
 "@applicaster/quick-brick-tabs@1.0.0":
   version "1.0.0"
@@ -177,10 +177,10 @@
   resolved "https://registry.yarnpkg.com/@applicaster/react-native-fast-image/-/react-native-fast-image-8.3.2-1.tgz#b0d565c2b33e3d3a9311fd569869186d942951cd"
   integrity sha512-L2RYxsv9CzCIgRMegjKkjbord1Zi0RcOKl39wnCXr60nHsRBTnL4BxX5sQwD4h5ZNF6lZDms5U5vxme+vMHpPQ==
 
-"@applicaster/x-ray@0.0.14-alpha":
-  version "0.0.14-alpha"
-  resolved "https://registry.yarnpkg.com/@applicaster/x-ray/-/x-ray-0.0.14-alpha.tgz#a644c6e819e0289cca5c0fa5326d16192211c68a"
-  integrity sha512-8whEPj6Ze+B6+tx7ovBfn3+N4ySnApdDvBwMliLtxoAN6LpQVAlo5FTu6m/nvudisTTfO9qldxbuQUveMb/O9g==
+"@applicaster/x-ray@0.0.15-alpha":
+  version "0.0.15-alpha"
+  resolved "https://registry.yarnpkg.com/@applicaster/x-ray/-/x-ray-0.0.15-alpha.tgz#83eca41e9105f393bfc2d8102515c59558dea090"
+  integrity sha512-ZfBePVZWct9vtwOcT+tlpzH5tIGPYvhBQy3QBsPOjr7paNLlMrpoYMtlaVlvxpCxPRpgf87wWpSdDjWKVc9x6Q==
 
 "@applicaster/x-ray@0.0.8-alpha":
   version "0.0.8-alpha"
