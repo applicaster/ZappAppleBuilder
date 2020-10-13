@@ -213,6 +213,13 @@ const TVOS_FILES_TO_PATCH = [
       skipPatchIfFileIsMissing: true,
     },
   },
+  {
+    filePath: "../@react-native-community/blur/react-native-blur.podspec",
+    operation: addReactCoreDependency,
+    options: {
+      skipPatchIfFileIsMissing: true,
+    },
+  },
 ];
 
 async function run() {
