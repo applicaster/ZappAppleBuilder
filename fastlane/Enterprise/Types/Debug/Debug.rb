@@ -255,6 +255,16 @@ class EnterpriseDebug < BuildTypeEnterprise
     )
   end
 
+  def update_parameters_in_feature_optimization_json
+    super
+ 
+    @projectHelper.update_features_customization(
+      name: 'DebugEnvironment',
+      value: "YES"
+    )
+
+  end
+
   def add_debug_ribbon_to_app_icon
     current(__callee__.to_s)
     sh("sh #{@@envHelper.root_path}/Scripts/add-debug-ribbon-to-app-icon.sh #{ENV['PWD']} #{@projectHelper.name} #{@@envHelper.platform_name}")
