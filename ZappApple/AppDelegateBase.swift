@@ -171,9 +171,20 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
             } else {
                 logger?.debugLog(template: AppDelegateLogs.handleURLSchemeDelegate,
                                  data: data)
-                return uiLayerPluginDelegate?.applicationDelegate?.application?(app,
-                                                                                open: url,
-                                                                                options: options) ?? true
+                let alertController = UIAlertController(title: "Alert", message: url.absoluteString, preferredStyle: .alert)
+                let action1 = UIAlertAction(title: "Forward URL Scheme", style: .default) { (action:UIAlertAction) in
+                    _ = self.uiLayerPluginDelegate?.applicationDelegate?.application?(app,
+                                                                                 open: url,
+                                                                                 options: options) ?? true
+                }
+                alertController.addAction(action1)
+
+                let viewController = UIApplication.shared.windows.first!.rootViewController!
+
+                viewController.present(alertController, animated: true, completion: nil)
+                
+                
+                return true
             }
 
         } else {
