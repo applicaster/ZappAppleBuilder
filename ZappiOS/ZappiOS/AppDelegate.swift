@@ -182,4 +182,8 @@ class AppDelegate: AppDelegateBase {
             self.shortcutItem = shortcutItem
         }
     }
+
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return UIDevice.current.userInterfaceIdiom == .pad ? .all : .allButUpsideDown
+    }
 }
