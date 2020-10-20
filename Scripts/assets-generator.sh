@@ -107,7 +107,7 @@ info 'Clearing Source Image File ...'
 info 'Clearing Complete.'
 
 info 'Moving Launch Images to LaunchImage folder ...'
-files='Default@2x Default-568h@2x Default-667h Default-736h Default-812h Default-896h@2x Default-1242h@3x'
+files='Default@2x Default-568h@2x Default-667h Default-736h Default-812h Default-896h@2x Default-1242h@3x Default-Landscape~ipad Default-Landscape@2x~ipad Default-Portrait~ipad Default-Portrait@2x~ipad'
 for file in $files
 do
   if [ -e "$DST_PATH_RESOURCES/$file.png" ]
@@ -117,15 +117,3 @@ do
   fi
 
 done
-
-files='Default-Landscape~ipad Default-Landscape@2x~ipad'
-for file in $files
-do
-  if [ -e "$DST_PATH_RESOURCES/$file.png" ]
-  then
-    cp "$DST_PATH_RESOURCES/$file.png" "$DST_PATH_LAUNCH_IMAGES/$file.png"
-    info "Copy $file.png ..."
-fi
-
-done
-info 'Moving Complete.'
