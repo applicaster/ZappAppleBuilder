@@ -187,10 +187,10 @@
   resolved "https://registry.yarnpkg.com/@applicaster/x-ray/-/x-ray-0.0.8-alpha.tgz#76e67f07763d621a441ac7701548ef636907eb9c"
   integrity sha512-RJxXyW4C3ak/sDm5OwhL324zizGWMgKBmqcLY5fRb6z0Yn3GnQ6i9iw005X8QBL+mqANmL16GmCuhU/rFbQG5w==
 
-"@applicaster/zapp-apple@0.9.11-alpha.0":
-  version "0.9.11-alpha.0"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-apple/-/zapp-apple-0.9.11-alpha.0.tgz#cf51ead8aa14c79987dfe76bfc4e338769af1376"
-  integrity sha512-ANHt5rZV2y41aH8xfuwGxsljVBQSempfaiARVWotFJghJU75EYxPTvzIwhcaPA9Q9U4PT6XFMKY4DRQ05JL8EA==
+"@applicaster/zapp-apple@0.9.12":
+  version "0.9.12"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-apple/-/zapp-apple-0.9.12.tgz#4ef7f14f44e105cc2ed173e5c0a9b2ddfabc5655"
+  integrity sha512-HSVDiuN+S/5qTKHlbYTXTuSTR2Fx6Lyw3NLmkHwfn4782rgm/8BdhNms+F9oEgQCZjw4P98akBUyeubW2KeLcg==
 
 "@applicaster/zapp-core@0.13.9":
   version "0.13.9"
