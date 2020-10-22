@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
@@ -14,18 +14,17 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1Ak-zI-VMl">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="LaunchImageColor" translatesAutoresizingMaskIntoConstraints="NO" id="HAl-ao-p1X">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchImageColor" translatesAutoresizingMaskIntoConstraints="NO" id="HAl-ao-p1X">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchImageBackground" translatesAutoresizingMaskIntoConstraints="NO" id="8cf-FD-rY4">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                             </imageView>
                             <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchImageLogo" translatesAutoresizingMaskIntoConstraints="NO" id="WG7-hG-97S">
-                                <rect key="frame" x="47" y="293" width="320" height="320"/>
+                                <rect key="frame" x="109" y="242" width="550" height="550"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="320" id="Cue-BH-Fxg">
                                         <variation key="heightClass=regular-widthClass=regular" constant="550"/>
@@ -40,7 +39,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="WG7-hG-97S" firstAttribute="centerX" secondItem="1Ak-zI-VMl" secondAttribute="centerX" id="2eO-bD-JfL"/>
+                            <constraint firstAttribute="trailing" secondItem="HAl-ao-p1X" secondAttribute="trailing" id="9FL-w0-s3y"/>
+                            <constraint firstItem="HAl-ao-p1X" firstAttribute="leading" secondItem="1Ak-zI-VMl" secondAttribute="leading" id="A0r-QV-lho"/>
+                            <constraint firstItem="HAl-ao-p1X" firstAttribute="top" secondItem="1Ak-zI-VMl" secondAttribute="top" id="C4k-Wf-uHo"/>
                             <constraint firstItem="8cf-FD-rY4" firstAttribute="top" secondItem="1Ak-zI-VMl" secondAttribute="top" id="MIh-sK-PvG"/>
+                            <constraint firstAttribute="bottom" secondItem="HAl-ao-p1X" secondAttribute="bottom" id="TnK-ZW-iyX"/>
                             <constraint firstAttribute="bottom" secondItem="8cf-FD-rY4" secondAttribute="bottom" id="Ukk-cV-cKc"/>
                             <constraint firstItem="8cf-FD-rY4" firstAttribute="leading" secondItem="1Ak-zI-VMl" secondAttribute="leading" id="fdf-05-MdZ"/>
                             <constraint firstItem="WG7-hG-97S" firstAttribute="centerY" secondItem="1Ak-zI-VMl" secondAttribute="centerY" constant="5" id="w2j-9s-osp"/>
@@ -54,9 +57,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchImageBackground" width="428" height="926"/>
+        <image name="LaunchImageBackground" width="1366" height="1366"/>
         <image name="LaunchImageColor" width="768" height="768"/>
-        <image name="LaunchImageLogo" width="320" height="320"/>
+        <image name="LaunchImageLogo" width="550" height="550"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
