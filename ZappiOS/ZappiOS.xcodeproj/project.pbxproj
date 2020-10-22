@@ -61,6 +61,7 @@
 		1D68DC442483B16000844CB3 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D68DC432483B16000844CB3 /* NotificationViewController.swift */; };
 		1D68DC472483B16000844CB3 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D68DC452483B16000844CB3 /* MainInterface.storyboard */; };
 		32636CEA116811F2E788FD98 /* Pods_NotificationContentExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE45E241DA058A38504F4D /* Pods_NotificationContentExtension.framework */; };
+		402134E72542334100080D25 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 402134E62542334100080D25 /* LaunchScreen.storyboard */; };
 		4054F78724291A0B00CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4054F78624291A0B00CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift */; };
 		40EE124F2409CEED00B052C2 /* FirebaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EE124E2409CEED00B052C2 /* FirebaseHandler.swift */; };
 		40FB300923F1A69800B76AD0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40FB300823F1A69800B76AD0 /* GoogleService-Info.plist */; };
@@ -185,6 +186,7 @@
 		1D68DC532483D88100844CB3 /* NotificationContentExtension-Debug.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "NotificationContentExtension-Debug.entitlements"; sourceTree = "<group>"; };
 		1D68DC542483D88100844CB3 /* NotificationContentExtension-Release.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "NotificationContentExtension-Release.entitlements"; sourceTree = "<group>"; };
 		29FF41560500977D816BE342 /* Pods-NotificationContentExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationContentExtension.debug.xcconfig"; path = "Target Support Files/Pods-NotificationContentExtension/Pods-NotificationContentExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		402134E62542334100080D25 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4054F78624291A0B00CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+UNUserNotificationCenterDelegate.swift"; sourceTree = "<group>"; };
 		40EE124E2409CEED00B052C2 /* FirebaseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHandler.swift; sourceTree = "<group>"; };
 		40FB300823F1A69800B76AD0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "ZappiOS/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -355,6 +357,7 @@
 				1D30F68123CB297F00DDD86F /* AppDelegate.swift */,
 				4054F78624291A0B00CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift */,
 				1D30F68723CB297F00DDD86F /* Main.storyboard */,
+				402134E62542334100080D25 /* LaunchScreen.storyboard */,
 				1D30F68F23CB298000DDD86F /* Info.plist */,
 			);
 			path = ZappiOS;
@@ -644,6 +647,7 @@
 				0F5EC59E24756F3C00F994B9 /* SFProDisplay-RegularItalic.otf in Resources */,
 				0F5EC5A024756F3C00F994B9 /* SFProDisplay-Medium.otf in Resources */,
 				0F5EC59B24756F3C00F994B9 /* SFProText-BlackItalic.otf in Resources */,
+				402134E72542334100080D25 /* LaunchScreen.storyboard in Resources */,
 				0F5EC58924756F3C00F994B9 /* SFProText-ThinItalic.otf in Resources */,
 				0F5EC59024756F3C00F994B9 /* SFProDisplay-BlackItalic.otf in Resources */,
 				0F5EC58324756F3C00F994B9 /* SFProText-SemiboldItalic.otf in Resources */,
