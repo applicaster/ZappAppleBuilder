@@ -186,7 +186,6 @@ class BaseHelper
       app_identifier: options[:bundle_identifier],
       team_id: options[:team_id],
       provisioning_name: "#{options[:bundle_identifier]} prov profile",
-      cert_owner_name: options[:team_name],
       filename: "#{options[:bundle_identifier]}.mobileprovision",
       platform: @@envHelper.platform_name
     )
