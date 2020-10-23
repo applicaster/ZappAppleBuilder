@@ -17,9 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchImageColor" translatesAutoresizingMaskIntoConstraints="NO" id="HAl-ao-p1X">
-                                <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
-                            </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchImageBackground" translatesAutoresizingMaskIntoConstraints="NO" id="8cf-FD-rY4">
                                 <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                             </imageView>
@@ -39,11 +36,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="WG7-hG-97S" firstAttribute="centerX" secondItem="1Ak-zI-VMl" secondAttribute="centerX" id="2eO-bD-JfL"/>
-                            <constraint firstAttribute="trailing" secondItem="HAl-ao-p1X" secondAttribute="trailing" id="9FL-w0-s3y"/>
-                            <constraint firstItem="HAl-ao-p1X" firstAttribute="leading" secondItem="1Ak-zI-VMl" secondAttribute="leading" id="A0r-QV-lho"/>
-                            <constraint firstItem="HAl-ao-p1X" firstAttribute="top" secondItem="1Ak-zI-VMl" secondAttribute="top" id="C4k-Wf-uHo"/>
                             <constraint firstItem="8cf-FD-rY4" firstAttribute="top" secondItem="1Ak-zI-VMl" secondAttribute="top" id="MIh-sK-PvG"/>
-                            <constraint firstAttribute="bottom" secondItem="HAl-ao-p1X" secondAttribute="bottom" id="TnK-ZW-iyX"/>
                             <constraint firstAttribute="bottom" secondItem="8cf-FD-rY4" secondAttribute="bottom" id="Ukk-cV-cKc"/>
                             <constraint firstItem="8cf-FD-rY4" firstAttribute="leading" secondItem="1Ak-zI-VMl" secondAttribute="leading" id="fdf-05-MdZ"/>
                             <constraint firstItem="WG7-hG-97S" firstAttribute="centerY" secondItem="1Ak-zI-VMl" secondAttribute="centerY" constant="5" id="w2j-9s-osp"/>
@@ -58,7 +51,6 @@
     </scenes>
     <resources>
         <image name="LaunchImageBackground" width="428" height="926"/>
-        <image name="LaunchImageColor" width="768" height="768"/>
         <image name="LaunchImageLogo" width="320" height="320"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

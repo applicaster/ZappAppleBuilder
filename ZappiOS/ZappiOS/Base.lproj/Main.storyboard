@@ -20,9 +20,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ThN-oz-OOv" userLabel="SplashImageContainer">
                                 <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchImageColor" translatesAutoresizingMaskIntoConstraints="NO" id="FBK-qU-30U">
-                                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
-                                    </imageView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchImageBackground" translatesAutoresizingMaskIntoConstraints="NO" id="3C7-bR-kKN">
                                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                                     </imageView>
@@ -41,15 +38,11 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="3C7-bR-kKN" secondAttribute="bottom" id="2Cx-UW-qD4"/>
-                                    <constraint firstAttribute="trailing" secondItem="FBK-qU-30U" secondAttribute="trailing" id="7uD-Xa-ZIR"/>
                                     <constraint firstItem="wGY-MM-Lgv" firstAttribute="centerY" secondItem="ThN-oz-OOv" secondAttribute="centerY" id="8VM-GC-pTA"/>
                                     <constraint firstItem="3C7-bR-kKN" firstAttribute="top" secondItem="ThN-oz-OOv" secondAttribute="top" id="KL2-wV-WRf"/>
-                                    <constraint firstItem="FBK-qU-30U" firstAttribute="top" secondItem="ThN-oz-OOv" secondAttribute="top" id="Kl6-dv-mky"/>
                                     <constraint firstAttribute="trailing" secondItem="3C7-bR-kKN" secondAttribute="trailing" id="PH3-i6-PX2"/>
                                     <constraint firstItem="3C7-bR-kKN" firstAttribute="leading" secondItem="ThN-oz-OOv" secondAttribute="leading" id="WgB-VK-TDe"/>
                                     <constraint firstItem="wGY-MM-Lgv" firstAttribute="centerX" secondItem="ThN-oz-OOv" secondAttribute="centerX" id="iqw-bb-8CO"/>
-                                    <constraint firstAttribute="bottom" secondItem="FBK-qU-30U" secondAttribute="bottom" id="oha-Gw-504"/>
-                                    <constraint firstItem="FBK-qU-30U" firstAttribute="leading" secondItem="ThN-oz-OOv" secondAttribute="leading" id="umd-Dj-bEw"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g5r-jl-qID" userLabel="Player Container View">
@@ -101,7 +94,6 @@
     </scenes>
     <resources>
         <image name="LaunchImageBackground" width="428" height="926"/>
-        <image name="LaunchImageColor" width="768" height="768"/>
         <image name="LaunchImageLogo" width="320" height="320"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

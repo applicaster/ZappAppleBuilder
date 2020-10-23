@@ -133,6 +133,4 @@ sips -Z 550 "$DST_PATH_RESOURCES/launch_image_logo_pad.png" --out "$DST_PATH_ASS
 info "Moving launch_image_logo_pad.png >> LaunchImageLogo@2x~ipad.png"
 mv "$DST_PATH_RESOURCES/launch_image_logo_pad.png" "$DST_PATH_ASSET_CATALOG/LaunchImageLogo.imageset/LaunchImageLogo@2x~ipad.png"
 
-info "Moving launch_image_color.png >> LaunchImageColor.png"
-mv "$DST_PATH_RESOURCES/launch_image_color.png" "$DST_PATH_ASSET_CATALOG/LaunchImageColor.imageset/LaunchImageColor.png"
 
