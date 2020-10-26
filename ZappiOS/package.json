@@ -29,7 +29,7 @@
   "dependencies": {
     "@applicaster/quick-brick-native-apple": "4.1.2-rc.12",
     "@applicaster/x-ray": "0.0.16-alpha",
-    "@applicaster/zapp-apple": "0.9.10",
+    "@applicaster/zapp-apple": "0.9.14",
     "@applicaster/zapp-core": "0.13.9",
     "@react-native-community/cli-platform-ios": "^4.7.0",
     "@react-native-community/netinfo": "^5.9.0",
