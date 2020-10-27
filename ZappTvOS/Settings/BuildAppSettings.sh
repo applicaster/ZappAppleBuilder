@@ -12,21 +12,12 @@ echo "Creating $CODESIGNING_FOLDER_PATH/Settings.bundle for '$CONFIGURATION' bui
 /usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers array" "$SETTINGSBUNDLEPATH"
 /usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:0 dict" "$SETTINGSBUNDLEPATH"
 
-/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:0:Type string 'PSGroupSpecifier'" "$SETTINGSBUNDLEPATH"
-/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:0:Title string 'About'" "$SETTINGSBUNDLEPATH"
+/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:1:Type string 'PSGroupSpecifier'" "$SETTINGSBUNDLEPATH"
+/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:1:Title string 'Assistance'" "$SETTINGSBUNDLEPATH"
 
-/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:1:Type string 'PSTitleValueSpecifier'" "$SETTINGSBUNDLEPATH"
-/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:1:Title string 'App Version'" "$SETTINGSBUNDLEPATH"
-/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:1:Key string 'app_version'" "$SETTINGSBUNDLEPATH"
-/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:1:DefaultValue string '$APPSHORTVERSION ($APPVERSION)'" "$SETTINGSBUNDLEPATH"
-
-
-/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:2:Type string 'PSGroupSpecifier'" "$SETTINGSBUNDLEPATH"
-/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:2:Title string 'Assistance'" "$SETTINGSBUNDLEPATH"
-
-/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:3:Type string 'PSToggleSwitchSpecifier'" "$SETTINGSBUNDLEPATH"
-/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:3:Title string 'Disable Alert'" "$SETTINGSBUNDLEPATH"
-/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:3:Key string 'is_url_scheme_alert_disabled'" "$SETTINGSBUNDLEPATH"
-/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:3:DefaultValue bool 'false'" "$SETTINGSBUNDLEPATH"
-/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:3:TrueValue bool 'true'" "$SETTINGSBUNDLEPATH"
-/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:3:FalseValue bool 'false'" "$SETTINGSBUNDLEPATH"
+/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:2:Type string 'PSToggleSwitchSpecifier'" "$SETTINGSBUNDLEPATH"
+/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:2:Title string 'Disable Alert'" "$SETTINGSBUNDLEPATH"
+/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:2:Key string 'is_url_scheme_alert_disabled'" "$SETTINGSBUNDLEPATH"
+/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:2:DefaultValue bool 'false'" "$SETTINGSBUNDLEPATH"
+/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:2:TrueValue bool 'true'" "$SETTINGSBUNDLEPATH"
+/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:2:FalseValue bool 'false'" "$SETTINGSBUNDLEPATH"
