@@ -24,7 +24,7 @@ set -e
 
 SRC_FILE="$1"
 DST_PATH="$2"
-DST_PATH_LAUNCH_IMAGES="$3"
+DST_PATH_ASSET_CATALOG="$3"
 DST_PATH_RESOURCES="$4"
 
 VERSION=1.0.0
@@ -91,9 +91,6 @@ sips -Z 120 "$SRC_FILE" --out "$DST_PATH/Icon-App-60x60@2x.png"
 info 'Generate Icon-App-60x60@3x ...'
 sips -Z 180 "$SRC_FILE" --out "$DST_PATH/Icon-App-60x60@3x.png"
 
-info 'Generate Icon-App-76x76@1x ...'
-sips -Z 76 "$SRC_FILE" --out "$DST_PATH/Icon-App-76x76@1x.png"
-
 info 'Generate Icon-App-76x76@2x ...'
 sips -Z 152 "$SRC_FILE" --out "$DST_PATH/Icon-App-76x76@2x.png"
 
@@ -106,26 +103,50 @@ info 'Clearing Source Image File ...'
 [ -e "$SRC_FILE" ] && rm -- "$SRC_FILE"
 info 'Clearing Complete.'
 
-info 'Moving Launch Images to LaunchImage folder ...'
-files='Default@2x Default-568h@2x Default-667h Default-736h Default-812h Default-896h@2x Default-1242h@3x'
-for file in $files
-do
-  if [ -e "$DST_PATH_RESOURCES/$file.png" ]
-  then
-    mv "$DST_PATH_RESOURCES/$file.png" "$DST_PATH_LAUNCH_IMAGES/$file.png"
-    info "Moving $file.png ..."
-  fi
 
-done
+info 'Create launch image files'
 
-files='Default-Landscape~ipad Default-Landscape@2x~ipad'
-for file in $files
-do
-  if [ -e "$DST_PATH_RESOURCES/$file.png" ]
-  then
-    cp "$DST_PATH_RESOURCES/$file.png" "$DST_PATH_LAUNCH_IMAGES/$file.png"
-    info "Copy $file.png ..."
+if [ -e "$DST_PATH_RESOURCES/launch_image_phone.png" ]
+then
+  info 'LaunchImageBackground@2x~iphone 856x1852'
+  sips -Z 1852 "$DST_PATH_RESOURCES/launch_image_phone.png" --out "$DST_PATH_ASSET_CATALOG/LaunchImageBackground.imageset/LaunchImageBackground@2x~iphone.png"
+
+  info "Moving launch_image_phone.png >> LaunchImageBackground@3x~iphone.png"
+  mv "$DST_PATH_RESOURCES/launch_image_phone.png" "$DST_PATH_ASSET_CATALOG/LaunchImageBackground.imageset/LaunchImageBackground@3x~iphone.png"
 fi
 
-done
-info 'Moving Complete.'
+if [ -e "$DST_PATH_RESOURCES/launch_image_pad.png" ]
+then
+  info 'LaunchImageBackground~ipad 1366x1366'
+  sips -Z 1366 "$DST_PATH_RESOURCES/launch_image_pad.png" --out "$DST_PATH_ASSET_CATALOG/LaunchImageBackground.imageset/LaunchImageBackground~ipad.png"
+
+  info "Moving launch_image_pad.png >> LaunchImageBackground@2x~ipad.png"
+  mv "$DST_PATH_RESOURCES/launch_image_pad.png" "$DST_PATH_ASSET_CATALOG/LaunchImageBackground.imageset/LaunchImageBackground@2x~ipad.png"
+fi
+
+if [ -e "$DST_PATH_RESOURCES/launch_image_logo_phone.png" ]
+then
+  info 'LaunchImageLogo@2x~iphone.png 640x640'
+  sips -Z 640 "$DST_PATH_RESOURCES/launch_image_logo_phone.png" --out "$DST_PATH_ASSET_CATALOG/LaunchImageLogo.imageset/LaunchImageLogo@2x~iphone.png"
+
+  info "Moving launch_image_logo_phone.png >> LaunchImageBackground@3x~iphone.png"
+  mv "$DST_PATH_RESOURCES/launch_image_logo_phone.png" "$DST_PATH_ASSET_CATALOG/LaunchImageLogo.imageset/LaunchImageLogo@3x~iphone.png"
+fi
+
+if [ -e "$DST_PATH_RESOURCES/launch_image_logo_pad.png" ]
+then
+  info 'launch_image_logo_pad~ipad 550x550'
+  sips -Z 550 "$DST_PATH_RESOURCES/launch_image_logo_pad.png" --out "$DST_PATH_ASSET_CATALOG/LaunchImageLogo.imageset/LaunchImageLogo~ipad.png"
+
+  info "Moving launch_image_logo_pad.png >> LaunchImageLogo@2x~ipad.png"
+  mv "$DST_PATH_RESOURCES/launch_image_logo_pad.png" "$DST_PATH_ASSET_CATALOG/LaunchImageLogo.imageset/LaunchImageLogo@2x~ipad.png"
+fi
+
+
+
+
+
+
+
+
+
