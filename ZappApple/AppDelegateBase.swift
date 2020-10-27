@@ -171,19 +171,20 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
             } else {
                 logger?.debugLog(template: AppDelegateLogs.handleURLSchemeDelegate,
                                  data: data)
-                let alertController = UIAlertController(title: "Alert", message: url.absoluteString, preferredStyle: .alert)
-                let action1 = UIAlertAction(title: "Forward URL Scheme", style: .default) { (action:UIAlertAction) in
-                    _ = self.uiLayerPluginDelegate?.applicationDelegate?.application?(app,
-                                                                                 open: url,
-                                                                                 options: options) ?? true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    let alertController = UIAlertController(title: "Alert", message: url.absoluteString, preferredStyle: .alert)
+                    let action1 = UIAlertAction(title: "Forward URL Scheme", style: .default) { (_: UIAlertAction) in
+                        _ = self.uiLayerPluginDelegate?.applicationDelegate?.application?(app,
+                                                                                          open: url,
+                                                                                          options: options) ?? true
+                    }
+                    alertController.addAction(action1)
+
+                    if let viewController = UIApplication.shared.keyWindow?.rootViewController {
+                        viewController.present(alertController, animated: true, completion: nil)
+                    }
                 }
-                alertController.addAction(action1)
 
-                let viewController = UIApplication.shared.windows.first!.rootViewController!
-
-                viewController.present(alertController, animated: true, completion: nil)
-                
-                
                 return true
             }
 
