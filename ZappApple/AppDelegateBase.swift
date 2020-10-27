@@ -73,8 +73,6 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         UIApplication.shared.applicationIconBadgeNumber = 0
         logger?.debugLog(template: AppDelegateLogs.applicationBecomeActive,
                          data: ["icon_badge_number": "0"])
-        
-        SettingsBundleHelper.handleChangesIfNeeded()
     }
 
     public func handleDelayedEventsIfNeeded() {
@@ -173,18 +171,25 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
             } else {
                 logger?.debugLog(template: AppDelegateLogs.handleURLSchemeDelegate,
                                  data: data)
-                let alertController = UIAlertController(title: "Alert", message: url.absoluteString, preferredStyle: .alert)
-                let action1 = UIAlertAction(title: "Forward URL Scheme", style: .default) { (_: UIAlertAction) in
-                    _ = self.uiLayerPluginDelegate?.applicationDelegate?.application?(app,
-                                                                                      open: url,
-                                                                                      options: options) ?? true
-                }
-                alertController.addAction(action1)
+                let disableAlert = UserDefaults.standard.bool(forKey: "is_url_scheme_alert_disabled")
+                if disableAlert == true {
+                    return uiLayerPluginDelegate?.applicationDelegate?.application?(app,
+                                                                                    open: url,
+                                                                                    options: options) ?? true
+                } else {
+                    let alertController = UIAlertController(title: "Alert", message: url.absoluteString, preferredStyle: .alert)
+                    let action1 = UIAlertAction(title: "Forward URL Scheme", style: .default) { (_: UIAlertAction) in
+                        _ = self.uiLayerPluginDelegate?.applicationDelegate?.application?(app,
+                                                                                          open: url,
+                                                                                          options: options) ?? true
+                    }
+                    alertController.addAction(action1)
 
-                if let viewController = UIApplication.shared.keyWindow?.rootViewController {
-                    viewController.present(alertController, animated: true, completion: nil)
+                    if let viewController = UIApplication.shared.keyWindow?.rootViewController {
+                        viewController.present(alertController, animated: true, completion: nil)
+                    }
+                    return true
                 }
-                return true
             }
 
         } else {
