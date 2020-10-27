@@ -73,6 +73,8 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         UIApplication.shared.applicationIconBadgeNumber = 0
         logger?.debugLog(template: AppDelegateLogs.applicationBecomeActive,
                          data: ["icon_badge_number": "0"])
+        
+        SettingsBundleHelper.handleChangesIfNeeded()
     }
 
     public func handleDelayedEventsIfNeeded() {
