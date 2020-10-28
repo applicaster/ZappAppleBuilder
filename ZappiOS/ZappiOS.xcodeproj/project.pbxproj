@@ -45,6 +45,7 @@
 		0F5EC5A024756F3C00F994B9 /* SFProDisplay-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0F5EC57C24756F3C00F994B9 /* SFProDisplay-Medium.otf */; };
 		1526CA20C41058B2832FE233 /* Pods_ZappiOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48BCB8F0F692A4D55E8D12E9 /* Pods_ZappiOSTests.framework */; };
 		1D18FB6823CFB6F00018D15E /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D18FB6723CFB6F00018D15E /* NotificationService.swift */; };
+		1D1963AF2548864B00FEB71C /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1D1963AD2548864B00FEB71C /* Settings.bundle */; };
 		1D30F68223CB297F00DDD86F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30F68123CB297F00DDD86F /* AppDelegate.swift */; };
 		1D30F68923CB297F00DDD86F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D30F68723CB297F00DDD86F /* Main.storyboard */; };
 		1D30F68B23CB298000DDD86F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D30F68A23CB298000DDD86F /* Assets.xcassets */; };
@@ -157,6 +158,7 @@
 		1D18FB6923CFB6F00018D15E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D18FB7323CFB76F0018D15E /* NotificationServiceExtension-Release.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "NotificationServiceExtension-Release.entitlements"; sourceTree = "<group>"; };
 		1D18FB7423CFB76F0018D15E /* NotificationServiceExtension-Debug.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "NotificationServiceExtension-Debug.entitlements"; sourceTree = "<group>"; };
+		1D1963AD2548864B00FEB71C /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		1D30F67E23CB297F00DDD86F /* ZappiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZappiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D30F68123CB297F00DDD86F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1D30F68823CB297F00DDD86F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -310,6 +312,15 @@
 			path = Entitlements;
 			sourceTree = "<group>";
 		};
+		1D1963AC2548864B00FEB71C /* SettingsBundle */ = {
+			isa = PBXGroup;
+			children = (
+				1D1963AD2548864B00FEB71C /* Settings.bundle */,
+			);
+			name = SettingsBundle;
+			path = ../SettingsBundle;
+			sourceTree = "<group>";
+		};
 		1D26409223D9E7E4000BCD54 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -321,6 +332,7 @@
 		1D30F67523CB297F00DDD86F = {
 			isa = PBXGroup;
 			children = (
+				1D1963AC2548864B00FEB71C /* SettingsBundle */,
 				1D30F6B623CB2CE800DDD86F /* ZappApple */,
 				1D30F68023CB297F00DDD86F /* ZappiOS */,
 				1D30F69723CB298000DDD86F /* ZappiOSTests */,
@@ -511,6 +523,7 @@
 				1D30F6C323CB469100DDD86F /* Run xcode fix */,
 				1DD19CBD241E7B3200D77827 /* Embed App Extensions */,
 				1D30F6C423CB46CE00DDD86F /* Run React Native Packager */,
+				1D1963B62548865E00FEB71C /* Settings bunlde script */,
 			);
 			buildRules = (
 			);
@@ -667,6 +680,7 @@
 				0F5EC57D24756F3C00F994B9 /* SFProDisplay-HeavyItalic.otf in Resources */,
 				0F5EC58024756F3C00F994B9 /* SFProDisplay-UltralightItalic.otf in Resources */,
 				0F5EC58424756F3C00F994B9 /* SFProText-HeavyItalic.otf in Resources */,
+				1D1963AF2548864B00FEB71C /* Settings.bundle in Resources */,
 				0F5EC57E24756F3C00F994B9 /* SFProDisplay-Thin.otf in Resources */,
 				0F5EC58224756F3C00F994B9 /* SFProDisplay-SemiboldItalic.otf in Resources */,
 				0F5EC59A24756F3C00F994B9 /* SFProText-UltralightItalic.otf in Resources */,
@@ -732,6 +746,24 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		1D1963B62548865E00FEB71C /* Settings bunlde script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Settings bunlde script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nsh \"${SRCROOT}/../SettingsBundle/BuildSettingsBundle.sh\"\n";
 		};
 		1D30F6C323CB469100DDD86F /* Run xcode fix */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D19635A2548858F00FEB71C /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1D1963582548858F00FEB71C /* Settings.bundle */; };
 		1D30F6D223CB484500DDD86F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30F6D123CB484500DDD86F /* AppDelegate.swift */; };
 		1D30F6D723CB484500DDD86F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D30F6D523CB484500DDD86F /* Main.storyboard */; };
 		1D30F6D923CB484500DDD86F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D30F6D823CB484500DDD86F /* Assets.xcassets */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D1963582548858F00FEB71C /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		1D30F6CE23CB484500DDD86F /* ZappTvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZappTvOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D30F6D123CB484500DDD86F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1D30F6D623CB484500DDD86F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -101,6 +103,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D1963572548858F00FEB71C /* SettingsBundle */ = {
+			isa = PBXGroup;
+			children = (
+				1D1963582548858F00FEB71C /* Settings.bundle */,
+			);
+			name = SettingsBundle;
+			path = ../SettingsBundle;
+			sourceTree = "<group>";
+		};
 		1D2640A523D9E85E000BCD54 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +122,7 @@
 		1D30F6C523CB484500DDD86F = {
 			isa = PBXGroup;
 			children = (
+				1D1963572548858F00FEB71C /* SettingsBundle */,
 				1D30F70923CB4D3A00DDD86F /* ZappApple */,
 				1D30F6D023CB484500DDD86F /* ZappTvOS */,
 				1D30F6E523CB484600DDD86F /* ZappTvOSTests */,
@@ -247,6 +259,7 @@
 				D54776718E2F6C491E84E9E6 /* [CP] Embed Pods Frameworks */,
 				1D3FE37923D8C557002B5E30 /* Copy App Resources */,
 				403A829623ECC21600AE3002 /* Run Xcode Fix */,
+				1D1960A72546BCB200FEB71C /* Settings bunlde script */,
 			);
 			buildRules = (
 			);
@@ -346,6 +359,7 @@
 				1D30F71023CB4D3A00DDD86F /* FeaturesCustomization.plist in Resources */,
 				40FB300723F1A66E00B76AD0 /* GoogleService-Info.plist in Resources */,
 				1D30F71123CB4D3A00DDD86F /* ZappStyles.json in Resources */,
+				1D19635A2548858F00FEB71C /* Settings.bundle in Resources */,
 				1D30F6D723CB484500DDD86F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -367,6 +381,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1D1960A72546BCB200FEB71C /* Settings bunlde script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Settings bunlde script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nsh \"${SRCROOT}/../SettingsBundle/BuildSettingsBundle.sh\"\n";
+		};
 		1D3FE37923D8C557002B5E30 /* Copy App Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
