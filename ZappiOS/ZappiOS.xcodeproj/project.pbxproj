@@ -1175,7 +1175,7 @@
 					"@executable_path/Frameworks",
 				);
 				MAIN_PROV_PROFILE_SPECIFIER = "";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)-DFB_SONARKIT_ENABLED";
 				PRODUCT_BUNDLE_IDENTIFIER = com.applicaster.ZappiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "$(MAIN_PROV_PROFILE_SPECIFIER)";
@@ -1199,7 +1199,7 @@
 					"@executable_path/Frameworks",
 				);
 				MAIN_PROV_PROFILE_SPECIFIER = "";
-				OTHER_SWIFT_FLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)-DFB_SONARKIT_ENABLED";
 				PRODUCT_BUNDLE_IDENTIFIER = com.applicaster.ZappiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "$(MAIN_PROV_PROFILE_SPECIFIER)";
