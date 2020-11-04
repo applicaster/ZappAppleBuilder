@@ -250,7 +250,7 @@ PODS:
     - XrayLogger/Core (= 0.0.1)
   - XrayLogger/Core (0.0.1)
   - Yoga (1.14.0)
-  - ZappApple (0.10.0):
+  - ZappApple (0.11.1):
     - AppCenter/Distribute (= 3.0.0)
     - DeviceKit (= 3.2.0)
     - ReachabilitySwift (= 5.0.0)
@@ -389,7 +389,7 @@ SPEC CHECKSUMS:
   ReactCommon: 4520755b5a8921156f0bca32157da837640c2ae6
   XrayLogger: 0eea77da5bfa6c2c1647644cae05e2dabbcdadf0
   Yoga: 2b7639f79fddf5026153af56851b832318942330
-  ZappApple: cbccda7f315ac6007087f05e4b21bd9a415f8a05
+  ZappApple: 84ea744855ee7be72c25304a9938a01864f0cb81
   ZappCore: ff45c96fd3ed199bcd639c2b8c01b027b1652fab
 
 PODFILE CHECKSUM: 64736908f4529dbb6ec19a484e93c8c704eab3aa
