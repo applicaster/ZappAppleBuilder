@@ -24,12 +24,12 @@ PODS:
     - Flipper-Folly (~> 2.2)
     - Flipper-RSocket (~> 1.1)
   - Flipper-DoubleConversion (1.1.7)
-  - Flipper-Folly (2.2.0):
+  - Flipper-Folly (2.3.0):
     - boost-for-react-native
     - CocoaLibEvent (~> 1.0)
     - Flipper-DoubleConversion
     - Flipper-Glog
-    - OpenSSL-Universal (= 1.0.2.19)
+    - OpenSSL-Universal (= 1.0.2.20)
   - Flipper-Glog (0.3.6)
   - Flipper-PeerTalk (0.0.4)
   - flipper-plugin-react-native-performance (0.4.3):
@@ -85,10 +85,10 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
-  - OpenSSL-Universal (1.0.2.19):
-    - OpenSSL-Universal/Static (= 1.0.2.19)
-  - OpenSSL-Universal/Static (1.0.2.19)
-  - QuickBrickApple (4.1.2-rc.7):
+  - OpenSSL-Universal (1.0.2.20):
+    - OpenSSL-Universal/Static (= 1.0.2.20)
+  - OpenSSL-Universal/Static (1.0.2.20)
+  - QuickBrickApple (4.1.2-rc.12):
     - React
     - React-RCTLinking
     - XrayLogger
@@ -333,7 +333,7 @@ PODS:
     - Yoga (~> 1.14)
   - ZappAnalyticsPluginsSDK (11.0.0):
     - ZappPlugins
-  - ZappApple (0.9.10):
+  - ZappApple (0.11.1):
     - AppCenter/Distribute (= 3.0.0)
     - DeviceKit (= 3.2.0)
     - ReachabilitySwift (= 5.0.0)
@@ -408,7 +408,7 @@ SPEC REPOS:
     - ZappAnalyticsPluginsSDK
     - ZappPlugins
     - ZappPushPluginsSDK
-  https://cdn.cocoapods.org/:
+  trunk:
     - AppCenter
     - boost-for-react-native
     - CocoaAsyncSocket
@@ -512,7 +512,7 @@ SPEC CHECKSUMS:
   FBReactNativeSpec: 5465d51ccfeecb7faa12f9ae0024f2044ce4044e
   Flipper: 16f4f0614fa9935e67bdd46ace0909677df1b200
   Flipper-DoubleConversion: 38631e41ef4f9b12861c67d17cb5518d06badc41
-  Flipper-Folly: c12092ea368353b58e992843a990a3225d4533c3
+  Flipper-Folly: e4493b013c02d9347d5e0cb4d128680239f6c78a
   Flipper-Glog: 1dfd6abf1e922806c52ceb8701a3599a79a200a6
   Flipper-PeerTalk: 116d8f857dc6ef55c7a5a75ea3ceaafe878aadc9
   flipper-plugin-react-native-performance: d54b331105c1a3c33ba32a7a759b553d16a2906d
@@ -520,8 +520,8 @@ SPEC CHECKSUMS:
   FlipperKit: a53f8c1495e283dd8a1aeac9f3faaa63a03da17c
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
-  OpenSSL-Universal: 8b48cc0d10c1b2923617dfe5c178aa9ed2689355
-  QuickBrickApple: ccc3f9843a81ef01a84482a7bbe62bdd033391c2
+  OpenSSL-Universal: ff34003318d5e1163e9529b08470708e389ffcdd
+  QuickBrickApple: 184d5dcf558d089af04dc0e0562ea2c5b212e76c
   RCTRequired: cec6a34b3ac8a9915c37e7e4ad3aa74726ce4035
   RCTTypeSafety: 93006131180074cffa227a1075802c89a49dd4ce
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
@@ -551,11 +551,11 @@ SPEC CHECKSUMS:
   Yoga: 3ebccbdd559724312790e7742142d062476b698e
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
   ZappAnalyticsPluginsSDK: 0b33b53031e6c1a3c32b4ff25fb63d6e78d8380f
-  ZappApple: 63240e80421c59c95ea7680b3de6deaa16e1cd77
+  ZappApple: 84ea744855ee7be72c25304a9938a01864f0cb81
   ZappCore: ff45c96fd3ed199bcd639c2b8c01b027b1652fab
   ZappPlugins: b1a3da054cae582240d2c2ba782479dea515b7c4
   ZappPushPluginsSDK: 8d4e0402d2ebb94974aa88807885db70d6d976e4
 
-PODFILE CHECKSUM: 7c18bf68b14c0afc456b1af8c9559fcfa6d8e0c7
+PODFILE CHECKSUM: 79b39ffa0b925d0a62565ba35abef38a4233dc73
 
 COCOAPODS: 1.9.3
