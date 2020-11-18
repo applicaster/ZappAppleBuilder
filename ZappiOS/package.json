@@ -31,6 +31,8 @@
     "@applicaster/x-ray": "0.0.21",
     "@applicaster/zapp-apple": "0.11.1",
     "@applicaster/zapp-core": "0.13.9",
+    "@applicaster/zapp-analytics-plugins" : "12.0.0",
+    "@applicaster/zapp-push-plugins" : "12.0.0",
     "@react-native-community/cli-platform-ios": "^4.7.0",
     "@react-native-community/netinfo": "^5.9.0",
     "@react-native-community/viewpager": "3.3.0",
