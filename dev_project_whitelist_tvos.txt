@@ -1,3 +1,4 @@
 ZappApple/
 ZappTvOS/
 Scripts/
+SettingsBundle/
