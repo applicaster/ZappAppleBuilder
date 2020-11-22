@@ -331,7 +331,8 @@ PODS:
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
-  - ZappAnalyticsPluginsSDK (11.0.0):
+  - ZappAnalyticsPluginsSDK (12.0.0):
+    - ZappCore
     - ZappPlugins
   - ZappApple (0.11.1):
     - AppCenter/Distribute (= 3.0.0)
@@ -342,7 +343,7 @@ PODS:
   - ZappCore (0.13.9)
   - ZappPlugins (11.7.0):
     - ZappCore
-  - ZappPushPluginsSDK (11.0.1):
+  - ZappPushPluginsSDK (12.0.0):
     - ZappCore
     - ZappPlugins
 
@@ -397,17 +398,15 @@ DEPENDENCIES:
   - RNSVG (from `node_modules/react-native-svg`)
   - "XrayLogger (from `./node_modules/@applicaster/x-ray/apple/XrayLogger.podspec`)"
   - Yoga (from `./node_modules/react-native/ReactCommon/yoga`)
-  - ZappAnalyticsPluginsSDK (= 11.0.0)
+  - "ZappAnalyticsPluginsSDK (from `./node_modules/@applicaster/zapp-analytics-plugins/apple/ZappAnalyticsPluginsSDK.podspec`)"
   - "ZappApple (from `./node_modules/@applicaster/zapp-apple/apple/ZappApple.podspec`)"
   - "ZappCore (from `./node_modules/@applicaster/zapp-core/apple/ZappCore.podspec`)"
   - ZappPlugins (= 11.7.0)
-  - ZappPushPluginsSDK (= 11.0.1)
+  - "ZappPushPluginsSDK (from `./node_modules/@applicaster/zapp-push-plugins/apple/ZappPushPluginsSDK.podspec`)"
 
 SPEC REPOS:
   "git@github.com:applicaster/CocoaPods.git":
-    - ZappAnalyticsPluginsSDK
     - ZappPlugins
-    - ZappPushPluginsSDK
   trunk:
     - AppCenter
     - boost-for-react-native
@@ -494,10 +493,14 @@ EXTERNAL SOURCES:
     :path: "./node_modules/@applicaster/x-ray/apple/XrayLogger.podspec"
   Yoga:
     :path: "./node_modules/react-native/ReactCommon/yoga"
+  ZappAnalyticsPluginsSDK:
+    :path: "./node_modules/@applicaster/zapp-analytics-plugins/apple/ZappAnalyticsPluginsSDK.podspec"
   ZappApple:
     :path: "./node_modules/@applicaster/zapp-apple/apple/ZappApple.podspec"
   ZappCore:
     :path: "./node_modules/@applicaster/zapp-core/apple/ZappCore.podspec"
+  ZappPushPluginsSDK:
+    :path: "./node_modules/@applicaster/zapp-push-plugins/apple/ZappPushPluginsSDK.podspec"
 
 SPEC CHECKSUMS:
   AppCenter: 7a0bbe928d07467ac8b2d7f6f2a675872a6471d8
@@ -550,12 +553,12 @@ SPEC CHECKSUMS:
   XrayLogger: 0eea77da5bfa6c2c1647644cae05e2dabbcdadf0
   Yoga: 3ebccbdd559724312790e7742142d062476b698e
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
-  ZappAnalyticsPluginsSDK: 0b33b53031e6c1a3c32b4ff25fb63d6e78d8380f
+  ZappAnalyticsPluginsSDK: 95eca519604ef762af3f7f76d27c319fbf4e5983
   ZappApple: 84ea744855ee7be72c25304a9938a01864f0cb81
   ZappCore: ff45c96fd3ed199bcd639c2b8c01b027b1652fab
   ZappPlugins: b1a3da054cae582240d2c2ba782479dea515b7c4
-  ZappPushPluginsSDK: 8d4e0402d2ebb94974aa88807885db70d6d976e4
+  ZappPushPluginsSDK: 5e8bd0f0cb454950dd92b2630ae5b4feb4c92ba9
 
-PODFILE CHECKSUM: 79b39ffa0b925d0a62565ba35abef38a4233dc73
+PODFILE CHECKSUM: 10d4d3cff9c48ad4b797f694f80a0169b797838e
 
 COCOAPODS: 1.9.3

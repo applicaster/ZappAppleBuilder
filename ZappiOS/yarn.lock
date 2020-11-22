@@ -137,10 +137,10 @@
   dependencies:
     ramda "^0.27.0"
 
-"@applicaster/quick-brick-native-apple@4.1.2-rc.12":
-  version "4.1.2-rc.12"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-native-apple/-/quick-brick-native-apple-4.1.2-rc.12.tgz#84d01e67ac0b9f6acf1bbcf361a9a9e1cc303dd8"
-  integrity sha512-z9UfGDarBWtCmcrH4sRzdkpTLRwTr5zF/WQb7Tn0oj6dOC+VNRiuOZWKhxAs14R8m/5gnlhyB4OG0v1Sio2DDA==
+"@applicaster/quick-brick-native-apple@4.1.2-rc.36":
+  version "4.1.2-rc.36"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-native-apple/-/quick-brick-native-apple-4.1.2-rc.36.tgz#5248cab3944b58e7faeae69e316f584a55dbeda9"
+  integrity sha512-KDCG3Hzleo0TXzgFjfHs8uqEXDFg1Q5IlkRfaTFU0INVtsPyXpO5WjycVKdJQuEzPymgA4Udqi69FqZIWAKvEA==
 
 "@applicaster/quick-brick-tabs@1.0.0":
   version "1.0.0"
@@ -177,15 +177,20 @@
   resolved "https://registry.yarnpkg.com/@applicaster/react-native-fast-image/-/react-native-fast-image-8.3.2-1.tgz#b0d565c2b33e3d3a9311fd569869186d942951cd"
   integrity sha512-L2RYxsv9CzCIgRMegjKkjbord1Zi0RcOKl39wnCXr60nHsRBTnL4BxX5sQwD4h5ZNF6lZDms5U5vxme+vMHpPQ==
 
-"@applicaster/x-ray@0.0.20":
-  version "0.0.20"
-  resolved "https://registry.yarnpkg.com/@applicaster/x-ray/-/x-ray-0.0.20.tgz#29164bb3781589b790bc1ef76a8ed6b50fbaa8cd"
-  integrity sha512-VS9MrTLPysTt0IaRWdd6ixuSmyitBDGFGlJwzDTIGTZr9lXv2kDNKatAf54jqcZPjW6VhuyesyErLfqkeK14cg==
+"@applicaster/x-ray@0.0.21":
+  version "0.0.21"
+  resolved "https://registry.yarnpkg.com/@applicaster/x-ray/-/x-ray-0.0.21.tgz#6ac77f4574b62c1339ba7ceb10eda931dbf7a229"
+  integrity sha512-cDzMTGqnQ0otq8jAFcl2t/oE/1wwMAbnjzQJhv1zXJgcLumHjAUaoxPk1mV2hPqv+qvRwdo7VRnZo6MIKMiuiQ==
 
 "@applicaster/x-ray@0.0.8-alpha":
   version "0.0.8-alpha"
   resolved "https://registry.yarnpkg.com/@applicaster/x-ray/-/x-ray-0.0.8-alpha.tgz#76e67f07763d621a441ac7701548ef636907eb9c"
   integrity sha512-RJxXyW4C3ak/sDm5OwhL324zizGWMgKBmqcLY5fRb6z0Yn3GnQ6i9iw005X8QBL+mqANmL16GmCuhU/rFbQG5w==
+
+"@applicaster/zapp-analytics-plugins@12.0.0":
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-analytics-plugins/-/zapp-analytics-plugins-12.0.0.tgz#8e2d524eb7285832d2a8961e079bcfeaaedfd320"
+  integrity sha512-P3eqgTW2a/9qsg7t31m9kULx2xMF0NPlChC++EBTonngO7YOKRpLGXwP+F+BPgrAnJHar924GmEU4mrOyzB2mA==
 
 "@applicaster/zapp-apple@0.11.1":
   version "0.11.1"
@@ -219,6 +224,11 @@
     ramda "0.23.0"
     snake-case "2.1.0"
     xml2js "0.4.17"
+
+"@applicaster/zapp-push-plugins@12.0.0":
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-push-plugins/-/zapp-push-plugins-12.0.0.tgz#bc638f64bc98f0be7abc1b4220c2c7cdb52e712a"
+  integrity sha512-7aMsyxBJSMfXon//aLB2Y5S3EsOmQVWpwE9CccCo50afkwW96IMquAPUOVK0TtkYr77sTtM/eddQsQmRmS1jjA==
 
 "@applicaster/zapp-react-dom-app@4.1.1":
   version "4.1.1"
