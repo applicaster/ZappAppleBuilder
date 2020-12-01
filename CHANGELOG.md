@@ -4,24 +4,47 @@
 
 ## SDK supports only UI Framework: QuickBrick
 
-### QuickBrick version: [4.0.0](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#2020-03-09)
+### QuickBrick version: [4.1.4](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#v414-2020-12-01)
 
 #### React Native version: 0.62.2
 
 ### Instruments
 
 - [Xcode](https://developer.apple.com): 12.0.0
-- [Fastlane](https://fastlane.tools): 2.150.0
+- [Fastlane](https://fastlane.tools): 2.163.0
 - [CocoaPods](https://github.com/CocoaPods/CocoaPods): 1.9.3
-- [ZappTool](https://github.com/applicaster/ZappTool): 3.11.1
+- [ZappTool](https://github.com/applicaster/ZappTool): 4.1.4
 
 ### Dependencies
 
-- [ZappCore](https://github.com/applicaster/ZappAppleBuilder): 0.13.6
-- [ZappApple](https://github.com/applicaster/ZappAppleBuilder): 0.9.8
+- [ZappCore](https://github.com/applicaster/ZappAppleBuilder): 0.13.9
+- [ZappApple](https://github.com/applicaster/ZappAppleBuilder): 0.11.3
 - [(iOS) ZappPlugins](https://github.com/applicaster/ZappPlugins.2.0-iOS): 11.8.0
-- [(iOS) ZappPushPluginsSDK](https://github.com/applicaster/ZappPushPluginsSDK-iOS): 11.0.1
-- [(iOS) ZappAnalyticsPluginsSDK](https://github.com/applicaster/ZappAnalyticsPluginsSDK-iOS): 11.0.0
+- [(iOS) ZappPushPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): 12.0.0
+- [(iOS) ZappAnalyticsPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): 12.0.0
+
+## [2.0.0](https://github.com/applicaster/ZappAppleBuilder/tree/2.0.0) (2020-12-01)
+
+**Features**
+
+- Add tvOS settings bundle [\#162](https://github.com/applicaster/ZappAppleBuilder/pull/162) ([alexzchut](https://github.com/alexzchut))
+- Add start orientation support [\#157](https://github.com/applicaster/ZappAppleBuilder/pull/157) ([kononenkoAnton](https://github.com/kononenkoAnton))
+
+**Implemented enhancements:**
+
+- Set new dependency for push and analytics plugins sdk [\#170](https://github.com/applicaster/ZappAppleBuilder/pull/170) ([alexzchut](https://github.com/alexzchut))
+- Finilize support enable/disable plugin feature [\#163](https://github.com/applicaster/ZappAppleBuilder/pull/163) ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Add script for blur component [\#155](https://github.com/applicaster/ZappAppleBuilder/pull/155) ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Update fastlane to 2.163.0 [\#152](https://github.com/applicaster/ZappAppleBuilder/pull/152) ([alexzchut](https://github.com/alexzchut))
+- Add xray readable ui [\#151](https://github.com/applicaster/ZappAppleBuilder/pull/151) ([kononenkoAnton](https://github.com/kononenkoAnton))
+
+**Bug fixes:**
+
+- Remove NSUserTrackingUsageDescription key from the app [\#172](https://github.com/applicaster/ZappAppleBuilder/pull/172) ([alexzchut](https://github.com/alexzchut))
+- Update xray version with fix in json file sink [\#168](https://github.com/applicaster/ZappAppleBuilder/pull/168) ([alexzchut](https://github.com/alexzchut))
+- Update xray version with fix in search subsystem and bg color [\#165](https://github.com/applicaster/ZappAppleBuilder/pull/165) ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Remove rotaion styles from zapptool [\#160](https://github.com/applicaster/ZappAppleBuilder/pull/160) ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Fix for Xcode 12 settings failure to build CocoaPods-generate umbrella headers [\#153](https://github.com/applicaster/ZappAppleBuilder/pull/153) ([alexzchut](https://github.com/alexzchut))
 
 ## [1.0.0](https://github.com/applicaster/ZappAppleBuilder/tree/1.0.0) (2020-09-22)
 
