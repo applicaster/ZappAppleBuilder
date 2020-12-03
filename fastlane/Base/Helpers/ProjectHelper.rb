@@ -78,8 +78,8 @@ class ProjectHelper < BaseHelper
     update_info_plist_versions(
       xcodeproj: xcodeproj_path,
       plist_path: "#{options[:target_name]}/Info.plist",
-      bundle_version: build_version,
-      bundle_short_version: version_name
+      bundle_version: @@envHelper.build_version,
+      bundle_short_version: @@envHelper.version_name
     )
 
     # update app identifier to the enterprise one
