@@ -75,21 +75,11 @@ class ProjectHelper < BaseHelper
   def plist_update_version_values(options)
     current(__callee__.to_s)
 
-    # update app identifier, versions of the extension
-    bundle_version = get_plist_value(
-      plist_path: options[:plist_path],
-      key: 'CFBundleVersion'
-    )
-    bundle_short_version = get_plist_value(
-      plist_path: options[:plist_path],
-      key: 'CFBundleShortVersionString'
-    )
-
     update_info_plist_versions(
       xcodeproj: xcodeproj_path,
       plist_path: "#{options[:target_name]}/Info.plist",
-      bundle_version: bundle_version,
-      bundle_short_version: bundle_short_version
+      bundle_version: build_version,
+      bundle_short_version: version_name
     )
 
     # update app identifier to the enterprise one
