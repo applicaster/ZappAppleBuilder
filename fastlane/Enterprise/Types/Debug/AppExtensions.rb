@@ -61,15 +61,9 @@ class EnterpriseDebugAppExtensions < AppExtensions
         bundle_identifier: extension_bundle_identifier
       )
 
-      # add group to entitlements for app target
-      update_group_identifiers(
-        target: @projectHelper.name.to_s,
-        build_type: 'Release',
-        groups: [group_name(app_bundle_identifier).to_s]
-      )
-
       # add group to entitlements for extension target
       update_group_identifiers(
+        path: @projectHelper.path,
         target: extension_target_name.to_s,
         build_type: 'Release',
         groups: [group_name(app_bundle_identifier).to_s]
@@ -87,17 +81,13 @@ class EnterpriseDebugAppExtensions < AppExtensions
       # notification extension disabled
       sh("echo '#{extension_type} disabled'")
     end
-  end
 
-  def update_group_identifiers(options)
-    target = options[:target]
-    build_type = options[:build_type]
-    groups = options[:groups]
-    file_path = "#{@projectHelper.path}/#{target}/Entitlements/#{target}-#{build_type}.entitlements"
-
-    @fastlane.update_app_group_identifiers(
-      entitlements_file: file_path.to_s,
-      app_group_identifiers: groups
+    # add group to entitlements for app target
+    update_group_identifiers(
+      path: @projectHelper.path,
+      target: @projectHelper.name.to_s,
+      build_type: 'Release',
+      groups: [group_name(app_bundle_identifier).to_s]
     )
   end
 end

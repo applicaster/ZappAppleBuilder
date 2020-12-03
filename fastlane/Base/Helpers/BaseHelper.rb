@@ -255,6 +255,21 @@ class BaseHelper
     sh(command.to_s)
   end
 
+  def update_group_identifiers(options)
+    current(__callee__.to_s)
+    target = options[:target]
+    build_type = options[:build_type]
+    groups = options[:groups]
+    path = options[:path]
+
+    file_path = "#{path}/#{target}/Entitlements/#{target}-#{build_type}.entitlements"
+
+    @fastlane.update_app_group_identifiers(
+      entitlements_file: file_path.to_s,
+      app_group_identifiers: groups
+    )
+  end
+
   def circle_artifacts_folder_path
     "#{@@envHelper.root_path}/CircleArtifacts"
   end
