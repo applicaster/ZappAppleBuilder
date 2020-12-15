@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class EnterpriseDebugAppExtensions < AppExtensions
+
   def extension_prepare(options)
     username = options[:username]
     team_id = options[:team_id]
@@ -46,11 +47,7 @@ class EnterpriseDebugAppExtensions < AppExtensions
         app_index: extension_type
       )
 
-      # create group for app and notification extension
-      sh("bundle exec fastlane produce group -g #{group_name(app_bundle_identifier)} -n '#{@@envHelper.bundle_identifier} Group' -u #{username} ")
-
-      # add the app and the notification extension to the created group
-      sh("bundle exec fastlane produce associate_group #{group_name(app_bundle_identifier)} -a #{app_bundle_identifier} -u #{username} ")
+      # add notification extension to the app group
       sh("bundle exec fastlane produce associate_group #{group_name(app_bundle_identifier)} -a #{extension_bundle_identifier} -u #{username} -i 1")
 
       # create provisioning profile for the notifications app
@@ -81,13 +78,5 @@ class EnterpriseDebugAppExtensions < AppExtensions
       # notification extension disabled
       sh("echo '#{extension_type} disabled'")
     end
-
-    # add group to entitlements for app target
-    update_group_identifiers(
-      path: @projectHelper.path,
-      target: @projectHelper.name.to_s,
-      build_type: 'Release',
-      groups: [group_name(app_bundle_identifier).to_s]
-    )
   end
 end
