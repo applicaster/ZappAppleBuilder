@@ -8,6 +8,7 @@
 
 import Foundation
 
+import AVKit
 import DeviceKit
 import React
 import UIKit
@@ -54,6 +55,7 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
 
         StorageInitialization.initializeDefaultValues(sessionStorage: defaultStorageParams,
                                                       localStorage: defaultStorageParams)
+        prepareAudioSession()
         rootController?.reloadApplication()
 
         FirebaseHandler.configure()
@@ -69,11 +71,23 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
         logsLogger?.verboseLog(template: LoggerLogs.loggerIntialized)
     }
 
+    func prepareAudioSession() {
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession.setCategory(.playback,
+                                         mode: .moviePlayback,
+                                         options: [])
+            try audioSession.setActive(true, options: [])
+        } catch {
+            print("Setting category to AVAudioSessionCategoryPlayback failed.", error)
+        }
+    }
+
     public func applicationDidBecomeActive(_ application: UIApplication) {
         UIApplication.shared.applicationIconBadgeNumber = 0
         logger?.debugLog(template: AppDelegateLogs.applicationBecomeActive,
                          data: ["icon_badge_number": "0"])
-        
+
         SettingsBundleHelper.handleChangesIfNeeded()
     }
 
@@ -148,7 +162,7 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
 
     var isApplicationReady: Bool {
         if let rootController = rootController,
-            rootController.appReadyForUse == false {
+           rootController.appReadyForUse == false {
             return false
         }
         return true
