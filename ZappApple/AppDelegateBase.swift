@@ -79,7 +79,7 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
                                          options: [])
             try audioSession.setActive(true, options: [])
         } catch {
-            print("Setting category to AVAudioSessionCategoryPlayback failed.", error)
+            logger?.errorLog(message: "Setting category to AVAudioSessionCategoryPlayback failed. error:\(error)")
         }
     }
 
