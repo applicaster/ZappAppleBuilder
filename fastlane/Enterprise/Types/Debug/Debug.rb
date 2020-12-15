@@ -168,6 +168,8 @@ class EnterpriseDebug < BuildTypeEnterprise
         p12_password: @@envHelper.accounts_account_id
       )
 
+      prepare_app_group
+
       enterprise_debug_create_provisioning_profile(
         username: username,
         team_id: team_id,
@@ -221,6 +223,23 @@ class EnterpriseDebug < BuildTypeEnterprise
     current(__callee__.to_s)
     prepare_notification_content_extension
     prepare_notification_service_extension
+  end
+
+  def prepare_app_group
+    current(__callee__.to_s)
+
+    # create group for app
+    sh("bundle exec fastlane produce group -g #{group_name(app_bundle_identifier)} -n '#{@@envHelper.bundle_identifier} Group' -u #{username} ")
+    # add the app to the created group
+    sh("bundle exec fastlane produce associate_group #{group_name(app_bundle_identifier)} -a #{app_bundle_identifier} -u #{username} ")
+
+    # add group to entitlements for app target
+    update_group_identifiers(
+      path: @projectHelper.path,
+      target: @projectHelper.name.to_s,
+      build_type: 'Release',
+      groups: [group_name(app_bundle_identifier).to_s]
+    )
   end
 
   def prepare_notification_content_extension
