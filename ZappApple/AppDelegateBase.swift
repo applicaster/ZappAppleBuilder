@@ -43,6 +43,7 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
     public func application(_ application: UIApplication,
                             didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         self.launchOptions = launchOptions
+        prepareAudioSession()
 
         rootController = RootController()
         rootController?.appDelegate = self
@@ -55,7 +56,6 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
 
         StorageInitialization.initializeDefaultValues(sessionStorage: defaultStorageParams,
                                                       localStorage: defaultStorageParams)
-        prepareAudioSession()
         rootController?.reloadApplication()
 
         FirebaseHandler.configure()
@@ -77,7 +77,6 @@ public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnecto
             try audioSession.setCategory(.playback,
                                          mode: .moviePlayback,
                                          options: [])
-            try audioSession.setActive(true, options: [])
         } catch {
             logger?.errorLog(message: "Setting category to AVAudioSessionCategoryPlayback failed. error:\(error)")
         }
