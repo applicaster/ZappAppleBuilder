@@ -7,16 +7,24 @@
 //
 
 import Foundation
-import OfflineContent
+
+#if canImport(OfflineContent)
+    import OfflineContent
+#endif
+
 import ZappCore
 
 extension AppDelegateBase: FacadeConnectorOfflineContentProtocol {
     public func localUrl(for identifier: String?) -> String? {
-        guard let identifier = identifier,
-              let avUrlAsset = OfflineContentManager.shared.localUrlAsset(for: identifier) else {
-            return nil
-        }
+        #if canImport(OfflineContent)
+            guard let identifier = identifier,
+                  let avUrlAsset = OfflineContentManager.shared.localUrlAsset(for: identifier) else {
+                return nil
+            }
 
-        return avUrlAsset.url.absoluteString
+            return avUrlAsset.url.absoluteString
+        #else
+            return nil
+        #endif
     }
 }
