@@ -62,6 +62,7 @@
 		1D68DC442483B16000844CB3 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D68DC432483B16000844CB3 /* NotificationViewController.swift */; };
 		1D68DC472483B16000844CB3 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D68DC452483B16000844CB3 /* MainInterface.storyboard */; };
 		32636CEA116811F2E788FD98 /* Pods_NotificationContentExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CE45E241DA058A38504F4D /* Pods_NotificationContentExtension.framework */; };
+		1DDDE56F258A008F00958764 /* AppDelegateBase+FacadeConnectorOfflineContentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDDE56E258A008F00958764 /* AppDelegateBase+FacadeConnectorOfflineContentProtocol.swift */; };
 		402134E72542334100080D25 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 402134E62542334100080D25 /* LaunchScreen.storyboard */; };
 		4054F78724291A0B00CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4054F78624291A0B00CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift */; };
 		40EE124F2409CEED00B052C2 /* FirebaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EE124E2409CEED00B052C2 /* FirebaseHandler.swift */; };
@@ -188,6 +189,7 @@
 		1D68DC532483D88100844CB3 /* NotificationContentExtension-Debug.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "NotificationContentExtension-Debug.entitlements"; sourceTree = "<group>"; };
 		1D68DC542483D88100844CB3 /* NotificationContentExtension-Release.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "NotificationContentExtension-Release.entitlements"; sourceTree = "<group>"; };
 		29FF41560500977D816BE342 /* Pods-NotificationContentExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationContentExtension.debug.xcconfig"; path = "Target Support Files/Pods-NotificationContentExtension/Pods-NotificationContentExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		1DDDE56E258A008F00958764 /* AppDelegateBase+FacadeConnectorOfflineContentProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegateBase+FacadeConnectorOfflineContentProtocol.swift"; sourceTree = "<group>"; };
 		402134E62542334100080D25 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4054F78624291A0B00CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+UNUserNotificationCenterDelegate.swift"; sourceTree = "<group>"; };
 		40EE124E2409CEED00B052C2 /* FirebaseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHandler.swift; sourceTree = "<group>"; };
@@ -413,6 +415,7 @@
 			children = (
 				40EE124C2409CEED00B052C2 /* Helpers */,
 				1D30F6B723CB2CE800DDD86F /* Customization */,
+				1DDDE56D258A007E00958764 /* Extensions */,
 				1D30F6BB23CB2CE800DDD86F /* AppDelegateBase.swift */,
 			);
 			name = ZappApple;
@@ -456,6 +459,14 @@
 				1D68DC542483D88100844CB3 /* NotificationContentExtension-Release.entitlements */,
 			);
 			path = Entitlements;
+			sourceTree = "<group>";
+		};
+		1DDDE56D258A007E00958764 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1DDDE56E258A008F00958764 /* AppDelegateBase+FacadeConnectorOfflineContentProtocol.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		40EE124C2409CEED00B052C2 /* Helpers */ = {
@@ -920,6 +931,7 @@
 				1D30F6BF23CB2CE800DDD86F /* AppDelegateBase.swift in Sources */,
 				1D30F68223CB297F00DDD86F /* AppDelegate.swift in Sources */,
 				1D30F6BC23CB2CE800DDD86F /* ApplicationCredentials.swift in Sources */,
+				1DDDE56F258A008F00958764 /* AppDelegateBase+FacadeConnectorOfflineContentProtocol.swift in Sources */,
 				4054F78724291A0B00CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift in Sources */,
 				40EE124F2409CEED00B052C2 /* FirebaseHandler.swift in Sources */,
 			);
