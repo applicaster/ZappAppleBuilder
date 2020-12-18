@@ -207,10 +207,10 @@
   resolved "https://registry.yarnpkg.com/@applicaster/zapp-apple/-/zapp-apple-0.11.3.tgz#27b05ea04aaa5d0ea6fc319473c7397dc4c38b0a"
   integrity sha512-Z1SWxGkuss5glcZSPdSfw4XIa8NHfAmmb+FpO6ARAlkpBgFS/qNswl9bT1kHWlTMPv3BR34hWbeFmjaQ+oIVwQ==
 
-"@applicaster/zapp-core@0.13.9":
-  version "0.13.9"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-core/-/zapp-core-0.13.9.tgz#e8ac9270a44c5ffd658eaf6a298ef250c1d7d934"
-  integrity sha512-4rGGT4N84x8wvoBYpcA+jnHWYsIOggp7zB+0nNXuCvr/4FT7qzcJqim1p8OJylLflgOa96J6jMjxqN5LAxteCQ==
+"@applicaster/zapp-core@0.13.11":
+  version "0.13.11"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-core/-/zapp-core-0.13.11.tgz#734aa2d65022af3daba3fe9288783ea87dfeeca4"
+  integrity sha512-B3PJ6cgLLeZ75aS2xK/ppjjA+YEDGN09+Qf9zezDRDTKD7E9pqJJepbgeoJ3hg9/+FLdUB9EgIL5VxVwEbeY0Q==
 
 "@applicaster/zapp-pipes-dev-kit@^1.4.1":
   version "1.4.1"
