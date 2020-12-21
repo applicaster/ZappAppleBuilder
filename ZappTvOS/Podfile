@@ -21,6 +21,8 @@ end
 puts("\n\nCocoaPods preparing for platform: tvOS\n\n")
 
 def shared_pods
+    pod 'ZappPlugins', '= 11.9.0'
+    pod 'ZappAnalyticsPluginsSDK', :path => './node_modules/@applicaster/zapp-analytics-plugins/apple/ZappAnalyticsPluginsSDK.podspec'
     pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
     pod 'ZappCore', :path => './node_modules/@applicaster/zapp-core/apple/ZappCore.podspec'
     pod 'ZappApple', :path => './node_modules/@applicaster/zapp-apple/apple/ZappApple.podspec'
