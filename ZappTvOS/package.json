@@ -25,10 +25,10 @@
     "reset": "rm -rf quick_brick/* quick_brick/.babelrc"
   },
   "dependencies": {
-    "@applicaster/x-ray": "0.0.21",
-    "@applicaster/zapp-apple": "0.11.3",
-    "@applicaster/zapp-core": "0.13.11",
-    "@applicaster/zapp-analytics-plugins": "12.1.0",
+    "@applicaster/x-ray": "0.1.0",
+    "@applicaster/zapp-apple": "1.0.0",
+    "@applicaster/zapp-core": "1.0.0",
+    "@applicaster/zapp-analytics-plugins": "13.0.0",
     "@applicaster/quick-brick-native-apple": "4.1.2",
     "@react-native-community/cli-platform-ios": "^4.7.0",
     "react": "16.11.0",
