@@ -23,7 +23,7 @@
 - [(iOS) ZappPushPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): 12.0.0
 - [(iOS) ZappAnalyticsPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): 12.0.0
 
-## [2.0.0](https://github.com/applicaster/ZappAppleBuilder/tree/2.0.0) (2020-12-01)
+## [2.0.1](https://github.com/applicaster/ZappAppleBuilder/tree/2.0.1) (2020-12-01)
 
 **Features**
 
