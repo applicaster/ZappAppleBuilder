@@ -2,17 +2,17 @@
 # yarn lockfile v1
 
 
-"@applicaster/babel-preset-quick-brick@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@applicaster/babel-preset-quick-brick/-/babel-preset-quick-brick-4.0.0.tgz#b889ec14fcc80a7f01bdda0418177124b00446c6"
-  integrity sha512-KFOw5ZsMSzhA63c6FdZWUI+EILM3B+zr3jqlfUy2bqHtNCSok2stI+y2OaWKtK2WjrCG4o/lR7OOULAYJlTKBQ==
+"@applicaster/babel-preset-quick-brick@4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/babel-preset-quick-brick/-/babel-preset-quick-brick-4.1.5.tgz#f012afa725e5e6bda70925a17d3586f4ba4237e1"
+  integrity sha512-Y55svYSXKJ5vWkHsYuFzRPinKEsuLSnWuVEjI8FzWgKyxbQlc05EtdM5tSxiUsiW1Qrep49ADEeq29Kzwojmyw==
   dependencies:
     "@babel/core" "^7.6.2"
     "@babel/plugin-proposal-decorators" "^7.1.0"
     "@babel/plugin-proposal-optional-chaining" "^7.8.3"
     "@babel/plugin-transform-modules-commonjs" "^7.4.4"
     "@babel/preset-env" "^7.3.1"
-    "@babel/preset-typescript" "^7.9.0"
+    "@babel/preset-typescript" "^7.12.7"
     babel-core "^7.0.0-bridge.0"
     babel-plugin-module-resolver "^4.0.0"
     babel-plugin-react-native-web "^0.11.2"
@@ -20,10 +20,10 @@
     metro-react-native-babel-preset "^0.59.0"
     react-hot-loader "^4.12.5"
 
-"@applicaster/horizontal-list-qb@1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@applicaster/horizontal-list-qb/-/horizontal-list-qb-1.6.0.tgz#3e4a54cc5794e4775fa083cce0f4e0588dfa6ed9"
-  integrity sha512-8fCnAWtUalcZPTqLddHL9xnafUU4XtkXsHRJiY68zN72Jm236oYpocb50KylVtgCH+9Cf+Oq2gP438nGB2WMOw==
+"@applicaster/horizontal-list-qb@1.7.1":
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/@applicaster/horizontal-list-qb/-/horizontal-list-qb-1.7.1.tgz#8a9889db9d2aaaa3f45ffb6f14b44110ff34ecd6"
+  integrity sha512-bA7dSG+aqapDyErDTz+8Mgoa9R8TmG2y/6daFE969Q2hN8rVqkP80cm9yFTUQFdJn5SppM0TORK0B/irn8Igwg==
   dependencies:
     ramda "^0.26.1"
 
@@ -44,43 +44,43 @@
     react-redux "^7.2.1"
     reselect "^4.0.0"
 
-"@applicaster/quick-brick-core-plugins@4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-core-plugins/-/quick-brick-core-plugins-4.1.4.tgz#5d22804decfeb4ff90d986d4e4d3c39cb0d3914b"
-  integrity sha512-gSVOxI02pvTs88HIEGm7gKTIIk0MzvnTfaCysuMgD+PLGk5wguZg6hKQH7Jf1JpVb7dxu+FjwUMaPqnSvIWX9g==
+"@applicaster/quick-brick-core-plugins@4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-core-plugins/-/quick-brick-core-plugins-4.1.5.tgz#06fb2dda533758b16de4f072614d4ef52b684ee5"
+  integrity sha512-BzllAQDIhd0cij3qYjGDgeLz7JxvudJzyHdvHeK8K82DpMm/9f2NJxnFwDK0O89zoNE26ZFuzaCwSF2cPkJktw==
   dependencies:
-    "@applicaster/horizontal-list-qb" "1.6.0"
+    "@applicaster/horizontal-list-qb" "1.7.1"
     "@applicaster/local-storage-favourites-action" "1.0.0"
     "@applicaster/quick-brick-bottom-tabs" "1.1.2"
     "@applicaster/quick-brick-grid" "1.5.0"
-    "@applicaster/quick-brick-group" "1.1.0"
+    "@applicaster/quick-brick-group" "1.1.1-beta.1"
     "@applicaster/quick-brick-group-info" "1.1.0"
     "@applicaster/quick-brick-hero" "1.0.2"
     "@applicaster/quick-brick-list" "1.4.2"
     "@applicaster/quick-brick-mobile-side-menu" "1.5.0"
     "@applicaster/quick-brick-mobile-toolbar" "5.7.1"
     "@applicaster/quick-brick-native-share-action" "1.0.0"
-    "@applicaster/quick-brick-tabs" "1.1.0-beta.2"
+    "@applicaster/quick-brick-tabs" "1.1.0"
     "@applicaster/quick-brick-webview-component" "1.0.1"
-    "@applicaster/quick-brick-webview-screen" "2.0.1-beta.0"
+    "@applicaster/quick-brick-webview-screen" "2.0.1"
     "@applicaster/zapp-pipes-provider-general" "1.1.1"
-    "@applicaster/zapp-react-native-cell-1-mobile" "1.2.0-beta.4"
-    "@applicaster/zapp-react-native-cell-2-mobile" "1.2.0-beta.2"
-    "@applicaster/zapp-react-native-cell-3-mobile" "1.2.0-beta.2"
+    "@applicaster/zapp-react-native-cell-1-mobile" "1.2.0"
+    "@applicaster/zapp-react-native-cell-2-mobile" "1.2.0"
+    "@applicaster/zapp-react-native-cell-3-mobile" "1.2.0"
     "@applicaster/zapp-react-native-cell-info" "1.1.0"
-    "@applicaster/zapp-react-native-default-player" "3.2.2-beta.1"
+    "@applicaster/zapp-react-native-default-player" "3.3.0"
     ramda "^0.27.0"
 
-"@applicaster/quick-brick-core@4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-core/-/quick-brick-core-4.1.4.tgz#5a98df23fab1ea2649053f44697664c43ae2cf27"
-  integrity sha512-3IWTUfbjqJGxD/tv7ZTQFkIWQsw74aen1Cme3LqEKUwQ+gIzwRR8+mluDZ3DSgdzrrX2RF9GqK96yLeVyE97Fw==
+"@applicaster/quick-brick-core@4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-core/-/quick-brick-core-4.1.5.tgz#00af71afeedfe41afe345cb1e0c81590b88f3a8e"
+  integrity sha512-eLNwA47sjBJcHYhLapoONmRoSXYNYN5IUKjom4GKny3AZMusr6cLqM7iTokZejppjJc9xxAe5Q6ero1J/0Hp5g==
   dependencies:
-    "@applicaster/quick-brick-core-plugins" "4.1.4"
-    "@applicaster/zapp-react-native-bridge" "4.1.4"
-    "@applicaster/zapp-react-native-redux" "4.1.4"
-    "@applicaster/zapp-react-native-ui-components" "4.1.4"
-    "@applicaster/zapp-react-native-utils" "4.1.4"
+    "@applicaster/quick-brick-core-plugins" "4.1.5"
+    "@applicaster/zapp-react-native-bridge" "4.1.5"
+    "@applicaster/zapp-react-native-redux" "4.1.5"
+    "@applicaster/zapp-react-native-ui-components" "4.1.5"
+    "@applicaster/zapp-react-native-utils" "4.1.5"
     atob "^2.1.2"
     axios "^0.18.0"
     btoa "^1.2.1"
@@ -106,10 +106,10 @@
   dependencies:
     ramda "^0.26.1"
 
-"@applicaster/quick-brick-group@1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-group/-/quick-brick-group-1.1.0.tgz#e9326c8f21f8cea86ab2a82c3df379baf04b1ee3"
-  integrity sha512-zKOXiMUHsgnZmpc/z+9RTVrRZERIvPyUiAZaMRPOSiao1LcMFNn1uqFkEyPQYqMG72/EP8SmDsSpqJleFgqqyg==
+"@applicaster/quick-brick-group@1.1.1-beta.1":
+  version "1.1.1-beta.1"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-group/-/quick-brick-group-1.1.1-beta.1.tgz#8130b15f5f6afbd24f1e95fbd0488d1f3932eee6"
+  integrity sha512-LSnFqzAYOswSTenNG1MOWcOJ8fWgP4taOSKUINR2hR85gsaXh2kDdwMAghYea+KIf8lLQj7GX1Q5CGUrxgSxOQ==
   dependencies:
     ramda "^0.26.1"
 
@@ -139,18 +139,18 @@
   dependencies:
     ramda "^0.27.0"
 
-"@applicaster/quick-brick-mobile-transport-controls@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-mobile-transport-controls/-/quick-brick-mobile-transport-controls-1.0.0.tgz#73f6948bb5f2043774fa14fdce069b4225e841fd"
-  integrity sha512-cwtl2oOKrmJCUTWOyh+5dCtqoUByTGxZ6/mOHwZ/kIT+nGUutRlyp+J7Z0ZJ0vEplBwE5sKuHLF8byYPpKLZ5Q==
+"@applicaster/quick-brick-mobile-transport-controls@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-mobile-transport-controls/-/quick-brick-mobile-transport-controls-1.1.1.tgz#1b6a76390d8bc09162313686cb2a1bf00fb46fab"
+  integrity sha512-/YiLKQunbz650iVgMZjuKBZrb/9W8CETmjry9B6kBVcsKniIdWi5Hshlr7GWFaR73+jJDRcX+93Y4Fx88/rVKg==
   dependencies:
     "@miblanchard/react-native-slider" "^1.5.0"
     react-native-linear-gradient "2.5.6"
 
-"@applicaster/quick-brick-native-apple@4.1.2":
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-native-apple/-/quick-brick-native-apple-4.1.2.tgz#46c2d4f8f3111f981f7ee7c49f7b8beeedc0b23f"
-  integrity sha512-1WAdScahv+mtW/Dx8Z1X14m14G6AzWL2LJP/pSyk4twASf2HBwb5fa9bvmJF8Yp5NU+aWI62QJMS81lDBnycZQ==
+"@applicaster/quick-brick-native-apple@4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-native-apple/-/quick-brick-native-apple-4.1.5.tgz#59ac502bfcc1f4e22d9ea4445261088add4de299"
+  integrity sha512-27C7Je3oAp3nJGcIY7GjHNDXL4v8BfjWT8SVhfyIqRL7bdzx+YIe0WHgrNyofsH8/hbxC+rigB5VdRup1Qv0SA==
 
 "@applicaster/quick-brick-native-share-action@1.0.0":
   version "1.0.0"
@@ -159,10 +159,10 @@
   dependencies:
     ramda "^0.26.1"
 
-"@applicaster/quick-brick-tabs@1.1.0-beta.2":
-  version "1.1.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-tabs/-/quick-brick-tabs-1.1.0-beta.2.tgz#882ac83e192d7714274c9c049e4d9aa5f42c15be"
-  integrity sha512-nLGcSvTBIQzBfJKVOoO2mcGhwYjBWth2R0qBZLFzQSyDW9aqtSQBO1TXGxJPogs6JdNdvxuDmrXXRpcrMOdMHw==
+"@applicaster/quick-brick-tabs@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-tabs/-/quick-brick-tabs-1.1.0.tgz#cfd1e04b2c2f7b67b738ce1396c03ca68e6f2ae8"
+  integrity sha512-V9Vfuxp61ME/V06ya4Ec7qnZfqtfYL+v8vU0GQcyFkmpntIz/7QnrUhF/WpJNBqScMHV01RDou9dK7hG9vtmsQ==
   dependencies:
     ramda "^0.26.1"
 
@@ -174,10 +174,10 @@
     ramda "^0.26.1"
     react-native-webview "9.1.1"
 
-"@applicaster/quick-brick-webview-screen@2.0.1-beta.0":
-  version "2.0.1-beta.0"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-webview-screen/-/quick-brick-webview-screen-2.0.1-beta.0.tgz#7d285318ffd9494bd7d0b14e95e961429700987f"
-  integrity sha512-KZWIGBO6MN9mNPObtTHNqP+piG6bR+codfFmEDV7eharh1y6doBkCuRR+P3Uf8unjUaFJsJqsT4Qi2OSYWTiKA==
+"@applicaster/quick-brick-webview-screen@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-webview-screen/-/quick-brick-webview-screen-2.0.1.tgz#8c5618a1d6297b4d83e7dedc65f91ac8a39d7c04"
+  integrity sha512-NKe7+gzgZtH8KGc+d6H8M+sgRjWALWzemBzBUgmiTC0T7y8LTzb+5KhWn7Bx/ovE1b/LCBdIbddofj0+B7AyVA==
   dependencies:
     ramda "^0.26.1"
     react-native-webview "9.1.1"
@@ -192,25 +192,25 @@
   resolved "https://registry.yarnpkg.com/@applicaster/react-native-fast-image/-/react-native-fast-image-8.3.2-1.tgz#b0d565c2b33e3d3a9311fd569869186d942951cd"
   integrity sha512-L2RYxsv9CzCIgRMegjKkjbord1Zi0RcOKl39wnCXr60nHsRBTnL4BxX5sQwD4h5ZNF6lZDms5U5vxme+vMHpPQ==
 
-"@applicaster/x-ray@0.0.21":
-  version "0.0.21"
-  resolved "https://registry.yarnpkg.com/@applicaster/x-ray/-/x-ray-0.0.21.tgz#6ac77f4574b62c1339ba7ceb10eda931dbf7a229"
-  integrity sha512-cDzMTGqnQ0otq8jAFcl2t/oE/1wwMAbnjzQJhv1zXJgcLumHjAUaoxPk1mV2hPqv+qvRwdo7VRnZo6MIKMiuiQ==
+"@applicaster/x-ray@0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@applicaster/x-ray/-/x-ray-0.1.0.tgz#7fc4a5133ced9b2d73cbdea6ba94f5fd5a607a7d"
+  integrity sha512-5mAMEs9qAEnq1CiZz5ST2duMPmCNbSP7XVMLbA5GyNkwWJDxfP7e93HpYLxELWwKW7C3cGWoKQWB467uuxvaPw==
 
-"@applicaster/zapp-analytics-plugins@12.0.0":
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-analytics-plugins/-/zapp-analytics-plugins-12.0.0.tgz#8e2d524eb7285832d2a8961e079bcfeaaedfd320"
-  integrity sha512-P3eqgTW2a/9qsg7t31m9kULx2xMF0NPlChC++EBTonngO7YOKRpLGXwP+F+BPgrAnJHar924GmEU4mrOyzB2mA==
+"@applicaster/zapp-analytics-plugins@13.0.0":
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-analytics-plugins/-/zapp-analytics-plugins-13.0.0.tgz#efe3fdb4a7646c6b115b70bed88f5351ee6d9457"
+  integrity sha512-rpSheuIBUNdF9Jf9vFIXD5aQLfYfh5nhwKRNP5odw6Oxvj+41ooi/aVEZWJXLhyKohER4MOOdf3UfuQCoXhebw==
 
-"@applicaster/zapp-apple@0.11.3":
-  version "0.11.3"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-apple/-/zapp-apple-0.11.3.tgz#27b05ea04aaa5d0ea6fc319473c7397dc4c38b0a"
-  integrity sha512-Z1SWxGkuss5glcZSPdSfw4XIa8NHfAmmb+FpO6ARAlkpBgFS/qNswl9bT1kHWlTMPv3BR34hWbeFmjaQ+oIVwQ==
+"@applicaster/zapp-apple@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-apple/-/zapp-apple-1.0.1.tgz#e69ec14fdf55d60e1307b759d518a2377633a909"
+  integrity sha512-s7GPUO7WZ7v1/xyKCkWLWU1fu2H320+HETB6KnPyH1+IPTmc8TI2W1Rk59iGab1DK4iC7StiyCppryCSP7Z7Gg==
 
-"@applicaster/zapp-core@0.13.11":
-  version "0.13.11"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-core/-/zapp-core-0.13.11.tgz#734aa2d65022af3daba3fe9288783ea87dfeeca4"
-  integrity sha512-B3PJ6cgLLeZ75aS2xK/ppjjA+YEDGN09+Qf9zezDRDTKD7E9pqJJepbgeoJ3hg9/+FLdUB9EgIL5VxVwEbeY0Q==
+"@applicaster/zapp-core@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-core/-/zapp-core-1.0.1.tgz#840bf2811d9bada732008d2048f1f9203d1f0a92"
+  integrity sha512-vJEaK1LFY3I4hjlUWqcJ2fq+0Z3ZM1LteDnJaYQpfFtZZDbL6a26YcoxtLvy23JWnjhJa/YYktgOj7odA/cRzQ==
 
 "@applicaster/zapp-pipes-dev-kit@^1.4.1":
   version "1.4.1"
@@ -249,96 +249,96 @@
     typescript "^4.0.5"
     url "^0.11.0"
 
-"@applicaster/zapp-push-plugins@12.0.0":
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-push-plugins/-/zapp-push-plugins-12.0.0.tgz#bc638f64bc98f0be7abc1b4220c2c7cdb52e712a"
-  integrity sha512-7aMsyxBJSMfXon//aLB2Y5S3EsOmQVWpwE9CccCo50afkwW96IMquAPUOVK0TtkYr77sTtM/eddQsQmRmS1jjA==
+"@applicaster/zapp-push-plugins@13.0.0":
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-push-plugins/-/zapp-push-plugins-13.0.0.tgz#f258ed60930bfd8f6c68eca0d29eddddcdf8f879"
+  integrity sha512-xnYz9WVGapjOnihwZj4tOVs7csjty1PKdWq49mtRJu4sL3IbHWcWLnhyU4lgHD69IB5AYP5j8ENDoDVGFFayrw==
 
-"@applicaster/zapp-react-dom-app@4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-dom-app/-/zapp-react-dom-app-4.1.4.tgz#6a124783ce733923a0b8f8c94fb8e9bca72c5360"
-  integrity sha512-9qXkJ6PbwJ+wBxTp/uNrm2V2IRiQiktajOi7PKZSEzACFQrk9gnX0TGbWmnKy3EkE4lKgF8VMCwTMX+asaTWXg==
+"@applicaster/zapp-react-dom-app@4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-dom-app/-/zapp-react-dom-app-4.1.5.tgz#6cd004258f22f53c6e6cc313fcc4b616e7c2dc0e"
+  integrity sha512-gq2O1D603bCFZObAIg2a6nJ0bYa8Y0TrG+4bXno0hBmTzX1XI33SC6+ECp6q9l6c/V9BzRjrE1DMOiJrG1zsYA==
   dependencies:
-    "@applicaster/zapp-react-dom-ui-components" "4.1.4"
-    "@applicaster/zapp-react-native-bridge" "4.1.4"
-    "@applicaster/zapp-react-native-redux" "4.1.4"
-    "@applicaster/zapp-react-native-ui-components" "4.1.4"
-    "@applicaster/zapp-react-native-utils" "4.1.4"
+    "@applicaster/zapp-react-dom-ui-components" "4.1.5"
+    "@applicaster/zapp-react-native-bridge" "4.1.5"
+    "@applicaster/zapp-react-native-redux" "4.1.5"
+    "@applicaster/zapp-react-native-ui-components" "4.1.5"
+    "@applicaster/zapp-react-native-utils" "4.1.5"
     history "^4.7.2"
     ramda "0.26.1"
     react-router-dom "^5.1.2"
     typeface-montserrat "^0.0.54"
     video.js "7.9.7"
 
-"@applicaster/zapp-react-dom-cli-template@4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-dom-cli-template/-/zapp-react-dom-cli-template-4.1.4.tgz#4bce5fb59578991e2506a10f4c7053bc97a18b16"
-  integrity sha512-1HuIdG8f6sDmkhZWPZtmwyUlIfR976yBDrPbBvbTak1SA6BDxV1Z+DslmsDLpWzGNNSU7VDc6NjUVftNGYCk7w==
+"@applicaster/zapp-react-dom-cli-template@4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-dom-cli-template/-/zapp-react-dom-cli-template-4.1.5.tgz#2b63a645b9580ffd6baa52b9c63aadbe69cb780b"
+  integrity sha512-f8ATkJO/8Bl7ELSKcNh//Gr02LqVV7QTWaoFpbI9un5eyasNkyx+I44V+lTfOBrb0mnloGCugsMw2DcQ4lmk5g==
   dependencies:
-    "@applicaster/quick-brick-core" "4.1.4"
-    "@applicaster/zapp-react-dom-app" "4.1.4"
-    "@applicaster/zapp-react-dom-ui-components" "4.1.4"
-    "@applicaster/zapp-react-native-ui-components" "4.1.4"
+    "@applicaster/quick-brick-core" "4.1.5"
+    "@applicaster/zapp-react-dom-app" "4.1.5"
+    "@applicaster/zapp-react-dom-ui-components" "4.1.5"
+    "@applicaster/zapp-react-native-ui-components" "4.1.5"
     camelize "^1.0.0"
     ramda "0.26.1"
 
-"@applicaster/zapp-react-dom-ui-components@4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-dom-ui-components/-/zapp-react-dom-ui-components-4.1.4.tgz#0822a7c87f7d74f66f8849a23aae65bbea6918c5"
-  integrity sha512-Wk926o1OjzaM4F2huTskEsGBG4RBooqjS2fAyr+BB+58RNLJlJD8Chr5G+/vV3jSuFLKPlSrRdaMymJ1IJrk7g==
+"@applicaster/zapp-react-dom-ui-components@4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-dom-ui-components/-/zapp-react-dom-ui-components-4.1.5.tgz#06a756f45a4d5f01c8b5f8c91ad645e21a6d8a2f"
+  integrity sha512-j9nWPS/SCtktIM8TP4mldVR+HZEnbKlOsU39RhQ8SLRIx2ySAg7NJUFrzsOgKwHYd0/lQRa16tIqmIAfvzUINg==
   dependencies:
-    "@applicaster/zapp-react-native-bridge" "4.1.4"
-    "@applicaster/zapp-react-native-redux" "4.1.4"
-    "@applicaster/zapp-react-native-ui-components" "4.1.4"
-    "@applicaster/zapp-react-native-utils" "4.1.4"
+    "@applicaster/zapp-react-native-bridge" "4.1.5"
+    "@applicaster/zapp-react-native-redux" "4.1.5"
+    "@applicaster/zapp-react-native-ui-components" "4.1.5"
+    "@applicaster/zapp-react-native-utils" "4.1.5"
     react-hot-loader "^4.3.8"
 
-"@applicaster/zapp-react-native-android-tv-app@4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-android-tv-app/-/zapp-react-native-android-tv-app-4.1.4.tgz#e543a17d4b05fe4f43fd830e760715b10b39ea34"
-  integrity sha512-t0VCtJ1cSSVfzcFiQGKNatf50PbcQWeHz+GZ3SERg/E5yEISIT4Rz7UW6ghJY/gUI7IPL0l5gtJ/rUIkJUHGNQ==
+"@applicaster/zapp-react-native-android-tv-app@4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-android-tv-app/-/zapp-react-native-android-tv-app-4.1.5.tgz#e3ad7510a2ba9766539636eebc8671b3910f5a93"
+  integrity sha512-ZHLXH1ICWzp6pDh6b2zS31yxt6DZ8anHf0UYOKON3KJd9Nhj+W80sMx0zfN6m1sCxW2YO782/4xd8ofImVRVJA==
   dependencies:
-    "@applicaster/quick-brick-core" "4.1.4"
-    "@applicaster/zapp-react-native-bridge" "4.1.4"
-    "@applicaster/zapp-react-native-redux" "4.1.4"
-    "@applicaster/zapp-react-native-ui-components" "4.1.4"
-    "@applicaster/zapp-react-native-utils" "4.1.4"
+    "@applicaster/quick-brick-core" "4.1.5"
+    "@applicaster/zapp-react-native-bridge" "4.1.5"
+    "@applicaster/zapp-react-native-redux" "4.1.5"
+    "@applicaster/zapp-react-native-ui-components" "4.1.5"
+    "@applicaster/zapp-react-native-utils" "4.1.5"
     ramda "^0.26.0"
     react-router-native "^5.1.2"
 
-"@applicaster/zapp-react-native-android-tv-cli-template@4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-android-tv-cli-template/-/zapp-react-native-android-tv-cli-template-4.1.4.tgz#71a8ae52121fb5e7506416935d73dd669e9b6a04"
-  integrity sha512-bsO2UAjfZ40aKloupim00nQ0ixujITCoUjSCC6KmVZLROvFP1BdGZdEy1UaBsOOn9BqZ/ag+RvlwKJAxKvA1Dg==
+"@applicaster/zapp-react-native-android-tv-cli-template@4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-android-tv-cli-template/-/zapp-react-native-android-tv-cli-template-4.1.5.tgz#633456608b8cd414c5083eaf4046169284f1dd62"
+  integrity sha512-fy77Vcg/93Gt8N9hR5CCkc0aLu8xW7B4t1GFQSJpiRBRmszQOT/ZR4I7W9lZA3cUfGXUS9qtwaX1AwNj7A2YAA==
   dependencies:
-    "@applicaster/babel-preset-quick-brick" "4.0.0"
-    "@applicaster/quick-brick-core" "4.1.4"
-    "@applicaster/zapp-react-native-android-tv-app" "4.1.4"
-    "@applicaster/zapp-react-native-android-tv-ui-components" "4.1.4"
-    "@applicaster/zapp-react-native-ui-components" "4.1.4"
+    "@applicaster/babel-preset-quick-brick" "4.1.5"
+    "@applicaster/quick-brick-core" "4.1.5"
+    "@applicaster/zapp-react-native-android-tv-app" "4.1.5"
+    "@applicaster/zapp-react-native-android-tv-ui-components" "4.1.5"
+    "@applicaster/zapp-react-native-ui-components" "4.1.5"
 
-"@applicaster/zapp-react-native-android-tv-ui-components@4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-android-tv-ui-components/-/zapp-react-native-android-tv-ui-components-4.1.4.tgz#d10a2b46fe63cb84479da80b56b31f1776cc2768"
-  integrity sha512-5c2xl6YnzPdNF3iNVP23Kd3E8q6JDjNgIrupOxvc0LVSH9PhHj8Eqv2QTMC3Wldws/YsG9lPGS1qtcl2NfLrGA==
+"@applicaster/zapp-react-native-android-tv-ui-components@4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-android-tv-ui-components/-/zapp-react-native-android-tv-ui-components-4.1.5.tgz#3cfc06da4a75f77d5af182ada4ed83dea6fc0ced"
+  integrity sha512-j3AeN3dqnctWwSu+Z5KnM2WAOJ/CWHIjQI+jQpYD8T2KYaWlNjWh0aFaNku9E0Sb0jLqBdiM4E61CPap19rB8Q==
   dependencies:
-    "@applicaster/zapp-react-native-redux" "4.1.4"
-    "@applicaster/zapp-react-native-ui-components" "4.1.4"
-    "@applicaster/zapp-react-native-utils" "4.1.4"
+    "@applicaster/zapp-react-native-redux" "4.1.5"
+    "@applicaster/zapp-react-native-ui-components" "4.1.5"
+    "@applicaster/zapp-react-native-utils" "4.1.5"
     ramda "^0.26.0"
     react-native-snap-carousel "^3.9.0"
     uuid "^3.3.2"
 
-"@applicaster/zapp-react-native-app@4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-app/-/zapp-react-native-app-4.1.4.tgz#8c0d6c868e65214efdaaa0af1f00701b15502453"
-  integrity sha512-F8Y2w1a1WnZD90o9dJL9vDjd9EH81IYa/j8OW/l1xITTa9tE6B26H8DAV0cxN1hTLCNXP4LDD3n5ZW8Ub9Q1yQ==
+"@applicaster/zapp-react-native-app@4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-app/-/zapp-react-native-app-4.1.5.tgz#18075001ae120df1476c94eca7775a1a524611f0"
+  integrity sha512-7alYy+zB7oEy+RG5iKmUnEhy6kepM13eibVnXpWIJQtT8lMbsnqxE+miP6jqpEeFLjq24G/d3C3ZlhyWIkNZUg==
   dependencies:
-    "@applicaster/quick-brick-core" "4.1.4"
-    "@applicaster/zapp-react-native-bridge" "4.1.4"
-    "@applicaster/zapp-react-native-redux" "4.1.4"
-    "@applicaster/zapp-react-native-ui-components" "4.1.4"
-    "@applicaster/zapp-react-native-utils" "4.1.4"
+    "@applicaster/quick-brick-core" "4.1.5"
+    "@applicaster/zapp-react-native-bridge" "4.1.5"
+    "@applicaster/zapp-react-native-redux" "4.1.5"
+    "@applicaster/zapp-react-native-ui-components" "4.1.5"
+    "@applicaster/zapp-react-native-utils" "4.1.5"
     axios "^0.18.0"
     camelize "^1.0.0"
     query-string "^6.1.0"
@@ -346,125 +346,126 @@
     react-router-native "5.1.2"
     url "^0.11.0"
 
-"@applicaster/zapp-react-native-bridge@4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-bridge/-/zapp-react-native-bridge-4.1.4.tgz#084669d31556c8df3f676020e34e191ffc76f804"
-  integrity sha512-M2DQkpDXErZHalmTnmn0ePhJXsEpXbhYkeL8BMgV8tUK2bOEFf4xEOZP6AMqG2FFVNKHW+6Uxo5RT6fPNjGmHQ==
+"@applicaster/zapp-react-native-bridge@4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-bridge/-/zapp-react-native-bridge-4.1.5.tgz#3972f09eba127f424bed9d08027135930e5be0d6"
+  integrity sha512-aI8vo9d4WWHg2+LUePWS+lFML9p3W0Vd2E8HEBBA2Z8IaTp7axMiiCGux6NhKJ9qpOeMhcj1ea2JJfFvlppqRQ==
   dependencies:
     "@applicaster/zapp-pipes-dev-kit" "^1.4.1"
-    "@applicaster/zapp-react-native-utils" "4.1.4"
+    "@applicaster/zapp-react-native-utils" "4.1.5"
     uuid "^3.3.2"
 
-"@applicaster/zapp-react-native-cell-1-mobile@1.2.0-beta.4":
-  version "1.2.0-beta.4"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cell-1-mobile/-/zapp-react-native-cell-1-mobile-1.2.0-beta.4.tgz#1e5339eec32931142cc26f23f88224381bdc7cec"
-  integrity sha512-p11UcJRIXHrciQMWAyjfoUz2+sXzl1mOoPp0fDlDQbhYSQgdQTDPuqHoQVFDyVoiXE+yb00bd7OSsX6DBOZCaA==
+"@applicaster/zapp-react-native-cell-1-mobile@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cell-1-mobile/-/zapp-react-native-cell-1-mobile-1.2.0.tgz#70a50888d47ee9e57047b905a7e8c964ca8e6837"
+  integrity sha512-dX2II//G8H6Vr4jmMhQL6T8vmfbsEvRs9wzhxuihaxBN8CIKFslTsPvLRNGMjSc6EUVxuOYP/t4aeA7kFEXH6A==
 
-"@applicaster/zapp-react-native-cell-2-mobile@1.2.0-beta.2":
-  version "1.2.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cell-2-mobile/-/zapp-react-native-cell-2-mobile-1.2.0-beta.2.tgz#d15074eba2fac15d5649f61e6b06579844ec0c92"
-  integrity sha512-VDc02554UvtXRo3DZaBZYYMVDVhRqJQjOYtRziQ/i9YRGiYLPRuaw+/sxQG64gI1xoIDd3GF5Tp72kd5ZfBczA==
+"@applicaster/zapp-react-native-cell-2-mobile@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cell-2-mobile/-/zapp-react-native-cell-2-mobile-1.2.0.tgz#47b031d4ae85dd9a535cc67b5ec9de1244ba4fb9"
+  integrity sha512-7uBY1XInfcg5ANZmdy7U4/9m8RiaafDj5X2NyW5hicZyaFI9MAc7wHVRurN+57x4jUAWcTAX2el+c9mSa6S2kQ==
 
-"@applicaster/zapp-react-native-cell-3-mobile@1.2.0-beta.2":
-  version "1.2.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cell-3-mobile/-/zapp-react-native-cell-3-mobile-1.2.0-beta.2.tgz#c9e718ec82056280fbcd1cc3ca282974895f6e1a"
-  integrity sha512-3DHbjM9ds6gQPqMfnKtscLsL55JqWhqUXNogRjOSYWmGRiKjxf3MzUw2mbJetClUPYGamqnnfurZQU46foLHdQ==
+"@applicaster/zapp-react-native-cell-3-mobile@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cell-3-mobile/-/zapp-react-native-cell-3-mobile-1.2.0.tgz#6934f314a76e2e05cf235f9f19850098dfe086b0"
+  integrity sha512-6n2my+3PrRvx2WweDJshuNPty/QuojU+55qF1vguFqC5d/1rQLlopg99xQBVtzXhxgfsLSSz7KIYIWmPAqxvSg==
 
 "@applicaster/zapp-react-native-cell-info@1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cell-info/-/zapp-react-native-cell-info-1.1.0.tgz#c1282b18c89b685a195c2733911408cdd626f98d"
   integrity sha512-YknlzOCA8AKN9aH2XOQyRpXwQ5ydmI7RxTFpRKug5d6HpB57azgWNqpqM0Nx1XAU1KP/1myHibYKQ6f/xJYG8Q==
 
-"@applicaster/zapp-react-native-cli-template@4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cli-template/-/zapp-react-native-cli-template-4.1.4.tgz#2fc486b7c42a0a46a493ca67397748b7b18d3343"
-  integrity sha512-Xet0BAsDbBa5KDED4d4JihkyPTjylxLJjwmOQclwb8FfBcx34E+krgin/gb8jzyg+93R++yf86fZrL/IlEUojQ==
+"@applicaster/zapp-react-native-cli-template@4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cli-template/-/zapp-react-native-cli-template-4.1.5.tgz#6457707793c6d97d68b2333d45140b38ead8eece"
+  integrity sha512-Vz7+Y7/IurXhH7AVM7zx1rM9nIWzyXffaDwUFwfyTFDyeXXkfqhOeY2YbRJpIe5/EgbSbZFoyNkIwe9cdqbeeQ==
   dependencies:
-    "@applicaster/babel-preset-quick-brick" "4.0.0"
-    "@applicaster/quick-brick-core" "4.1.4"
+    "@applicaster/babel-preset-quick-brick" "4.1.5"
+    "@applicaster/quick-brick-core" "4.1.5"
     "@applicaster/react-native-fast-image" "8.3.2-1"
-    "@applicaster/zapp-react-native-app" "4.1.4"
-    "@applicaster/zapp-react-native-bridge" "4.1.4"
-    "@applicaster/zapp-react-native-ui-components" "4.1.4"
+    "@applicaster/zapp-react-native-app" "4.1.5"
+    "@applicaster/zapp-react-native-bridge" "4.1.5"
+    "@applicaster/zapp-react-native-ui-components" "4.1.5"
 
-"@applicaster/zapp-react-native-default-player@3.2.2-beta.1":
-  version "3.2.2-beta.1"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-default-player/-/zapp-react-native-default-player-3.2.2-beta.1.tgz#31631329950883440b4bcd7a3631e2893d0abfe5"
-  integrity sha512-mtzoORN0GMJlu4KXHmatdliF6ofnZ02GJpCJFAyHZ9A1+EsWH2onMBsO3UnRI6k9p3Lkic8S4VLr5ePTc7fTqw==
+"@applicaster/zapp-react-native-default-player@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-default-player/-/zapp-react-native-default-player-3.3.0.tgz#09cb2aeb5ffccdbd26131aab7cc015ed75c71238"
+  integrity sha512-5MnOt2dF7kBK6abQOA+3mWPdOfdOrSJ1XHCyxd6uvH6Gz/0PUYbn5S76DX5VCQQEqOa1KL9DlOrGIzNzpn8Kiw==
   dependencies:
-    "@applicaster/quick-brick-mobile-transport-controls" "1.0.0"
+    "@applicaster/quick-brick-mobile-transport-controls" "1.1.1"
     keymirror "^0.1.1"
 
-"@applicaster/zapp-react-native-redux@4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-redux/-/zapp-react-native-redux-4.1.4.tgz#178d9776f3df7344906591a6aa3035d725b6bb5f"
-  integrity sha512-gwgrGztkWAl3E0cGCBqDiUOfKNwwmCIn9EdE+p6FM7IvpjKTveVwWayL+DX6SuWGqSipXD+RS8+2G+e4d7bZhw==
+"@applicaster/zapp-react-native-redux@4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-redux/-/zapp-react-native-redux-4.1.5.tgz#a2394027b23f912c91490c4227889032479483e4"
+  integrity sha512-XzTiTJB/g+18c5bWj2y2xUFBITXF+LDvUQ0hpOERFgWPX6RBAw7tmgATqgxyeog6we0xbn6Q0cgsmOethaHJKQ==
   dependencies:
     "@applicaster/zapp-pipes-v2-client" "4.1.2"
-    "@applicaster/zapp-react-native-bridge" "4.1.4"
-    "@applicaster/zapp-react-native-utils" "4.1.4"
+    "@applicaster/zapp-react-native-bridge" "4.1.5"
+    "@applicaster/zapp-react-native-utils" "4.1.5"
     "@types/react-redux" "^7.1.9"
     axios "^0.21.0"
     moment "^2.24.0"
     ramda "0.26.1"
     react-redux "^7.2.0"
     redux "^4.0.5"
+    redux-devtools-extension "^2.13.8"
     redux-thunk "^2.3.0"
     reselect "4.0.0"
 
-"@applicaster/zapp-react-native-tvos-app@4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-tvos-app/-/zapp-react-native-tvos-app-4.1.4.tgz#1fe4ba5d5462a3a587e18d56e593fa23a8df439b"
-  integrity sha512-mCjA7DL7d4vR+/OXbzdoohlqW2RiqpZ9w9qgWM3XRi4WRMaF+QAMibxUidXyGhx74ikN1o3HrnDAGU+5gzqDPQ==
+"@applicaster/zapp-react-native-tvos-app@4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-tvos-app/-/zapp-react-native-tvos-app-4.1.5.tgz#2acc3a0e62b956bd5e88b4762781963a84b5cc13"
+  integrity sha512-qs0MniSCUepaqqceP648OJ88JSCpB4x67zVlfEMlVBxdS/NUD+1LdmESvovi1H1Kd7FTHDt2OhQ6Y1RzyFe+9A==
   dependencies:
-    "@applicaster/quick-brick-core" "4.1.4"
-    "@applicaster/zapp-react-native-bridge" "4.1.4"
-    "@applicaster/zapp-react-native-redux" "4.1.4"
-    "@applicaster/zapp-react-native-ui-components" "4.1.4"
-    "@applicaster/zapp-react-native-utils" "4.1.4"
+    "@applicaster/quick-brick-core" "4.1.5"
+    "@applicaster/zapp-react-native-bridge" "4.1.5"
+    "@applicaster/zapp-react-native-redux" "4.1.5"
+    "@applicaster/zapp-react-native-ui-components" "4.1.5"
+    "@applicaster/zapp-react-native-utils" "4.1.5"
     ramda "^0.26.0"
     react-router-native "^5.1.2"
 
-"@applicaster/zapp-react-native-tvos-cli-template@4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-tvos-cli-template/-/zapp-react-native-tvos-cli-template-4.1.4.tgz#0e8b551495bac171de3fd66221bb2fd6d37936bb"
-  integrity sha512-kwF84IAmZ3d+CyZnLW2iXbJmmbZQ9faIlfFvVz+nFcg1A5TSXCYzmclO96HHj8b57Z9MPKEpoUst/nfUpJ10UQ==
+"@applicaster/zapp-react-native-tvos-cli-template@4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-tvos-cli-template/-/zapp-react-native-tvos-cli-template-4.1.5.tgz#4d34909eef9b7bd4c56eb013abe441763415938b"
+  integrity sha512-wYVagX5CXJ8mEzeUYsSpdKdkHEdefPcMPlzn+IlOVxMXVR1Q2UOVXQdGhMps2Uie4e3ucniacgrronzv2+jjLg==
   dependencies:
-    "@applicaster/babel-preset-quick-brick" "4.0.0"
-    "@applicaster/quick-brick-core" "4.1.4"
-    "@applicaster/zapp-react-native-tvos-app" "4.1.4"
-    "@applicaster/zapp-react-native-tvos-ui-components" "4.1.4"
-    "@applicaster/zapp-react-native-ui-components" "4.1.4"
+    "@applicaster/babel-preset-quick-brick" "4.1.5"
+    "@applicaster/quick-brick-core" "4.1.5"
+    "@applicaster/zapp-react-native-tvos-app" "4.1.5"
+    "@applicaster/zapp-react-native-tvos-ui-components" "4.1.5"
+    "@applicaster/zapp-react-native-ui-components" "4.1.5"
 
-"@applicaster/zapp-react-native-tvos-ui-components@4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-tvos-ui-components/-/zapp-react-native-tvos-ui-components-4.1.4.tgz#19f03b2900704b37e533b1d739608f598223d4a8"
-  integrity sha512-FjrECtkJlsLKq7zWthZfcfXQUOfHuftobATZPOooyJO7CHr2GxBnNAO8fGv6mFQet2F/+rDHMocGU7nc3/+6nQ==
+"@applicaster/zapp-react-native-tvos-ui-components@4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-tvos-ui-components/-/zapp-react-native-tvos-ui-components-4.1.5.tgz#b15dff6134afafdd21eeb71f9b087fcd96f11f2d"
+  integrity sha512-e1KRkCeifcGwY0FDt0EIc1oFhKGe8dsGrjfT4I6/PVRoak7X+s9hBlHDQZbRZVTklnb0vxnZ+d30XiXHFC5+dA==
   dependencies:
-    "@applicaster/zapp-react-native-redux" "4.1.4"
-    "@applicaster/zapp-react-native-ui-components" "4.1.4"
-    "@applicaster/zapp-react-native-utils" "4.1.4"
+    "@applicaster/zapp-react-native-redux" "4.1.5"
+    "@applicaster/zapp-react-native-ui-components" "4.1.5"
+    "@applicaster/zapp-react-native-utils" "4.1.5"
     ramda "^0.26.0"
     uuid "^3.3.2"
 
-"@applicaster/zapp-react-native-ui-components@4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-ui-components/-/zapp-react-native-ui-components-4.1.4.tgz#d1f3d3ff6773298062ecb39da1bfc4c5e41bed71"
-  integrity sha512-62pIRc1dyg4TASpzc7v0GmcHo1IgiEY02pW72bNNzO3pBiZJ7LLYzxwX2/moxrls+P3A91xiyA93k5u57D7ulg==
+"@applicaster/zapp-react-native-ui-components@4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-ui-components/-/zapp-react-native-ui-components-4.1.5.tgz#b2a1caced726b4c544f80f27c609d7e5de3eff7e"
+  integrity sha512-8rOdTcr7yE31mKqkjRtTpmKkmr5+I9dlkn19C6igAjM6QBD6TWdt/K7HUTBQjctLCC8rZjYsBoCx68c+uMQlJw==
   dependencies:
-    "@applicaster/zapp-react-native-bridge" "4.1.4"
-    "@applicaster/zapp-react-native-redux" "4.1.4"
-    "@applicaster/zapp-react-native-utils" "4.1.4"
+    "@applicaster/zapp-react-native-bridge" "4.1.5"
+    "@applicaster/zapp-react-native-redux" "4.1.5"
+    "@applicaster/zapp-react-native-utils" "4.1.5"
     ramda "0.26.1"
     react-native-status-bar-height "^2.4.0"
     react-router-native "^5.1.2"
     url "^0.11.0"
     uuid "^3.3.2"
 
-"@applicaster/zapp-react-native-utils@4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-utils/-/zapp-react-native-utils-4.1.4.tgz#1a0d3472ef5457fa00e95f3f8de7050841c16bfc"
-  integrity sha512-l272jnU2FYyVlBApFJ7xR/3+j01ePI5TLHmEp9NNnzatpbma5FM199gATc8nq6Cu+LDkjJ5LxxpDCj2HjUhdZw==
+"@applicaster/zapp-react-native-utils@4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-utils/-/zapp-react-native-utils-4.1.5.tgz#5f113a9e512c7bcdf3cad514b07572597455d14a"
+  integrity sha512-sVVFKlMN7YmsNhdYqMd30cpBiDMEk8rZsCCBNleiprAdLNe8hrTIGd4nPkxQKF9pafnLLSEa7YxC1V7bAroQJw==
   dependencies:
     "@applicaster/quick-brick-xray" "0.4.1"
     "@react-native-community/netinfo" "^5.9.0"
@@ -477,15 +478,15 @@
     ramda "0.26.1"
     react-native-handlebars "^5.0.0-alpha.1"
 
-"@applicaster/zapplicaster-cli@4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapplicaster-cli/-/zapplicaster-cli-4.1.4.tgz#c7d4bbdd45f8e9c7da622ef76d2538647086e9c7"
-  integrity sha512-c9PS7aKAa6b6eT5fNT0qa6WsQLYGUWYeQv6EoPVnOWqhzaS7jtmnCvVKCQBTYeYV9DngkxejevHM5zd197c/Mw==
+"@applicaster/zapplicaster-cli@4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapplicaster-cli/-/zapplicaster-cli-4.1.5.tgz#06dcd42be525eb174609a038475558b8fed086da"
+  integrity sha512-pmCuUuAmZq49YQc1qokYAGZCkF1f04vHJ2RxOyxI66PHBygcTcoK4avY2fXLlhRwhqtKszIrWD9BX5D/DRgcTw==
   dependencies:
-    "@applicaster/zapp-react-dom-cli-template" "4.1.4"
-    "@applicaster/zapp-react-native-android-tv-cli-template" "4.1.4"
-    "@applicaster/zapp-react-native-cli-template" "4.1.4"
-    "@applicaster/zapp-react-native-tvos-cli-template" "4.1.4"
+    "@applicaster/zapp-react-dom-cli-template" "4.1.5"
+    "@applicaster/zapp-react-native-android-tv-cli-template" "4.1.5"
+    "@applicaster/zapp-react-native-cli-template" "4.1.5"
+    "@applicaster/zapp-react-native-tvos-cli-template" "4.1.5"
     axios "^0.18.0"
     camelize "^1.0.0"
     chalk "^2.3.2"
@@ -631,16 +632,6 @@
     lodash "^4.17.13"
     source-map "^0.5.0"
 
-"@babel/generator@^7.9.6":
-  version "7.9.6"
-  resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.9.6.tgz#5408c82ac5de98cda0d77d8124e99fa1f2170a43"
-  integrity sha512-+htwWKJbH2bL72HRluF8zumBxzuX0ZZUFl3JLNyoUjM/Ho8wnVpPXM6aUz8cfKDqQ/h7zHqKt4xzJteUosckqQ==
-  dependencies:
-    "@babel/types" "^7.9.6"
-    jsesc "^2.5.1"
-    lodash "^4.17.13"
-    source-map "^0.5.0"
-
 "@babel/helper-annotate-as-pure@^7.8.3":
   version "7.8.3"
   resolved "https://registry.yarnpkg.com/@babel/helper-annotate-as-pure/-/helper-annotate-as-pure-7.8.3.tgz#60bc0bc657f63a0924ff9a4b4a0b24a13cf4deee"
@@ -684,6 +675,17 @@
     levenary "^1.1.0"
     semver "^5.5.0"
 
+"@babel/helper-create-class-features-plugin@^7.12.1":
+  version "7.12.1"
+  resolved "https://registry.yarnpkg.com/@babel/helper-create-class-features-plugin/-/helper-create-class-features-plugin-7.12.1.tgz#3c45998f431edd4a9214c5f1d3ad1448a6137f6e"
+  integrity sha512-hkL++rWeta/OVOBTRJc9a5Azh5mt5WgZUGAKMD8JM141YsE08K//bp1unBBieO6rUKkIPyUE0USQ30jAy3Sk1w==
+  dependencies:
+    "@babel/helper-function-name" "^7.10.4"
+    "@babel/helper-member-expression-to-functions" "^7.12.1"
+    "@babel/helper-optimise-call-expression" "^7.10.4"
+    "@babel/helper-replace-supers" "^7.12.1"
+    "@babel/helper-split-export-declaration" "^7.10.4"
+
 "@babel/helper-create-class-features-plugin@^7.8.3":
   version "7.8.3"
   resolved "https://registry.yarnpkg.com/@babel/helper-create-class-features-plugin/-/helper-create-class-features-plugin-7.8.3.tgz#5b94be88c255f140fd2c10dd151e7f98f4bff397"
@@ -694,18 +696,6 @@
     "@babel/helper-optimise-call-expression" "^7.8.3"
     "@babel/helper-plugin-utils" "^7.8.3"
     "@babel/helper-replace-supers" "^7.8.3"
-    "@babel/helper-split-export-declaration" "^7.8.3"
-
-"@babel/helper-create-class-features-plugin@^7.9.6":
-  version "7.9.6"
-  resolved "https://registry.yarnpkg.com/@babel/helper-create-class-features-plugin/-/helper-create-class-features-plugin-7.9.6.tgz#965c8b0a9f051801fd9d3b372ca0ccf200a90897"
-  integrity sha512-6N9IeuyHvMBRyjNYOMJHrhwtu4WJMrYf8hVbEHD3pbbbmNOk1kmXSQs7bA4dYDUaIx4ZEzdnvo6NwC3WHd/Qow==
-  dependencies:
-    "@babel/helper-function-name" "^7.9.5"
-    "@babel/helper-member-expression-to-functions" "^7.8.3"
-    "@babel/helper-optimise-call-expression" "^7.8.3"
-    "@babel/helper-plugin-utils" "^7.8.3"
-    "@babel/helper-replace-supers" "^7.9.6"
     "@babel/helper-split-export-declaration" "^7.8.3"
 
 "@babel/helper-create-regexp-features-plugin@^7.8.3":
@@ -759,15 +749,6 @@
     "@babel/helper-get-function-arity" "^7.8.3"
     "@babel/template" "^7.8.3"
     "@babel/types" "^7.8.3"
-
-"@babel/helper-function-name@^7.9.5":
-  version "7.9.5"
-  resolved "https://registry.yarnpkg.com/@babel/helper-function-name/-/helper-function-name-7.9.5.tgz#2b53820d35275120e1874a82e5aabe1376920a5c"
-  integrity sha512-JVcQZeXM59Cd1qanDUxv9fgJpt3NeKUaqBqUEvfmQ+BCOKq2xUgaWZW2hr0dkbyJgezYuplEoh5knmrnS68efw==
-  dependencies:
-    "@babel/helper-get-function-arity" "^7.8.3"
-    "@babel/template" "^7.8.3"
-    "@babel/types" "^7.9.5"
 
 "@babel/helper-get-function-arity@^7.10.1":
   version "7.10.1"
@@ -958,16 +939,6 @@
     "@babel/traverse" "^7.8.3"
     "@babel/types" "^7.8.3"
 
-"@babel/helper-replace-supers@^7.9.6":
-  version "7.9.6"
-  resolved "https://registry.yarnpkg.com/@babel/helper-replace-supers/-/helper-replace-supers-7.9.6.tgz#03149d7e6a5586ab6764996cd31d6981a17e1444"
-  integrity sha512-qX+chbxkbArLyCImk3bWV+jB5gTNU/rsze+JlcF6Nf8tVTigPJSI1o1oBow/9Resa1yehUO9lIipsmu9oG4RzA==
-  dependencies:
-    "@babel/helper-member-expression-to-functions" "^7.8.3"
-    "@babel/helper-optimise-call-expression" "^7.8.3"
-    "@babel/traverse" "^7.9.6"
-    "@babel/types" "^7.9.6"
-
 "@babel/helper-simple-access@^7.10.1":
   version "7.10.1"
   resolved "https://registry.yarnpkg.com/@babel/helper-simple-access/-/helper-simple-access-7.10.1.tgz#08fb7e22ace9eb8326f7e3920a1c2052f13d851e"
@@ -998,6 +969,13 @@
   dependencies:
     "@babel/types" "^7.10.1"
 
+"@babel/helper-split-export-declaration@^7.10.4":
+  version "7.12.11"
+  resolved "https://registry.yarnpkg.com/@babel/helper-split-export-declaration/-/helper-split-export-declaration-7.12.11.tgz#1b4cc424458643c47d37022223da33d76ea4603a"
+  integrity sha512-LsIVN8j48gHgwzfocYUSkO/hjYAOJqlpJEc7tGXcIm4cubjVUf8LGW6eWRyxEu7gA25q02p0rQUWoCI33HNS5g==
+  dependencies:
+    "@babel/types" "^7.12.11"
+
 "@babel/helper-split-export-declaration@^7.11.0":
   version "7.11.0"
   resolved "https://registry.yarnpkg.com/@babel/helper-split-export-declaration/-/helper-split-export-declaration-7.11.0.tgz#f8a491244acf6a676158ac42072911ba83ad099f"
@@ -1022,10 +1000,20 @@
   resolved "https://registry.yarnpkg.com/@babel/helper-validator-identifier/-/helper-validator-identifier-7.10.4.tgz#a78c7a7251e01f616512d31b10adcf52ada5e0d2"
   integrity sha512-3U9y+43hz7ZM+rzG24Qe2mufW5KhvFg/NhnNph+i9mgCtdTCtMJuI1TMkrIUiK7Ix4PYlRF9I5dhqaLYA/ADXw==
 
+"@babel/helper-validator-identifier@^7.12.11":
+  version "7.12.11"
+  resolved "https://registry.yarnpkg.com/@babel/helper-validator-identifier/-/helper-validator-identifier-7.12.11.tgz#c9a1f021917dcb5ccf0d4e453e399022981fc9ed"
+  integrity sha512-np/lG3uARFybkoHokJUmf1QfEvRVCPbmQeUQpKow5cQ3xWrV9i3rUHodKDJPQfTVX61qKi+UdYk8kik84n7XOw==
+
 "@babel/helper-validator-identifier@^7.9.5":
   version "7.9.5"
   resolved "https://registry.yarnpkg.com/@babel/helper-validator-identifier/-/helper-validator-identifier-7.9.5.tgz#90977a8e6fbf6b431a7dc31752eee233bf052d80"
   integrity sha512-/8arLKUFq882w4tWGj9JYzRpAlZgiWUJ+dtteNTDqrRBz9Iguck9Rn3ykuBDoUwh2TO4tSAJlrxDUOXWklJe4g==
+
+"@babel/helper-validator-option@^7.12.1":
+  version "7.12.11"
+  resolved "https://registry.yarnpkg.com/@babel/helper-validator-option/-/helper-validator-option-7.12.11.tgz#d66cb8b7a3e7fe4c6962b32020a131ecf0847f4f"
+  integrity sha512-TBFCyj939mFSdeX7U7DDj32WtzYY7fDcalgq8v3fBZMNOJQNn7nOYzMaUCiPxPYfCup69mtIpqlKgMZLvQ8Xhw==
 
 "@babel/helper-wrap-function@^7.8.3":
   version "7.8.3"
@@ -1105,11 +1093,6 @@
   version "7.10.2"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.10.2.tgz#871807f10442b92ff97e4783b9b54f6a0ca812d0"
   integrity sha512-PApSXlNMJyB4JiGVhCOlzKIif+TKFTvu0aQAhnTvfP/z3vVSN6ZypH5bfUNwFXXjRQtUEBNFd2PtmCmG2Py3qQ==
-
-"@babel/parser@^7.9.6":
-  version "7.9.6"
-  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.9.6.tgz#3b1bbb30dabe600cd72db58720998376ff653bc7"
-  integrity sha512-AoeIEJn8vt+d/6+PXDRPaksYhnlbMIiejioBZvvMQsOjW/JYK6k/0dKnvvP3EhK5GfMBWDPtrxRtegWdAcdq9Q==
 
 "@babel/plugin-external-helpers@^7.0.0":
   version "7.8.3"
@@ -1340,6 +1323,13 @@
   integrity sha512-kwj1j9lL/6Wd0hROD3b/OZZ7MSrZLqqn9RAZ5+cYYsflQ9HZBIKCUkr3+uL1MEJ1NePiUbf98jjiMQSv0NMR9g==
   dependencies:
     "@babel/helper-plugin-utils" "^7.8.3"
+
+"@babel/plugin-syntax-typescript@^7.12.1":
+  version "7.12.1"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-typescript/-/plugin-syntax-typescript-7.12.1.tgz#460ba9d77077653803c3dd2e673f76d66b4029e5"
+  integrity sha512-UZNEcCY+4Dp9yYRCAHrHDU+9ZXLYaY9MgBXSRLkB9WjYFRR6quJBumfVrEkUxrePPBwFcpWfNKXqVRQQtm7mMA==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.10.4"
 
 "@babel/plugin-syntax-typescript@^7.8.3":
   version "7.8.3"
@@ -1642,21 +1632,21 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.8.3"
 
+"@babel/plugin-transform-typescript@^7.12.1":
+  version "7.12.1"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-typescript/-/plugin-transform-typescript-7.12.1.tgz#d92cc0af504d510e26a754a7dbc2e5c8cd9c7ab4"
+  integrity sha512-VrsBByqAIntM+EYMqSm59SiMEf7qkmI9dqMt6RbD/wlwueWmYcI0FFK5Fj47pP6DRZm+3teXjosKlwcZJ5lIMw==
+  dependencies:
+    "@babel/helper-create-class-features-plugin" "^7.12.1"
+    "@babel/helper-plugin-utils" "^7.10.4"
+    "@babel/plugin-syntax-typescript" "^7.12.1"
+
 "@babel/plugin-transform-typescript@^7.5.0":
   version "7.9.4"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-typescript/-/plugin-transform-typescript-7.9.4.tgz#4bb4dde4f10bbf2d787fce9707fb09b483e33359"
   integrity sha512-yeWeUkKx2auDbSxRe8MusAG+n4m9BFY/v+lPjmQDgOFX5qnySkUY5oXzkp6FwPdsYqnKay6lorXYdC0n3bZO7w==
   dependencies:
     "@babel/helper-create-class-features-plugin" "^7.8.3"
-    "@babel/helper-plugin-utils" "^7.8.3"
-    "@babel/plugin-syntax-typescript" "^7.8.3"
-
-"@babel/plugin-transform-typescript@^7.9.0":
-  version "7.9.6"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-typescript/-/plugin-transform-typescript-7.9.6.tgz#2248971416a506fc78278fc0c0ea3179224af1e9"
-  integrity sha512-8OvsRdvpt3Iesf2qsAn+YdlwAJD7zJ+vhFZmDCa4b8dTp7MmHtKk5FF2mCsGxjZwuwsy/yIIay/nLmxST1ctVQ==
-  dependencies:
-    "@babel/helper-create-class-features-plugin" "^7.9.6"
     "@babel/helper-plugin-utils" "^7.8.3"
     "@babel/plugin-syntax-typescript" "^7.8.3"
 
@@ -1731,13 +1721,14 @@
     levenary "^1.1.0"
     semver "^5.5.0"
 
-"@babel/preset-typescript@^7.9.0":
-  version "7.9.0"
-  resolved "https://registry.yarnpkg.com/@babel/preset-typescript/-/preset-typescript-7.9.0.tgz#87705a72b1f0d59df21c179f7c3d2ef4b16ce192"
-  integrity sha512-S4cueFnGrIbvYJgwsVFKdvOmpiL0XGw9MFW9D0vgRys5g36PBhZRL8NX8Gr2akz8XRtzq6HuDXPD/1nniagNUg==
+"@babel/preset-typescript@^7.12.7":
+  version "7.12.7"
+  resolved "https://registry.yarnpkg.com/@babel/preset-typescript/-/preset-typescript-7.12.7.tgz#fc7df8199d6aae747896f1e6c61fc872056632a3"
+  integrity sha512-nOoIqIqBmHBSEgBXWR4Dv/XBehtIFcw9PqZw6rFYuKrzsZmOQm3PR5siLBnKZFEsDb03IegG8nSjU/iXXXYRmw==
   dependencies:
-    "@babel/helper-plugin-utils" "^7.8.3"
-    "@babel/plugin-transform-typescript" "^7.9.0"
+    "@babel/helper-plugin-utils" "^7.10.4"
+    "@babel/helper-validator-option" "^7.12.1"
+    "@babel/plugin-transform-typescript" "^7.12.1"
 
 "@babel/register@^7.0.0":
   version "7.8.3"
@@ -1850,21 +1841,6 @@
     globals "^11.1.0"
     lodash "^4.17.13"
 
-"@babel/traverse@^7.9.6":
-  version "7.9.6"
-  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.9.6.tgz#5540d7577697bf619cc57b92aa0f1c231a94f442"
-  integrity sha512-b3rAHSjbxy6VEAvlxM8OV/0X4XrG72zoxme6q1MOoe2vd0bEc+TwayhuC1+Dfgqh1QEG+pj7atQqvUprHIccsg==
-  dependencies:
-    "@babel/code-frame" "^7.8.3"
-    "@babel/generator" "^7.9.6"
-    "@babel/helper-function-name" "^7.9.5"
-    "@babel/helper-split-export-declaration" "^7.8.3"
-    "@babel/parser" "^7.9.6"
-    "@babel/types" "^7.9.6"
-    debug "^4.1.0"
-    globals "^11.1.0"
-    lodash "^4.17.13"
-
 "@babel/types@^7.0.0", "@babel/types@^7.8.3":
   version "7.8.3"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.8.3.tgz#5a383dffa5416db1b73dedffd311ffd0788fb31c"
@@ -1892,19 +1868,19 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
+"@babel/types@^7.12.11":
+  version "7.12.12"
+  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.12.12.tgz#4608a6ec313abbd87afa55004d373ad04a96c299"
+  integrity sha512-lnIX7piTxOH22xE7fDXDbSHg9MM1/6ORnafpJmov5rs0kX5g4BZxeXNJLXsMRiO0U5Rb8/FvMS6xlTnTHvxonQ==
+  dependencies:
+    "@babel/helper-validator-identifier" "^7.12.11"
+    lodash "^4.17.19"
+    to-fast-properties "^2.0.0"
+
 "@babel/types@^7.9.5":
   version "7.9.5"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.9.5.tgz#89231f82915a8a566a703b3b20133f73da6b9444"
   integrity sha512-XjnvNqenk818r5zMaba+sLQjnbda31UfUURv3ei0qPQw4u+j2jMyJ5b11y8ZHYTRSI3NnInQkkkRT4fLqqPdHg==
-  dependencies:
-    "@babel/helper-validator-identifier" "^7.9.5"
-    lodash "^4.17.13"
-    to-fast-properties "^2.0.0"
-
-"@babel/types@^7.9.6":
-  version "7.9.6"
-  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.9.6.tgz#2c5502b427251e9de1bd2dff95add646d95cc9f7"
-  integrity sha512-qxXzvBO//jO9ZnoasKF1uJzHd2+M6Q2ZPIVfnFps8JJvXy0ZBbwbNOmE6SGIY5XOY6d1Bo5lb9d9RJ8nv3WSeA==
   dependencies:
     "@babel/helper-validator-identifier" "^7.9.5"
     lodash "^4.17.13"
@@ -8393,6 +8369,11 @@ redent@^3.0.0:
   dependencies:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
+
+redux-devtools-extension@^2.13.8:
+  version "2.13.8"
+  resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.8.tgz#37b982688626e5e4993ff87220c9bbb7cd2d96e1"
+  integrity sha512-8qlpooP2QqPtZHQZRhx3x3OP5skEV1py/zUdMY28WNAocbafxdG2tRD1MWE7sp8obGMNYuLWanhhQ7EQvT1FBg==
 
 redux-thunk@^2.3.0:
   version "2.3.0"
