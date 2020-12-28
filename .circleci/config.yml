@@ -367,7 +367,7 @@ jobs:
       - *version_xcode
       - *location_xcode
 
-  pre_build:
+  build:
     <<: *mac_config
     steps:
       - *triggered_by_zapp_only
@@ -504,19 +504,19 @@ workflows:
   version: 2
   build_from_branch_and_tag:
     jobs:
-      - pre_build:
+      - build:
           filters:
             tags:
               only: /.*/
       - build_debug:
           requires:
-            - pre_build
+            - build
           filters:
             tags:
               only: /.*/
       - build_release:
           requires:
-            - pre_build
+            - build
           filters:
             tags:
               only: /.*/
