@@ -58,7 +58,7 @@ class BuildTypeFactory
         type_for_use = replace_store_to_enterprise_client_if_needed(type_for_use)
 
         puts("Building for #{type_for_use.class.name}")
-        type.build
+        type_for_use.build
       else 
         puts("Unable to build for #{type_to_build}".colorize(:red))
       end
