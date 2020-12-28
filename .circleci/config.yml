@@ -408,13 +408,13 @@ jobs:
       - *install_pods
       - *version_xcode
       - *location_xcode
+      - *prepare_application_environment
 
-  build_release:
+  build_debug:
     <<: *mac_config
     steps:
       - *is_release_build
       - *validate_app_signing_debug
-      - *prepare_application_environment
       
       - deploy:
           name: Prepare Debug Build environment
@@ -454,7 +454,6 @@ jobs:
     steps:
       #need validate release true (halt)
       - *validate_app_signing_release
-      - *prepare_application_environment
 
       - deploy:
           name: Prepare Release Build environment
