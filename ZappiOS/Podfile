@@ -5,7 +5,7 @@ require_relative './node_modules/@react-native-community/cli-platform-ios/native
 require_relative '../scripts/autolink-react-dependencies.rb'
 
 require 'resolv-replace'
-install! 'cocoapods', :deterministic_uuids => false, :preserve_pod_file_structure => true
+install! 'cocoapods', :deterministic_uuids => false, :preserve_pod_file_structure => true, :warn_for_unused_master_specs_repo => false
 use_frameworks! :linkage => :static
 
 source 'git@github.com:applicaster/CocoaPods.git'
