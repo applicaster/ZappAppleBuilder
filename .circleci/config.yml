@@ -267,10 +267,6 @@ references:
       name: Validate app signing for release build
       command: bundle exec fastlane ios validate_app_signing type:store
 
-  validate_app_signing: &validate_app_signing
-    - *validate_app_signing_debug
-    - *validate_app_signing_release
-
   release_zapp_sdk_workflow: &release_zapp_sdk_workflow
     - *prepare_caching_file
     - checkout
@@ -385,15 +381,22 @@ jobs:
       - *restore_zapptool
       - *zapptool_download
       - *version_zapptool
+
       - *set_ruby_version
       - *whitch_ruby
       - *install_node
+
       - *restore_gems
       - *gems_install
+
       - *npm_login
       - *restore_npm
+
       - *install_awscli
-      - *validate_app_signing
+
+      - *validate_app_signing_release
+      - *validate_app_signing_debug
+      
       - *prepare_application_environment
       - *restore_pods
       - *vesion_pods
