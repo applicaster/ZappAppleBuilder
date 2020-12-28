@@ -26,7 +26,7 @@ class BuildTypeFactory
         puts("Perform signing validation for #{type_for_use.class.name}".colorize(:yellow))
         type_for_use.perform_signing_validation
       else 
-        puts("Unable to perform signing validation for #{type_to_prepare} build".colorize(:red))
+        puts("Unable to perform signing validation for #{type_to_validate} build".colorize(:red))
       end
     end
   end
