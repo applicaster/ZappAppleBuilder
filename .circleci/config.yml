@@ -413,6 +413,7 @@ jobs:
   build_debug:
     <<: *mac_config
     steps:
+      - *triggered_by_zapp_only
       - *is_release_build
       - *validate_app_signing_debug
       
@@ -428,6 +429,7 @@ jobs:
   build_devproject:
     <<: *mac_config
     steps:
+      - *triggered_by_zapp_only
       - deploy:
           name: Building development project
           command: |
@@ -452,7 +454,7 @@ jobs:
   build_release:
     <<: *mac_config
     steps:
-      #need validate release true (halt)
+      - *triggered_by_zapp_only
       - *validate_app_signing_release
 
       - deploy:
