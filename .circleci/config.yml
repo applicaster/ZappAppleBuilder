@@ -53,6 +53,15 @@ references:
             circleci-agent step halt
         fi
 
+  is_release_build: &is_release_build
+    run:
+      name: Workflow Validation
+      command: |
+        if [ "$with_release" = "true" ]; then
+        echo "Skipping a workflow, should not build if not release, task completed"
+            circleci-agent step halt
+        fi
+
   gems_cache_key: &gems_cache_key GEMS.1.0-{{ checksum "~/_caching_file" }}-{{ checksum "Gemfile.lock" }}
   restore_gems: &restore_gems
     restore_cache:
@@ -257,12 +266,15 @@ references:
         bundle exec rake zapp_sdks:create[$ZAPP_SDK_PLATFORM,$version,$CIRCLE_PROJECT_REPONAME]
         bundle exec rake zapp_sdks:publish_changelog[$ZAPP_SDK_PLATFORM,$version]
 
-  validate_app_signing: &validate_app_signing
+  validate_app_signing_debug: &validate_app_signing_debug
     run:
-      name: Validate app signing
-      command: |
-        echo "\n-- Validating app signing --"
-        bundle exec fastlane ios validate_app_signing
+      name: Validate app signing for debug build
+      command: bundle exec fastlane ios validate_app_signing type:debug
+
+  validate_app_signing_release: &validate_app_signing_release
+    run:
+      name: Validate app signing for release build
+      command: bundle exec fastlane ios validate_app_signing type:store
 
   release_zapp_sdk_workflow: &release_zapp_sdk_workflow
     - *prepare_caching_file
@@ -378,29 +390,46 @@ jobs:
       - *restore_zapptool
       - *zapptool_download
       - *version_zapptool
+
       - *set_ruby_version
       - *whitch_ruby
       - *install_node
+
       - *restore_gems
       - *gems_install
+
       - *npm_login
       - *restore_npm
+
       - *install_awscli
-      - *validate_app_signing
-      - *prepare_application_environment
+
       - *restore_pods
       - *vesion_pods
       - *install_pods
       - *version_xcode
       - *location_xcode
+      - *prepare_application_environment
+
+  build_debug:
+    <<: *mac_config
+    steps:
+      - *triggered_by_zapp_only
+      - *is_release_build
+      - *validate_app_signing_debug
+      
       - deploy:
-          name: Prepare Build environment
+          name: Prepare Debug Build environment
           command: |
-            bundle exec fastlane ios prepare_environment
+            bundle exec fastlane ios prepare_environment type:debug
       - deploy:
-          name: Build App
+          name: Debug Build
           command: |
-            bundle exec fastlane ios build
+            bundle exec fastlane ios build type:debug
+
+  build_devproject:
+    <<: *mac_config
+    steps:
+      - *triggered_by_zapp_only
       - deploy:
           name: Building development project
           command: |
@@ -421,6 +450,23 @@ jobs:
             else
               echo "Building standard app, not for external development environment! Step will be skipped"
             fi
+
+  build_release:
+    <<: *mac_config
+    steps:
+      - *triggered_by_zapp_only
+      - *validate_app_signing_release
+
+      - deploy:
+          name: Prepare Release Build environment
+          command: |
+            bundle exec fastlane ios prepare_environment type:store
+      - deploy:
+          name: Release Build
+          command: |
+            bundle exec fastlane ios build type:store
+      
+
       - run:
           name: Publishing builds to Zapp
           command: |
@@ -461,6 +507,24 @@ workflows:
   build_from_branch_and_tag:
     jobs:
       - build:
+          filters:
+            tags:
+              only: /.*/
+      - build_debug:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /.*/
+      - build_release:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /.*/
+      - build_devproject:
+          requires:
+            - build_debug
           filters:
             tags:
               only: /.*/
