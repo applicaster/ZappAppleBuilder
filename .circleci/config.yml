@@ -260,16 +260,12 @@ references:
   validate_app_signing_debug: &validate_app_signing_debug
     run:
       name: Validate app signing for debug build
-      command: |
-        echo "\n-- Validating app signing --"
-        bundle exec fastlane ios validate_app_signing type:debug
+      command: bundle exec fastlane ios validate_app_signing type:debug
 
   validate_app_signing_release: &validate_app_signing_release
     run:
       name: Validate app signing for release build
-      command: |
-        echo "\n-- Validating app signing --"
-        bundle exec fastlane ios validate_app_signing type:store
+      command: bundle exec fastlane ios validate_app_signing type:store
 
   validate_app_signing: &validate_app_signing
     - *validate_app_signing_debug
