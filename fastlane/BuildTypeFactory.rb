@@ -13,7 +13,7 @@ class BuildTypeFactory
 
   def perform_signing_validation(options)
     # perform validation for all needed env
-    build_types_for_use.each do |type|
+    build_types_for_use.each do |type_for_use|
       if type_for_use.build_type == type
         # download signing files
         type_for_use.download_signing_files
