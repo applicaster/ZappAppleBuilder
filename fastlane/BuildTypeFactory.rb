@@ -11,47 +11,59 @@ class BuildTypeFactory
     @fastlane = options[:fastlane]
   end
 
-  def prepare_environment
-    # prepare only specific env to build
-    prepare_environment_build_types_for_use.each do |type|
-
-      # replace store to enterprise-client if needed
-      type = replace_store_to_enterprise_client_if_needed(type)
-
-      puts("Prepare environment for #{type.class.name}")
-      type.prepare_environment
-    end
-  end
-
-  def perform_signing_validation
+  def perform_signing_validation(options)
     # perform validation for all needed env
     build_types_for_use.each do |type|
-      # download signing files
-      type.download_signing_files
+      if type_for_use.build_type == type
+        # download signing files
+        type_for_use.download_signing_files
 
-      # replace store to enterprise-client if needed
-      type = replace_store_to_enterprise_client_if_needed(type)
+        # replace store to enterprise-client if needed
+        type_for_use = replace_store_to_enterprise_client_if_needed(type_for_use)
 
-      puts("Perform signing validation for #{type.class.name}".colorize(:yellow))
-      type.perform_signing_validation
+        puts("Perform signing validation for #{type_for_use.class.name}".colorize(:yellow))
+        type_for_use.perform_signing_validation
+      else 
+        puts("Unable to perform signing validation for #{type} build".colorize(:red))
+      end
     end
   end
 
-  def build
+  def prepare_environment(options)
+    type = options[:type]
+
+    # prepare only specific env to build
+    build_types_for_use.each do |type_for_use|
+      if type_for_use.build_type == type
+        # replace store to enterprise-client if needed
+        type_for_use = replace_store_to_enterprise_client_if_needed(type_for_use)
+
+        puts("Prepare environment for #{type_for_use.class.name}")
+        type_for_use.prepare_environment
+      else 
+        puts("Unable to prepare environment for #{type} build".colorize(:red))
+      end
+    end
+  end
+
+  def build(options)
+    type = options[:type]
+
     # build each one of the env
-    build_types_for_use.each do |type|
-      # replace store to enterprise-client if needed
-      type = replace_store_to_enterprise_client_if_needed(type)
+    build_types_for_use.each do |type_for_use|
+      if type_for_use.build_type == type
+        # replace store to enterprise-client if needed
+        type_for_use = replace_store_to_enterprise_client_if_needed(type_for_use)
 
-      puts("Building for #{type.class.name}")
-
-      # prepare env if this is not the initially requested build type (like store + debug =>> prepare debug)
-      type.prepare_environment if build_type != type.build_type
-      type.build
+        puts("Building for #{type_for_use.class.name}")
+        type.build
+      else 
+        puts("Unable to build for #{type}".colorize(:red))
+      end
     end
   end
 
-  def build_type
+  def build_type_string
     envHelper = EnvironmentHelper.new
     if !envHelper.distribution_key_url.to_s.strip.empty? && envHelper.with_release == 'true'
       'store'
@@ -64,28 +76,9 @@ class BuildTypeFactory
     end
   end
 
-  def prepare_environment_build_types_for_use
-    buildtypes = []
-    case build_type
-    when 'enterprise'
-      buildtypes = [
-        EnterpriseClient.new(fastlane: @fastlane)
-      ]
-    when 'store'
-      buildtypes = [
-        Store.new(fastlane: @fastlane)
-      ]
-    when 'debug'
-      buildtypes = [
-        EnterpriseDebug.new(fastlane: @fastlane)
-      ]
-    end
-    buildtypes
-  end
-
   def build_types_for_use
     buildtypes = []
-    case build_type
+    case build_type_string
     when 'enterprise'
       buildtypes = [
         EnterpriseClient.new(fastlane: @fastlane),
@@ -106,7 +99,7 @@ class BuildTypeFactory
 
   def replace_store_to_enterprise_client_if_needed(type)
     if type.build_type == "store" && type.isEnterpriseBuild
-      puts("Switching to Enterprise client build".colorize(:red))
+      puts("Switching to Enterprise client build".colorize(:green))
 
       type = EnterpriseClient.new(fastlane: @fastlane)
     end

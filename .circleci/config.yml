@@ -257,12 +257,23 @@ references:
         bundle exec rake zapp_sdks:create[$ZAPP_SDK_PLATFORM,$version,$CIRCLE_PROJECT_REPONAME]
         bundle exec rake zapp_sdks:publish_changelog[$ZAPP_SDK_PLATFORM,$version]
 
-  validate_app_signing: &validate_app_signing
+  validate_app_signing_debug: &validate_app_signing_debug
     run:
-      name: Validate app signing
+      name: Validate app signing for debug build
       command: |
         echo "\n-- Validating app signing --"
-        bundle exec fastlane ios validate_app_signing
+        bundle exec fastlane ios validate_app_signing type:debug
+
+  validate_app_signing_release: &validate_app_signing_release
+    run:
+      name: Validate app signing for release build
+      command: |
+        echo "\n-- Validating app signing --"
+        bundle exec fastlane ios validate_app_signing type:store
+
+  validate_app_signing: &validate_app_signing
+    - *validate_app_signing_debug
+    - *validate_app_signing_release
 
   release_zapp_sdk_workflow: &release_zapp_sdk_workflow
     - *prepare_caching_file
@@ -394,13 +405,21 @@ jobs:
       - *version_xcode
       - *location_xcode
       - deploy:
-          name: Prepare Build environment
+          name: Prepare Release Build environment
           command: |
-            bundle exec fastlane ios prepare_environment
+            bundle exec fastlane ios prepare_environment type:store
       - deploy:
-          name: Build App
+          name: Release Build
           command: |
-            bundle exec fastlane ios build
+            bundle exec fastlane ios build type:store
+      - deploy:
+          name: Prepare Debug Build environment
+          command: |
+            bundle exec fastlane ios prepare_environment type:debug
+      - deploy:
+          name: Debug Build
+          command: |
+            bundle exec fastlane ios build type:debug
       - deploy:
           name: Building development project
           command: |

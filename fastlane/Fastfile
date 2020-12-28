@@ -55,24 +55,24 @@ platform :ios do
     create_temp_keychain
   end
 
-  lane :prepare_environment do
+  lane :prepare_environment do |options|
     envHelper = EnvironmentHelper.new
     unless envHelper.bundle_identifier.to_s.strip.empty?
-      BuildTypeFactory.new(fastlane: self).prepare_environment
+      BuildTypeFactory.new(fastlane: self).prepare_environment(options)
     end
   end
 
-  lane :validate_app_signing do
+  lane :validate_app_signing do |options|
     envHelper = EnvironmentHelper.new
     unless envHelper.bundle_identifier.to_s.strip.empty?
-      BuildTypeFactory.new(fastlane: self).perform_signing_validation
+      BuildTypeFactory.new(fastlane: self).perform_signing_validation(options)
     end
   end
 
-  lane :build do
+  lane :build do |options|
     envHelper = EnvironmentHelper.new
     unless envHelper.bundle_identifier.to_s.strip.empty?
-      BuildTypeFactory.new(fastlane: self).build
+      BuildTypeFactory.new(fastlane: self).build(options)
     end
   end
 end
