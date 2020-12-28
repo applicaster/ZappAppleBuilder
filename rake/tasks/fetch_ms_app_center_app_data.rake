@@ -60,79 +60,51 @@ def fetch_distribution_group(bundle_identifier, app_name)
 end
 
 def fetch_app(bundle_identifier, platform)
-  cmd = "curl -X GET \"https://api.appcenter.ms/v0.1/apps/#{ENV['APPCENTER_OWNER_NAME']}/#{platform}-#{bundle_identifier}\" "\
-        "-H \"accept: application/json\" "\
-        "-H \"Content-Type: application/json\" "\
-        "-H \"X-API-Token: #{ENV['APPCENTER_API_TOKEN']}\" "
+  response = app_center_client.get("/v0.1/apps/#{ENV['APPCENTER_OWNER_NAME']}/#{platform}-#{bundle_identifier}")
 
-  puts("--> cmd: #{cmd}")
-  result = `#{cmd}`
-  puts("--> result: #{result}")
-  failure = result.nil? || result["statusCode"] == 404
-  raise "Failed to fetch app details" if failure
+  raise "Failed to fetch app details" unless response.success?
 
-  JSON.parse(result)
+  JSON.parse(response.body)
 end
 
 def fetch_app_details_from_mapping(bundle_identifier, platform)
+  url = "https://assets-production.applicaster.com/zapp/tmp/appcenter/#{platform}/hockeyapp_appcenter_mapping.json"
+  response = Faraday.get(url)
 
-  cmd = "curl -X GET \"https://assets-production.applicaster.com/zapp/tmp/appcenter/#{platform}/hockeyapp_appcenter_mapping.json\" "\
-        "-H \"accept: application/json\" "\
-        "-H \"Content-Type: application/json\" "
+  raise "Failed to fetch apps mappings json" unless response.success?
 
-  result = `#{cmd}`
-
-  failure = result.nil? || result["statusCode"] == 404
-  raise "Failed to fetch apps mappings json" if failure
-
-  mapping_data = JSON.parse(result)
+  mapping_data = JSON.parse(response.body)
   mapping_data.select { |h| h['bundle_identifier'] == "#{bundle_identifier}" && h['platform'] == "#{platform}" }.first
 end
 
 def fetch_app_distribution_groups(app_name)
-  cmd = "curl -X GET \"https://api.appcenter.ms/v0.1/apps/#{ENV['APPCENTER_OWNER_NAME']}/#{app_name}/distribution_groups\" "\
-        "-H \"accept: application/json\" "\
-        "-H \"Content-Type: application/json\" "\
-        "-H \"X-API-Token: #{ENV['APPCENTER_API_TOKEN']}\" "
+  response = app_center_client.get("/v0.1/apps/#{ENV['APPCENTER_OWNER_NAME']}/#{app_name}/distribution_groups")
+  raise "Failed to fetch app distribution_groups" unless response.success?
 
-  puts("--> cmd: #{cmd}")
-  result = `#{cmd}`
-  puts("--> result: #{result}")
-
-  failure = result.nil? || result["statusCode"] == 404
-  raise "Failed to fetch app distribution_groups" if failure
-
-  JSON.parse(result)
+  JSON.parse(response.body)
 end
 
 def create_new_public_distribution_group(bundle_identifier, app_name)
-  cmd = "curl -X POST \"https://api.appcenter.ms/v0.1/apps/#{ENV['APPCENTER_OWNER_NAME']}/#{app_name}/distribution_groups\" "\
-        "-H \"accept: application/json\" "\
-        "-H \"X-API-Token: #{ENV['APPCENTER_API_TOKEN']}\" "\
-        "-H \"Content-Type: application/json\" "\
-        "-d '{ \"name\": \"All app users\", \"is_public\": true}'"
+  body = {name: "All app users", is_public: true}
+  response = app_center_client.post("/v0.1/apps/#{ENV['APPCENTER_OWNER_NAME']}/#{app_name}/distribution_groups", JSON.dump(body))
+  raise "Failed to create new app distribution group" unless response.success?
 
-  puts("--> cmd: #{cmd}")
-  result = `#{cmd}`
-  puts("--> result: #{result}")
-
-  failure = result.nil? || result["statusCode"] == 404
-  raise "Failed to create new app distribution group" if failure
-
-  JSON.parse(result)
+  JSON.parse(response.body)
 end
 
 def create_new_app(bundle_identifier, platform)
-  cmd = "curl -X POST \"https://api.appcenter.ms/v0.1/orgs/#{ENV['APPCENTER_OWNER_NAME']}/apps\" "\
-        "-H \"accept: application/json\" "\
-        "-H \"X-API-Token: #{ENV['APPCENTER_API_TOKEN']}\" "\
-        "-H \"Content-Type: application/json\" "\
-        "-d '{ \"description\": \"#{ENV['app_name']}\", \"release_type\": \"Beta\", \"display_name\": \"#{ENV['app_name']}\", \"name\": \"#{platform}-#{bundle_identifier}\", \"os\": \"iOS\", \"platform\": \"Objective-C-Swift\"}'"
+  body = {
+      description: ENV['app_name'],
+      release_type: "Beta",
+      display_name: ENV['app_name'],
+      name: "#{platform}-#{bundle_identifier}",
+      os: "iOS",
+      platform: "Objective-C-Swift"
+  }
+  response = app_center_client.post("/v0.1/orgs/#{ENV['APPCENTER_OWNER_NAME']}/apps", JSON.dump(body))
+  raise "Failed to create new app" unless response.success?
 
-  puts("--> cmd: #{cmd}")
-  result = `#{cmd}`
-  puts("--> result: #{result}")
-  app = JSON.parse(result)
+  app = JSON.parse(response.body)
 
   write_app_data_to_file("#{bundle_identifier}", "#{app['name']}", "appname")
   write_app_data_to_file("#{bundle_identifier}", "#{app['app_secret']}", "appsecret")
@@ -154,5 +126,18 @@ def read_app_secret_from_file(bundle_identifier)
   filename = "#{folder_name}/#{bundle_identifier}_appsecret"
   if File.exist? "#{filename}"
      File.read("#{filename}")
+  end
+end
+
+def app_center_client()
+  default_headers = {
+    'Accept' => 'application/json',
+    'Content-Type' => 'application/json',
+    'X-API-Token' => ENV['APPCENTER_API_TOKEN']
+  }
+  Faraday.new(url: "https://api.appcenter.ms", headers: default_headers) do |conn|
+    conn.request :retry
+    conn.response :logger
+    conn.adapter :net_http
   end
 end
