@@ -26,7 +26,7 @@ class BuildTypeFactory
         puts("Perform signing validation for #{type_for_use.class.name}".colorize(:yellow))
         type_for_use.perform_signing_validation
       else 
-        puts("Unable to perform signing validation for #{type_to_validate} build".colorize(:red))
+        puts("Skipping signing validation for #{type_for_use} build".colorize(:red))
       end
     end
   end
@@ -43,7 +43,7 @@ class BuildTypeFactory
         puts("Prepare environment for #{type_for_use.class.name}")
         type_for_use.prepare_environment
       else 
-        puts("Unable to prepare environment for #{type_to_prepare} build".colorize(:red))
+        puts("Skipping preparing environment for #{type_for_use} build".colorize(:red))
       end
     end
   end
@@ -60,7 +60,7 @@ class BuildTypeFactory
         puts("Building for #{type_for_use.class.name}")
         type_for_use.build
       else 
-        puts("Unable to build for #{type_to_build}".colorize(:red))
+        puts("Skipping build for #{type_for_use}".colorize(:red))
       end
     end
   end
@@ -84,10 +84,12 @@ class BuildTypeFactory
     when 'enterprise'
       buildtypes = [
         EnterpriseClient.new(fastlane: @fastlane),
+        EnterpriseDebug.new(fastlane: @fastlane)
       ]
     when 'store'
       buildtypes = [
         Store.new(fastlane: fastlane),
+        EnterpriseDebug.new(fastlane: @fastlane)
       ]
     when 'debug'
       buildtypes = [
