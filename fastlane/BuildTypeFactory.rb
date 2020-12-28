@@ -84,12 +84,10 @@ class BuildTypeFactory
     when 'enterprise'
       buildtypes = [
         EnterpriseClient.new(fastlane: @fastlane),
-        EnterpriseDebug.new(fastlane: @fastlane)
       ]
     when 'store'
       buildtypes = [
         Store.new(fastlane: fastlane),
-        EnterpriseDebug.new(fastlane: @fastlane)
       ]
     when 'debug'
       buildtypes = [
