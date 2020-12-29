@@ -447,6 +447,19 @@ jobs:
             else
               bundle exec rake publish_to_zapp:update_zapp_version
             fi
+      - store_artifacts:
+          name: Artifacts - build logs
+          path: /tmp/zapp-build-logs
+
+      - store_artifacts:
+          name: Artifacts - collecting
+          path: ./CircleArtifacts
+      - store_artifacts:
+          name: Podfile.lock - collecting from iOS build
+          path: ./ZappiOS/Podfile.lock
+      - store_artifacts:
+          name: Podfile.lock - collecting from tvOS build
+          path: ./ZappTvOS/Podfile.lock
 
   create_ios_mobile_sdk:
     <<: *mac_config
