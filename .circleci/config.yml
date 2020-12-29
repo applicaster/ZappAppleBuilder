@@ -448,7 +448,7 @@ jobs:
               bundle exec rake publish_to_zapp:update_zapp_version
             fi
       - store_artifacts:
-          name: Artifacts - build logs
+          name: Artifacts - Build logs
           path: /tmp/zapp-build-logs
 
       - store_artifacts:
