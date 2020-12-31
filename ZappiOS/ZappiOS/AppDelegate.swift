@@ -101,6 +101,10 @@ class AppDelegate: AppDelegateBase {
         }
     }
 
+    public func applicationWillEnterForeground(_ application: UIApplication) {
+        SettingsBundleHelper.handleChangesIfNeeded()
+    }
+    
     public func applicationWillResignActive(_ application: UIApplication) {
         logger?.verboseLog(template: AppDelegateLogs.applicationWillResignActive)
         uiLayerPluginDelegate?.applicationDelegate?.applicationWillResignActive?(application)
