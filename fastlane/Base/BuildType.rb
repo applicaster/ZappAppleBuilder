@@ -295,7 +295,6 @@ class BuildType < BaseHelper
         bundle_identifier: options[:bundle_identifier],
         ipa: "#{circle_artifacts_folder_path}/#{build_type}/#{@projectHelper.scheme}-#{build_type}.ipa",
         dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@projectHelper.scheme}-#{build_type}.app.dSYM.zip",
-        build_type: build_type
       )
       puts('Upload application to MS App Center')
       @appCenterHelper.upload_app(options)
