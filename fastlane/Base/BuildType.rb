@@ -60,16 +60,15 @@ class BuildType < BaseHelper
       value: @@envHelper.s3_hostname
     )
 
-    debug_environment = "YES"
-    if build_type == "enterprise" or build_type == "store"
-      debug_environment = "NO"
+    debug_environment = 'YES'
+    if (build_type == 'enterprise') || (build_type == 'store')
+      debug_environment = 'NO'
     end
- 
+
     @projectHelper.update_features_customization(
       name: 'DebugEnvironment',
       value: debug_environment
     )
-
   end
 
   def add_wifi_system_capability_if_needed
@@ -197,7 +196,9 @@ class BuildType < BaseHelper
       hasCertificate = false
       provisioning_profile_certificates.each do |raw|
         certificate = OpenSSL::X509::Certificate.new(raw.string)
-        hasCertificate = true if certificate.public_key.to_s == p12.certificate.public_key.to_s
+        if certificate.public_key.to_s == p12.certificate.public_key.to_s
+          hasCertificate = true
+        end
       end
 
       error_message = 'Provisioning Profile is not signed with provided certificate'
@@ -293,7 +294,8 @@ class BuildType < BaseHelper
       s3_upload(
         bundle_identifier: options[:bundle_identifier],
         ipa: "#{circle_artifacts_folder_path}/#{build_type}/#{@projectHelper.scheme}-#{build_type}.ipa",
-        dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@projectHelper.scheme}-#{build_type}.app.dSYM.zip"
+        dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@projectHelper.scheme}-#{build_type}.app.dSYM.zip",
+        build_type: build_type
       )
       puts('Upload application to MS App Center')
       @appCenterHelper.upload_app(options)
