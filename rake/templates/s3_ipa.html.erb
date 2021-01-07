@@ -86,7 +86,7 @@
             <p class="">
                 Built on <%= Time.now.strftime('%a, %e %b %Y %H:%M %p') %>
             </p>
-            <a href="itms-services://?action=download-manifest&url=<%= url_encode(plist_url) %>" x-bind:disabled="downloaded" class="w-100 btn btn-lg btn-dark" @click="downloaded = true" x-on:click>
+            <a href="itms-services://?action=download-manifest&url=<%= url_encode(gsub('s3.amazonaws.com/', '')) %>" x-bind:disabled="downloaded" class="w-100 btn btn-lg btn-dark" @click="downloaded = true" x-on:click>
                 <div class="download-button">
                     <svg class="platform-icon" fill="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
@@ -135,7 +135,7 @@
                     <p class="text-center">
                         Built on <%= Time.now.strftime('%a, %e %b %Y %H:%M %p') %>
                     </p>
-                    <p><a href="itms-services://?action=download-manifest&url=<%= url_encode(plist_url) %>">Download apk</a></p>
+                    <p><a href="itms-services://?action=download-manifest&url=<%= url_encode(gsub('s3.amazonaws.com/', '')) %>">Download apk</a></p>
                 </div>
             </div>
         </div>
