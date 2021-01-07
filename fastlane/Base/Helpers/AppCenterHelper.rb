@@ -111,12 +111,12 @@ class AppCenterHelper < BaseHelper
         download_url: s3DistanationPath
       }
     else
-      s3InstallURL = "https://assets-secure.applicaster.com/#{s3DestinationPathParams}/#{@projectHelper.scheme}-#{options[:build_type]}.html"
+      s3InstallURL = "https://assets-secure.applicaster.com/#{s3DestinationPathParams}/index.html"
       release_info = options[:build_information]
       {
         uploaded_at: time.inspect,
         download_url: s3DistanationPath,
-        install_url: s3downloadURL,
+        install_url: s3InstallURL,
         id: release_info['id'],
         app_name: options[:app_name],
         app_secret: options[:app_secret]
