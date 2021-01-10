@@ -35,7 +35,7 @@ references:
         fetched_params=$(echo `curl -s -X GET $custom_params_url` | jq -r "to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]" )
         # fetched_params=$(echo `curl -s -X GET $build_params_url` | jq -r "to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]" )
 
-        echo 'export $fetched_params`  >> $BASH_ENV
+        echo 'export $fetched_params'  >> $BASH_ENV
         source $BASH_ENV
 
         echo $custom_param_1
