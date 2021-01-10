@@ -31,23 +31,19 @@ references:
     run: 
       name: Prepare build parameters
       command: |
-        custom_params_url="https://gist.githubusercontent.com/alexzchut/da6543190a41759c750761925b4eb8ec/raw/07f30b58e0b230ee550079021e4591dd7c8b952d/custom_params.json"
-        values=`curl -s -X GET $custom_params_url` # build_params_url
+        values=`curl -s -X GET $build_params_url`
         for keyvals in $(echo $values | jq -r "to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]" ); do
             echo "export $keyvals" >> $BASH_ENV
         done
 
         source $BASH_ENV
 
-        echo $custom_param_1
-        echo $custom_param_2
-
   print_build_parameters: &print_build_parameters
     run: 
       name: Print build parameters
       command: |
-        echo $custom_param_1
-        echo $custom_param_2
+        echo $app_name
+        echo $bundle_identifier
   
   #Hack general caching until circle does not support global env variables
   prepare_caching_file: &prepare_caching_file
@@ -305,8 +301,6 @@ jobs:
       device_target: universal
       TARGET_FOLDER: ZappiOS
     steps:
-      - *prepare_build_parameters
-      - *print_build_parameters
       - *stop_job_triggered_by_zapp
       - checkout
       - *prepare_caching_file
@@ -347,8 +341,6 @@ jobs:
       device_target: apple_tv
       TARGET_FOLDER: "ZappTvOS"
     steps:
-      - *prepare_build_parameters
-      - *print_build_parameters
       - *stop_job_triggered_by_zapp
       - checkout
 
@@ -387,9 +379,9 @@ jobs:
   build:
     <<: *mac_config
     steps:
+      - *triggered_by_zapp_only
       - *prepare_build_parameters
       - *print_build_parameters
-      - *triggered_by_zapp_only
       - run:
           name: CocoaPods - install default dependencies
           command: |
