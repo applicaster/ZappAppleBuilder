@@ -32,7 +32,7 @@ references:
       name: Prepare build parameters
       command: |
         custom_params="https://gist.githubusercontent.com/alexzchut/da6543190a41759c750761925b4eb8ec/raw/07f30b58e0b230ee550079021e4591dd7c8b952d/custom_params.json"
-        export $(echo `curl -s -X GET $custom_params` | jq -r "to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]" ) >> $BASH_ENV
+        echo 'export $(echo `curl -s -X GET $custom_params` | jq -r "to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]" )' >> $BASH_ENV
 
         # export $(echo `curl -s -X GET $build_params_url` | jq -r "to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]" ) >> $BASH_ENV
         source $BASH_ENV
