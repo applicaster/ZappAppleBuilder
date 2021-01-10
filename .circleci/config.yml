@@ -32,13 +32,11 @@ references:
       name: Prepare build parameters
       command: |
         custom_params_url="https://gist.githubusercontent.com/alexzchut/da6543190a41759c750761925b4eb8ec/raw/07f30b58e0b230ee550079021e4591dd7c8b952d/custom_params.json"
-        fetched_params=$(echo `curl -s -X GET $custom_params_url` | jq -r "to_entries|map(\"export \(.key)=\(.value|tostring)\")|.[]" )
-        # fetched_params=$(echo `curl -s -X GET $build_params_url` | jq -r "to_entries|map(\"export \(.key)=\(.value|tostring)\")|.[]" )
-
-        for param in $fetched_params; do
-          echo '$param' >> $BASH_ENV
+        values=`curl -s -X GET $custom_params_url` # build_params_url
+        for keyvals in $(echo $values | jq -r "to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]" ); do
+            echo "export $keyvals" >> $BASH_ENV
         done
-        
+
         source $BASH_ENV
 
         echo $custom_param_1
