@@ -1,90 +1,170 @@
-<html>
-  <head>
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Install <%= title %></title>
-  </head>
-  <body>
-    <style type="text/css">
-      * {
-        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-        text-align: center;
-        background-color: #f5f5f5;
-      }
-      h1 {
-        margin-bottom: 0px;
-      }
-      h2 {
-        margin-top: 5px;
-      }
-      .oneRow {
-        width: 100%;
-        overflow: auto;
-        overflow-y: hidden;
-        white-space: nowrap;
-        text-align: center;
-      }
-      .download {
-        margin: 30px;
-        font-size: 130%;
-      }
-      #appIcon {
-        -webkit-border-radius: 22.544%;
-        -moz-border-radius: 22.544%;
-        -ms-border-radius: 22.544%;
-          border-radius: 22.544%;
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <title><%= title %> | Version <%= bundle_version %> | Build <%= build_num %></title>
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #f5f5f5;
+        }
+        .form-download {
+            width: 100%;
+            max-width: 330px;
+            padding: 10px;
+            margin: auto;
+        }
+        .form-download .checkbox {
+            font-weight: 400;
+        }
+        .form-download .form-control {
+            position: relative;
+            box-sizing: border-box;
+            height: auto;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .form-download .form-control:focus {
+            z-index: 2;
+        }
+        .form-download input[type="email"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+        .form-download input[type="password"] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+        .platform-icon {
+            height: 50px;
+        }
+        .version-text-container {
+            flex: 1;
+            text-align: left;
+            padding-left: 15px;
+            padding-right: 5px;
+        }
+        .version-text {
+            word-break: break-word;
+        }
+        .capitalize {
+            text-transform: capitalize;
+        }
+        .download-button {
+            display: flex;
+            align-items: center;
+        }
 
-        margin-bottom: 30px;
-      }
-      a {
-        text-decoration: none;
-        color: blue;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
-      #os-message {
-        text-align: center;
-        color: #737373;
-        font-size: 14px;
-      }
-      #footnote {
-        color: #737373;
-        font-size: 14px;
-      }
-      #finished { display: none; }
-      #fastlaneLogo {
-        text-align: center;
-        max-width: 150px;
-        margin-top: 10px;
-      }
     </style>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/englishextra/qrjs2@0.1.7/js/qrjs2.min.js" defer></script>
+</head>
+<% cdn_plist_url = plist_url.gsub('s3.amazonaws.com/', '') %>
+<body class="text-center" :class="{'modal-open': open}" x-data="{ open: false, downloaded: false }">
+    <main class="form-download">
+        <form>
+            <img class="mb-4 rounded-3"
+                onerror="this.src='https://assets-production.applicaster.com/zapp/assets/cms_assets/zapp-launcher.png'"
+                src="https://assets-production.applicaster.com/zapp/assets/app_versions/<%= ENV['version_id'] %>/universal/Icon-1024.png"
+                alt="" width="100" height="100">
+            <h2>
+                <%= title %>
+            </h2>
+            <p class="">
+                Built on <%= Time.now.strftime('%a, %e %b %Y %H:%M %p') %>
+            </p>
+            <a href="itms-services://?action=download-manifest&url=<%= url_encode(cdn_plist_url) %>" x-bind:disabled="downloaded" class="w-100 btn btn-lg btn-dark" @click="downloaded = true" x-on:click>
+                <div class="download-button">
+                    <svg class="platform-icon" fill="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701" />
+                    </svg>
 
-    <h1 style="text-align: center;"><%= title %></h1>
-    <h2><%= bundle_version %> (<%= build_num %>)</h2>
-    <p><em>Built on <%= Time.now.strftime('%a, %e %b %Y %H:%M %p') %></em></p>
-
-    <div class="oneRow">
-      <span class="download" id="ios">
-        <a href="itms-services://?action=download-manifest&url=<%= url_encode(plist_url) %>" id="text" class="btn btn-lg btn-default" onclick="document.getElementById('finished').id = '';">
-          Install <%= title %> <%= bundle_version %> (<%= build_num %>)
-        </a>
-      </span>
-
-      <span class="info">
-        <p><%= release_notes %></p>
-      </span>
+                    <div class="version-text-container">
+                        <template x-if="!downloaded"><small class="capitalize">Download <%= ENV['build_type'] %></small></template>
+                        <template x-if="downloaded"><small>App is being installed</small></template>
+                        <div class="version-text"> V<%= bundle_version %> (<%= build_num %>)</div>
+                    </div>
+                </div>
+            </a>
+            <p class="mt-5 mb-3 text-muted">This is a private version and is not intended for public sharing.</p>
+            <a href="https://applicaster.com">
+                <img class="mx-auto h-6 w-auto mt-16"
+                    src="https://assets-production.applicaster.com/zapp/assets/cms_assets/applicaster_logo.svg"
+                    height="25">
+            </a>
+        <h4 class="mt-4" :style="`opacity: ${downloaded ? 1 : 0};`" >App is being installed. Close the browser using the home button.</h4>
+        </form>
+        </div>
+    </main>
+    <!-- Modal -->
+    <div class="modal fade show" tabindex="-1" :style="`display: ${open && 'block'};`  "
+        x-on:toggle.window="open = !open">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <div class="d-flex">
+                        <img class="me-2 rounded-3"
+                            onerror="this.src='https://assets-production.applicaster.com/zapp/assets/cms_assets/zapp-launcher.png'"
+                            src="https://assets-production.applicaster.com/zapp/assets/app_versions/<%= ENV['version_id'] %>/universal/Icon-1024.png"
+                            alt="" width="40" height="40">
+                        <h5 class="modal-title"><%= title %></h5>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <h5 class="modal-title">Please open this page on your Apple mobile device!</h5>
+                    <p>OR Scan this QR code using your Apple Mobile device</p>
+                    <div id="qr"></div>
+                    <p class="">
+                        V<%= bundle_version %> (<%= build_num %>)
+                    </p>
+                    <p class="text-center">
+                        Built on <%= Time.now.strftime('%a, %e %b %Y %H:%M %p') %>
+                    </p>
+                    <p><a href="itms-services://?action=download-manifest&url=<%= url_encode(cdn_plist_url) %>">Download apk</a></p>
+                </div>
+            </div>
+        </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            //the event occurred
+            var userAgent = window.navigator.userAgent,
+                platform = window.navigator.platform,
+                iosPlatforms = ['iPhone', 'iPad', 'iPod'];
 
-    <h3 id="os-message">Please open this page on your iOS device!</h3>
-
-    <p id="finished">
-      App is being installed. Close Safari using the home button.	
-    </p>
-
-    <p id="footnote">
-      This is a beta version and is not intended for public sharing.
-    </p>
-    <img src="https://assets-production.applicaster.com/zapp/assets/cms_assets/applicaster_logo.svg" id="fastlaneLogo" />
-  </body>
+            if (iosPlatforms.indexOf(platform) === -1) {
+                window.dispatchEvent(new CustomEvent('toggle'));
+            }
+            var element = document.getElementById('qr');
+            var svgElement = document.createElement("div"),
+                u = window.location.href,
+                s = window.QRCode.generateSVG(u, {
+                    ecclevel: "M",
+                    fillcolor: "#FFFFFF",
+                    textcolor: "#373737",
+                    margin: 4,
+                    modulesize: 8
+                });
+            svgElement.appendChild(s);
+            element.appendChild(svgElement);
+        })
+    </script>
+    <div x-show="open" class="modal-backdrop fade show"></div>
+</body>
 </html>
