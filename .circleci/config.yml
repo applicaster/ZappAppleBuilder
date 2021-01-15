@@ -27,6 +27,24 @@ references:
       LC_ALL: "en_US.UTF-8"
       LANG: "en_US.UTF-8"
 
+  prepare_build_parameters: &prepare_build_parameters
+    run: 
+      name: Prepare build parameters
+      command: |
+        values=`curl -s -X GET $build_params_url`
+        for keyvals in $(echo $values | jq -r "to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]" ); do
+            echo "export $keyvals" >> $BASH_ENV
+        done
+
+        source $BASH_ENV
+
+  print_build_parameters: &print_build_parameters
+    run: 
+      name: Print build parameters
+      command: |
+        echo $app_name
+        echo $bundle_identifier
+  
   #Hack general caching until circle does not support global env variables
   prepare_caching_file: &prepare_caching_file
     run: echo "<< pipeline.parameters.general-caching-key >>" > ~/_caching_file
@@ -268,6 +286,7 @@ references:
       command: bundle exec fastlane ios validate_app_signing type:store
 
   release_zapp_sdk_workflow: &release_zapp_sdk_workflow
+    - *prepare_build_parameters
     - *prepare_caching_file
     - checkout
     - *set_ruby_version
@@ -284,7 +303,6 @@ jobs:
     steps:
       - *stop_job_triggered_by_zapp
       - checkout
-
       - *prepare_caching_file
       - *prepare_zapptool_version_file
       - *prepare_pods_cache_file
@@ -362,6 +380,8 @@ jobs:
     <<: *mac_config
     steps:
       - *triggered_by_zapp_only
+      - *prepare_build_parameters
+      - *print_build_parameters
       - run:
           name: CocoaPods - install default dependencies
           command: |
@@ -474,6 +494,7 @@ jobs:
     environment:
       ZAPP_SDK_PLATFORM: ios_for_quickbrick
     steps:
+      - *prepare_build_parameters
       - *prepare_caching_file
       - checkout
       - *set_ruby_version
@@ -486,6 +507,7 @@ jobs:
     environment:
       ZAPP_SDK_PLATFORM: tvos_for_quickbrick
     steps:
+      - *prepare_build_parameters
       - *prepare_caching_file
       - checkout
       - *set_ruby_version
