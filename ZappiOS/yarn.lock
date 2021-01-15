@@ -202,15 +202,15 @@
   resolved "https://registry.yarnpkg.com/@applicaster/zapp-analytics-plugins/-/zapp-analytics-plugins-13.0.0.tgz#efe3fdb4a7646c6b115b70bed88f5351ee6d9457"
   integrity sha512-rpSheuIBUNdF9Jf9vFIXD5aQLfYfh5nhwKRNP5odw6Oxvj+41ooi/aVEZWJXLhyKohER4MOOdf3UfuQCoXhebw==
 
-"@applicaster/zapp-apple@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-apple/-/zapp-apple-1.0.1.tgz#e69ec14fdf55d60e1307b759d518a2377633a909"
-  integrity sha512-s7GPUO7WZ7v1/xyKCkWLWU1fu2H320+HETB6KnPyH1+IPTmc8TI2W1Rk59iGab1DK4iC7StiyCppryCSP7Z7Gg==
+"@applicaster/zapp-apple@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-apple/-/zapp-apple-1.2.0.tgz#5bad98881eeb5945881bc1a41feef293815adbb0"
+  integrity sha512-4ER1ZaBjoTEMMP5gT8f7wSIEGMR/5U5jiLpwwKKTJGWPxKb/yQUfFhSZ4+FRFPwTM/SHOWv9GdZw4WX0uQ7l1Q==
 
-"@applicaster/zapp-core@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-core/-/zapp-core-1.0.1.tgz#840bf2811d9bada732008d2048f1f9203d1f0a92"
-  integrity sha512-vJEaK1LFY3I4hjlUWqcJ2fq+0Z3ZM1LteDnJaYQpfFtZZDbL6a26YcoxtLvy23JWnjhJa/YYktgOj7odA/cRzQ==
+"@applicaster/zapp-core@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-core/-/zapp-core-1.1.0.tgz#91b87d0c5b385275940bfe628a96baf2970f5e93"
+  integrity sha512-/kzUwiECsQo9Vezp8wylXLK29LctibS0PW6pRtfXL0ZPtDVTxxEUcGvqJQX55mLo5D40os+k3LfZVS7V3paosw==
 
 "@applicaster/zapp-pipes-dev-kit@^1.4.1":
   version "1.4.1"

@@ -102,19 +102,22 @@ class AppCenterHelper < BaseHelper
     current(__callee__.to_s)
 
     if @@envHelper.isTvOS
-      time = Time.new
       s3DestinationPathParams = @@envHelper.s3_upload_path(options[:bundle_identifier])
       s3DistanationPath = "https://assets-secure.applicaster.com/#{s3DestinationPathParams}/#{@projectHelper.scheme}-#{options[:build_type]}.ipa"
+      time = Time.new
       {
         uploaded_at: time.inspect,
         download_url: s3DistanationPath
       }
     else
+      s3DestinationPathParams = @@envHelper.s3_generic_upload_path(options[:bundle_identifier])
+      s3InstallURL = "https://assets-secure.applicaster.com/#{s3DestinationPathParams}/index.html"
+
       release_info = options[:build_information]
       {
-        uploaded_at: release_info['uploaded_at'],
-        download_url: release_info['download_url'],
-        install_url: release_info['install_url'],
+        uploaded_at: time.inspect,
+        download_url: s3InstallURL,
+        install_url: s3InstallURL,
         id: release_info['id'],
         app_name: options[:app_name],
         app_secret: options[:app_secret]

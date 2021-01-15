@@ -57,7 +57,7 @@ references:
       name: Workflow Validation
       command: |
         echo $triggered_by
-        if [ "$triggered_by" != "zapp" ]; then 
+        if [ "$triggered_by" != "zapp" ]; then
         echo "Skipping a workflow, can not work trigged by zapp only"
              circleci-agent step halt
         fi
@@ -161,7 +161,7 @@ references:
           then
             ZAPPTOOL_FLAGS="${ZAPPTOOL_FLAGS} -sbm"
           fi;
-          
+
           echo "../ZappTool/ZappTool${ZAPPTOOL_FLAGS}"
 
           ../ZappTool/ZappTool "${ZAPPTOOL_FLAGS}"
@@ -387,7 +387,7 @@ jobs:
           command: |
             if [ "$device_target" = apple_tv ]; then
               echo 'export TARGET_FOLDER="ZappTvOS"' >> $BASH_ENV
-            else 
+            else
               echo 'export TARGET_FOLDER="ZappiOS"' >> $BASH_ENV
             fi
 
@@ -416,7 +416,7 @@ jobs:
 
       - *validate_app_signing_release
       - *validate_app_signing_debug
-      
+
       - *prepare_application_environment
       - *restore_pods
       - *vesion_pods
@@ -430,6 +430,7 @@ jobs:
       - deploy:
           name: Release Build
           command: |
+            export build_type=release
             bundle exec fastlane ios build type:store
       - deploy:
           name: Prepare Debug Build environment
@@ -438,6 +439,7 @@ jobs:
       - deploy:
           name: Debug Build
           command: |
+            export build_type=debug
             bundle exec fastlane ios build type:debug
       - deploy:
           name: Building development project
@@ -486,7 +488,7 @@ jobs:
       - store_artifacts:
           name: Artifacts - yarn.lock - collecting from tvOS build
           path: ./ZappTvOS/yarn.lock
-          
+
   create_ios_mobile_sdk:
     <<: *mac_config
     environment:
