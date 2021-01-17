@@ -108,7 +108,7 @@ class ProjectHelper < BaseHelper
 
   def organizeResourcesToAssetsCatalog
     current(__callee__.to_s)
-    @@assetsCatalogHelper.moveResourceImagesToAssetsCatalog(
+    @@assetsCatalogHelper.organizeResourcesToAssetsCatalog(
       assets_catalog: 'Assets.xcassets',
       path: "#{path}/#{folder_name}"
     )

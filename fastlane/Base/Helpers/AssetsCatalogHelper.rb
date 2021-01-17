@@ -4,8 +4,8 @@ require 'tmpdir'
 require "json"
 
 class AssetsCatalogHelper
-	def moveResourceImagesToAssetsCatalog(options)
-		addResourcesImagesToAssetCatalog(options)
+	def organizeResourcesToAssetsCatalog(options)
+		addResourcesImagesToAssetsCatalog(options)
 		cleanupAssetsCatalog(options)
 	end
 	
@@ -14,41 +14,45 @@ class AssetsCatalogHelper
 
 		assetsCatalog = options[:assets_catalog]
 		path = options[:path]
+		assetsCatalogPath = "#{path}/#{assetsCatalog}"
 
 		# Create asset catalog file if doesnt exists
-		if File.directory?("#{assetsCatalog}") == false
-			Dir.mkdir(assetsCatalog)
+		if File.directory?("#{assetsCatalogPath}") == false
+			Dir.mkdir("#{assetsCatalogPath}")
 		end
 
-		# Fetch all the png files from the project folder
-		Dir.glob("#{path}/**/Resources/*.png").each do |asset|
+		pp assetsCatalogPath
 
-			#Jump into asset catalog folder
-			Dir.chdir(assetsCatalog)
-			
+		# Fetch all the png files from the project folder
+		Dir.glob("#{path}/Resources/*.png").each do |asset|
+
 			assetName = File.basename(asset,'.*')
-			filename = assetName
+			fileName = assetName
 			if assetName.include? "@" or assetName.include? "~"
-				filename = assetName.split(/[\s@~]/).first
-				imageSetName = "#{ filename }.imageset"
+				fileName = assetName.split(/[\s@~]/).first
+				imageSetName = "#{fileName}.imageset"
 			else	
-				imageSetName = "#{ assetName }.imageset"
+				imageSetName = "#{assetName}.imageset"
 			end
+
+			imageSetPath = "#{assetsCatalogPath}/#{imageSetName}"
+			pp "imageSetName = #{imageSetName}"
+			pp "imageSetPath = #{imageSetPath}"
 
 			#If directory doesnt exists, create new ImageSet directory which holds images
-			if File.directory?("#{imageSetName}") == false
-				Dir.mkdir(imageSetName)
+			if File.directory?("#{imageSetPath}") == false
+				Dir.mkdir(imageSetPath)
 			end
 
-			#Jump into ImageSet directory
-			Dir.chdir(imageSetName)
-			FileUtils.mv("#{asset}", "#{assetName}.png")
+			pp "asset = #{asset}"
+			pp "image target path = #{imageSetPath}/#{assetName}.png"
+			FileUtils.mv("#{asset}", "#{imageSetPath}/#{assetName}.png")
 			
 			#Create Json File which needs to be present for every ImageSet
-			createJsonfile(filename)
-			
-			#Jump back to parent directory
-			Dir.chdir(projectFolderName) 
+			createJsonfile(
+				file_name: fileName,
+				path: "#{imageSetPath}/Contents.json"
+			)
 		end
 	end
 	
@@ -56,9 +60,10 @@ class AssetsCatalogHelper
 		puts 'Cleaning unused assets placeholders ...'
 
 		assetsCatalog = options[:assets_catalog]
-		base_path = options[:path]
+		path = options[:path]
+		assetsCatalogPath = "#{path}/#{assetsCatalog}"
 
-		files = Dir["#{path}/#{assetsCatalog}/**/Contents.json"]
+		files = Dir["#{assetsCatalogPath}/**/Contents.json"]
 
 		files.each do |file_name|
 			file = File.read(file_name)
@@ -78,7 +83,9 @@ class AssetsCatalogHelper
 		end
 	end
 
-	def createJsonfile(fileName)
+	def createJsonfile(options)
+		fileName = options[:file_name]
+		path = options[:path]
 		content = '{
 			"images" : [
 				{
@@ -127,9 +134,8 @@ class AssetsCatalogHelper
 				"version" : 1
 			}
 		}'
-		target  = "Contents.json"
 
-		File.open(target, "w+") do |f|
+		File.open(path, "w+") do |f|
 			f.write(content)
 		end
 	end
