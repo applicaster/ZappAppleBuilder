@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 import 'Base/Helpers/BaseHelper.rb'
+import 'Base/Helpers/AssetsCatalogHelper.rb'
 
 class ProjectHelper < BaseHelper
+  @@assetsCatalogHelper = AssetsCatalogHelper.new
+
   def change_system_capability(options)
     current(__callee__.to_s)
 
@@ -101,5 +104,13 @@ class ProjectHelper < BaseHelper
 
   def plist_inner_path
     "#{name}/Info.plist"
+  end
+
+  def organizeResourcesToAssetsCatalog
+    current(__callee__.to_s)
+    @@assetsCatalogHelper.moveResourceImagesToAssetsCatalog(
+      assets_catalog: 'Assets.xcassets',
+      path: "#{path}/#{folder_name}"
+    )
   end
 end
