@@ -21,8 +21,6 @@ class AssetsCatalogHelper
 			Dir.mkdir("#{assetsCatalogPath}")
 		end
 
-		pp assetsCatalogPath
-
 		# Fetch all the png files from the project folder
 		Dir.glob("#{path}/Resources/*.png").each do |asset|
 
@@ -36,16 +34,12 @@ class AssetsCatalogHelper
 			end
 
 			imageSetPath = "#{assetsCatalogPath}/#{imageSetName}"
-			pp "imageSetName = #{imageSetName}"
-			pp "imageSetPath = #{imageSetPath}"
 
 			#If directory doesnt exists, create new ImageSet directory which holds images
 			if File.directory?("#{imageSetPath}") == false
 				Dir.mkdir(imageSetPath)
 			end
 
-			pp "asset = #{asset}"
-			pp "image target path = #{imageSetPath}/#{assetName}.png"
 			FileUtils.mv("#{asset}", "#{imageSetPath}/#{assetName}.png")
 			
 			#Create Json File which needs to be present for every ImageSet
