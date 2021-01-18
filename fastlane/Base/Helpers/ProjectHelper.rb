@@ -110,7 +110,8 @@ class ProjectHelper < BaseHelper
     current(__callee__.to_s)
     @@assetsCatalogHelper.organizeResourcesToAssetsCatalog(
       assets_catalog: 'Assets.xcassets',
-      path: "#{path}/#{folder_name}"
+      path: "#{path}/#{folder_name}",
+      platform: @@envHelper.platform_name
     )
   end
 end

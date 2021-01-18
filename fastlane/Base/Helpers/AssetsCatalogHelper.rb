@@ -80,7 +80,21 @@ class AssetsCatalogHelper
 	def createJsonfile(options)
 		fileName = options[:file_name]
 		path = options[:path]
-		content = '{
+		platform = options[:platform]
+		if platform == "tvos"
+			content = contentForTvOS(options)
+		else
+			content = contentForIOS(options)
+		end
+		File.open(path, "w+") do |f|
+			f.write(content)
+		end
+	end
+
+	def contentForIOS(options)
+		fileName = options[:file_name]
+
+		'{
 			"images" : [
 				{
 					"filename" : "'"#{ fileName}"'.png",
@@ -128,9 +142,33 @@ class AssetsCatalogHelper
 				"version" : 1
 			}
 		}'
+	end
 
-		File.open(path, "w+") do |f|
-			f.write(content)
-		end
+	def contentForTvOS(options)
+		fileName = options[:file_name]
+
+		'{
+			"images" : [
+				{
+					"filename" : "'"#{ fileName}"'.png",
+					"idiom" : "universal",
+					"scale" : "1x"
+				},
+				{
+					"filename" : "'"#{ fileName}"'@2x.png",
+					"idiom" : "universal",
+					"scale" : "2x"
+				},
+				{
+					"filename" : "'"#{ fileName}"'@3x.png",
+					"idiom" : "universal",
+					"scale" : "3x"
+				}
+			],
+				"info" : {
+				"author" : "xcode",
+				"version" : 1
+			}
+		}'
 	end
 end
