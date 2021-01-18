@@ -45,7 +45,8 @@ class AssetsCatalogHelper
 			#Create Json File which needs to be present for every ImageSet
 			createJsonfile(
 				file_name: fileName,
-				path: "#{imageSetPath}/Contents.json"
+				path: "#{imageSetPath}/Contents.json",
+				platform: options[:platform]
 			)
 		end
 	end
