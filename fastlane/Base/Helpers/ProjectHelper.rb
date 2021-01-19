@@ -4,7 +4,11 @@ import 'Base/Helpers/BaseHelper.rb'
 import 'Base/Helpers/AssetsCatalogHelper.rb'
 
 class ProjectHelper < BaseHelper
-  @@assetsCatalogHelper = AssetsCatalogHelper.new
+  attr_accessor :assetsCatalogHelper
+  def initialize(options = {})
+    super
+    @assetsCatalogHelper = AssetsCatalogHelper.new(fastlane: @fastlane)
+  end
 
   def change_system_capability(options)
     current(__callee__.to_s)
@@ -108,7 +112,7 @@ class ProjectHelper < BaseHelper
 
   def organizeResourcesToAssetsCatalog
     current(__callee__.to_s)
-    @@assetsCatalogHelper.organizeResourcesToAssetsCatalog(
+    @assetsCatalogHelper.organizeResourcesToAssetsCatalog(
       assets_catalog: 'Assets.xcassets',
       path: "#{path}/#{folder_name}",
       platform: @@envHelper.platform_name
