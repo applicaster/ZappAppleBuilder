@@ -272,12 +272,10 @@ class BaseHelper
       )
 
       @fastlane.update_app_group_identifiers(
-      entitlements_file: file_path.to_s,
-      app_group_identifiers: groups
-    )
+        entitlements_file: file_path.to_s,
+        app_group_identifiers: groups
+      )
     end
-
-    
   end
 
   def circle_artifacts_folder_path

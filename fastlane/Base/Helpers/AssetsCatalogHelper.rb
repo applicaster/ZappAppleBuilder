@@ -94,8 +94,6 @@ class AssetsCatalogHelper < BaseHelper
 				f.write(JSON.pretty_generate(parsed))
 			end
 		end
-
-		exit 0
 	end
 
 	def fileExists(path)
