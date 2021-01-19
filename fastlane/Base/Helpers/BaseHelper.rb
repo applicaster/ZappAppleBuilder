@@ -268,8 +268,7 @@ class BaseHelper
       @fastlane.set_info_plist_value(
         path: file_path.to_s,
         key: "com.apple.security.application-groups",
-        value: [],
-        app_group_identifiers: groups
+        value: []
       )
     end
 
