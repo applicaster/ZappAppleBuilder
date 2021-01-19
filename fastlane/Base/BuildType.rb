@@ -30,6 +30,7 @@ class BuildType < BaseHelper
   def prepare_environment
     remove_app_extensions
     fetch_app_center_identifiers
+    @projectHelper.organizeResourcesToAssetsCatalog
   end
 
   def download_signing_files
