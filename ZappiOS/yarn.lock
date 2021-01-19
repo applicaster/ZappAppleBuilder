@@ -147,10 +147,10 @@
     "@miblanchard/react-native-slider" "^1.5.0"
     react-native-linear-gradient "2.5.6"
 
-"@applicaster/quick-brick-native-apple@4.1.5":
-  version "4.1.5"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-native-apple/-/quick-brick-native-apple-4.1.5.tgz#59ac502bfcc1f4e22d9ea4445261088add4de299"
-  integrity sha512-27C7Je3oAp3nJGcIY7GjHNDXL4v8BfjWT8SVhfyIqRL7bdzx+YIe0WHgrNyofsH8/hbxC+rigB5VdRup1Qv0SA==
+"@applicaster/quick-brick-native-apple@4.1.6-rc.5":
+  version "4.1.6-rc.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-native-apple/-/quick-brick-native-apple-4.1.6-rc.5.tgz#f5efabbd066eafe8f93daa1d9a8920dda2b02cd1"
+  integrity sha512-PXC7Ml5oershR+atM1loCs0nT4MY9cedLQoCx8eONKWge3JxoJ4Kg9NNpTDT73PhuQ0fdnQZ+HReM2VGj34KVw==
 
 "@applicaster/quick-brick-native-share-action@1.0.0":
   version "1.0.0"
@@ -207,10 +207,10 @@
   resolved "https://registry.yarnpkg.com/@applicaster/zapp-apple/-/zapp-apple-1.2.0.tgz#5bad98881eeb5945881bc1a41feef293815adbb0"
   integrity sha512-4ER1ZaBjoTEMMP5gT8f7wSIEGMR/5U5jiLpwwKKTJGWPxKb/yQUfFhSZ4+FRFPwTM/SHOWv9GdZw4WX0uQ7l1Q==
 
-"@applicaster/zapp-core@1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-core/-/zapp-core-1.1.0.tgz#91b87d0c5b385275940bfe628a96baf2970f5e93"
-  integrity sha512-/kzUwiECsQo9Vezp8wylXLK29LctibS0PW6pRtfXL0ZPtDVTxxEUcGvqJQX55mLo5D40os+k3LfZVS7V3paosw==
+"@applicaster/zapp-core@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-core/-/zapp-core-1.1.1.tgz#ecae787bbb794f7f75105e54da4c2c589897d08d"
+  integrity sha512-Vw+pivZ6zhO+Vm7sDnaJEr9l/oqZYFcmC1wvhD2nIZ2UpT7OTahdp40LYjyIo34Lqjs/othTiAvJgzHHktte5g==
 
 "@applicaster/zapp-pipes-dev-kit@^1.4.1":
   version "1.4.1"
