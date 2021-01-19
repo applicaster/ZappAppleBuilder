@@ -91,6 +91,9 @@ sips -Z 120 "$SRC_FILE" --out "$DST_PATH/Icon-App-60x60@2x.png"
 info 'Generate Icon-App-60x60@3x ...'
 sips -Z 180 "$SRC_FILE" --out "$DST_PATH/Icon-App-60x60@3x.png"
 
+info 'Generate Icon-App-76x76@1x ...'
+sips -Z 76 "$SRC_FILE" --out "$DST_PATH/Icon-App-76x76@1x.png"
+
 info 'Generate Icon-App-76x76@2x ...'
 sips -Z 152 "$SRC_FILE" --out "$DST_PATH/Icon-App-76x76@2x.png"
 
