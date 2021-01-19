@@ -264,10 +264,18 @@ class BaseHelper
 
     file_path = "#{path}/#{target}/Entitlements/#{target}-#{build_type}.entitlements"
 
-    @fastlane.update_app_group_identifiers(
-      entitlements_file: file_path.to_s,
-      app_group_identifiers: groups
-    )
+    if groups.count > 0 
+      @fastlane.set_info_plist_value(
+        path: file_path.to_s,
+        key: "com.apple.security.application-groups",
+        value: []
+      )
+
+      @fastlane.update_app_group_identifiers(
+        entitlements_file: file_path.to_s,
+        app_group_identifiers: groups
+      )
+    end
   end
 
   def circle_artifacts_folder_path
