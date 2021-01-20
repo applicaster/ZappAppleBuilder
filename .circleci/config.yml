@@ -32,9 +32,7 @@ references:
       name: Prepare build parameters
       command: |
         values=`curl -s -X GET $build_params_url`
-        for keyvals in $(echo $values | jq -r "to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]" ); do
-            echo "export $keyvals" >> $BASH_ENV
-        done
+        echo $values | jq -r "to_entries|map(\"export \(.key)='\(.value|tostring)'\")|.[]" | while read i; do echo $i >> $BASH_ENV; done
 
         source $BASH_ENV
 
