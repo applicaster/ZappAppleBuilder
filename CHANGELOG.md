@@ -1,27 +1,50 @@
 # Changelog
 
-### Minimum OS supported: iOS: 11, tvOS: 11
+### Minimum OS supported: iOS: 12, tvOS: 12
 
 ## SDK supports only UI Framework: QuickBrick
 
-### QuickBrick version: [4.1.4](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#v414-2020-12-01)
+### QuickBrick version: [4.1.5](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#v414-2020-12-01)
 
 #### React Native version: 0.62.2
 
 ### Instruments
 
-- [Xcode](https://developer.apple.com): 12.0.0
-- [Fastlane](https://fastlane.tools): 2.163.0
-- [CocoaPods](https://github.com/CocoaPods/CocoaPods): 1.9.3
-- [ZappTool](https://github.com/applicaster/ZappTool): 4.1.4
+- [Xcode](https://developer.apple.com): 12.3.0
+- [Fastlane](https://fastlane.tools): 2.171.0
+- [CocoaPods](https://github.com/CocoaPods/CocoaPods): 1.9.10
+- [ZappTool](https://github.com/applicaster/ZappTool): 4.1.5
 
 ### Dependencies
 
-- [ZappCore](https://github.com/applicaster/ZappAppleBuilder): 0.13.9
-- [ZappApple](https://github.com/applicaster/ZappAppleBuilder): 0.11.3
-- [(iOS) ZappPlugins](https://github.com/applicaster/ZappPlugins.2.0-iOS): 11.8.0
-- [(iOS) ZappPushPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): 12.0.0
-- [(iOS) ZappAnalyticsPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): 12.0.0
+- [ZappCore](https://github.com/applicaster/ZappAppleBuilder): 1.1.1
+- [ZappApple](https://github.com/applicaster/ZappAppleBuilder): 1.3.0
+- [(iOS) ZappPlugins](https://github.com/applicaster/ZappPlugins.2.0-iOS): 12.0.0
+- [(iOS) ZappPushPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): 13.0.0
+- [(iOS) ZappAnalyticsPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): 13.0.0
+
+## [3.0.0](https://github.com/applicaster/ZappAppleBuilder/tree/3.0.3) (2021-01-20)
+
+**Features**
+
+- Organize resources images to assets catalog [\#199](https://github.com/applicaster/ZappAppleBuilder/pull/199) ([alexzchut](https://github.com/alexzchut))
+- Add support keychain to local storage [\#195](https://github.com/applicaster/ZappAppleBuilder/pull/195) ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Adding support for analytics plugins in tvOS [\#181](https://github.com/applicaster/ZappAppleBuilder/pull/181) ([alexzchut](https://github.com/alexzchut))
+- Adding support for offline content fetching for item identifier [\#179](https://github.com/applicaster/ZappAppleBuilder/pull/179) ([alexzchut](https://github.com/alexzchut))
+
+**Implemented enhancements:**
+
+- Use S3 download page instead of Appcenter [\#193](https://github.com/applicaster/ZappAppleBuilder/pull/193) ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Add artifacts to CircleCI from build content [\#189](https://github.com/applicaster/ZappAppleBuilder/pull/189) ([alexzchut](https://github.com/alexzchut))
+- Updates for README.md + fastlane minor version [\#194](https://github.com/applicaster/ZappAppleBuilder/pull/194) ([alexzchut](https://github.com/alexzchut))
+- Update build steps + Cocoapods 1.10.0 [\#185](https://github.com/applicaster/ZappAppleBuilder/pull/185) ([alexzchut](https://github.com/alexzchut))
+- Prepare to minimum supported iOS 12 [\#182](https://github.com/applicaster/ZappAppleBuilder/pull/182) ([alexzchut](https://github.com/alexzchut))
+- Add support check ip-adress with port [\#180](https://github.com/applicaster/ZappAppleBuilder/pull/180) ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Remove unneeded setActive audio, it prevent to call PIP and play now [\#178](https://github.com/applicaster/ZappAppleBuilder/pull/178) ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Add audio category logs [\#177](https://github.com/applicaster/ZappAppleBuilder/pull/177) ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Add system fonts for tvos [\#175](https://github.com/applicaster/ZappAppleBuilder/pull/175) ([f-roland](https://github.com/f-roland))
+
+- Remove empty entitlements 
 
 ## [2.0.1](https://github.com/applicaster/ZappAppleBuilder/tree/2.0.1) (2020-12-01)
 
