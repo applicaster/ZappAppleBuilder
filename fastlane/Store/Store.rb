@@ -78,8 +78,8 @@ class Store < BuildType
     puts('Starting app delivery to AppStoreConnect using altool')
     deliver_output = capture_stream($stdout) do
       @fastlane.altool(
-        altool_username: itunesconnect_username.to_s,
-        altool_password: itunesconnect_password.to_s,
+        altool_api_key: appstore_api_key.to_s,
+        altool_api_issuer: appstore_api_issuer.to_s,
         altool_app_type: @@envHelper.isTvOS ? 'appletvos' : 'ios',
         altool_ipa_path: "#{circle_artifacts_folder_path}/Store/#{@projectHelper.scheme}-Store.ipa",
         altool_output_format: 'xml'
@@ -108,6 +108,12 @@ class Store < BuildType
     # download p12 and provisioning profile
     sh("curl -sL \"#{@@envHelper.provisioning_profile_url}\" --output \"#{@projectHelper.distribution_provisioning_profile_path}\"")
     sh("curl -sL \"#{@@envHelper.distribution_key_url}\" --output \"#{@projectHelper.distribution_certificate_path}\"")
+
+    # create new dir for private key
+    sh("mkdir -p \"#{@@envHelper.appstore_api_key_folder}\"")
+    # download appstore api key
+    sh("curl -sL \"#{@@envHelper.appstore_api_key_url}\" --output \"#{@@envHelper.appstore_api_key_folder}\"")
+
   end
 
   def perform_signing_validation
@@ -119,8 +125,8 @@ class Store < BuildType
       certificate_password: @@envHelper.distribution_key_password,
       provisioning_profile_path: @projectHelper.distribution_provisioning_profile_path,
       version_number: @@envHelper.version_name,
-      appstore_username: itunesconnect_username,
-      appstore_password: itunesconnect_password
+      appstore_api_key: appstore_api_key,
+      appstore_api_issuer: appstore_api_issuer
     )
   end
 
@@ -150,8 +156,6 @@ class Store < BuildType
       keychain_password: @@envHelper.keychain_password
     )
 
-    sh("bundle exec fastlane fastlane-credentials add --username #{itunesconnect_username} --password '#{itunesconnect_password}'")
-    ENV['FASTLANE_PASSWORD'] = itunesconnect_password
   end
 
   def prepare_build
@@ -235,12 +239,12 @@ class Store < BuildType
     )
   end
 
-  def itunesconnect_username
-    (ENV['itunes_connect_user']).to_s
+  def appstore_api_key
+    (ENV['appstore_api_key']).to_s
   end
 
-  def itunesconnect_password
-    (ENV['itunes_connect_password']).to_s
+  def appstore_api_issuer
+    (ENV['appstore_api_issuer']).to_s
   end
 
   def isEnterpriseBuild

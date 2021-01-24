@@ -140,12 +140,12 @@ class BuildType < BaseHelper
 
   def validate_appstoreconnect_credentials(options)
     current(__callee__.to_s)
-    username = options[:appstore_username]
-    password = options[:appstore_password]
+    appstore_api_key = options[:appstore_api_key]
+    appstore_api_issuer = options[:appstore_api_issuer]
     error_message = 'AppStoreConnect credentials are incorrect'
     begin
       filename = './providers.list'
-      sh("xcrun altool --list-providers -u '#{username}' -p '#{password}' --output-format json > #{filename}")
+      sh("xcrun altool --list-providers --apiKey '#{appstore_api_key}' --apiIssuer '#{appstore_api_issuer}' --output-format json > #{filename}")
       result = File.read(filename.to_s).strip if File.exist? filename.to_s
       File.delete(filename.to_s)
       raise error_message if result['-20101']
