@@ -86,15 +86,17 @@ class Store < BuildType
       in_house: false # optional but may be required if using match/sigh
     )
 
-    puts('Starting app delivery to AppStoreConnect using altool')
+    puts('Starting app delivery to AppStoreConnect')
     deliver_output = capture_stream($stdout) do
       @fastlane.deliver(
         ipa: "#{circle_artifacts_folder_path}/Store/#{@projectHelper.scheme}-Store.ipa",
         platform: @@envHelper.isTvOS ? 'appletvos' : 'ios',
         force: true,
         skip_screenshots: true,
-        skip_metadata: true
+        skip_metadata: true,
+        precheck_include_in_app_purchases: false
       )
+
     end
 
     # print deliver output
