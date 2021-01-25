@@ -78,8 +78,8 @@ class Store < BuildType
     puts('Starting app delivery to AppStoreConnect using altool')
     deliver_output = capture_stream($stdout) do
       @fastlane.altool(
-        altool_api_key: appstore_api_key_id.to_s,
-        altool_api_issuer: appstore_api_issuer_id.to_s,
+        altool_api_key_id: appstore_api_key_id.to_s,
+        altool_api_issuer_id: appstore_api_issuer_id.to_s,
         altool_app_type: @@envHelper.isTvOS ? 'appletvos' : 'ios',
         altool_ipa_path: "#{circle_artifacts_folder_path}/Store/#{@projectHelper.scheme}-Store.ipa",
         altool_output_format: 'xml'
