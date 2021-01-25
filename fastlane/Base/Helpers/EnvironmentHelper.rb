@@ -109,11 +109,4 @@ class EnvironmentHelper
     "zapp/accounts/#{accounts_account_id}/apps/#{bundle_identifier}/#{store}/#{version_name}/builds/#{platform_name}/#{build_version}"
   end
 
-  def appstore_api_key_url
-    ENV['appstore_api_key_url']
-  end
-  
-  def appstore_api_key_folder
-    "~/.private_keys"
-  end
 end

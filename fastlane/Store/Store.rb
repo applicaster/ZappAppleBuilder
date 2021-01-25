@@ -78,7 +78,7 @@ class Store < BuildType
     puts('Starting app delivery to AppStoreConnect using altool')
     deliver_output = capture_stream($stdout) do
       @fastlane.altool(
-        altool_api_key: appstore_api_key.to_s,
+        altool_api_key: appstore_api_key_id.to_s,
         altool_api_issuer: appstore_api_issuer.to_s,
         altool_app_type: @@envHelper.isTvOS ? 'appletvos' : 'ios',
         altool_ipa_path: "#{circle_artifacts_folder_path}/Store/#{@projectHelper.scheme}-Store.ipa",
@@ -103,17 +103,18 @@ class Store < BuildType
   def download_signing_files
     current(__callee__.to_s)
 
-    # create new dir for files
-    sh("mkdir -p \"#{@projectHelper.credentials_folder_path}\"")
-    # download p12 and provisioning profile
-    sh("curl -sL \"#{@@envHelper.provisioning_profile_url}\" --output \"#{@projectHelper.distribution_provisioning_profile_path}\"")
-    sh("curl -sL \"#{@@envHelper.distribution_key_url}\" --output \"#{@projectHelper.distribution_certificate_path}\"")
+    Dir.chdir("#{@@envHelper.root_path}"){
+        # create new dir for files
+        sh("mkdir -p \"#{@projectHelper.credentials_folder_path}\"")
+        # download p12 and provisioning profile
+        sh("curl -sL \"#{@@envHelper.provisioning_profile_url}\" --output \"#{@projectHelper.distribution_provisioning_profile_path}\"")
+        sh("curl -sL \"#{@@envHelper.distribution_key_url}\" --output \"#{@projectHelper.distribution_certificate_path}\"")
 
-    # create new dir for private key
-    sh("mkdir -p \"#{@@envHelper.appstore_api_key_folder}\"")
-    # download appstore api key
-    sh("curl -sL \"#{@@envHelper.appstore_api_key_url}\" --output \"#{@@envHelper.appstore_api_key_folder}\"")
-
+        # create new dir for private key
+        sh("mkdir -p \"#{appstore_api_key_folder}\"")
+        # download appstore api key
+        sh("curl -sL \"#{appstore_api_key_url}\" --output \"#{appstore_api_key_folder}/AuthKey_#{appstore_api_key_id}.p8\"")
+    }
   end
 
   def perform_signing_validation
@@ -125,7 +126,7 @@ class Store < BuildType
       certificate_password: @@envHelper.distribution_key_password,
       provisioning_profile_path: @projectHelper.distribution_provisioning_profile_path,
       version_number: @@envHelper.version_name,
-      appstore_api_key: appstore_api_key,
+      appstore_api_key_id: appstore_api_key_id,
       appstore_api_issuer: appstore_api_issuer
     )
   end
@@ -239,12 +240,20 @@ class Store < BuildType
     )
   end
 
-  def appstore_api_key
-    (ENV['appstore_api_key']).to_s
+  def appstore_api_key_url
+    (ENV['appstore_api_key_url']).to_s
+  end
+
+  def appstore_api_key_id
+    (ENV['appstore_api_key_id']).to_s
   end
 
   def appstore_api_issuer
     (ENV['appstore_api_issuer']).to_s
+  end
+    
+  def appstore_api_key_folder
+    "./private_keys"
   end
 
   def isEnterpriseBuild

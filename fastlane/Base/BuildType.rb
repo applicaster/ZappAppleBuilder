@@ -122,7 +122,7 @@ class BuildType < BaseHelper
     end
 
     validate_version_number(options) if options[:version_number]
-    validate_appstoreconnect_credentials(options) if options[:appstore_username]
+    validate_appstoreconnect_credentials(options) if options[:appstore_api_key_id]
   end
 
   def validate_version_number(options)
@@ -140,17 +140,19 @@ class BuildType < BaseHelper
 
   def validate_appstoreconnect_credentials(options)
     current(__callee__.to_s)
-    appstore_api_key = options[:appstore_api_key]
+    appstore_api_key_id = options[:appstore_api_key_id]
     appstore_api_issuer = options[:appstore_api_issuer]
     error_message = 'AppStoreConnect credentials are incorrect'
     begin
-      filename = './providers.list'
-      sh("xcrun altool --list-providers --apiKey '#{appstore_api_key}' --apiIssuer '#{appstore_api_issuer}' --output-format json > #{filename}")
-      result = File.read(filename.to_s).strip if File.exist? filename.to_s
-      File.delete(filename.to_s)
-      raise error_message if result['-20101']
-
-      puts("VALID: AppStoreConnect credentials are Ok\n".colorize(:green))
+      Dir.chdir("#{@@envHelper.root_path}"){
+        filename = "./providers_list.json"
+        cmd = "xcrun altool --list-providers --apiKey \"#{appstore_api_key_id}\" --apiIssuer \"#{appstore_api_issuer}\" --output-format json > #{filename}"
+        system("#{cmd}")
+        result = File.read(filename.to_s).strip if File.exist? filename.to_s
+        File.delete(filename.to_s)
+        raise error_message unless result['WWDRTeamID']
+        puts("VALID: AppStoreConnect credentials are Ok\n".colorize(:green))
+      }
     rescue StandardError => e
       raise error_message
     end
