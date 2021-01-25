@@ -5,6 +5,8 @@ require 'colorize'
 import 'Base/Helpers/EnvironmentHelper.rb'
 
 class BuildTypeFactory
+  @@envHelper = EnvironmentHelper.new
+
   attr_accessor :fastlane
 
   def initialize(options = {})
@@ -14,21 +16,23 @@ class BuildTypeFactory
   def perform_signing_validation(options)
     type_to_validate = options[:type]
 
-    # perform validation for all needed env
-    build_types_for_use.each do |type_for_use|
-      if type_for_use.build_type == type_to_validate
-        # download signing files
-        type_for_use.download_signing_files
+    Dir.chdir("#{@@envHelper.root_path}"){
+      # perform validation for all needed env
+      build_types_for_use.each do |type_for_use|
+        if type_for_use.build_type == type_to_validate
+          # download signing files
+          type_for_use.download_signing_files
 
-        # replace store to enterprise-client if needed
-        type_for_use = replace_store_to_enterprise_client_if_needed(type_for_use)
+          # replace store to enterprise-client if needed
+          type_for_use = replace_store_to_enterprise_client_if_needed(type_for_use)
 
-        puts("Perform signing validation for #{type_for_use.class.name}".colorize(:yellow))
-        type_for_use.perform_signing_validation
-      else 
-        puts("Skipping signing validation for #{type_for_use} build".colorize(:red))
+          puts("Perform signing validation for #{type_for_use.class.name}".colorize(:yellow))
+          type_for_use.perform_signing_validation
+        else 
+          puts("Skipping signing validation for #{type_for_use} build".colorize(:red))
+        end
       end
-    end
+    }
   end
 
   def prepare_environment(options)
@@ -66,11 +70,10 @@ class BuildTypeFactory
   end
 
   def build_type_string
-    envHelper = EnvironmentHelper.new
-    if !envHelper.distribution_key_url.to_s.strip.empty? && envHelper.with_release == 'true'
+    if !@@envHelper.distribution_key_url.to_s.strip.empty? && @@envHelper.with_release == 'true'
       'store'
     else
-      if !envHelper.debug_distribution_key_url.to_s.strip.empty?
+      if !@@envHelper.debug_distribution_key_url.to_s.strip.empty?
         'enterprise' # enterprise client release/debug depending on provided provisioning
       else
         'debug'

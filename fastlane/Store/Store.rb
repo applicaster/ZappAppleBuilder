@@ -103,18 +103,16 @@ class Store < BuildType
   def download_signing_files
     current(__callee__.to_s)
 
-    Dir.chdir("#{@@envHelper.root_path}"){
-        # create new dir for files
-        sh("mkdir -p \"#{@projectHelper.credentials_folder_path}\"")
-        # download p12 and provisioning profile
-        sh("curl -sL \"#{@@envHelper.provisioning_profile_url}\" --output \"#{@projectHelper.distribution_provisioning_profile_path}\"")
-        sh("curl -sL \"#{@@envHelper.distribution_key_url}\" --output \"#{@projectHelper.distribution_certificate_path}\"")
+    # create new dir for files
+    sh("mkdir -p \"#{@projectHelper.credentials_folder_path}\"")
+    # download p12 and provisioning profile
+    sh("curl -sL \"#{@@envHelper.provisioning_profile_url}\" --output \"#{@projectHelper.distribution_provisioning_profile_path}\"")
+    sh("curl -sL \"#{@@envHelper.distribution_key_url}\" --output \"#{@projectHelper.distribution_certificate_path}\"")
 
-        # create new dir for private key
-        sh("mkdir -p \"#{appstore_api_key_folder}\"")
-        # download appstore api key
-        sh("curl -sL \"#{appstore_api_key_url}\" --output \"#{appstore_api_key_folder}/AuthKey_#{appstore_api_key_id}.p8\"")
-    }
+    # create new dir for private key
+    sh("mkdir -p \"#{appstore_api_key_folder}\"")
+    # download appstore api key
+    sh("curl -sL \"#{appstore_api_key_url}\" --output \"#{appstore_api_key_folder}/AuthKey_#{appstore_api_key_id}.p8\"")
   end
 
   def perform_signing_validation
