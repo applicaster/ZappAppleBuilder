@@ -155,10 +155,12 @@ class Store < BuildType
       keychain_password: @@envHelper.keychain_password
     )
 
+    # set appstore api key
+    key_content = File.binread("#{appstore_api_key_folder}/AuthKey_#{appstore_api_key_id}.p8")
     @fastlane.app_store_connect_api_key(
       key_id: appstore_api_key_id,
       issuer_id: appstore_api_issuer_id,
-      key_filepath: "#{appstore_api_key_folder}/AuthKey_#{appstore_api_key_id}.p8",
+      key_content: key_content,
       duration: 1200, # optional
       in_house: false # optional but may be required if using match/sigh
     )
