@@ -94,13 +94,14 @@ class Store < BuildType
         force: true,
         skip_screenshots: true,
         skip_metadata: true,
-        precheck_include_in_app_purchases: false
+        precheck_include_in_app_purchases: false,
+        run_precheck_before_submit: false
       )
 
     end
 
     # print deliver output
-    puts("Altool output: #{deliver_output}")
+    puts("Deliver output: #{deliver_output}")
 
     # raise an error if the delover output has an error
     raise 'Error posting the app to the App Store Connect' if deliver_output.include?('ERROR ITMS-')
