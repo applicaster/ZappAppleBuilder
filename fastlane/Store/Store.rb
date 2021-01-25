@@ -75,14 +75,25 @@ class Store < BuildType
       ]
     )
 
+    # set appstore api key
+    puts('Setting AppStore API Key')
+    key_content = File.binread("#{appstore_api_key_folder}/AuthKey_#{appstore_api_key_id}.p8")
+    @fastlane.app_store_connect_api_key(
+      key_id: appstore_api_key_id,
+      issuer_id: appstore_api_issuer_id,
+      key_content: key_content,
+      duration: 1200, # optional
+      in_house: false # optional but may be required if using match/sigh
+    )
+
     puts('Starting app delivery to AppStoreConnect using altool')
     deliver_output = capture_stream($stdout) do
-      @fastlane.altool(
-        altool_api_key_id: appstore_api_key_id.to_s,
-        altool_api_issuer_id: appstore_api_issuer_id.to_s,
-        altool_app_type: @@envHelper.isTvOS ? 'appletvos' : 'ios',
-        altool_ipa_path: "#{circle_artifacts_folder_path}/Store/#{@projectHelper.scheme}-Store.ipa",
-        altool_output_format: 'xml'
+      @fastlane.deliver(
+        ipa: "#{circle_artifacts_folder_path}/Store/#{@projectHelper.scheme}-Store.ipa",
+        platform: @@envHelper.isTvOS ? 'appletvos' : 'ios',
+        force: true,
+        skip_screenshots: true,
+        skip_metadata: true
       )
     end
 
@@ -155,15 +166,6 @@ class Store < BuildType
       keychain_password: @@envHelper.keychain_password
     )
 
-    # set appstore api key
-    key_content = File.binread("#{appstore_api_key_folder}/AuthKey_#{appstore_api_key_id}.p8")
-    @fastlane.app_store_connect_api_key(
-      key_id: appstore_api_key_id,
-      issuer_id: appstore_api_issuer_id,
-      key_content: key_content,
-      duration: 1200, # optional
-      in_house: false # optional but may be required if using match/sigh
-    )
   end
 
   def prepare_build
