@@ -79,7 +79,7 @@ class Store < BuildType
     deliver_output = capture_stream($stdout) do
       @fastlane.altool(
         altool_api_key: appstore_api_key_id.to_s,
-        altool_api_issuer: appstore_api_issuer.to_s,
+        altool_api_issuer: appstore_api_issuer_id.to_s,
         altool_app_type: @@envHelper.isTvOS ? 'appletvos' : 'ios',
         altool_ipa_path: "#{circle_artifacts_folder_path}/Store/#{@projectHelper.scheme}-Store.ipa",
         altool_output_format: 'xml'
@@ -125,7 +125,7 @@ class Store < BuildType
       provisioning_profile_path: @projectHelper.distribution_provisioning_profile_path,
       version_number: @@envHelper.version_name,
       appstore_api_key_id: appstore_api_key_id,
-      appstore_api_issuer: appstore_api_issuer
+      appstore_api_issuer_id: appstore_api_issuer_id
     )
   end
 
@@ -155,6 +155,13 @@ class Store < BuildType
       keychain_password: @@envHelper.keychain_password
     )
 
+    @fastlane.app_store_connect_api_key(
+      key_id: appstore_api_key_id,
+      issuer_id: appstore_api_issuer_id,
+      key_filepath: "#{appstore_api_key_folder}/AuthKey_#{appstore_api_key_id}.p8",
+      duration: 1200, # optional
+      in_house: false # optional but may be required if using match/sigh
+    )
   end
 
   def prepare_build
@@ -246,8 +253,8 @@ class Store < BuildType
     (ENV['appstore_api_key_id']).to_s
   end
 
-  def appstore_api_issuer
-    (ENV['appstore_api_issuer']).to_s
+  def appstore_api_issuer_id
+    (ENV['appstore_api_issuer_id']).to_s
   end
     
   def appstore_api_key_folder
