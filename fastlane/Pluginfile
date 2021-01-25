@@ -4,7 +4,6 @@
 
 gem 'fastlane-plugin-appcenter'
 gem 'fastlane-plugin-aws_s3'
-gem 'fastlane-plugin-altool', git: "git@github.com:applicaster/fastlane-plugin-altool.git", tag: "1.3.0-alpha.3"
 
 # dependencies
 gem 'apktools', '= 0.7.4'
