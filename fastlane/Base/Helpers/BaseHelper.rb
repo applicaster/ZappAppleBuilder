@@ -187,7 +187,8 @@ class BaseHelper
       team_id: options[:team_id],
       provisioning_name: "#{options[:bundle_identifier]} prov profile",
       filename: "#{options[:bundle_identifier]}.mobileprovision",
-      platform: @@envHelper.platform_name
+      platform: @@envHelper.platform_name,
+      output_path: @@envHelper.root_path
     )
 
     provisioning_profile = get_provisioning_profile_content("#{@@envHelper.root_path}/#{options[:bundle_identifier]}.mobileprovision")
