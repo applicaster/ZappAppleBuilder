@@ -10,8 +10,8 @@
 
 ### Instruments
 
-- [Xcode](https://developer.apple.com): 12.3.0
-- [Fastlane](https://fastlane.tools): 2.171.0
+- [Xcode](https://developer.apple.com): 12.4.0
+- [Fastlane](https://fastlane.tools): 2.173.0
 - [CocoaPods](https://github.com/CocoaPods/CocoaPods): 1.9.10
 - [ZappTool](https://github.com/applicaster/ZappTool): 4.1.5
 
