@@ -17,7 +17,7 @@ references:
       xcode: "12.3.0"
     resource_class: large
     shell: /bin/bash --login -eo pipefail
-
+ 
     environment:
       PROJECT_NAME: "ZappApple"
       SCRIPTS_FOLDER: "Scripts"
