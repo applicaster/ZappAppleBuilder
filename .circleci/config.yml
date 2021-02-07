@@ -494,7 +494,6 @@ jobs:
     environment:
       ZAPP_SDK_PLATFORM: ios_for_quickbrick
     steps:
-      - *prepare_build_parameters
       - *prepare_caching_file
       - checkout
       - *set_ruby_version
