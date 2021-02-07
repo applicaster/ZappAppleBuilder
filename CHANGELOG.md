@@ -12,13 +12,13 @@
 
 - [Xcode](https://developer.apple.com): 12.4.0
 - [Fastlane](https://fastlane.tools): 2.173.0
-- [CocoaPods](https://github.com/CocoaPods/CocoaPods): 1.9.10
+- [CocoaPods](https://github.com/CocoaPods/CocoaPods): 1.10.0
 - [ZappTool](https://github.com/applicaster/ZappTool): 4.1.5
 
 ### Dependencies
 
-- [ZappCore](https://github.com/applicaster/ZappAppleBuilder): 1.1.1
-- [ZappApple](https://github.com/applicaster/ZappAppleBuilder): 1.3.0
+- [ZappCore](https://github.com/applicaster/ZappAppleBuilder): 1.2.0
+- [ZappApple](https://github.com/applicaster/ZappAppleBuilder): 1.4.0
 - [(iOS) ZappPlugins](https://github.com/applicaster/ZappPlugins.2.0-iOS): 12.0.0
 - [(iOS) ZappPushPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): 13.0.0
 - [(iOS) ZappAnalyticsPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): 13.0.0
