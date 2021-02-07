@@ -142,20 +142,19 @@ class BuildType < BaseHelper
     current(__callee__.to_s)
     appstore_api_key_id = options[:appstore_api_key_id]
     appstore_api_issuer_id = options[:appstore_api_issuer_id]
-    error_message = 'AppStoreConnect credentials are incorrect'
-    begin
-      Dir.chdir("#{@@envHelper.root_path}"){
-        filename = "./providers_list.json"
+    error_message = 'Failed to validate AppStoreConnect credentials'
+    Dir.chdir("#{@@envHelper.root_path}"){
+      filename = "./providers_list.json"
+      begin
         cmd = "xcrun altool --list-providers --apiKey \"#{appstore_api_key_id}\" --apiIssuer \"#{appstore_api_issuer_id}\" --output-format json > #{filename}"
         system("#{cmd}")
         result = File.read(filename.to_s).strip if File.exist? filename.to_s
-        File.delete(filename.to_s)
         raise error_message unless result['WWDRTeamID']
         puts("VALID: AppStoreConnect credentials are Ok\n".colorize(:green))
-      }
-    rescue StandardError => e
-      raise error_message
-    end
+      rescue StandardError => e
+        raise "#{error_message} \n\n #{sh("cat #{filename} | jq .")}"
+      end
+    }
   end
 
   def validate_distribution_certificate_expiration(options)
