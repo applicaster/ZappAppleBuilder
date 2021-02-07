@@ -143,7 +143,7 @@ class BuildType < BaseHelper
     username = options[:appstore_username]
     password = options[:appstore_password]
     filename = './providers.list'
-    error_message = "Failed to validate AppStoreConnect credentials \n\n #{sh("cat #{filename} | jq .")}"
+    error_message = "Failed to validate AppStoreConnect credentials"
     begin
       sh("xcrun altool --list-providers -u '#{username}' -p '#{password}' --output-format json > #{filename}")
       result = File.read(filename.to_s).strip if File.exist? filename.to_s
@@ -151,7 +151,7 @@ class BuildType < BaseHelper
 
       puts("VALID: AppStoreConnect credentials are Ok\n".colorize(:green))
     rescue StandardError => e
-      raise error_message
+      raise "#{error_message} \n\n #{sh("cat #{filename} | jq .")}"
     end
   end
 
