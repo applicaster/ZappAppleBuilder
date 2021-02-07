@@ -4,7 +4,7 @@
 
 ## SDK supports only UI Framework: QuickBrick
 
-### QuickBrick version: [4.1.5](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#v414-2020-12-01)
+### QuickBrick version: [4.1.6](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#v416-2021-02-02)
 
 #### React Native version: 0.62.2
 
@@ -23,7 +23,7 @@
 - [(iOS) ZappPushPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): 13.0.0
 - [(iOS) ZappAnalyticsPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): 13.0.0
 
-## [3.0.0](https://github.com/applicaster/ZappAppleBuilder/tree/3.0.3) (2021-01-20)
+## [3.0.0](https://github.com/applicaster/ZappAppleBuilder/tree/3.0.0) (2021-02-07)
 
 **Features**
 
