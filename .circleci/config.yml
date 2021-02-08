@@ -387,7 +387,6 @@ jobs:
     <<: *mac_config
     steps:
       - *triggered_by_zapp_only
-      - *add_new_wwdr_intermediate_certificate
       - *prepare_build_parameters
       - *print_build_parameters
       - run:
@@ -400,7 +399,8 @@ jobs:
             fi
 
       - checkout
-
+      
+      - *add_new_wwdr_intermediate_certificate
       - *prepare_caching_file
       - *prepare_zapptool_version_file
       - *prepare_pods_cache_file
