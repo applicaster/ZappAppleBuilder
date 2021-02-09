@@ -1,10 +1,21 @@
 local_build = ENV['triggered_by'].nil? && ENV['CIRCLECI'].nil?
+puts "---> value of local_build=#{local_build}"
 
+# skip flipper setup by default on local build
 should_add_flipper_on_local_build = false
+# enable flipper based on zapptool param
+should_add_flipper_on_local_build = true if File.file?(".zappToolParams/enable_flipper")
+
+# remove app extensions by default on local build
 should_remove_app_extensions_on_local_build = true
+# keep app extensions based on zapptool param
+should_remove_app_extensions_on_local_build = false if File.file?(".zappToolParams/keep_app_extensions")
 
 setup_flipper = local_build && should_add_flipper_on_local_build
+puts "---> value of setup_flipper=#{setup_flipper}"
+
 remove_app_extensions = local_build && should_remove_app_extensions_on_local_build
+puts "---> value of remove_app_extensions=#{remove_app_extensions}"
 
 load 'Flipper' if setup_flipper
 
