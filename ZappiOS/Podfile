@@ -1,5 +1,13 @@
 local_build = ENV['triggered_by'].nil? && ENV['CIRCLECI'].nil?
-load 'Flipper' if local_build
+
+should_add_flipper_on_local_build = true
+should_remove_app_extensions_on_local_build = true
+
+setup_flipper = local_build && should_add_flipper_on_local_build
+remove_app_extensions = local_build && should_remove_app_extensions_on_local_build
+
+load 'Flipper' if setup_flipper
+
 platform :ios, '12.0'
 require_relative './node_modules/@react-native-community/cli-platform-ios/native_modules'
 require_relative '../scripts/autolink-react-dependencies.rb'
@@ -28,7 +36,7 @@ def shared_pods
     pod 'ZappPushPluginsSDK', :path => './node_modules/@applicaster/zapp-push-plugins/apple/ZappPushPluginsSDK.podspec'
     pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
     pod 'ZappCore', :path => './node_modules/@applicaster/zapp-core/apple/ZappCore.podspec'
-    pod 'ZappApple', :path => './node_modules/@applicaster/zapp-apple/apple/ZappApple.podspec'
+    pod 'ZappApple', :path => '/Users/alexzchut/Documents/Applicaster/Github/Zapp-Frameworks/plugins/zapp-apple/apple/ZappApple.podspec.json'
     pod 'XrayLogger', :path => './node_modules/@applicaster/x-ray/apple/XrayLogger.podspec'
     pod 'react-native-viewpager', :path => 'node_modules/@react-native-community/viewpager/react-native-viewpager.podspec'
     pod 'react-native-webview', :path => './node_modules/react-native-webview/react-native-webview.podspec'
@@ -40,9 +48,9 @@ target 'ZappiOS' do
   shared_pods
   use_native_modules!
   use_react_native!
-  puts local_build
+  puts "Is local build: #{local_build}"
   # Enables Flipper
-  add_flipper_pods! if local_build
+  add_flipper_pods! if setup_flipper
 end
 
 target 'ZappiOSTests' do
@@ -59,7 +67,7 @@ target 'NotificationContentExtension' do
 end
 
 post_install do |installer|
-  flipper_post_install(installer) if local_build
+    flipper_post_install(installer) if setup_flipper
 
     installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|
@@ -82,4 +90,11 @@ post_install do |installer|
             config.build_settings['CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER'] = 'NO'
         end
     end
+    
+    remove_app_extensions_after_pod_update if remove_app_extensions
+end
+
+def remove_app_extensions_after_pod_update
+  cmd = "cd .. && bundle exec fastlane ios remove_app_extensions_targets project_name:ZappiOS"
+  system("#{cmd}")
 end

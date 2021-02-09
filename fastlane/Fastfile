@@ -51,11 +51,26 @@ platform :ios do
   end
 
   before_all do
-    set_device_family
-    create_temp_keychain
+
   end
 
+  lane :remove_app_extensions_targets do |options|
+    Dir.chdir("#{ENV['PWD'].to_s}"){
+      project_name = options[:project_name]
+      project_path = "#{project_name}/#{project_name}.xcodeproj"
+      project_scheme = project_name
+      appExtensions = AppExtensions.new
+      unless project_name.to_s.strip.empty?
+        appExtensions.remove_app_extensions_targets_from_project(
+          project_path: project_path,
+          project_scheme: project_scheme
+        )
+      end
+    }
+  end 
+
   lane :prepare_environment do |options|
+    set_initial_context
     envHelper = EnvironmentHelper.new
     unless envHelper.bundle_identifier.to_s.strip.empty?
       BuildTypeFactory.new(fastlane: self).prepare_environment(options)
@@ -63,6 +78,7 @@ platform :ios do
   end
 
   lane :validate_app_signing do |options|
+    set_initial_context
     envHelper = EnvironmentHelper.new
     unless envHelper.bundle_identifier.to_s.strip.empty?
       BuildTypeFactory.new(fastlane: self).perform_signing_validation(options)
@@ -70,11 +86,17 @@ platform :ios do
   end
 
   lane :build do |options|
+    set_initial_context
     envHelper = EnvironmentHelper.new
     unless envHelper.bundle_identifier.to_s.strip.empty?
       BuildTypeFactory.new(fastlane: self).build(options)
     end
   end
+end
+
+def set_initial_context
+  set_device_family
+  create_temp_keychain
 end
 
 def create_temp_keychain
