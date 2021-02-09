@@ -1,7 +1,7 @@
 local_build = ENV['triggered_by'].nil? && ENV['CIRCLECI'].nil?
 
-should_add_flipper_on_local_build = true
-should_remove_app_extensions_on_local_build = false
+should_add_flipper_on_local_build = false
+should_remove_app_extensions_on_local_build = true
 
 setup_flipper = local_build && should_add_flipper_on_local_build
 remove_app_extensions = local_build && should_remove_app_extensions_on_local_build
