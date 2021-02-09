@@ -12,19 +12,36 @@ class AppExtensions < BaseHelper
     @projectHelper = options[:projectHelper]
   end
 
-  def remove_from_project(target_name)
-    update_app_target do |target|
+  def remove_app_extensions_targets_from_project(options)
+    puts('Removing notifications extensions from project, enabled extensions will be added on build step')
+    extension_target_names = [
+      notification_content_extension_target_name,
+      notification_service_extension_target_name
+    ]
+
+    extension_target_names.each do |extension_target_name|
+      remove_from_project(extension_target_name, options)
+    end
+
+  end
+
+  def remove_from_project(target_name, options)
+    puts "Removing #{target_name}"
+    update_app_target(options) do |target|
       target.dependencies.reject! do |dependency|
         dependency.target.name == target_name.to_s
       end
     end
   end
 
-  def update_app_target
+  def update_app_target(options)
+    project_path = options[:project_path]
+    project_scheme = options[:project_scheme]
+
     require 'xcodeproj'
 
-    project = Xcodeproj::Project.open(@projectHelper.xcodeproj_path.to_s)
-    target = project.native_targets.find { |s| s.name == @projectHelper.scheme.to_s }
+    project = Xcodeproj::Project.open(project_path)
+    target = project.native_targets.find { |s| s.name == project_scheme }
 
     yield(target)
 

@@ -1,5 +1,24 @@
 local_build = ENV['triggered_by'].nil? && ENV['CIRCLECI'].nil?
-load 'Flipper' if local_build
+puts "---> value of local_build=#{local_build}"
+
+# skip flipper setup by default on local build
+should_add_flipper_on_local_build = false
+# enable flipper based on zapptool param
+should_add_flipper_on_local_build = true if File.file?(".zappToolParams/enable_flipper")
+
+# remove app extensions by default on local build
+should_remove_app_extensions_on_local_build = true
+# keep app extensions based on zapptool param
+should_remove_app_extensions_on_local_build = false if File.file?(".zappToolParams/keep_app_extensions")
+
+setup_flipper = local_build && should_add_flipper_on_local_build
+puts "---> value of setup_flipper=#{setup_flipper}"
+
+remove_app_extensions = local_build && should_remove_app_extensions_on_local_build
+puts "---> value of remove_app_extensions=#{remove_app_extensions}"
+
+load 'Flipper' if setup_flipper
+
 platform :ios, '12.0'
 require_relative './node_modules/@react-native-community/cli-platform-ios/native_modules'
 require_relative '../scripts/autolink-react-dependencies.rb'
@@ -40,9 +59,9 @@ target 'ZappiOS' do
   shared_pods
   use_native_modules!
   use_react_native!
-  puts local_build
+  puts "Is local build: #{local_build}"
   # Enables Flipper
-  add_flipper_pods! if local_build
+  add_flipper_pods! if setup_flipper
 end
 
 target 'ZappiOSTests' do
@@ -59,7 +78,7 @@ target 'NotificationContentExtension' do
 end
 
 post_install do |installer|
-  flipper_post_install(installer) if local_build
+    flipper_post_install(installer) if setup_flipper
 
     installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|
@@ -82,4 +101,11 @@ post_install do |installer|
             config.build_settings['CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER'] = 'NO'
         end
     end
+    
+    remove_app_extensions_after_pod_update if remove_app_extensions
+end
+
+def remove_app_extensions_after_pod_update
+  cmd = "cd .. && bundle exec fastlane ios remove_app_extensions_targets project_name:ZappiOS"
+  system("#{cmd}")
 end
