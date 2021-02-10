@@ -21,11 +21,15 @@ class ProjectHelper < BaseHelper
   end
 
   def xcodeproj_path
-    "#{path}/#{name}.xcodeproj"
+    "#{path}/#{xcodeproj_name}"
+  end
+
+  def xcodeproj_name
+    "#{name}.xcodeproj"
   end
 
   def xcworkspace_relative_path
-    "../#{folder_name}/#{name}.xcworkspace"
+    "#{folder_name}/#{name}.xcworkspace"
   end
 
   def folder_name

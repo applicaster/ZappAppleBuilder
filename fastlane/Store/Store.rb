@@ -75,19 +75,33 @@ class Store < BuildType
       ]
     )
 
-    puts('Starting app delivery to AppStoreConnect using altool')
+    # set appstore api key
+    puts('Setting AppStore API Key')
+    key_content = File.binread("#{appstore_api_key_folder}/AuthKey_#{appstore_api_key_id}.p8")
+    @fastlane.app_store_connect_api_key(
+      key_id: appstore_api_key_id,
+      issuer_id: appstore_api_issuer_id,
+      key_content: key_content,
+      duration: 1200, # optional
+      in_house: false # optional but may be required if using match/sigh
+    )
+
+    puts('Starting app delivery to AppStoreConnect')
     deliver_output = capture_stream($stdout) do
-      @fastlane.altool(
-        altool_username: itunesconnect_username.to_s,
-        altool_password: itunesconnect_password.to_s,
-        altool_app_type: @@envHelper.isTvOS ? 'appletvos' : 'ios',
-        altool_ipa_path: "#{circle_artifacts_folder_path}/Store/#{@projectHelper.scheme}-Store.ipa",
-        altool_output_format: 'xml'
+      @fastlane.deliver(
+        ipa: "#{circle_artifacts_folder_path}/Store/#{@projectHelper.scheme}-Store.ipa",
+        platform: @@envHelper.isTvOS ? 'appletvos' : 'ios',
+        force: true,
+        skip_screenshots: true,
+        skip_metadata: true,
+        precheck_include_in_app_purchases: false,
+        run_precheck_before_submit: false
       )
+
     end
 
     # print deliver output
-    puts("Altool output: #{deliver_output}")
+    puts("Deliver output: #{deliver_output}")
 
     # raise an error if the delover output has an error
     raise 'Error posting the app to the App Store Connect' if deliver_output.include?('ERROR ITMS-')
@@ -108,6 +122,11 @@ class Store < BuildType
     # download p12 and provisioning profile
     sh("curl -sL \"#{@@envHelper.provisioning_profile_url}\" --output \"#{@projectHelper.distribution_provisioning_profile_path}\"")
     sh("curl -sL \"#{@@envHelper.distribution_key_url}\" --output \"#{@projectHelper.distribution_certificate_path}\"")
+
+    # create new dir for private key
+    sh("mkdir -p \"#{appstore_api_key_folder}\"")
+    # download appstore api key
+    sh("curl -sL \"#{appstore_api_key_url}\" --output \"#{appstore_api_key_folder}/AuthKey_#{appstore_api_key_id}.p8\"")
   end
 
   def perform_signing_validation
@@ -119,8 +138,8 @@ class Store < BuildType
       certificate_password: @@envHelper.distribution_key_password,
       provisioning_profile_path: @projectHelper.distribution_provisioning_profile_path,
       version_number: @@envHelper.version_name,
-      appstore_username: itunesconnect_username,
-      appstore_password: itunesconnect_password
+      appstore_api_key_id: appstore_api_key_id,
+      appstore_api_issuer_id: appstore_api_issuer_id
     )
   end
 
@@ -150,8 +169,6 @@ class Store < BuildType
       keychain_password: @@envHelper.keychain_password
     )
 
-    sh("bundle exec fastlane fastlane-credentials add --username #{itunesconnect_username} --password '#{itunesconnect_password}'")
-    ENV['FASTLANE_PASSWORD'] = itunesconnect_password
   end
 
   def prepare_build
@@ -235,12 +252,20 @@ class Store < BuildType
     )
   end
 
-  def itunesconnect_username
-    (ENV['itunes_connect_user']).to_s
+  def appstore_api_key_url
+    (ENV['appstore_api_key_url']).to_s
   end
 
-  def itunesconnect_password
-    (ENV['itunes_connect_password']).to_s
+  def appstore_api_key_id
+    (ENV['appstore_api_key_id']).to_s
+  end
+
+  def appstore_api_issuer_id
+    (ENV['appstore_api_issuer_id']).to_s
+  end
+    
+  def appstore_api_key_folder
+    "./private_keys"
   end
 
   def isEnterpriseBuild

@@ -4,26 +4,26 @@
 
 ## SDK supports only UI Framework: QuickBrick
 
-### QuickBrick version: [4.1.5](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#v414-2020-12-01)
+### QuickBrick version: [4.1.6](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#v416-2021-02-02)
 
 #### React Native version: 0.62.2
 
 ### Instruments
 
-- [Xcode](https://developer.apple.com): 12.3.0
-- [Fastlane](https://fastlane.tools): 2.171.0
-- [CocoaPods](https://github.com/CocoaPods/CocoaPods): 1.9.10
+- [Xcode](https://developer.apple.com): 12.4.0
+- [Fastlane](https://fastlane.tools): 2.173.0
+- [CocoaPods](https://github.com/CocoaPods/CocoaPods): 1.10.0
 - [ZappTool](https://github.com/applicaster/ZappTool): 4.1.5
 
 ### Dependencies
 
-- [ZappCore](https://github.com/applicaster/ZappAppleBuilder): 1.1.1
-- [ZappApple](https://github.com/applicaster/ZappAppleBuilder): 1.3.0
+- [ZappCore](https://github.com/applicaster/ZappAppleBuilder): 1.2.0
+- [ZappApple](https://github.com/applicaster/ZappAppleBuilder): 1.4.0
 - [(iOS) ZappPlugins](https://github.com/applicaster/ZappPlugins.2.0-iOS): 12.0.0
 - [(iOS) ZappPushPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): 13.0.0
 - [(iOS) ZappAnalyticsPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): 13.0.0
 
-## [3.0.0](https://github.com/applicaster/ZappAppleBuilder/tree/3.0.3) (2021-01-20)
+## [3.0.0](https://github.com/applicaster/ZappAppleBuilder/tree/3.0.0) (2021-02-07)
 
 **Features**
 

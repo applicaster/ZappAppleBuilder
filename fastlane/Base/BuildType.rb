@@ -28,7 +28,10 @@ class BuildType < BaseHelper
   end
 
   def prepare_environment
-    remove_app_extensions
+    @appExtensions.remove_app_extensions_targets_from_project(
+      project_path: @projectHelper.xcodeproj_path.to_s,
+      project_scheme: @projectHelper.scheme
+    )
     fetch_app_center_identifiers
     @projectHelper.organizeResourcesToAssetsCatalog
   end
@@ -104,12 +107,6 @@ class BuildType < BaseHelper
     end
   end
 
-  def remove_app_extensions
-    puts('Removing notifications extensions from project (needed for `pod install`)')
-    @appExtensions.remove_from_project(@appExtensions.notification_content_extension_target_name)
-    @appExtensions.remove_from_project(@appExtensions.notification_service_extension_target_name)
-  end
-
   def validate(options)
     validate_distribution_certificate_password(options)
     validate_distribution_certificate_expiration(options)
@@ -122,7 +119,7 @@ class BuildType < BaseHelper
     end
 
     validate_version_number(options) if options[:version_number]
-    validate_appstoreconnect_credentials(options) if options[:appstore_username]
+    validate_appstoreconnect_credentials(options) if options[:appstore_api_key_id]
   end
 
   def validate_version_number(options)
@@ -140,20 +137,21 @@ class BuildType < BaseHelper
 
   def validate_appstoreconnect_credentials(options)
     current(__callee__.to_s)
-    username = options[:appstore_username]
-    password = options[:appstore_password]
-    error_message = 'AppStoreConnect credentials are incorrect'
-    begin
-      filename = './providers.list'
-      sh("xcrun altool --list-providers -u '#{username}' -p '#{password}' --output-format json > #{filename}")
-      result = File.read(filename.to_s).strip if File.exist? filename.to_s
-      File.delete(filename.to_s)
-      raise error_message if result['-20101']
-
-      puts("VALID: AppStoreConnect credentials are Ok\n".colorize(:green))
-    rescue StandardError => e
-      raise error_message
-    end
+    appstore_api_key_id = options[:appstore_api_key_id]
+    appstore_api_issuer_id = options[:appstore_api_issuer_id]
+    error_message = 'Failed to validate AppStoreConnect credentials'
+    Dir.chdir("#{@@envHelper.root_path}"){
+      filename = "./providers_list.json"
+      begin
+        cmd = "xcrun altool --list-providers --apiKey \"#{appstore_api_key_id}\" --apiIssuer \"#{appstore_api_issuer_id}\" --output-format json > #{filename}"
+        system("#{cmd}")
+        result = File.read(filename.to_s).strip if File.exist? filename.to_s
+        raise error_message unless result['WWDRTeamID']
+        puts("VALID: AppStoreConnect credentials are Ok\n".colorize(:green))
+      rescue StandardError => e
+        raise "#{error_message} \n\n #{sh("cat #{filename} | jq .")}"
+      end
+    }
   end
 
   def validate_distribution_certificate_expiration(options)
