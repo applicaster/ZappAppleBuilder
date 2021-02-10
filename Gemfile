@@ -6,7 +6,7 @@ source 'https://rubygems.org'
 gem 'cocoapods', '= 1.10.0'
 gem 'colorize', '= 0.8.1'
 gem 'configure_extensions'
-gem 'fastlane', '= 2.173.0'
+gem 'fastlane', '= 2.174.0'
 gem 'faraday', '~> 1.0'
 # Zapp SDK creation process
 gem 'zapp_sdk_tasks', '= 0.6.0'

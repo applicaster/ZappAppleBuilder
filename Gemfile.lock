@@ -99,7 +99,7 @@ GEM
     faraday_middleware (1.0.0)
       faraday (~> 1.0)
     fastimage (2.2.2)
-    fastlane (2.173.0)
+    fastlane (2.174.0)
       CFPropertyList (>= 2.3, < 4.0.0)
       addressable (>= 2.3, < 3.0.0)
       artifactory (~> 3.0)
@@ -280,7 +280,7 @@ DEPENDENCIES
   colorize (= 0.8.1)
   configure_extensions
   faraday (~> 1.0)
-  fastlane (= 2.173.0)
+  fastlane (= 2.174.0)
   fastlane-plugin-appcenter
   fastlane-plugin-aws_s3
   zapp_sdk_tasks (= 0.6.0)
