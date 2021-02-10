@@ -1,20 +1,11 @@
-local_build = ENV['triggered_by'].nil? && ENV['CIRCLECI'].nil?
-puts "---> value of local_build=#{local_build}"
+load '../Scripts/podfile-helpers.rb'
 
-# skip flipper setup by default on local build
-should_add_flipper_on_local_build = false
-# enable flipper based on zapptool param
-should_add_flipper_on_local_build = true if File.file?(".zappToolParams/enable_flipper")
+puts "---> value of local_build=#{is_local_build}"
 
-# remove app extensions by default on local build
-should_remove_app_extensions_on_local_build = true
-# keep app extensions based on zapptool param
-should_remove_app_extensions_on_local_build = false if File.file?(".zappToolParams/keep_app_extensions")
-
-setup_flipper = local_build && should_add_flipper_on_local_build
+setup_flipper = should_add_flipper_on_local_build
 puts "---> value of setup_flipper=#{setup_flipper}"
 
-remove_app_extensions = local_build && should_remove_app_extensions_on_local_build
+remove_app_extensions = should_remove_app_extensions_on_local_build
 puts "---> value of remove_app_extensions=#{remove_app_extensions}"
 
 load 'Flipper' if setup_flipper
@@ -59,7 +50,7 @@ target 'ZappiOS' do
   shared_pods
   use_native_modules!
   use_react_native!
-  puts "Is local build: #{local_build}"
+  puts "Is local build: #{is_local_build}"
   # Enables Flipper
   add_flipper_pods! if setup_flipper
 end
@@ -102,10 +93,5 @@ post_install do |installer|
         end
     end
     
-    remove_app_extensions_after_pod_update if remove_app_extensions
-end
-
-def remove_app_extensions_after_pod_update
-  cmd = "cd .. && bundle exec fastlane ios remove_app_extensions_targets project_name:ZappiOS"
-  system("#{cmd}")
+    remove_app_extensions_after_pod_update("ZappiOS") if remove_app_extensions
 end
