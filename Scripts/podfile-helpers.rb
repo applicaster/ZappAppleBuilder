@@ -22,7 +22,7 @@ def should_remove_app_extensions_on_local_build
     value
 end
 
-def remove_app_extensions_after_pod_update(project_name)
+def pre_install_remove_app_extensions(project_name)
     cmd = "cd .. && bundle exec fastlane ios remove_app_extensions_targets project_name:#{project_name}"
     system("#{cmd}")
   end
