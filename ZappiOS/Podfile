@@ -27,6 +27,8 @@ source 'https://cdn.cocoapods.org/'
 pre_install do |_installer|
   # workaround for https://github.com/CocoaPods/CocoaPods/issues/3289
   Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
+  
+  pre_install_remove_app_extensions("ZappiOS") if remove_app_extensions
 end
 
 puts("\n\nCocoaPods preparing for platform: iOS\n\n")
@@ -59,13 +61,14 @@ target 'ZappiOSTests' do
   inherit! :search_paths
 end
 
-target 'NotificationServiceExtension' do
-    # Zaptool notification service extension pods - Do not remove or change.
-end
+unless remove_app_extensions
+  target 'NotificationServiceExtension' do
+      # Zaptool notification service extension pods - Do not remove or change.
+  end
 
-target 'NotificationContentExtension' do
-    # Zaptool notification content extension pods - Do not remove or change.
-
+  target 'NotificationContentExtension' do
+      # Zaptool notification content extension pods - Do not remove or change.
+  end
 end
 
 post_install do |installer|
@@ -92,6 +95,4 @@ post_install do |installer|
             config.build_settings['CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER'] = 'NO'
         end
     end
-    
-    remove_app_extensions_after_pod_update("ZappiOS") if remove_app_extensions
 end
