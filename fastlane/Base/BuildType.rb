@@ -28,7 +28,10 @@ class BuildType < BaseHelper
   end
 
   def prepare_environment
-    remove_app_extensions
+    @appExtensions.remove_app_extensions_targets_from_project(
+      project_path: @projectHelper.xcodeproj_path.to_s,
+      project_scheme: @projectHelper.scheme
+    )
     fetch_app_center_identifiers
     @projectHelper.organizeResourcesToAssetsCatalog
   end
@@ -102,12 +105,6 @@ class BuildType < BaseHelper
       end
       t.value # join and get the result of the thread
     end
-  end
-
-  def remove_app_extensions
-    puts('Removing notifications extensions from project (needed for `pod install`)')
-    @appExtensions.remove_from_project(@appExtensions.notification_content_extension_target_name)
-    @appExtensions.remove_from_project(@appExtensions.notification_service_extension_target_name)
   end
 
   def validate(options)

@@ -1,5 +1,15 @@
-local_build = ENV['triggered_by'].nil? && ENV['CIRCLECI'].nil?
-load 'Flipper' if local_build
+load '../Scripts/podfile-helpers.rb'
+
+puts "---> value of local_build=#{is_local_build}"
+
+setup_flipper = should_add_flipper_on_local_build
+puts "---> value of setup_flipper=#{setup_flipper}"
+
+remove_app_extensions = should_remove_app_extensions_on_local_build
+puts "---> value of remove_app_extensions=#{remove_app_extensions}"
+
+load 'Flipper' if setup_flipper
+
 platform :ios, '12.0'
 require_relative './node_modules/@react-native-community/cli-platform-ios/native_modules'
 require_relative '../scripts/autolink-react-dependencies.rb'
@@ -17,6 +27,8 @@ source 'https://cdn.cocoapods.org/'
 pre_install do |_installer|
   # workaround for https://github.com/CocoaPods/CocoaPods/issues/3289
   Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
+  
+  pre_install_remove_app_extensions("ZappiOS") if remove_app_extensions
 end
 
 puts("\n\nCocoaPods preparing for platform: iOS\n\n")
@@ -40,26 +52,27 @@ target 'ZappiOS' do
   shared_pods
   use_native_modules!
   use_react_native!
-  puts local_build
+  puts "Is local build: #{is_local_build}"
   # Enables Flipper
-  add_flipper_pods! if local_build
+  add_flipper_pods! if setup_flipper
 end
 
 target 'ZappiOSTests' do
   inherit! :search_paths
 end
 
-target 'NotificationServiceExtension' do
-    # Zaptool notification service extension pods - Do not remove or change.
-end
+unless remove_app_extensions
+  target 'NotificationServiceExtension' do
+      # Zaptool notification service extension pods - Do not remove or change.
+  end
 
-target 'NotificationContentExtension' do
-    # Zaptool notification content extension pods - Do not remove or change.
-
+  target 'NotificationContentExtension' do
+      # Zaptool notification content extension pods - Do not remove or change.
+  end
 end
 
 post_install do |installer|
-  flipper_post_install(installer) if local_build
+    flipper_post_install(installer) if setup_flipper
 
     installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|

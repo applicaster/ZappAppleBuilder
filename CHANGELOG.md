@@ -1,27 +1,29 @@
 # Changelog
 
-### Minimum OS supported: iOS: 12, tvOS: 12
+### Minimum OS supported: `iOS: 12, tvOS: 12`
 
 ## SDK supports only UI Framework: QuickBrick
 
-### QuickBrick version: [4.1.6](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#v416-2021-02-02)
+### QuickBrick version: [`4.1.6`](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#v416-2021-02-02)
 
-#### React Native version: 0.62.2
+#### React Native version: `0.62.2`
+
+#### Apple App Tracking Transparency minimum supported sdk: `2.0.1`
 
 ### Instruments
 
-- [Xcode](https://developer.apple.com): 12.4.0
-- [Fastlane](https://fastlane.tools): 2.173.0
-- [CocoaPods](https://github.com/CocoaPods/CocoaPods): 1.10.0
-- [ZappTool](https://github.com/applicaster/ZappTool): 4.1.5
+- [Xcode](https://developer.apple.com): `12.4.0`
+- [Fastlane](https://fastlane.tools): `2.173.0`
+- [CocoaPods](https://github.com/CocoaPods/CocoaPods): `1.10.0`
+- [ZappTool](https://github.com/applicaster/ZappTool): `4.1.7`
 
 ### Dependencies
 
-- [ZappCore](https://github.com/applicaster/ZappAppleBuilder): 1.2.0
-- [ZappApple](https://github.com/applicaster/ZappAppleBuilder): 1.4.0
-- [(iOS) ZappPlugins](https://github.com/applicaster/ZappPlugins.2.0-iOS): 12.0.0
-- [(iOS) ZappPushPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): 13.0.0
-- [(iOS) ZappAnalyticsPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): 13.0.0
+- [ZappCore](https://github.com/applicaster/ZappAppleBuilder): `1.2.0`
+- [ZappApple](https://github.com/applicaster/ZappAppleBuilder): `1.4.0`
+- [(iOS) ZappPlugins](https://github.com/applicaster/ZappPlugins.2.0-iOS): `12.0.0`
+- [(iOS) ZappPushPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): `13.0.0`
+- [(iOS) ZappAnalyticsPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): `13.0.0`
 
 ## [3.0.0](https://github.com/applicaster/ZappAppleBuilder/tree/3.0.0) (2021-02-07)
 
