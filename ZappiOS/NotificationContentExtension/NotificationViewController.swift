@@ -11,19 +11,18 @@ import UserNotifications
 import UserNotificationsUI
 
 class NotificationViewController: UIViewController, UNNotificationContentExtension {
-
     @IBOutlet var label: UILabel?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any required interface initialization here.
     }
-    
+
     func didReceive(_ notification: UNNotification) {
-        self.label?.text = notification.request.content.body
+        label?.text = notification.request.content.body
     }
-    
+
     func didReceive(_ response: UNNotificationResponse, completionHandler completion: @escaping (UNNotificationContentExtensionResponseOption) -> Void) {
-        //don't make any change in received notification by default
+        // don't make any change in received notification by default
     }
 }
