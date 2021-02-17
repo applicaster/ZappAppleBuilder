@@ -147,10 +147,10 @@
     "@miblanchard/react-native-slider" "^1.5.0"
     react-native-linear-gradient "2.5.6"
 
-"@applicaster/quick-brick-native-apple@4.2.0-alpha.088ff4f6":
-  version "4.2.0-alpha.088ff4f6"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-native-apple/-/quick-brick-native-apple-4.2.0-alpha.088ff4f6.tgz#94f0d99d6cb1c31dc35fd32cb5f72534ec537ca1"
-  integrity sha512-0Phsy1BNQTmGs/QQaZijjpaxMuoblvhtWPgXBd+ksreOmQ3E1ljbk78/QfZ1U4x8yKqGBSks1JU3YQ8ZZr621w==
+"@applicaster/quick-brick-native-apple@4.2.0-alpha.2067735f":
+  version "4.2.0-alpha.2067735f"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-native-apple/-/quick-brick-native-apple-4.2.0-alpha.2067735f.tgz#073c07b7e3c46355ee4a65baf1e8cf1f15f48916"
+  integrity sha512-R6NFRfN/H4v4U+VlSKDBy/hxJUPe3X5uLtAuzl9JUGiMVI5XWBqZukMmho45z4oOmCkMj4xA5s4bKz5pYDkd9Q==
 
 "@applicaster/quick-brick-native-share-action@1.0.0":
   version "1.0.0"
