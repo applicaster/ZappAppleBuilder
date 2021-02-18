@@ -26,8 +26,8 @@
   },
   "dependencies": {
     "@applicaster/x-ray": "0.1.7",
-    "@applicaster/zapp-apple": "1.5.1",
-    "@applicaster/zapp-core": "1.3.2",
+    "@applicaster/zapp-apple": "1.5.2",
+    "@applicaster/zapp-core": "1.3.3",
     "@applicaster/zapp-analytics-plugins": "13.0.0",
     "@applicaster/quick-brick-native-apple": "4.2.0-alpha.2067735f",
     "@react-native-community/cli-platform-ios": "^4.7.0",
