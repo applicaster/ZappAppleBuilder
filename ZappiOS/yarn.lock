@@ -192,10 +192,10 @@
   resolved "https://registry.yarnpkg.com/@applicaster/react-native-fast-image/-/react-native-fast-image-8.3.2-1.tgz#b0d565c2b33e3d3a9311fd569869186d942951cd"
   integrity sha512-L2RYxsv9CzCIgRMegjKkjbord1Zi0RcOKl39wnCXr60nHsRBTnL4BxX5sQwD4h5ZNF6lZDms5U5vxme+vMHpPQ==
 
-"@applicaster/x-ray@0.1.7":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@applicaster/x-ray/-/x-ray-0.1.7.tgz#868f3d57e4be1d5a61a498ec4c92200285a22f43"
-  integrity sha512-ln3N+i5CO3Wxd32MGnOLOQOnaSqW6lxrBe7nJ381NfX+uwqeCmxCXzZ7t2Nfr6apDhbczb19c/zcfsrRTnkXfw==
+"@applicaster/x-ray@0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@applicaster/x-ray/-/x-ray-0.1.8.tgz#1db7e2565155037b847c245a73f545c739c581dc"
+  integrity sha512-lhMvd8BgWicuoxOx5S9j4Oqo0WyS5YLa3sbAf0IeFJuKdNfSipg+1o4Cl0z/RXs9p022AnqIjNLYU9qALCFo5w==
 
 "@applicaster/zapp-analytics-plugins@13.0.0":
   version "13.0.0"
