@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@applicaster/quick-brick-native-apple": "4.2.0-alpha.2067735f",
-    "@applicaster/x-ray": "0.1.7",
+    "@applicaster/x-ray": "0.1.8",
     "@applicaster/zapp-analytics-plugins": "13.0.0",
     "@applicaster/zapp-apple": "1.4.3",
     "@applicaster/zapp-core": "1.2.0",
