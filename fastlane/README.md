@@ -12,9 +12,43 @@ Install _fastlane_ using
 ```
 [sudo] gem install fastlane -NV
 ```
-or alternatively using `brew cask install fastlane`
+or alternatively using `brew install fastlane`
 
 # Available Actions
+## iOS
+### ios publish_builds_to_zapp
+```
+fastlane ios publish_builds_to_zapp
+```
+
+### ios precache
+```
+fastlane ios precache
+```
+
+### ios remove_app_extensions_targets
+```
+fastlane ios remove_app_extensions_targets
+```
+
+### ios prepare_environment
+```
+fastlane ios prepare_environment
+```
+
+### ios validate_app_signing
+```
+fastlane ios validate_app_signing
+```
+
+### ios build
+```
+fastlane ios build
+```
+
+
+----
+
 ## appletvos
 ### appletvos test
 ```
@@ -24,15 +58,10 @@ fastlane appletvos test
 
 ----
 
-## iOS
-### ios enterprise
+## tvos
+### tvos precache
 ```
-fastlane ios enterprise
-```
-
-### ios store
-```
-fastlane ios store
+fastlane tvos precache
 ```
 
 
