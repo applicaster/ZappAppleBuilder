@@ -13,7 +13,7 @@
 ### Instruments
 
 - [Xcode](https://developer.apple.com): `12.4.0`
-- [Fastlane](https://fastlane.tools): `2.173.0`
+- [Fastlane](https://fastlane.tools): `2.174.0`
 - [CocoaPods](https://github.com/CocoaPods/CocoaPods): `1.10.0`
 - [ZappTool](https://github.com/applicaster/ZappTool): `4.1.7`
 
@@ -24,6 +24,21 @@
 - [(iOS) ZappPlugins](https://github.com/applicaster/ZappPlugins.2.0-iOS): `12.0.0`
 - [(iOS) ZappPushPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): `13.0.0`
 - [(iOS) ZappAnalyticsPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): `13.0.0`
+
+## [4.0.0](https://github.com/applicaster/ZappAppleBuilder/tree/4.0.0) (2021-02-22)
+
+**Features**
+
+- Add player plugin logic [\#214](https://github.com/applicaster/ZappAppleBuilder/pull/214) ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Support AppStore API Key for store uploads  [\#204](https://github.com/applicaster/ZappAppleBuilder/pull/204) ([alexzchut](https://github.com/alexzchut))
+
+**Implemented enhancements:**
+
+- Update podfile changes to remove extensions on preinstall  [\#215](https://github.com/applicaster/ZappAppleBuilder/pull/215) ([alexzchut](https://github.com/alexzchut))
+- Removal of App Extensions and Flipper on local build [\#212](https://github.com/applicaster/ZappAppleBuilder/pull/212) ([alexzchut](https://github.com/alexzchut))
+- Add new WWDR Certificate [\#211](https://github.com/applicaster/ZappAppleBuilder/pull/211) ([alexzchut](https://github.com/alexzchut))
+- Update Xcode version to 12.4.0 [\#209](https://github.com/applicaster/ZappAppleBuilder/pull/209) ([alexzchut](https://github.com/alexzchut))
+- Update to print store validation error [\#208](https://github.com/applicaster/ZappAppleBuilder/pull/208) ([alexzchut](https://github.com/alexzchut))
 
 ## [3.0.0](https://github.com/applicaster/ZappAppleBuilder/tree/3.0.0) (2021-02-07)
 
