@@ -4,7 +4,7 @@
 
 ## SDK supports only UI Framework: QuickBrick
 
-### QuickBrick version: [`4.1.6`](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#v416-2021-02-02)
+### QuickBrick version: [`5.0.0`](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#v500-2021-02-22)
 
 #### React Native version: `0.62.2`
 
@@ -13,17 +13,45 @@
 ### Instruments
 
 - [Xcode](https://developer.apple.com): `12.4.0`
-- [Fastlane](https://fastlane.tools): `2.173.0`
-- [CocoaPods](https://github.com/CocoaPods/CocoaPods): `1.10.0`
+- [Fastlane](https://fastlane.tools): `2.175.0`
+- [CocoaPods](https://github.com/CocoaPods/CocoaPods): `1.10.1`
 - [ZappTool](https://github.com/applicaster/ZappTool): `4.1.7`
 
 ### Dependencies
 
-- [ZappCore](https://github.com/applicaster/ZappAppleBuilder): `1.2.0`
-- [ZappApple](https://github.com/applicaster/ZappAppleBuilder): `1.4.0`
+- [ZappCore](https://github.com/applicaster/ZappAppleBuilder): `1.3.3`
+- [ZappApple](https://github.com/applicaster/ZappAppleBuilder): `1.5.2`
 - [(iOS) ZappPlugins](https://github.com/applicaster/ZappPlugins.2.0-iOS): `12.0.0`
 - [(iOS) ZappPushPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): `13.0.0`
 - [(iOS) ZappAnalyticsPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): `13.0.0`
+
+## [4.0.0](https://github.com/applicaster/ZappAppleBuilder/tree/4.0.0) (2021-02-22)
+
+**QB 5 Highlights:**
+
+- New TV components:
+    - support for Theme plugin with specific properties for TV platforms, including screen & component margins, and content anchoring (determines how many pixels from the top of the screen content is anchored when focus moves)
+    - support on TV for Horizontal List (QB) and Grid (QB) plugin. These plugins should be used instead of the legacy horizontal list & grid component. These plugins support full customization of styling & spacing
+    - support for Group, Group Info & Group info cell plugins on TV platforms, which allow to create Groups on TV layouts, and support full customization of TV components headers
+    - Advanced customization capabilities on component cells with the use of the TV Cell 1 power cell plugin
+    - Brand new Screen Picker TV (QB) plugin, with advanced configuration for styling of the screen selector part of the component
+- Pipes v2:
+    - improved compatibility of pipes v2 layout, on mobile & TV platforms
+    - separate entry / screen & search context to inject data in feeds
+    - support for v2 feeds from plugins, available on continue watching & local favourites plugins
+
+**Features**
+
+- Add player plugin logic [\#214](https://github.com/applicaster/ZappAppleBuilder/pull/214) ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Support AppStore API Key for store uploads  [\#204](https://github.com/applicaster/ZappAppleBuilder/pull/204) ([alexzchut](https://github.com/alexzchut))
+
+**Implemented enhancements:**
+
+- Update podfile changes to remove extensions on preinstall  [\#215](https://github.com/applicaster/ZappAppleBuilder/pull/215) ([alexzchut](https://github.com/alexzchut))
+- Removal of App Extensions and Flipper on local build [\#212](https://github.com/applicaster/ZappAppleBuilder/pull/212) ([alexzchut](https://github.com/alexzchut))
+- Add new WWDR Certificate [\#211](https://github.com/applicaster/ZappAppleBuilder/pull/211) ([alexzchut](https://github.com/alexzchut))
+- Update Xcode version to 12.4.0 [\#209](https://github.com/applicaster/ZappAppleBuilder/pull/209) ([alexzchut](https://github.com/alexzchut))
+- Update to print store validation error [\#208](https://github.com/applicaster/ZappAppleBuilder/pull/208) ([alexzchut](https://github.com/alexzchut))
 
 ## [3.0.0](https://github.com/applicaster/ZappAppleBuilder/tree/3.0.0) (2021-02-07)
 
