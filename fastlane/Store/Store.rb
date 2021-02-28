@@ -86,8 +86,11 @@ class Store < BuildType
       in_house: false # optional but may be required if using match/sigh
     )
 
+    puts('Print AppStore API Key')
+    puts(@fastlane.lane_context[SharedValues::APP_STORE_CONNECT_API_KEY])
+
     puts('Starting app delivery to AppStoreConnect')
-    deliver_output = capture_stream($stdout) do
+    # deliver_output = capture_stream($stdout) do
       @fastlane.deliver(
         ipa: "#{circle_artifacts_folder_path}/Store/#{@projectHelper.scheme}-Store.ipa",
         platform: @@envHelper.isTvOS ? 'appletvos' : 'ios',
@@ -98,7 +101,7 @@ class Store < BuildType
         run_precheck_before_submit: false
       )
 
-    end
+    # end
 
     # print deliver output
     puts("Deliver output: #{deliver_output}")
