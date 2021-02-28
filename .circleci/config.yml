@@ -51,6 +51,7 @@ references:
       command: |
         echo $app_name
         echo $bundle_identifier
+        echo $build_params_url
   
   #Hack general caching until circle does not support global env variables
   prepare_caching_file: &prepare_caching_file

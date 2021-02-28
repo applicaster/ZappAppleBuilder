@@ -95,7 +95,8 @@ class Store < BuildType
         skip_screenshots: true,
         skip_metadata: true,
         precheck_include_in_app_purchases: false,
-        run_precheck_before_submit: false
+        run_precheck_before_submit: false,
+        ignore_language_directory_validation: true
       )
 
     end
