@@ -119,7 +119,47 @@ class BuildType < BaseHelper
     end
 
     validate_version_number(options) if options[:version_number]
-    validate_appstoreconnect_credentials(options) if options[:appstore_api_key_id]
+
+    if options[:appstore_api_key_id]
+      validate_appstoreconnect_credentials(options)
+      add_appstoreconnect_api_key(options)
+      validate_appstoreconnect_latest_version(options)
+    end
+
+  end
+
+  def add_appstoreconnect_api_key(options)
+    current(__callee__.to_s)
+    appstore_api_key_id = options[:appstore_api_key_id]
+    appstore_api_issuer_id = options[:appstore_api_issuer_id]
+    appstore_api_key_folder = options[:appstore_api_key_folder]
+    file_path = "#{appstore_api_key_folder}/AuthKey_#{appstore_api_key_id}.p8"
+    key_content = File.binread("#{file_path}")
+    @fastlane.app_store_connect_api_key(
+      key_id: appstore_api_key_id,
+      issuer_id: appstore_api_issuer_id,
+      key_content: key_content,
+      duration: 2400, # optional
+      in_house: false # optional but may be required if using match/sigh
+    )
+  end
+
+  def validate_appstoreconnect_latest_version(options)
+    current(__callee__.to_s)
+
+    latest_app_version_info = @fastlane.get_latest_app_version_info(
+      app_identifier: @@envHelper.bundle_identifier,
+      platform: @@envHelper.platform_name
+    )
+
+    error_message = "App version `#{latest_app_version_info.version_string}` for platform `#{@@envHelper.platform_name}` is available in AppStoreConnect with `PENDING DEVELOPER RELEASE` state. Can not create a new version unless this version is released or rejected"
+    begin
+      raise error_message unless latest_app_version_info.app_store_state != 'PENDING_DEVELOPER_RELEASE'
+
+      puts("VALID: New app version can be uploaded to the AppStoreConnect".colorize(:green))
+    rescue StandardError => e
+      raise e.message
+    end
   end
 
   def validate_version_number(options)
