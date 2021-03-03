@@ -75,17 +75,6 @@ class Store < BuildType
       ]
     )
 
-    # set appstore api key
-    puts('Setting AppStore API Key')
-    key_content = File.binread("#{appstore_api_key_folder}/AuthKey_#{appstore_api_key_id}.p8")
-    @fastlane.app_store_connect_api_key(
-      key_id: appstore_api_key_id,
-      issuer_id: appstore_api_issuer_id,
-      key_content: key_content,
-      duration: 1200, # optional
-      in_house: false # optional but may be required if using match/sigh
-    )
-
     puts('Starting app delivery to AppStoreConnect')
     deliver_output = capture_stream($stdout) do
       @fastlane.deliver(
@@ -139,6 +128,7 @@ class Store < BuildType
       certificate_password: @@envHelper.distribution_key_password,
       provisioning_profile_path: @projectHelper.distribution_provisioning_profile_path,
       version_number: @@envHelper.version_name,
+      appstore_api_key_folder: appstore_api_key_folder,
       appstore_api_key_id: appstore_api_key_id,
       appstore_api_issuer_id: appstore_api_issuer_id
     )
