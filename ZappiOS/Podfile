@@ -63,11 +63,11 @@ end
 
 unless remove_app_extensions
   target 'NotificationServiceExtension' do
-      # Zaptool notification service extension pods - Do not remove or change.
+    # Zaptool notification service extension pods - Do not remove or change.
   end
 
   target 'NotificationContentExtension' do
-      # Zaptool notification content extension pods - Do not remove or change.
+    # Zaptool notification content extension pods - Do not remove or change.
   end
 end
 
