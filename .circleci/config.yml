@@ -5,7 +5,7 @@ parameters:
     default: "4.1.7"
   general-caching-key:
     type: string
-    default: "ZappApple_Cache_1.0.8.0 
+    default: "ZappApple_Cache_1.0.8.0"
 notify:
   webhooks:
     - url: https://zapp.applicaster.com/callbacks/build_status/circleci_builds
@@ -24,20 +24,20 @@ references:
       BUILD_PATH: ~/build_debug
       HOMEBREW_NO_AUTO_UPDATE: "1"
       SPACESHIP_SKIP_2FA_UPGRADE: "1"
-      
+
       #fastlane variables
       LC_ALL: "en_US.UTF-8"
       LANG: "en_US.UTF-8"
 
   add_new_wwdr_intermediate_certificate: &add_new_wwdr_intermediate_certificate
-    run: 
+    run:
       name: Add New WWDR Intermediate Certificate
       command: |
         curl https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer -o AppleWWDRCAG3.cer
         sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain AppleWWDRCAG3.cer
 
   prepare_build_parameters: &prepare_build_parameters
-    run: 
+    run:
       name: Prepare build parameters
       command: |
         values=`curl -s -X GET $build_params_url`
@@ -46,12 +46,12 @@ references:
         source $BASH_ENV
 
   print_build_parameters: &print_build_parameters
-    run: 
+    run:
       name: Print build parameters
       command: |
         echo $app_name
         echo $bundle_identifier
-  
+
   #Hack general caching until circle does not support global env variables
   prepare_caching_file: &prepare_caching_file
     run: echo "<< pipeline.parameters.general-caching-key >>" > ~/_caching_file
@@ -399,7 +399,7 @@ jobs:
             fi
 
       - checkout
-      
+
       - *add_new_wwdr_intermediate_certificate
       - *prepare_caching_file
       - *prepare_zapptool_version_file
