@@ -265,10 +265,10 @@ class BaseHelper
 
     file_path = "#{path}/#{target}/Entitlements/#{target}-#{build_type}.entitlements"
 
-    if groups.count > 0 
+    if groups.count > 0
       @fastlane.set_info_plist_value(
         path: file_path.to_s,
-        key: "com.apple.security.application-groups",
+        key: 'com.apple.security.application-groups',
         value: []
       )
 

@@ -51,11 +51,10 @@ platform :ios do
   end
 
   before_all do
-
   end
 
   lane :remove_app_extensions_targets do |options|
-    Dir.chdir("#{ENV['PWD'].to_s}"){
+    Dir.chdir((ENV['PWD']).to_s) do
       project_name = options[:project_name]
       project_path = "#{project_name}/#{project_name}.xcodeproj"
       project_scheme = project_name
@@ -66,8 +65,8 @@ platform :ios do
           project_scheme: project_scheme
         )
       end
-    }
-  end 
+    end
+  end
 
   lane :prepare_environment do |options|
     set_initial_context
@@ -88,9 +87,7 @@ platform :ios do
   lane :build do |options|
     set_initial_context
     envHelper = EnvironmentHelper.new
-    unless envHelper.bundle_identifier.to_s.strip.empty?
-      BuildTypeFactory.new(fastlane: self).build(options)
-    end
+    BuildTypeFactory.new(fastlane: self).build(options) unless envHelper.bundle_identifier.to_s.strip.empty?
   end
 end
 
@@ -115,7 +112,7 @@ def set_device_family
   ENV['DEVICE_FAMILY'] = '1,2'
   ENV['DEVICE_FAMILY'] = '1' if device_family == 'iphone'
   ENV['DEVICE_FAMILY'] = '2' if device_family == 'ipad'
-  end
+end
 
 def save_param_to_file(name, value)
   folder_name = "#{ENV['PWD']}/.fastlane_params"

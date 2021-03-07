@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class EnterpriseDebugAppExtensions < AppExtensions
-
   def extension_prepare(options)
     username = options[:username]
     team_id = options[:team_id]
@@ -74,7 +73,7 @@ class EnterpriseDebugAppExtensions < AppExtensions
       )
 
     else
-      
+
       # notification extension disabled
       sh("echo '#{extension_type} disabled'")
     end

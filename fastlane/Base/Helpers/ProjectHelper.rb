@@ -5,6 +5,7 @@ import 'Base/Helpers/AssetsCatalogHelper.rb'
 
 class ProjectHelper < BaseHelper
   attr_accessor :assetsCatalogHelper
+
   def initialize(options = {})
     super
     @assetsCatalogHelper = AssetsCatalogHelper.new(fastlane: @fastlane)

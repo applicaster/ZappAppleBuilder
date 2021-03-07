@@ -8,6 +8,7 @@ import 'Base/Helpers/BaseHelper.rb'
 
 class AppCenterHelper < BaseHelper
   attr_accessor :projectHelper
+
   def initialize(options = {})
     super
     @projectHelper = options[:projectHelper]

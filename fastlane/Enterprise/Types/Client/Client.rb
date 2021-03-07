@@ -200,5 +200,5 @@ class EnterpriseClient < BuildTypeEnterprise
 
   def zapp_build_type
     @@envHelper.with_release == 'true' ? 'release' : 'debug'
-  end 
+  end
 end

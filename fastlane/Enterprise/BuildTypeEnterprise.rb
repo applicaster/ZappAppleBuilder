@@ -20,7 +20,8 @@ class BuildTypeEnterprise < BuildType
     # delete spotlight subscription entitlements if exists
     remove_key_from_entitlements(@projectHelper.name.to_s, 'Release', 'com.apple.smoot.subscriptionservice')
     # delete sso entitlements if exists
-    remove_key_from_entitlements(@projectHelper.name.to_s, 'Release', 'com.apple.developer.video-subscriber-single-sign-on')
+    remove_key_from_entitlements(@projectHelper.name.to_s, 'Release',
+                                 'com.apple.developer.video-subscriber-single-sign-on')
   end
 
   def enterprise_build_type

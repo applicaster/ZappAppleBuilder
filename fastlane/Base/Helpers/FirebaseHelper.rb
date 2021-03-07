@@ -7,6 +7,7 @@ import 'Base/Helpers/BaseHelper.rb'
 
 class FirebaseHelper < BaseHelper
   attr_accessor :projectHelper
+
   def initialize(options = {})
     super
     @projectHelper = options[:projectHelper]

@@ -15,6 +15,7 @@ import 'Base/Helpers/AppCenterHelper.rb'
 
 class BuildType < BaseHelper
   attr_accessor :projectHelper, :firebaseHelper, :appCenterHelper, :appExtensions
+
   def initialize(options = {})
     super
     @projectHelper = ProjectHelper.new(fastlane: @fastlane)
@@ -65,9 +66,7 @@ class BuildType < BaseHelper
     )
 
     debug_environment = 'YES'
-    if (build_type == 'enterprise') || (build_type == 'store')
-      debug_environment = 'NO'
-    end
+    debug_environment = 'NO' if (build_type == 'enterprise') || (build_type == 'store')
 
     @projectHelper.update_features_customization(
       name: 'DebugEnvironment',
@@ -125,7 +124,6 @@ class BuildType < BaseHelper
       add_appstoreconnect_api_key(options)
       validate_appstoreconnect_latest_version(options)
     end
-
   end
 
   def add_appstoreconnect_api_key(options)
@@ -134,7 +132,7 @@ class BuildType < BaseHelper
     appstore_api_issuer_id = options[:appstore_api_issuer_id]
     appstore_api_key_folder = options[:appstore_api_key_folder]
     file_path = "#{appstore_api_key_folder}/AuthKey_#{appstore_api_key_id}.p8"
-    key_content = File.binread("#{file_path}")
+    key_content = File.binread(file_path.to_s)
     @fastlane.app_store_connect_api_key(
       key_id: appstore_api_key_id,
       issuer_id: appstore_api_issuer_id,
@@ -144,7 +142,7 @@ class BuildType < BaseHelper
     )
   end
 
-  def validate_appstoreconnect_latest_version(options)
+  def validate_appstoreconnect_latest_version(_options)
     current(__callee__.to_s)
 
     latest_app_version_info = @fastlane.get_latest_app_version_info(
@@ -156,7 +154,7 @@ class BuildType < BaseHelper
     begin
       raise error_message unless latest_app_version_info.app_store_state != 'PENDING_DEVELOPER_RELEASE'
 
-      puts("VALID: New app version can be uploaded to the AppStoreConnect".colorize(:green))
+      puts('VALID: New app version can be uploaded to the AppStoreConnect'.colorize(:green))
     rescue StandardError => e
       raise e.message
     end
@@ -180,18 +178,19 @@ class BuildType < BaseHelper
     appstore_api_key_id = options[:appstore_api_key_id]
     appstore_api_issuer_id = options[:appstore_api_issuer_id]
     error_message = 'Failed to validate AppStoreConnect credentials'
-    Dir.chdir("#{@@envHelper.root_path}"){
-      filename = "./providers_list.json"
+    Dir.chdir(@@envHelper.root_path.to_s) do
+      filename = './providers_list.json'
       begin
         cmd = "xcrun altool --list-providers --apiKey \"#{appstore_api_key_id}\" --apiIssuer \"#{appstore_api_issuer_id}\" --output-format json > #{filename}"
-        system("#{cmd}")
+        system(cmd.to_s)
         result = File.read(filename.to_s).strip if File.exist? filename.to_s
         raise error_message unless result['WWDRTeamID']
+
         puts("VALID: AppStoreConnect credentials are Ok\n".colorize(:green))
       rescue StandardError => e
         raise "#{error_message} \n\n #{sh("cat #{filename} | jq .")}"
       end
-    }
+    end
   end
 
   def validate_distribution_certificate_expiration(options)
@@ -235,9 +234,7 @@ class BuildType < BaseHelper
       hasCertificate = false
       provisioning_profile_certificates.each do |raw|
         certificate = OpenSSL::X509::Certificate.new(raw.string)
-        if certificate.public_key.to_s == p12.certificate.public_key.to_s
-          hasCertificate = true
-        end
+        hasCertificate = true if certificate.public_key.to_s == p12.certificate.public_key.to_s
       end
 
       error_message = 'Provisioning Profile is not signed with provided certificate'
@@ -333,7 +330,7 @@ class BuildType < BaseHelper
       s3_upload(
         bundle_identifier: options[:bundle_identifier],
         ipa: "#{circle_artifacts_folder_path}/#{build_type}/#{@projectHelper.scheme}-#{build_type}.ipa",
-        dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@projectHelper.scheme}-#{build_type}.app.dSYM.zip",
+        dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@projectHelper.scheme}-#{build_type}.app.dSYM.zip"
       )
       puts('Upload application to MS App Center')
       @appCenterHelper.upload_app(options)

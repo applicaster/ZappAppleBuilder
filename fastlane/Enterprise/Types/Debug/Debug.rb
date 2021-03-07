@@ -8,6 +8,7 @@ import 'Enterprise/BuildTypeEnterprise.rb'
 
 class EnterpriseDebug < BuildTypeEnterprise
   attr_accessor :enterpriseDebugAppExtensions
+
   def initialize(options = {})
     super
     @enterpriseDebugAppExtensions = EnterpriseDebugAppExtensions.new(fastlane: @fastlane, projectHelper: @projectHelper)
@@ -212,7 +213,7 @@ class EnterpriseDebug < BuildTypeEnterprise
   def perform_signing_validation
     current(__callee__.to_s)
     super
-    
+
     validate(
       certificate_path: certificate_path,
       certificate_password: ENV['KEY_PASSWORD']

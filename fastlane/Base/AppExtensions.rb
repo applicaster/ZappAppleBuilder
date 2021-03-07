@@ -7,6 +7,7 @@ import 'Base/Helpers/ProjectHelper.rb'
 
 class AppExtensions < BaseHelper
   attr_accessor :projectHelper
+
   def initialize(options = {})
     super
     @projectHelper = options[:projectHelper]
@@ -22,7 +23,6 @@ class AppExtensions < BaseHelper
     extension_target_names.each do |extension_target_name|
       remove_from_project(extension_target_name, options)
     end
-
   end
 
   def remove_from_project(target_name, options)

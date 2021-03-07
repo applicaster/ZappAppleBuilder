@@ -28,10 +28,10 @@ class Store < BuildType
           @@envHelper.bundle_identifier => main_prov_profile_specifier
         }
       }
-    else 
+    else
       notification_service_extension_prov_profile_specifier = @appExtensions.provisioning_profile_uuid(@appExtensions.notification_service_extension_key)
       notification_content_extension_prov_profile_specifier = @appExtensions.provisioning_profile_uuid(@appExtensions.notification_content_extension_key)
-    
+
       export_options = {
         compileBitcode: true,
         provisioningProfiles: {
@@ -87,7 +87,6 @@ class Store < BuildType
         run_precheck_before_submit: false,
         ignore_language_directory_validation: true
       )
-
     end
 
     # print deliver output
@@ -159,7 +158,6 @@ class Store < BuildType
       keychain_name: @@envHelper.keychain_name,
       keychain_password: @@envHelper.keychain_password
     )
-
   end
 
   def prepare_build
@@ -254,12 +252,12 @@ class Store < BuildType
   def appstore_api_issuer_id
     (ENV['appstore_api_issuer_id']).to_s
   end
-    
+
   def appstore_api_key_folder
-    "./private_keys"
+    './private_keys'
   end
 
-  def isEnterpriseBuild
+  def is_enterprise_build
     current(__callee__.to_s)
 
     provisioning_profile = get_provisioning_profile_content(@projectHelper.distribution_provisioning_profile_path)
@@ -268,9 +266,9 @@ class Store < BuildType
     puts("Checking if the provisioning profile related to Enterprise account - #{provisioning_profile_is_enterprise}".colorize(:red))
 
     if provisioning_profile_is_enterprise == true
-      ENV['debug_distribution_key_password']=ENV['distribution_key_password']
-      ENV['debug_distribution_key_url']=ENV['distribution_key_url']
-      ENV['debug_provisioning_profile_url']=ENV['provisioning_profile_url']
+      ENV['debug_distribution_key_password'] = ENV['distribution_key_password']
+      ENV['debug_distribution_key_url'] = ENV['distribution_key_url']
+      ENV['debug_provisioning_profile_url'] = ENV['provisioning_profile_url']
     end
 
     provisioning_profile_is_enterprise
