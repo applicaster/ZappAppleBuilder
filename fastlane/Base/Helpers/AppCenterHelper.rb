@@ -7,11 +7,11 @@ import 'Base/Helpers/ProjectHelper.rb'
 import 'Base/Helpers/BaseHelper.rb'
 
 class AppCenterHelper < BaseHelper
-  attr_accessor :projectHelper
+  attr_accessor :project_helper
 
   def initialize(options = {})
     super
-    @projectHelper = options[:projectHelper]
+    @project_helper = options[:project_helper]
   end
 
   def fetch_identifiers(bundle_identifier)
@@ -22,7 +22,7 @@ class AppCenterHelper < BaseHelper
   end
 
   def read_value_from_file(bundle_identifier, type)
-    folder_name = "#{@@envHelper.root_path}/.ms_app_center"
+    folder_name = "#{@@env_helper.root_path}/.ms_app_center"
     folder_name = folder_name.gsub('fastlane/', '')
     filename = "#{folder_name}/#{bundle_identifier}_#{type}"
     File.read(filename.to_s).strip if File.exist? filename.to_s
@@ -35,7 +35,7 @@ class AppCenterHelper < BaseHelper
       build_type = options[:build_type]
       zapp_build_type = options[:zapp_build_type]
       bundle_identifier = options[:bundle_identifier]
-      app_display_name = @@envHelper.app_name
+      app_display_name = @@env_helper.app_name
       app_name = read_value_from_file(bundle_identifier, 'appname')
       app_secret = read_value_from_file(bundle_identifier, 'appsecret')
       app_distribution_group = read_value_from_file(bundle_identifier, 'appgroup')
@@ -51,8 +51,8 @@ class AppCenterHelper < BaseHelper
         app_platform: app_platform,
         app_display_name: app_display_name,
         app_name: app_name,
-        ipa: "#{circle_artifacts_folder_path}/#{build_type}/#{@projectHelper.scheme}-#{build_type}.ipa",
-        dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@projectHelper.scheme}-#{build_type}.app.dSYM.zip",
+        ipa: "#{circle_artifacts_folder_path}/#{build_type}/#{@project_helper.scheme}-#{build_type}.ipa",
+        dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@project_helper.scheme}-#{build_type}.app.dSYM.zip",
         notify_testers: false
       )
 
@@ -72,14 +72,14 @@ class AppCenterHelper < BaseHelper
 
     app_secret = read_value_from_file(bundle_identifier, 'appsecret')
 
-    @projectHelper.update_features_customization(
+    @project_helper.update_features_customization(
       name: 'MSAppCenterAppSecret',
       value: app_secret
     )
 
     # add appcenter url scheme to the app
     update_url_schemes(
-      plist_path: @projectHelper.plist_path.to_s,
+      plist_path: @project_helper.plist_path.to_s,
       scheme: "appcenter-#{app_secret}"
     )
     puts "MS App Center app secret #{app_secret} was updated successfully for bundle identifier: #{bundle_identifier}"
@@ -88,7 +88,7 @@ class AppCenterHelper < BaseHelper
   def save_build_params_for_type(options)
     current(__callee__.to_s)
 
-    folder_name = "#{@@envHelper.root_path}/.ms_app_center"
+    folder_name = "#{@@env_helper.root_path}/.ms_app_center"
     folder_name = folder_name.gsub('fastlane/', '')
     filename = "#{folder_name}/#{options[:zapp_build_type]}_upload_params.json"
     hash = build_params_hash_for_type(options)
@@ -102,16 +102,16 @@ class AppCenterHelper < BaseHelper
   def build_params_hash_for_type(options)
     current(__callee__.to_s)
 
-    if @@envHelper.is_tvos
-      s3DestinationPathParams = @@envHelper.s3_upload_path(options[:bundle_identifier])
-      s3DistanationPath = "https://assets-secure.applicaster.com/#{s3DestinationPathParams}/#{@projectHelper.scheme}-#{options[:build_type]}.ipa"
+    if @@env_helper.is_tvos
+      s3DestinationPathParams = @@env_helper.s3_upload_path(options[:bundle_identifier])
+      s3DistanationPath = "https://assets-secure.applicaster.com/#{s3DestinationPathParams}/#{@project_helper.scheme}-#{options[:build_type]}.ipa"
       time = Time.new
       {
         uploaded_at: time.inspect,
         download_url: s3DistanationPath
       }
     else
-      s3DestinationPathParams = @@envHelper.s3_generic_upload_path(options[:bundle_identifier])
+      s3DestinationPathParams = @@env_helper.s3_generic_upload_path(options[:bundle_identifier])
       s3InstallURL = "https://assets-secure.applicaster.com/#{s3DestinationPathParams}/index.html"
 
       release_info = options[:build_information]

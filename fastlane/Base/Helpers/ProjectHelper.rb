@@ -4,11 +4,11 @@ import 'Base/Helpers/BaseHelper.rb'
 import 'Base/Helpers/AssetsCatalogHelper.rb'
 
 class ProjectHelper < BaseHelper
-  attr_accessor :assetsCatalogHelper
+  attr_accessor :assets_catalog_helper
 
   def initialize(options = {})
     super
-    @assetsCatalogHelper = AssetsCatalogHelper.new(fastlane: @fastlane)
+    @assets_catalog_helper = AssetsCatalogHelper.new(fastlane: @fastlane)
   end
 
   def change_system_capability(options)
@@ -42,11 +42,11 @@ class ProjectHelper < BaseHelper
   end
 
   def name
-    @@envHelper.device_target == 'apple_tv' ? 'ZappTvOS' : 'ZappiOS'
+    @@env_helper.device_target == 'apple_tv' ? 'ZappTvOS' : 'ZappiOS'
   end
 
   def path
-    "#{@@envHelper.root_path}/#{folder_name}"
+    "#{@@env_helper.root_path}/#{folder_name}"
   end
 
   def credentials_folder_path
@@ -54,11 +54,11 @@ class ProjectHelper < BaseHelper
   end
 
   def customizations_folder_path
-    "#{@@envHelper.root_path}/ZappApple/Customization"
+    "#{@@env_helper.root_path}/ZappApple/Customization"
   end
 
   def build_path
-    "#{@@envHelper.root_path}/build"
+    "#{@@env_helper.root_path}/build"
   end
 
   def distribution_certificate_filename
@@ -90,8 +90,8 @@ class ProjectHelper < BaseHelper
     update_info_plist_versions(
       xcodeproj: xcodeproj_path,
       plist_path: "#{options[:target_name]}/Info.plist",
-      bundle_version: @@envHelper.build_version,
-      bundle_short_version: @@envHelper.version_name
+      bundle_version: @@env_helper.build_version,
+      bundle_short_version: @@env_helper.version_name
     )
 
     # update app identifier to the enterprise one
@@ -117,10 +117,10 @@ class ProjectHelper < BaseHelper
 
   def organizeResourcesToAssetsCatalog
     current(__callee__.to_s)
-    @assetsCatalogHelper.organizeResourcesToAssetsCatalog(
+    @assets_catalog_helper.organizeResourcesToAssetsCatalog(
       assets_catalog: 'Assets.xcassets',
       path: "#{path}/#{folder_name}",
-      platform: @@envHelper.platform_name
+      platform: @@env_helper.platform_name
     )
   end
 end

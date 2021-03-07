@@ -14,14 +14,14 @@ import 'Base/Helpers/ProjectHelper.rb'
 import 'Base/Helpers/AppCenterHelper.rb'
 
 class BuildType < BaseHelper
-  attr_accessor :projectHelper, :firebaseHelper, :appCenterHelper, :appExtensions
+  attr_accessor :project_helper, :firebase_helper, :app_center_helper, :app_extensions_helper
 
   def initialize(options = {})
     super
-    @projectHelper = ProjectHelper.new(fastlane: @fastlane)
-    @firebaseHelper = FirebaseHelper.new(fastlane: @fastlane, projectHelper: @projectHelper)
-    @appCenterHelper = AppCenterHelper.new(fastlane: @fastlane, projectHelper: @projectHelper)
-    @appExtensions = AppExtensions.new(fastlane: @fastlane, projectHelper: @projectHelper)
+    @project_helper = ProjectHelper.new(fastlane: @fastlane)
+    @firebase_helper = FirebaseHelper.new(fastlane: @fastlane, project_helper: @project_helper)
+    @app_center_helper = AppCenterHelper.new(fastlane: @fastlane, project_helper: @project_helper)
+    @app_extensions_helper = AppExtensions.new(fastlane: @fastlane, project_helper: @project_helper)
   end
 
   def build_type
@@ -29,12 +29,12 @@ class BuildType < BaseHelper
   end
 
   def prepare_environment
-    @appExtensions.remove_app_extensions_targets_from_project(
-      project_path: @projectHelper.xcodeproj_path.to_s,
-      project_scheme: @projectHelper.scheme
+    @app_extensions_helper.remove_app_extensions_targets_from_project(
+      project_path: @project_helper.xcodeproj_path.to_s,
+      project_scheme: @project_helper.scheme
     )
     fetch_app_center_identifiers
-    @projectHelper.organizeResourcesToAssetsCatalog
+    @project_helper.organizeResourcesToAssetsCatalog
   end
 
   def download_signing_files
@@ -50,34 +50,34 @@ class BuildType < BaseHelper
   end
 
   def fetch_app_center_identifiers
-    @appCenterHelper.fetch_identifiers(@@envHelper.bundle_identifier.to_s)
+    @app_center_helper.fetch_identifiers(@@env_helper.bundle_identifier.to_s)
   end
 
   def remove_key_from_entitlements(target, build_type, key)
-    file_path = "#{@projectHelper.path}/#{target}/Entitlements/#{target}-#{build_type}.entitlements"
+    file_path = "#{@project_helper.path}/#{target}/Entitlements/#{target}-#{build_type}.entitlements"
 
     sh("echo $(/usr/libexec/PlistBuddy -c \"Delete :#{key}\" #{file_path} 2>/dev/null)")
   end
 
   def update_parameters_in_feature_optimization_json
-    @projectHelper.update_features_customization(
+    @project_helper.update_features_customization(
       name: 'S3Hostname',
-      value: @@envHelper.s3_hostname
+      value: @@env_helper.s3_hostname
     )
 
     debug_environment = 'YES'
     debug_environment = 'NO' if (build_type == 'enterprise') || (build_type == 'store')
 
-    @projectHelper.update_features_customization(
+    @project_helper.update_features_customization(
       name: 'DebugEnvironment',
       value: debug_environment
     )
   end
 
   def add_wifi_system_capability_if_needed
-    requires_wifi_capability = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :com.apple.developer.networking.wifi-info\" #{@projectHelper.path}/#{@projectHelper.name}/Entitlements/#{@projectHelper.name}-Release.entitlements 2>/dev/null | grep -c true)")
+    requires_wifi_capability = sh("echo $(/usr/libexec/PlistBuddy -c \"Print :com.apple.developer.networking.wifi-info\" #{@project_helper.path}/#{@project_helper.name}/Entitlements/#{@project_helper.name}-Release.entitlements 2>/dev/null | grep -c true)")
     if requires_wifi_capability.to_i > 0
-      @projectHelper.change_system_capability(
+      @project_helper.change_system_capability(
         capability: 'com.apple.AccessWiFi',
         old: 0,
         new: 1
@@ -146,11 +146,11 @@ class BuildType < BaseHelper
     current(__callee__.to_s)
 
     latest_app_version_info = @fastlane.get_latest_app_version_info(
-      app_identifier: @@envHelper.bundle_identifier,
-      platform: @@envHelper.platform_name
+      app_identifier: @@env_helper.bundle_identifier,
+      platform: @@env_helper.platform_name
     )
 
-    error_message = "App version `#{latest_app_version_info.version_string}` for platform `#{@@envHelper.platform_name}` is available in AppStoreConnect with `PENDING DEVELOPER RELEASE` state. Can not create a new version unless this version is released or rejected"
+    error_message = "App version `#{latest_app_version_info.version_string}` for platform `#{@@env_helper.platform_name}` is available in AppStoreConnect with `PENDING DEVELOPER RELEASE` state. Can not create a new version unless this version is released or rejected"
     begin
       raise error_message unless latest_app_version_info.app_store_state != 'PENDING_DEVELOPER_RELEASE'
 
@@ -178,7 +178,7 @@ class BuildType < BaseHelper
     appstore_api_key_id = options[:appstore_api_key_id]
     appstore_api_issuer_id = options[:appstore_api_issuer_id]
     error_message = 'Failed to validate AppStoreConnect credentials'
-    Dir.chdir(@@envHelper.root_path.to_s) do
+    Dir.chdir(@@env_helper.root_path.to_s) do
       filename = './providers_list.json'
       begin
         cmd = "xcrun altool --list-providers --apiKey \"#{appstore_api_key_id}\" --apiIssuer \"#{appstore_api_issuer_id}\" --output-format json > #{filename}"
@@ -282,8 +282,8 @@ class BuildType < BaseHelper
       pp_bundle_identifier = provisioning_profile['Entitlements']['application-identifier']
       prefix = provisioning_profile['ApplicationIdentifierPrefix']
       pp_bundle_identifier["#{prefix.first}."] = ''
-      unless pp_bundle_identifier == @@envHelper.bundle_identifier
-        raise "#{error_message} (|#{pp_bundle_identifier}| != |#{@@envHelper.bundle_identifier}|)"
+      unless pp_bundle_identifier == @@env_helper.bundle_identifier
+        raise "#{error_message} (|#{pp_bundle_identifier}| != |#{@@env_helper.bundle_identifier}|)"
       end
 
       puts("VALID: Provisioning Profile bundle identifier matches app required bundle identifier\n".colorize(:green))
@@ -314,12 +314,12 @@ class BuildType < BaseHelper
 
     build_type = options[:build_type]
 
-    if @@envHelper.is_tvos
+    if @@env_helper.is_tvos
       puts('Upload application to S3')
-      s3DestinationPathParams = @@envHelper.s3_upload_path(options[:bundle_identifier])
-      s3DistanationPath = "#{@@envHelper.s3_bucket_name}/#{s3DestinationPathParams}"
-      sh("aws --region #{@@envHelper.aws_region} s3 sync #{circle_artifacts_folder_path}/#{build_type} s3://#{s3DistanationPath} --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers --delete")
-      @appCenterHelper.save_build_params_for_type(
+      s3DestinationPathParams = @@env_helper.s3_upload_path(options[:bundle_identifier])
+      s3DistanationPath = "#{@@env_helper.s3_bucket_name}/#{s3DestinationPathParams}"
+      sh("aws --region #{@@env_helper.aws_region} s3 sync #{circle_artifacts_folder_path}/#{build_type} s3://#{s3DistanationPath} --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers --delete")
+      @app_center_helper.save_build_params_for_type(
         bundle_identifier: options[:bundle_identifier],
         zapp_build_type: options[:zapp_build_type],
         build_type: build_type,
@@ -329,23 +329,23 @@ class BuildType < BaseHelper
     else
       s3_upload(
         bundle_identifier: options[:bundle_identifier],
-        ipa: "#{circle_artifacts_folder_path}/#{build_type}/#{@projectHelper.scheme}-#{build_type}.ipa",
-        dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@projectHelper.scheme}-#{build_type}.app.dSYM.zip"
+        ipa: "#{circle_artifacts_folder_path}/#{build_type}/#{@project_helper.scheme}-#{build_type}.ipa",
+        dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@project_helper.scheme}-#{build_type}.app.dSYM.zip"
       )
       puts('Upload application to MS App Center')
-      @appCenterHelper.upload_app(options)
+      @app_center_helper.upload_app(options)
     end
   end
 
   def team_id
-    read_param_from_file("#{@@envHelper.bundle_identifier}_TEAM_ID")
+    read_param_from_file("#{@@env_helper.bundle_identifier}_TEAM_ID")
   end
 
   def team_name
-    read_param_from_file("#{@@envHelper.bundle_identifier}_TEAM_NAME")
+    read_param_from_file("#{@@env_helper.bundle_identifier}_TEAM_NAME")
   end
 
   def provisioning_profile_uuid
-    read_param_from_file("#{@@envHelper.bundle_identifier}_PROFILE_UDID")
+    read_param_from_file("#{@@env_helper.bundle_identifier}_PROFILE_UDID")
   end
 end

@@ -58,9 +58,9 @@ platform :ios do
       project_name = options[:project_name]
       project_path = "#{project_name}/#{project_name}.xcodeproj"
       project_scheme = project_name
-      appExtensions = AppExtensions.new
+      app_extensions_helper = AppExtensions.new
       unless project_name.to_s.strip.empty?
-        appExtensions.remove_app_extensions_targets_from_project(
+        app_extensions_helper.remove_app_extensions_targets_from_project(
           project_path: project_path,
           project_scheme: project_scheme
         )
@@ -70,24 +70,24 @@ platform :ios do
 
   lane :prepare_environment do |options|
     set_initial_context
-    envHelper = EnvironmentHelper.new
-    unless envHelper.bundle_identifier.to_s.strip.empty?
+    env_helper = EnvironmentHelper.new
+    unless env_helper.bundle_identifier.to_s.strip.empty?
       BuildTypeFactory.new(fastlane: self).prepare_environment(options)
     end
   end
 
   lane :validate_app_signing do |options|
     set_initial_context
-    envHelper = EnvironmentHelper.new
-    unless envHelper.bundle_identifier.to_s.strip.empty?
+    env_helper = EnvironmentHelper.new
+    unless env_helper.bundle_identifier.to_s.strip.empty?
       BuildTypeFactory.new(fastlane: self).perform_signing_validation(options)
     end
   end
 
   lane :build do |options|
     set_initial_context
-    envHelper = EnvironmentHelper.new
-    BuildTypeFactory.new(fastlane: self).build(options) unless envHelper.bundle_identifier.to_s.strip.empty?
+    env_helper = EnvironmentHelper.new
+    BuildTypeFactory.new(fastlane: self).build(options) unless env_helper.bundle_identifier.to_s.strip.empty?
   end
 end
 

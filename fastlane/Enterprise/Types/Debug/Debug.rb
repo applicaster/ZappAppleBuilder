@@ -11,7 +11,7 @@ class EnterpriseDebug < BuildTypeEnterprise
 
   def initialize(options = {})
     super
-    @enterpriseDebugAppExtensions = EnterpriseDebugAppExtensions.new(fastlane: @fastlane, projectHelper: @projectHelper)
+    @enterpriseDebugAppExtensions = EnterpriseDebugAppExtensions.new(fastlane: @fastlane, project_helper: @project_helper)
   end
 
   def build_type
@@ -30,7 +30,7 @@ class EnterpriseDebug < BuildTypeEnterprise
   end
 
   def fetch_app_center_identifiers
-    @appCenterHelper.fetch_identifiers(app_bundle_identifier.to_s)
+    @app_center_helper.fetch_identifiers(app_bundle_identifier.to_s)
   end
 
   def build
@@ -53,16 +53,16 @@ class EnterpriseDebug < BuildTypeEnterprise
     save_param_to_file(build_export_options, export_options.to_plist)
 
     build_app(
-      workspace: @projectHelper.xcworkspace_relative_path.to_s,
-      scheme: @projectHelper.scheme,
+      workspace: @project_helper.xcworkspace_relative_path.to_s,
+      scheme: @project_helper.scheme,
       configuration: build_configuration,
       include_bitcode: true,
       include_symbols: true,
       output_directory: "#{circle_artifacts_folder_path}/Enterprise",
       buildlog_path: "#{circle_artifacts_folder_path}/Enterprise",
-      output_name: "#{@projectHelper.scheme}-Enterprise",
-      build_path: @projectHelper.build_path,
-      derived_data_path: @projectHelper.build_path,
+      output_name: "#{@project_helper.scheme}-Enterprise",
+      build_path: @project_helper.build_path,
+      derived_data_path: @project_helper.build_path,
       xcargs: "RELEASE_SWIFT_OPTIMIZATION_LEVEL='-Onone' "\
               'RELEASE_COPY_PHASE_STRIP=NO '\
               "DEBUG_ENABLED_GCC='DEBUG=1' "\
@@ -93,7 +93,7 @@ class EnterpriseDebug < BuildTypeEnterprise
 
     # delete temp keychain
     delete_keychain(
-      name: @@envHelper.keychain_name
+      name: @@env_helper.keychain_name
     )
 
     # delete Invalid provisioning profiles for app
@@ -128,25 +128,25 @@ class EnterpriseDebug < BuildTypeEnterprise
     update_parameters_in_feature_optimization_json
 
     # update firebase configuration
-    @firebaseHelper.add_configuration_file('enterprise')
+    @firebase_helper.add_configuration_file('enterprise')
 
     # update app identifier to the enterprise one
     reset_info_plist_bundle_identifier(
-      xcodeproj: @projectHelper.xcodeproj_path,
-      plist_path: @projectHelper.plist_inner_path
+      xcodeproj: @project_helper.xcodeproj_path,
+      plist_path: @project_helper.plist_inner_path
     )
     update_app_identifier(
-      xcodeproj: @projectHelper.xcodeproj_path,
-      plist_path: @projectHelper.plist_inner_path,
+      xcodeproj: @project_helper.xcodeproj_path,
+      plist_path: @project_helper.plist_inner_path,
       app_identifier: app_bundle_identifier
     )
 
     # update ms_app_center app secret
-    @appCenterHelper.update_app_secret(app_bundle_identifier)
+    @app_center_helper.update_app_secret(app_bundle_identifier)
 
     # update project team identifier for all targets
     update_project_team(
-      xcodeproj: @projectHelper.xcodeproj_path,
+      xcodeproj: @project_helper.xcodeproj_path,
       teamid: team_id
     )
 
@@ -166,7 +166,7 @@ class EnterpriseDebug < BuildTypeEnterprise
         team_id: team_id,
         app_name: devportal_app_name,
         bundle_identifier: app_bundle_identifier,
-        p12_password: @@envHelper.accounts_account_id
+        p12_password: @@env_helper.accounts_account_id
       )
 
       prepare_app_group
@@ -183,8 +183,8 @@ class EnterpriseDebug < BuildTypeEnterprise
 
       # set info plist SupportedAppGroups param for app target
       set_info_plist_supported_groups_param(
-        xcodeproj: @projectHelper.xcodeproj_path,
-        plist_path: @projectHelper.plist_inner_path,
+        xcodeproj: @project_helper.xcodeproj_path,
+        plist_path: @project_helper.plist_inner_path,
         app_groups: [group_name(app_bundle_identifier).to_s]
       )
 
@@ -202,8 +202,8 @@ class EnterpriseDebug < BuildTypeEnterprise
       import_certificate(
         certificate_path: certificate_path,
         certificate_password: ENV['KEY_PASSWORD'],
-        keychain_name: @@envHelper.keychain_name,
-        keychain_password: @@envHelper.keychain_password
+        keychain_name: @@env_helper.keychain_name,
+        keychain_password: @@env_helper.keychain_password
       )
       sh("bundle exec fastlane fastlane-credentials add --username #{username} --password '#{password}'")
       ENV['FASTLANE_PASSWORD'] = password
@@ -230,14 +230,14 @@ class EnterpriseDebug < BuildTypeEnterprise
     current(__callee__.to_s)
 
     # create group for app
-    sh("bundle exec fastlane produce group -g #{group_name(app_bundle_identifier)} -n '#{@@envHelper.bundle_identifier} Group' -u #{username} ")
+    sh("bundle exec fastlane produce group -g #{group_name(app_bundle_identifier)} -n '#{@@env_helper.bundle_identifier} Group' -u #{username} ")
     # add the app to the created group
     sh("bundle exec fastlane produce associate_group #{group_name(app_bundle_identifier)} -a #{app_bundle_identifier} -u #{username} ")
 
     # add group to entitlements for app target
     update_group_identifiers(
-      path: @projectHelper.path,
-      target: @projectHelper.name.to_s,
+      path: @project_helper.path,
+      target: @project_helper.name.to_s,
       build_type: 'Release',
       groups: [group_name(app_bundle_identifier).to_s]
     )
@@ -250,12 +250,12 @@ class EnterpriseDebug < BuildTypeEnterprise
       team_id: team_id,
       team_name: team_name,
       app_bundle_identifier: app_bundle_identifier,
-      extension_type: @appExtensions.notification_content_extension_key,
-      extension_target_name: @appExtensions.notification_content_extension_target_name,
+      extension_type: @app_extensions_helper.notification_content_extension_key,
+      extension_target_name: @app_extensions_helper.notification_content_extension_target_name,
       extension_app_name: notifications_content_extension_app_name,
       extension_bundle_identifier: notifications_content_extension_bundle_identifier,
-      extension_info_plist_inner_path: @appExtensions.notification_content_extension_info_plist_inner_path,
-      extension_info_plist_path: @appExtensions.notification_content_extension_info_plist_path
+      extension_info_plist_inner_path: @app_extensions_helper.notification_content_extension_info_plist_inner_path,
+      extension_info_plist_path: @app_extensions_helper.notification_content_extension_info_plist_path
     )
   end
 
@@ -266,18 +266,18 @@ class EnterpriseDebug < BuildTypeEnterprise
       team_id: team_id,
       team_name: team_name,
       app_bundle_identifier: app_bundle_identifier,
-      extension_type: @appExtensions.notification_service_extension_key,
-      extension_target_name: @appExtensions.notification_service_extension_target_name,
+      extension_type: @app_extensions_helper.notification_service_extension_key,
+      extension_target_name: @app_extensions_helper.notification_service_extension_target_name,
       extension_app_name: notifications_service_extension_app_name,
       extension_bundle_identifier: notifications_service_extension_bundle_identifier,
-      extension_info_plist_inner_path: @appExtensions.notification_service_extension_info_plist_inner_path,
-      extension_info_plist_path: @appExtensions.notification_service_extension_info_plist_path
+      extension_info_plist_inner_path: @app_extensions_helper.notification_service_extension_info_plist_inner_path,
+      extension_info_plist_path: @app_extensions_helper.notification_service_extension_info_plist_path
     )
   end
 
   def add_debug_ribbon_to_app_icon
     current(__callee__.to_s)
-    sh("sh #{@@envHelper.root_path}/Scripts/add-debug-ribbon-to-app-icon.sh #{ENV['PWD']} #{@projectHelper.name} #{@@envHelper.platform_name}")
+    sh("sh #{@@env_helper.root_path}/Scripts/add-debug-ribbon-to-app-icon.sh #{ENV['PWD']} #{@project_helper.name} #{@@env_helper.platform_name}")
   end
 
   def app_bundle_prefix
@@ -289,7 +289,7 @@ class EnterpriseDebug < BuildTypeEnterprise
   end
 
   def certificate_path
-    "#{@@envHelper.root_path}/Zapp-Signing/Enterprise/dist.p12"
+    "#{@@env_helper.root_path}/Zapp-Signing/Enterprise/dist.p12"
   end
 
   def username
@@ -309,22 +309,22 @@ class EnterpriseDebug < BuildTypeEnterprise
   end
 
   def devportal_app_name
-    @@envHelper.bundle_identifier.to_s
+    @@env_helper.bundle_identifier.to_s
   end
 
   def notifications_service_extension_app_name
-    "#{devportal_app_name}.#{@appExtensions.notification_service_extension_target_name}"
+    "#{devportal_app_name}.#{@app_extensions_helper.notification_service_extension_target_name}"
   end
 
   def notifications_content_extension_app_name
-    "#{devportal_app_name}.#{@appExtensions.notification_content_extension_target_name}"
+    "#{devportal_app_name}.#{@app_extensions_helper.notification_content_extension_target_name}"
   end
 
   def notifications_service_extension_bundle_identifier
-    "#{app_bundle_identifier}.#{@appExtensions.notification_service_extension_target_name}"
+    "#{app_bundle_identifier}.#{@app_extensions_helper.notification_service_extension_target_name}"
   end
 
   def notifications_content_extension_bundle_identifier
-    "#{app_bundle_identifier}.#{@appExtensions.notification_content_extension_target_name}"
+    "#{app_bundle_identifier}.#{@app_extensions_helper.notification_content_extension_target_name}"
   end
 end
