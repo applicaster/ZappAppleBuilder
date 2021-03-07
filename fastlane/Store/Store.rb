@@ -21,7 +21,7 @@ class Store < BuildType
     # get provisioning profiles specifiers
     main_prov_profile_specifier = provisioning_profile_uuid
 
-    if @@envHelper.isTvOS
+    if @@envHelper.is_tvos
       export_options = {
         compileBitcode: true,
         provisioningProfiles: {
@@ -79,7 +79,7 @@ class Store < BuildType
     deliver_output = capture_stream($stdout) do
       @fastlane.deliver(
         ipa: "#{circle_artifacts_folder_path}/Store/#{@projectHelper.scheme}-Store.ipa",
-        platform: @@envHelper.isTvOS ? 'appletvos' : 'ios',
+        platform: @@envHelper.is_tvos ? 'appletvos' : 'ios',
         force: true,
         skip_screenshots: true,
         skip_metadata: true,

@@ -314,7 +314,7 @@ class BuildType < BaseHelper
 
     build_type = options[:build_type]
 
-    if @@envHelper.isTvOS
+    if @@envHelper.is_tvos
       puts('Upload application to S3')
       s3DestinationPathParams = @@envHelper.s3_upload_path(options[:bundle_identifier])
       s3DistanationPath = "#{@@envHelper.s3_bucket_name}/#{s3DestinationPathParams}"
