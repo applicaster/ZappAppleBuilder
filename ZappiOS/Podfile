@@ -61,6 +61,7 @@ target 'ZappiOSTests' do
   inherit! :search_paths
 end
 
+unless remove_app_extensions
   target 'NotificationServiceExtension' do
     # Zaptool notification service extension pods - Do not remove or change.
   end
@@ -68,6 +69,8 @@ end
   target 'NotificationContentExtension' do
     # Zaptool notification content extension pods - Do not remove or change.
   end
+end
+
 post_install do |installer|
     flipper_post_install(installer) if setup_flipper
 
