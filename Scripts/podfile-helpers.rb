@@ -13,11 +13,12 @@ def should_add_flipper_on_local_build
 end
 
 def should_remove_app_extensions_on_local_build
-    # remove app extensions by default on local build
-    value = true
+    value = false
     if is_local_build
-    # keep app extensions based on zapptool param
-    value = false if File.file?(".zappToolParams/keep_app_extensions")
+        # remove app extensions by default on local build
+        value = true 
+        # keep app extensions based on zapptool param
+        value = false if File.file?(".zappToolParams/keep_app_extensions")
     end
     value
 end
