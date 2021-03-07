@@ -7,11 +7,12 @@ import 'Enterprise/Types/Debug/AppExtensions.rb'
 import 'Enterprise/BuildTypeEnterprise.rb'
 
 class EnterpriseDebug < BuildTypeEnterprise
-  attr_accessor :enterpriseDebugAppExtensions
+  attr_accessor :enterprise_debug_app_extensions_helper
 
   def initialize(options = {})
     super
-    @enterpriseDebugAppExtensions = EnterpriseDebugAppExtensions.new(fastlane: @fastlane, project_helper: @project_helper)
+    @enterprise_debug_app_extensions_helper = EnterpriseDebugAppExtensions.new(fastlane: @fastlane,
+                                                                     project_helper: @project_helper)
   end
 
   def build_type
@@ -245,7 +246,7 @@ class EnterpriseDebug < BuildTypeEnterprise
 
   def prepare_notification_content_extension
     current(__callee__.to_s)
-    @enterpriseDebugAppExtensions.extension_prepare(
+    @enterprise_debug_app_extensions_helper.extension_prepare(
       username: username,
       team_id: team_id,
       team_name: team_name,
@@ -261,7 +262,7 @@ class EnterpriseDebug < BuildTypeEnterprise
 
   def prepare_notification_service_extension
     current(__callee__.to_s)
-    @enterpriseDebugAppExtensions.extension_prepare(
+    @enterprise_debug_app_extensions_helper.extension_prepare(
       username: username,
       team_id: team_id,
       team_name: team_name,

@@ -12,17 +12,17 @@ class AssetsCatalogHelper < BaseHelper
     super
   end
 
-  def organizeResourcesToAssetsCatalog(options)
-    addResourcesImagesToAssetsCatalog(options)
-    updateAssetsCatalog(options)
+  def organize_resources_to_assets_catalog(options)
+    add_resources_images_to_assets_catalog(options)
+    update_assets_catalog(options)
   end
 
-  def addResourcesImagesToAssetsCatalog(options)
+  def add_resources_images_to_assets_catalog(options)
     pp 'Adding images from `Resources` folder to Assets catalog ...'
 
-    assetsCatalog = options[:assets_catalog]
+    assets_catalog = options[:assets_catalog]
     path = options[:path]
-    assets_catalog_path = "#{path}/#{assetsCatalog}"
+    assets_catalog_path = "#{path}/#{assets_catalog}"
 
     # Create asset catalog file if doesnt exists
     Dir.mkdir(assets_catalog_path.to_s) if File.directory?(assets_catalog_path.to_s) == false
@@ -54,14 +54,14 @@ class AssetsCatalogHelper < BaseHelper
     end
   end
 
-  def updateAssetsCatalog(options)
+  def update_assets_catalog(options)
     pp 'Cleaning unused assets placeholders ...'
 
-    assetsCatalog = options[:assets_catalog]
+    assets_catalog = options[:assets_catalog]
     path = options[:path]
     platform = options[:platform]
 
-    assets_catalog_path = "#{path}/#{assetsCatalog}"
+    assets_catalog_path = "#{path}/#{assets_catalog}"
 
     files = Dir["#{assets_catalog_path}/**/Contents.json"]
 
@@ -126,8 +126,8 @@ class AssetsCatalogHelper < BaseHelper
     sh("sips -g pixelWidth #{path} | tail -n1 | cut -d' ' -f4").to_i
   end
 
-  def generate_image(src, width, saveTo)
-    sh("sips -Z #{width} #{src} --out #{saveTo}")
+  def generate_image(src, width, save_to)
+    sh("sips -Z #{width} #{src} --out #{save_to}")
   end
 
   def generate_ipad_images_by_idiom_if_needed(images, file_path, idiom)

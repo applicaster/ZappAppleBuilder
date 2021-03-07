@@ -115,9 +115,9 @@ class ProjectHelper < BaseHelper
     "#{name}/Info.plist"
   end
 
-  def organizeResourcesToAssetsCatalog
+  def organize_resources_to_assets_catalog
     current(__callee__.to_s)
-    @assets_catalog_helper.organizeResourcesToAssetsCatalog(
+    @assets_catalog_helper.organize_resources_to_assets_catalog(
       assets_catalog: 'Assets.xcassets',
       path: "#{path}/#{folder_name}",
       platform: @@env_helper.platform_name

@@ -34,7 +34,7 @@ class BuildType < BaseHelper
       project_scheme: @project_helper.scheme
     )
     fetch_app_center_identifiers
-    @project_helper.organizeResourcesToAssetsCatalog
+    @project_helper.organize_resources_to_assets_catalog
   end
 
   def download_signing_files
