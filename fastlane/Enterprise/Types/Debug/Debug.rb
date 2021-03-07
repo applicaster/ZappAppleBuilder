@@ -12,7 +12,7 @@ class EnterpriseDebug < BuildTypeEnterprise
   def initialize(options = {})
     super
     @enterprise_debug_app_extensions_helper = EnterpriseDebugAppExtensions.new(fastlane: @fastlane,
-                                                                     project_helper: @project_helper)
+                                                                               project_helper: @project_helper)
   end
 
   def build_type
