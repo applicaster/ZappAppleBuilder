@@ -117,13 +117,7 @@ class BuildType < BaseHelper
       validate_provisioning_profile(options)
     end
 
-    validate_version_number(options) if options[:version_number]
-
-    if options[:appstore_api_key_id]
-      validate_appstoreconnect_credentials(options)
-      add_appstoreconnect_api_key(options)
-      validate_appstoreconnect_latest_version(options)
-    end
+    validate_app_version(options)
   end
 
   def add_appstoreconnect_api_key(options)
@@ -142,13 +136,43 @@ class BuildType < BaseHelper
     )
   end
 
-  def validate_appstoreconnect_latest_version(_options)
-    current(__callee__.to_s)
-
-    latest_app_version_info = @fastlane.get_latest_app_version_info(
-      app_identifier: @@env_helper.bundle_identifier,
-      platform: @@env_helper.platform_name
+  def get_appstoreconnect_latest_version(_options)
+    @fastlane.get_latest_app_version_info(
+      app_identifier: @@envHelper.bundle_identifier,
+      platform: @@envHelper.platform_name
     )
+  end
+
+  def validate_app_version(options)
+    app_version = options[:version_number]
+
+    validate_version_number_up_to_three_integers(options) if app_version
+
+    if options[:appstore_api_key_id]
+      add_appstoreconnect_api_key(options)
+
+      latest_app_version_info = get_appstoreconnect_latest_version(options)
+
+      validate_appstoreconnect_latest_version_not_pending_release(latest_app_version_info)
+      validate_version_number_higher_than_released_version(latest_app_version_info, app_version) if app_version
+    end
+  end
+
+  def validate_version_number_up_to_three_integers(options)
+    current(__callee__.to_s)
+    app_version = options[:version_number]
+    error_message = "App version (#{app_version}) is not valid, version must be a period-separated list of at most three non-negative integers"
+    begin
+      raise error_message unless app_version.count('.') <= 2
+
+      puts("VALID: App version '#{app_version}' is valid for AppStore submission\n".colorize(:green))
+    rescue StandardError => e
+      raise e.message
+    end
+  end
+
+  def validate_appstoreconnect_latest_version_not_pending_release(latest_app_version_info)
+    current(__callee__.to_s)
 
     error_message = "App version `#{latest_app_version_info.version_string}` for platform `#{@@env_helper.platform_name}` is available in AppStoreConnect with `PENDING DEVELOPER RELEASE` state. Can not create a new version unless this version is released or rejected"
     begin
@@ -160,14 +184,15 @@ class BuildType < BaseHelper
     end
   end
 
-  def validate_version_number(options)
+  def validate_version_number_higher_than_released_version(latest_app_version_info, app_version)
     current(__callee__.to_s)
-    app_version = options[:version_number]
-    error_message = "App version (#{app_version}) is not valid, version must be a period-separated list of at most three non-negative integers"
+    error_message = "App version `#{app_version}` should be higher than previously approved version `#{latest_app_version_info.version_string}`"
     begin
-      raise error_message unless app_version.count('.') <= 2
+      unless Gem::Version.new(app_version) > Gem::Version.new(latest_app_version_info.version_string)
+        raise error_message
+      end
 
-      puts("VALID: App version '#{app_version}' is valid for AppStore submission\n".colorize(:green))
+      puts('VALID: New app version is higher than the latest approved/released version'.colorize(:green))
     rescue StandardError => e
       raise e.message
     end

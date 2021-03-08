@@ -101,11 +101,11 @@ class AppCenterHelper < BaseHelper
 
   def build_params_hash_for_type(options)
     current(__callee__.to_s)
+    time = Time.new
 
     if @@env_helper.is_tvos
       s3DestinationPathParams = @@env_helper.s3_upload_path(options[:bundle_identifier])
       s3DistanationPath = "https://assets-secure.applicaster.com/#{s3DestinationPathParams}/#{@project_helper.scheme}-#{options[:build_type]}.ipa"
-      time = Time.new
       {
         uploaded_at: time.inspect,
         download_url: s3DistanationPath
