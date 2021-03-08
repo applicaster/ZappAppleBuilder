@@ -5,7 +5,7 @@ require 'colorize'
 import 'Base/Helpers/EnvironmentHelper.rb'
 
 class BuildTypeFactory
-  @@envHelper = EnvironmentHelper.new
+  @@env_helper = EnvironmentHelper.new
 
   attr_accessor :fastlane
 
@@ -16,7 +16,7 @@ class BuildTypeFactory
   def perform_signing_validation(options)
     type_to_validate = options[:type]
 
-    Dir.chdir("#{@@envHelper.root_path}"){
+    Dir.chdir(@@env_helper.root_path.to_s) do
       # perform validation for all needed env
       build_types_for_use.each do |type_for_use|
         if type_for_use.build_type == type_to_validate
@@ -28,17 +28,17 @@ class BuildTypeFactory
 
           puts("Perform signing validation for #{type_for_use.class.name}".colorize(:yellow))
           type_for_use.perform_signing_validation
-        else 
+        else
           puts("Skipping signing validation for #{type_for_use} build".colorize(:red))
         end
       end
-    }
+    end
   end
 
   def prepare_environment(options)
     type_to_prepare = options[:type]
 
-    Dir.chdir("#{@@envHelper.root_path}"){
+    Dir.chdir(@@env_helper.root_path.to_s) do
       # prepare only specific env to build
       build_types_for_use.each do |type_for_use|
         if type_for_use.build_type == type_to_prepare
@@ -47,17 +47,17 @@ class BuildTypeFactory
 
           puts("Prepare environment for #{type_for_use.class.name}")
           type_for_use.prepare_environment
-        else 
+        else
           puts("Skipping preparing environment for #{type_for_use} build".colorize(:red))
         end
       end
-   }
+    end
   end
 
   def build(options)
     type_to_build = options[:type]
 
-    Dir.chdir("#{@@envHelper.root_path}"){
+    Dir.chdir(@@env_helper.root_path.to_s) do
       # build each one of the env
       build_types_for_use.each do |type_for_use|
         if type_for_use.build_type == type_to_build
@@ -66,22 +66,21 @@ class BuildTypeFactory
 
           puts("Building for #{type_for_use.class.name}")
           type_for_use.build
-        else 
+        else
           puts("Skipping build for #{type_for_use}".colorize(:red))
         end
       end
-    }
+    end
   end
 
   def build_type_string
-    if !@@envHelper.distribution_key_url.to_s.strip.empty? && @@envHelper.with_release == 'true'
+    if !@@env_helper.distribution_key_url.to_s.strip.empty? && @@env_helper.with_release == 'true'
       'store'
+    elsif !@@env_helper.debug_distribution_key_url.to_s.strip.empty?
+      # enterprise client release/debug depending on provided provisioning
+      'enterprise'
     else
-      if !@@envHelper.debug_distribution_key_url.to_s.strip.empty?
-        'enterprise' # enterprise client release/debug depending on provided provisioning
-      else
-        'debug'
-      end
+      'debug'
     end
   end
 
@@ -107,8 +106,8 @@ class BuildTypeFactory
   end
 
   def replace_store_to_enterprise_client_if_needed(type)
-    if type.build_type == "store" && type.isEnterpriseBuild
-      puts("Switching to Enterprise client build".colorize(:green))
+    if type.build_type == 'store' && type.is_enterprise_build
+      puts('Switching to Enterprise client build'.colorize(:green))
 
       type = EnterpriseClient.new(fastlane: @fastlane)
     end
