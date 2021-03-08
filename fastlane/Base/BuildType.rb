@@ -138,8 +138,8 @@ class BuildType < BaseHelper
 
   def get_appstoreconnect_latest_version(_options)
     @fastlane.get_latest_app_version_info(
-      app_identifier: @@envHelper.bundle_identifier,
-      platform: @@envHelper.platform_name
+      app_identifier: @@env_helper.bundle_identifier,
+      platform: @@env_helper.platform_name
     )
   end
 
@@ -192,7 +192,7 @@ class BuildType < BaseHelper
         raise error_message
       end
 
-      puts('VALID: New app version is higher than the latest approved/released version'.colorize(:green))
+      puts("VALID: New app version `#{app_version}` is higher than the latest approved/released version `#{latest_app_version_info.version_string}`".colorize(:green))
     rescue StandardError => e
       raise e.message
     end
