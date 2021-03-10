@@ -76,7 +76,6 @@ class Store < BuildType
     )
 
     # set appstore api key
-    puts('Setting AppStore API Key')
     add_appstoreconnect_api_key(
       appstore_api_key_folder: appstore_api_key_folder,
       appstore_api_key_id: appstore_api_key_id,
