@@ -131,7 +131,7 @@ class BuildType < BaseHelper
       key_id: appstore_api_key_id,
       issuer_id: appstore_api_issuer_id,
       key_content: key_content,
-      duration: 2400, # optional
+      duration: 1200, # optional
       in_house: false # optional but may be required if using match/sigh
     )
   end
