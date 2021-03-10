@@ -38,7 +38,7 @@ def shared_pods
     pod 'ZappPlugins', '= 12.0.0'
     pod 'ZappAnalyticsPluginsSDK', :path => './node_modules/@applicaster/zapp-analytics-plugins/apple/ZappAnalyticsPluginsSDK.podspec'
     pod 'ZappPushPluginsSDK', :path => './node_modules/@applicaster/zapp-push-plugins/apple/ZappPushPluginsSDK.podspec'
-    pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
+    pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/apple/QuickBrickApple.podspec'
     pod 'ZappCore', :path => './node_modules/@applicaster/zapp-core/apple/ZappCore.podspec'
     pod 'ZappApple', :path => './node_modules/@applicaster/zapp-apple/apple/ZappApple.podspec'
     pod 'XrayLogger', :path => './node_modules/@applicaster/x-ray/apple/XrayLogger.podspec'
