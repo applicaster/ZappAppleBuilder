@@ -154,7 +154,13 @@ class BuildType < BaseHelper
       latest_app_version_info = get_appstoreconnect_latest_version(options)
 
       validate_appstoreconnect_latest_version_not_pending_release(latest_app_version_info)
-      validate_version_number_higher_than_released_version(latest_app_version_info, app_version) if app_version
+
+      pp("Latest app info:")
+      pp(latest_app_version_info)
+
+      if app_version && latest_app_version_info.app_store_state == 'READY_FOR_SALE'
+        validate_version_number_higher_than_released_version(latest_app_version_info, app_version) 
+      end
     end
   end
 
