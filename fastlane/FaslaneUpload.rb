@@ -4,7 +4,7 @@ import 'Base/BuildType.rb'
 
 platform :ios do
   def update_app_secret(bundle_identifier)
-    if isTvOS == false
+    if is_tvos == false
       puts("Update MS App Center's secret")
       ms_app_center_update_app_secret(bundle_identifier)
     end

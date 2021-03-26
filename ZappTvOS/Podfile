@@ -4,7 +4,7 @@ require_relative './node_modules/@react-native-community/cli-platform-ios/native
 require_relative '../scripts/autolink-react-dependencies.rb'
 
 require 'resolv-replace'
-install! 'cocoapods', :deterministic_uuids => false, :preserve_pod_file_structure => true
+install! 'cocoapods', :deterministic_uuids => false, :preserve_pod_file_structure => true, :warn_for_unused_master_specs_repo => false
 use_frameworks!
 
 source 'git@github.com:applicaster/CocoaPods.git'
@@ -23,7 +23,7 @@ puts("\n\nCocoaPods preparing for platform: tvOS\n\n")
 def shared_pods
     pod 'ZappPlugins', '= 12.0.0'
     pod 'ZappAnalyticsPluginsSDK', :path => './node_modules/@applicaster/zapp-analytics-plugins/apple/ZappAnalyticsPluginsSDK.podspec'
-    pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
+    pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/apple/QuickBrickApple.podspec'
     pod 'ZappCore', :path => './node_modules/@applicaster/zapp-core/apple/ZappCore.podspec'
     pod 'ZappApple', :path => './node_modules/@applicaster/zapp-apple/apple/ZappApple.podspec'
     pod 'XrayLogger', :path => './node_modules/@applicaster/x-ray/apple/XrayLogger.podspec'
@@ -53,6 +53,8 @@ post_install do |installer|
             config.build_settings['CODE_SIGNING_ALLOWED'] = "NO"
             config.build_settings['OTHER_CFLAGS'] = ['$(inherited)', "-fembed-bitcode"]
             config.build_settings['BITCODE_GENERATION_MODE']  = "bitcode"
+            config.build_settings.delete 'TVOS_DEPLOYMENT_TARGET'
+
 						# This works around a unit test issue introduced in Xcode 10.
             # We only apply it to the Debug configuration to avoid bloating the app size
             if config.name == "Debug" && defined?(target.product_type) && target.product_type == "com.apple.product-type.framework"

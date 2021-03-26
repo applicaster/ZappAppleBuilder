@@ -1,5 +1,15 @@
-local_build = ENV['triggered_by'].nil? && ENV['CIRCLECI'].nil?
-load 'Flipper' if local_build
+load '../Scripts/podfile-helpers.rb'
+
+puts "---> value of local_build=#{is_local_build}"
+
+setup_flipper = should_add_flipper_on_local_build
+puts "---> value of setup_flipper=#{setup_flipper}"
+
+remove_app_extensions = should_remove_app_extensions_on_local_build
+puts "---> value of remove_app_extensions=#{remove_app_extensions}"
+
+load 'Flipper' if setup_flipper
+
 platform :ios, '12.0'
 require_relative './node_modules/@react-native-community/cli-platform-ios/native_modules'
 require_relative '../scripts/autolink-react-dependencies.rb'
@@ -17,6 +27,8 @@ source 'https://cdn.cocoapods.org/'
 pre_install do |_installer|
   # workaround for https://github.com/CocoaPods/CocoaPods/issues/3289
   Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
+  
+  pre_install_remove_app_extensions("ZappiOS") if remove_app_extensions
 end
 
 puts("\n\nCocoaPods preparing for platform: iOS\n\n")
@@ -26,7 +38,7 @@ def shared_pods
     pod 'ZappPlugins', '= 12.0.0'
     pod 'ZappAnalyticsPluginsSDK', :path => './node_modules/@applicaster/zapp-analytics-plugins/apple/ZappAnalyticsPluginsSDK.podspec'
     pod 'ZappPushPluginsSDK', :path => './node_modules/@applicaster/zapp-push-plugins/apple/ZappPushPluginsSDK.podspec'
-    pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec'
+    pod 'QuickBrickApple', :path => './node_modules/@applicaster/quick-brick-native-apple/apple/QuickBrickApple.podspec'
     pod 'ZappCore', :path => './node_modules/@applicaster/zapp-core/apple/ZappCore.podspec'
     pod 'ZappApple', :path => './node_modules/@applicaster/zapp-apple/apple/ZappApple.podspec'
     pod 'XrayLogger', :path => './node_modules/@applicaster/x-ray/apple/XrayLogger.podspec'
@@ -40,26 +52,27 @@ target 'ZappiOS' do
   shared_pods
   use_native_modules!
   use_react_native!
-  puts local_build
+  puts "Is local build: #{is_local_build}"
   # Enables Flipper
-  add_flipper_pods! if local_build
+  add_flipper_pods! if setup_flipper
 end
 
 target 'ZappiOSTests' do
   inherit! :search_paths
 end
 
-target 'NotificationServiceExtension' do
+unless remove_app_extensions
+  target 'NotificationServiceExtension' do
     # Zaptool notification service extension pods - Do not remove or change.
-end
+  end
 
-target 'NotificationContentExtension' do
+  target 'NotificationContentExtension' do
     # Zaptool notification content extension pods - Do not remove or change.
-
+  end
 end
 
 post_install do |installer|
-  flipper_post_install(installer) if local_build
+    flipper_post_install(installer) if setup_flipper
 
     installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|
@@ -70,7 +83,7 @@ post_install do |installer|
             config.build_settings['CODE_SIGNING_ALLOWED'] = "NO"
             config.build_settings['OTHER_CFLAGS'] = ['$(inherited)', "-fembed-bitcode"]
             config.build_settings['BITCODE_GENERATION_MODE']  = "bitcode"
-            config.build_settings['IPHONEOS_DEPLOYMENT_TARGET']  = "12.0"
+            config.build_settings.delete 'IPHONEOS_DEPLOYMENT_TARGET'
 						# This works around a unit test issue introduced in Xcode 10.
             # We only apply it to the Debug configuration to avoid bloating the app size
             if config.name == "Debug" && defined?(target.product_type) && target.product_type == "com.apple.product-type.framework"

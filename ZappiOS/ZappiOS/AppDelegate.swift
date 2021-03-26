@@ -46,7 +46,7 @@ class AppDelegate: AppDelegateBase {
     override public func handleDelayedEventsIfNeeded() {
         super.handleDelayedEventsIfNeeded()
         if isApplicationReady,
-            let remoteUserInfo = remoteUserInfo {
+           let remoteUserInfo = remoteUserInfo {
             logger?.debugLog(template: AppDelegateLogs.handleDelayedRemoteUserInfo,
                              data: ["remote_info": remoteUserInfo])
 
@@ -101,6 +101,10 @@ class AppDelegate: AppDelegateBase {
         }
     }
 
+    public func applicationWillEnterForeground(_ application: UIApplication) {
+        SettingsBundleHelper.handleChangesIfNeeded()
+    }
+
     public func applicationWillResignActive(_ application: UIApplication) {
         logger?.verboseLog(template: AppDelegateLogs.applicationWillResignActive)
         uiLayerPluginDelegate?.applicationDelegate?.applicationWillResignActive?(application)
@@ -150,7 +154,7 @@ class AppDelegate: AppDelegateBase {
             self.shortcutItem = nil
             let namespaceKey = "namespace"
             if let userInfo = shortcutItem.userInfo,
-                let namespace = userInfo["namespace"] as? String {
+               let namespace = userInfo["namespace"] as? String {
                 for current in userInfo {
                     if current.key == namespaceKey {
                         continue

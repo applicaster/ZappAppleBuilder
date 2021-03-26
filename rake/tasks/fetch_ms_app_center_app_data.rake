@@ -62,18 +62,27 @@ end
 def fetch_app(bundle_identifier, platform)
   response = app_center_client.get("/v0.1/apps/#{ENV['APPCENTER_OWNER_NAME']}/#{platform}-#{bundle_identifier}")
 
-  raise "Failed to fetch app details" unless response.success?
-
-  JSON.parse(response.body)
+  content = "{}"
+  unless response.success?
+    puts("--> Failed to fetch app details for appname #{platform}-#{bundle_identifier}")
+  else 
+    content = response.body
+  end
+  JSON.parse(content)
 end
 
 def fetch_app_details_from_mapping(bundle_identifier, platform)
   url = "https://assets-production.applicaster.com/zapp/tmp/appcenter/#{platform}/hockeyapp_appcenter_mapping.json"
   response = Faraday.get(url)
 
-  raise "Failed to fetch apps mappings json" unless response.success?
+  content = "{}"
+  unless response.success?
+    puts("--> Failed to fetch apps mappings json")
+  else 
+    content = response.body
+  end
 
-  mapping_data = JSON.parse(response.body)
+  mapping_data = JSON.parse(content)
   mapping_data.select { |h| h['bundle_identifier'] == "#{bundle_identifier}" && h['platform'] == "#{platform}" }.first
 end
 

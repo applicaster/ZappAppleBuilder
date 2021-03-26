@@ -51,30 +51,49 @@ platform :ios do
   end
 
   before_all do
-    set_device_family
-    create_temp_keychain
+  end
+
+  lane :remove_app_extensions_targets do |options|
+    Dir.chdir((ENV['PWD']).to_s) do
+      project_name = options[:project_name]
+      project_path = "#{project_name}/#{project_name}.xcodeproj"
+      project_scheme = project_name
+      app_extensions_helper = AppExtensions.new
+      unless project_name.to_s.strip.empty?
+        app_extensions_helper.remove_app_extensions_targets_from_project(
+          project_path: project_path,
+          project_scheme: project_scheme
+        )
+      end
+    end
   end
 
   lane :prepare_environment do |options|
-    envHelper = EnvironmentHelper.new
-    unless envHelper.bundle_identifier.to_s.strip.empty?
+    set_initial_context
+    env_helper = EnvironmentHelper.new
+    unless env_helper.bundle_identifier.to_s.strip.empty?
       BuildTypeFactory.new(fastlane: self).prepare_environment(options)
     end
   end
 
   lane :validate_app_signing do |options|
-    envHelper = EnvironmentHelper.new
-    unless envHelper.bundle_identifier.to_s.strip.empty?
+    set_initial_context
+    env_helper = EnvironmentHelper.new
+    unless env_helper.bundle_identifier.to_s.strip.empty?
       BuildTypeFactory.new(fastlane: self).perform_signing_validation(options)
     end
   end
 
   lane :build do |options|
-    envHelper = EnvironmentHelper.new
-    unless envHelper.bundle_identifier.to_s.strip.empty?
-      BuildTypeFactory.new(fastlane: self).build(options)
-    end
+    set_initial_context
+    env_helper = EnvironmentHelper.new
+    BuildTypeFactory.new(fastlane: self).build(options) unless env_helper.bundle_identifier.to_s.strip.empty?
   end
+end
+
+def set_initial_context
+  set_device_family
+  create_temp_keychain
 end
 
 def create_temp_keychain
@@ -93,7 +112,7 @@ def set_device_family
   ENV['DEVICE_FAMILY'] = '1,2'
   ENV['DEVICE_FAMILY'] = '1' if device_family == 'iphone'
   ENV['DEVICE_FAMILY'] = '2' if device_family == 'ipad'
-  end
+end
 
 def save_param_to_file(name, value)
   folder_name = "#{ENV['PWD']}/.fastlane_params"

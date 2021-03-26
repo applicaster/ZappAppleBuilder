@@ -9,7 +9,7 @@ class EnvironmentHelper
     device_target == 'apple_tv' ? 'tvos' : 'ios'
   end
 
-  def isTvOS
+  def is_tvos
     device_target == 'apple_tv'
   end
 

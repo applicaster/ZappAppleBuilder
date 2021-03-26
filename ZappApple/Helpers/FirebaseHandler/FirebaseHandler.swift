@@ -21,7 +21,7 @@ public class FirebaseHandler: NSObject {
     public class func configure() {
         #if canImport(FirebaseCore)
             guard FirebaseApp.app() == nil,
-                FirebaseHandler.hasValidConfiguration() == true else {
+                  FirebaseHandler.hasValidConfiguration() == true else {
                 return
             }
 

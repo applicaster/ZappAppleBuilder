@@ -16,7 +16,7 @@ import XrayLogger
 import ZappApple
 import ZappCore
 
-public class AppDelegateBase: UIResponder, UIApplicationDelegate, FacadeConnectorProtocol, AppDelegateProtocol {
+public class AppDelegateBase: AppDelegateExtandable, UIApplicationDelegate, FacadeConnectorProtocol, AppDelegateProtocol {
     lazy var logger = Logger.getLogger(for: AppDelegateLogs.subsystem)
 
     public var connectorInstance: FacadeConnector? {

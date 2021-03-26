@@ -12,7 +12,7 @@ require 'json'
 import 'Base/Helpers/EnvironmentHelper.rb'
 
 class BaseHelper
-  @@envHelper = EnvironmentHelper.new
+  @@env_helper = EnvironmentHelper.new
 
   attr_accessor :fastlane
 
@@ -25,7 +25,7 @@ class BaseHelper
   end
 
   def params_folder_path
-    "#{@@envHelper.root_path}/fastlane/.fastlane_params"
+    "#{@@env_helper.root_path}/fastlane/.fastlane_params"
   end
 
   def read_param_from_file(name)
@@ -165,17 +165,17 @@ class BaseHelper
   def s3_upload(options)
     current(__callee__.to_s)
     @fastlane.aws_s3(
-      access_key: @@envHelper.aws_access_key,
-      secret_access_key: @@envHelper.aws_secret_access_key,
-      bucket: @@envHelper.s3_bucket_name,
-      region: @@envHelper.aws_region,
+      access_key: @@env_helper.aws_access_key,
+      secret_access_key: @@env_helper.aws_secret_access_key,
+      bucket: @@env_helper.s3_bucket_name,
+      region: @@env_helper.aws_region,
       ipa: (options[:ipa]).to_s,
       dsym: (options[:dsym]).to_s,
-      path: "#{@@envHelper.s3_generic_upload_path(options[:bundle_identifier])}/",
+      path: "#{@@env_helper.s3_generic_upload_path(options[:bundle_identifier])}/",
       upload_metadata: true,
       html_in_folder: true,
-      html_template_path: "#{@@envHelper.root_path}/rake/templates/s3_ipa.html.erb",
-      version_file_name: "#{@@envHelper.s3_generic_upload_path(options[:bundle_identifier])}/version_distribution.json"
+      html_template_path: "#{@@env_helper.root_path}/rake/templates/s3_ipa.html.erb",
+      version_file_name: "#{@@env_helper.s3_generic_upload_path(options[:bundle_identifier])}/version_distribution.json"
     )
   end
 
@@ -187,10 +187,11 @@ class BaseHelper
       team_id: options[:team_id],
       provisioning_name: "#{options[:bundle_identifier]} prov profile",
       filename: "#{options[:bundle_identifier]}.mobileprovision",
-      platform: @@envHelper.platform_name
+      platform: @@env_helper.platform_name,
+      output_path: @@env_helper.root_path
     )
 
-    provisioning_profile = get_provisioning_profile_content("#{@@envHelper.root_path}/#{options[:bundle_identifier]}.mobileprovision")
+    provisioning_profile = get_provisioning_profile_content("#{@@env_helper.root_path}/#{options[:bundle_identifier]}.mobileprovision")
     provisioning_profile_uuid_value = provisioning_profile['UUID']
     save_param_to_file("#{options[:bundle_identifier]}_PROFILE_UDID", provisioning_profile_uuid_value.to_s)
   end
@@ -264,14 +265,22 @@ class BaseHelper
 
     file_path = "#{path}/#{target}/Entitlements/#{target}-#{build_type}.entitlements"
 
-    @fastlane.update_app_group_identifiers(
-      entitlements_file: file_path.to_s,
-      app_group_identifiers: groups
-    )
+    if groups.count > 0
+      @fastlane.set_info_plist_value(
+        path: file_path.to_s,
+        key: 'com.apple.security.application-groups',
+        value: []
+      )
+
+      @fastlane.update_app_group_identifiers(
+        entitlements_file: file_path.to_s,
+        app_group_identifiers: groups
+      )
+    end
   end
 
   def circle_artifacts_folder_path
-    "#{@@envHelper.root_path}/CircleArtifacts"
+    "#{@@env_helper.root_path}/CircleArtifacts"
   end
 
   def build_app(options)

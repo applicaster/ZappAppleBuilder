@@ -25,11 +25,11 @@
     "reset": "rm -rf quick_brick/* quick_brick/.babelrc"
   },
   "dependencies": {
-    "@applicaster/x-ray": "0.1.0",
-    "@applicaster/zapp-apple": "1.0.1",
-    "@applicaster/zapp-core": "1.0.1",
+    "@applicaster/x-ray": "0.2.0",
+    "@applicaster/zapp-apple": "1.7.0",
+    "@applicaster/zapp-core": "1.4.5",
     "@applicaster/zapp-analytics-plugins": "13.0.0",
-    "@applicaster/quick-brick-native-apple": "4.1.5",
+    "@applicaster/quick-brick-native-apple": "5.1.0",
     "@react-native-community/cli-platform-ios": "^4.7.0",
     "react": "16.11.0",
     "react-native-tvos": "0.62.2-0",
@@ -41,7 +41,7 @@
     "@commitlint/config-conventional": "^8.3.4"
   },
   "devDependencies": {
-    "@applicaster/zapplicaster-cli": "4.1.5"
+    "@applicaster/zapplicaster-cli": "5.0.0"
   },
   "repository": {
     "type": "git",

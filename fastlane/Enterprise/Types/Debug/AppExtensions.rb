@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class EnterpriseDebugAppExtensions < AppExtensions
-
   def extension_prepare(options)
     username = options[:username]
     team_id = options[:team_id]
@@ -17,7 +16,7 @@ class EnterpriseDebugAppExtensions < AppExtensions
     build_type = 'debug'
     extension_enabled = false
     # getting the indication if extension is enabled
-    plist_content = get_plist_content("#{@projectHelper.customizations_folder_path}/FeaturesCustomization.plist")
+    plist_content = get_plist_content("#{@project_helper.customizations_folder_path}/FeaturesCustomization.plist")
     supported_app_extensions = plist_content['SupportedAppExtensions']
     unless supported_app_extensions.nil?
       puts("supported_app_extensions: #{supported_app_extensions}")
@@ -60,7 +59,7 @@ class EnterpriseDebugAppExtensions < AppExtensions
 
       # add group to entitlements for extension target
       update_group_identifiers(
-        path: @projectHelper.path,
+        path: @project_helper.path,
         target: extension_target_name.to_s,
         build_type: 'Release',
         groups: [group_name(app_bundle_identifier).to_s]
@@ -68,13 +67,13 @@ class EnterpriseDebugAppExtensions < AppExtensions
 
       # set info plist SupportedAppGroups param for extension target
       set_info_plist_supported_groups_param(
-        xcodeproj: @projectHelper.xcodeproj_path,
+        xcodeproj: @project_helper.xcodeproj_path,
         plist_path: extension_info_plist_inner_path,
         app_groups: [group_name(app_bundle_identifier).to_s]
       )
 
     else
-      
+
       # notification extension disabled
       sh("echo '#{extension_type} disabled'")
     end
