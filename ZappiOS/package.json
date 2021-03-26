@@ -30,7 +30,7 @@
     "@applicaster/quick-brick-native-apple": "5.1.0",
     "@applicaster/x-ray": "0.2.0",
     "@applicaster/zapp-analytics-plugins": "13.0.0",
-    "@applicaster/zapp-apple": "1.7.0",
+    "@applicaster/zapp-apple": "1.7.2",
     "@applicaster/zapp-core": "1.4.5",
     "@applicaster/zapp-push-plugins": "13.0.0",
     "@react-native-community/cli-platform-ios": "^4.7.0",
