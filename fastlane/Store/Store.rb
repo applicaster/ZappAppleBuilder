@@ -108,6 +108,17 @@ class Store < BuildType
       build_type: 'Store',
       zapp_build_type: 'release'
     )
+
+    if @@env_helper.is_tvos
+      puts('Skipping upload application to MS App Center')
+    else
+      puts('Upload application to MS App Center')
+      @app_center_helper.upload_app(
+        bundle_identifier: @@env_helper.bundle_identifier,
+        build_type: 'Store',
+        zapp_build_type: 'release'
+      )
+    end
   end
 
   def download_signing_files
