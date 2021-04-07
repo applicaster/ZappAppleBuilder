@@ -72,7 +72,7 @@ def is_release_build_succeeded(debug_info, release_info)
 end
 
 def read_build_params_for_type(build_type)
-  folder_name = ".ms_app_center"
+  folder_name = ".build_params"
   filename = "#{folder_name}/#{build_type}_upload_params.json"
   if File.exists?(filename)
     JSON.parse(File.read(filename), :symbolize_names => true)

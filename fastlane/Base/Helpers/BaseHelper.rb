@@ -279,6 +279,45 @@ class BaseHelper
     end
   end
 
+  def save_build_params_for_type(options)
+    current(__callee__.to_s)
+
+    folder_name = "#{@@env_helper.root_path}/.build_params"
+    filename = "#{folder_name}/#{options[:zapp_build_type]}_upload_params.json"
+    hash = build_params_hash_for_type(options)
+    Dir.mkdir(folder_name) unless File.exist?(folder_name)
+    File.open(filename, 'w') do |f|
+      f.write(hash.to_json)
+    end
+    puts("content: #{hash}")
+  end
+
+  def build_params_hash_for_type(options)
+    current(__callee__.to_s)
+    time = Time.new
+    bundle_identifier = options[:bundle_identifier]
+    if @@env_helper.is_tvos
+      s3DestinationPathParams = @@env_helper.s3_upload_path(bundle_identifier)
+      project_scheme = options[:project_scheme]
+      build_type = options[:build_type]
+      s3DistanationPath = "https://assets-secure.applicaster.com/#{s3DestinationPathParams}/#{project_scheme}-#{build_type}.ipa"
+      {
+        uploaded_at: time.inspect,
+        download_url: s3DistanationPath
+      }
+    else
+      s3DestinationPathParams = @@env_helper.s3_generic_upload_path(bundle_identifier)
+      s3InstallURL = "https://assets-secure.applicaster.com/#{s3DestinationPathParams}/index.html"
+      {
+        uploaded_at: time.inspect,
+        download_url: s3InstallURL,
+        install_url: s3InstallURL,
+        app_name: options[:app_name],
+        app_secret: options[:app_secret]
+      }
+    end
+  end
+
   def circle_artifacts_folder_path
     "#{@@env_helper.root_path}/CircleArtifacts"
   end

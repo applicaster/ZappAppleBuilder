@@ -350,8 +350,9 @@ class BuildType < BaseHelper
       s3DestinationPathParams = @@env_helper.s3_upload_path(options[:bundle_identifier])
       s3DistanationPath = "#{@@env_helper.s3_bucket_name}/#{s3DestinationPathParams}"
       sh("aws --region #{@@env_helper.aws_region} s3 sync #{circle_artifacts_folder_path}/#{build_type} s3://#{s3DistanationPath} --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers --delete")
-      @app_center_helper.save_build_params_for_type(
+      save_build_params_for_type(
         bundle_identifier: options[:bundle_identifier],
+        project_scheme: @project_helper.scheme,
         zapp_build_type: options[:zapp_build_type],
         build_type: build_type,
         app_name: nil,
