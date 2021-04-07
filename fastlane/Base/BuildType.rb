@@ -344,27 +344,30 @@ class BuildType < BaseHelper
     current(__callee__.to_s)
 
     build_type = options[:build_type]
+    bundle_identifier = options[:bundle_identifier]
+    zapp_build_type = options[:zapp_build_type]
 
     if @@env_helper.is_tvos
       puts('Upload application to S3')
-      s3DestinationPathParams = @@env_helper.s3_upload_path(options[:bundle_identifier])
+      s3DestinationPathParams = @@env_helper.s3_upload_path(bundle_identifier)
       s3DistanationPath = "#{@@env_helper.s3_bucket_name}/#{s3DestinationPathParams}"
       sh("aws --region #{@@env_helper.aws_region} s3 sync #{circle_artifacts_folder_path}/#{build_type} s3://#{s3DistanationPath} --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers --delete")
-      save_build_params_for_type(
-        bundle_identifier: options[:bundle_identifier],
-        project_scheme: @project_helper.scheme,
-        zapp_build_type: options[:zapp_build_type],
-        build_type: build_type,
-        app_name: nil,
-        app_secret: nil
-      )
     else
       s3_upload(
-        bundle_identifier: options[:bundle_identifier],
+        bundle_identifier: bundle_identifier,
         ipa: "#{circle_artifacts_folder_path}/#{build_type}/#{@project_helper.scheme}-#{build_type}.ipa",
         dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@project_helper.scheme}-#{build_type}.app.dSYM.zip"
       )
     end
+
+    save_build_params_for_type(
+      bundle_identifier: bundle_identifier,
+      project_scheme: @project_helper.scheme,
+      zapp_build_type: zapp_build_type,
+      build_type: build_type,
+      app_name: nil,
+      app_secret: nil
+    )
   end
 
   def team_id
