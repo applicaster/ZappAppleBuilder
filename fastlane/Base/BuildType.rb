@@ -363,8 +363,6 @@ class BuildType < BaseHelper
         ipa: "#{circle_artifacts_folder_path}/#{build_type}/#{@project_helper.scheme}-#{build_type}.ipa",
         dsym: "#{circle_artifacts_folder_path}/#{build_type}/#{@project_helper.scheme}-#{build_type}.app.dSYM.zip"
       )
-      puts('Upload application to MS App Center')
-      @app_center_helper.upload_app(options)
     end
   end
 
