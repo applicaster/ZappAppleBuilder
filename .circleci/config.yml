@@ -29,6 +29,27 @@ references:
       LC_ALL: "en_US.UTF-8"
       LANG: "en_US.UTF-8"
 
+  # https://blog.lelonek.me/private-dependencies-from-github-in-your-docker-container-92e3b8cbf677
+  # https://circleci.com/docs/2.0/add-ssh-key/#adding-ssh-keys-to-a-job
+  add_ssh_keys: &add_ssh_keys
+    fingerprints:
+      - "e7:64:29:69:64:69:17:52:e4:fe:5e:b7:0a:d6:0d:a3"
+  
+  # https://circleci.com/docs/2.0/add-ssh-key/#adding-multiple-keys-with-blank-hostnames
+  configure_ssh_agents: &configure_ssh_agents
+    run:
+      name: Configure SSH agent
+      command: |
+        ssh-add -D
+        ssh-add ~/.ssh/id_rsa_e764296964691752e4fe5eb70ad60da3
+
+  # https://circleci.com/docs/2.0/gh-bb-integration/#establishing-the-authenticity-of-an-ssh-host
+  establishing_authenticity_ssh_host: &establishing_authenticity_ssh_host
+    run:
+      name: Add public keys to known_hosts
+      command: |
+        ssh-keyscan gitlab.p7s1.io >> ~/.ssh/known_hosts || exit 0
+
   add_new_wwdr_intermediate_certificate: &add_new_wwdr_intermediate_certificate
     run:
       name: Add New WWDR Intermediate Certificate
@@ -116,7 +137,7 @@ references:
         echo nvm install 12.0.0 >> $BASH_ENV
         echo nvm alias default 12.0.0 >> $BASH_ENV
 
-  whitch_ruby: &whitch_ruby
+  which_ruby: &which_ruby
     run:
       name: Ruby - version
       command: ruby -v
@@ -309,6 +330,7 @@ jobs:
       device_target: universal
       TARGET_FOLDER: ZappiOS
     steps:
+      - *add_ssh_keys
       - *stop_job_triggered_by_zapp
       - checkout
       - *prepare_caching_file
@@ -316,13 +338,16 @@ jobs:
       - *prepare_pods_cache_file
       - *prepare_npm_cache_file
 
+      - *configure_ssh_agents
+      - *establishing_authenticity_ssh_host
+
       - *restore_zapptool
       - *zapptool_download
       - *save_zapptool
       - *version_zapptool
 
       - *set_ruby_version
-      - *whitch_ruby
+      - *which_ruby
       - *install_node
       - *restore_gems
       - *gems_install
@@ -349,6 +374,7 @@ jobs:
       device_target: apple_tv
       TARGET_FOLDER: "ZappTvOS"
     steps:
+      - *add_ssh_keys
       - *stop_job_triggered_by_zapp
       - checkout
 
@@ -357,13 +383,16 @@ jobs:
       - *prepare_pods_cache_file
       - *prepare_npm_cache_file
 
+      - *configure_ssh_agents
+      - *establishing_authenticity_ssh_host
+
       - *restore_zapptool
       - *zapptool_download
       - *save_zapptool
       - *version_zapptool
 
       - *set_ruby_version
-      - *whitch_ruby
+      - *which_ruby
       - *install_node
       - *restore_gems
       - *gems_install
@@ -412,7 +441,7 @@ jobs:
       - *version_zapptool
 
       - *set_ruby_version
-      - *whitch_ruby
+      - *which_ruby
       - *install_node
 
       - *restore_gems
