@@ -419,9 +419,8 @@ jobs:
             else
               echo 'export TARGET_FOLDER="ZappiOS"' >> $BASH_ENV
             fi
-
-      - checkout
       - *add_ssh_keys
+      - checkout
       - *configure_ssh_agents
       - *establishing_authenticity_ssh_host
       - *add_new_wwdr_intermediate_certificate
