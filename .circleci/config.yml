@@ -413,10 +413,10 @@ jobs:
             else
               echo 'export TARGET_FOLDER="ZappiOS"' >> $BASH_ENV
             fi
-            
+
       # https://blog.lelonek.me/private-dependencies-from-github-in-your-docker-container-92e3b8cbf677
       # https://circleci.com/docs/2.0/add-ssh-key/#adding-ssh-keys-to-a-job
-      - add_ssh_keys
+      - add_ssh_keys:
           fingerprints:
             "e7:64:29:69:64:69:17:52:e4:fe:5e:b7:0a:d6:0d:a3"
 
