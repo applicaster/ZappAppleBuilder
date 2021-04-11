@@ -330,16 +330,12 @@ jobs:
       device_target: universal
       TARGET_FOLDER: ZappiOS
     steps:
-      - *add_ssh_keys
       - *stop_job_triggered_by_zapp
       - checkout
       - *prepare_caching_file
       - *prepare_zapptool_version_file
       - *prepare_pods_cache_file
       - *prepare_npm_cache_file
-
-      - *configure_ssh_agents
-      - *establishing_authenticity_ssh_host
 
       - *restore_zapptool
       - *zapptool_download
@@ -374,7 +370,6 @@ jobs:
       device_target: apple_tv
       TARGET_FOLDER: "ZappTvOS"
     steps:
-      - *add_ssh_keys
       - *stop_job_triggered_by_zapp
       - checkout
 
@@ -382,9 +377,6 @@ jobs:
       - *prepare_zapptool_version_file
       - *prepare_pods_cache_file
       - *prepare_npm_cache_file
-
-      - *configure_ssh_agents
-      - *establishing_authenticity_ssh_host
 
       - *restore_zapptool
       - *zapptool_download
@@ -429,7 +421,9 @@ jobs:
             fi
 
       - checkout
-
+      - *add_ssh_keys
+      - *configure_ssh_agents
+      - *establishing_authenticity_ssh_host
       - *add_new_wwdr_intermediate_certificate
       - *prepare_caching_file
       - *prepare_zapptool_version_file
