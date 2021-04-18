@@ -83,7 +83,7 @@ class Store < BuildType
     )
 
     puts('Starting app delivery to AppStoreConnect')
-    deliver_output = capture_stream($stdout) do
+    # deliver_output = capture_stream($stdout) do
       @fastlane.deliver(
         ipa: "#{circle_artifacts_folder_path}/Store/#{@project_helper.scheme}-Store.ipa",
         platform: @@env_helper.is_tvos ? 'appletvos' : 'ios',
@@ -94,13 +94,13 @@ class Store < BuildType
         run_precheck_before_submit: false,
         ignore_language_directory_validation: true
       )
-    end
+    # end
 
     # print deliver output
-    puts("Deliver output: #{deliver_output}")
+    # puts("Deliver output: #{deliver_output}")
 
     # raise an error if the delover output has an error
-    raise 'Error posting the app to the App Store Connect' if deliver_output.include?('ERROR ITMS-')
+    # raise 'Error posting the app to the App Store Connect' if deliver_output.include?('ERROR ITMS-')
 
     # upload to ms app center
     upload_application(
