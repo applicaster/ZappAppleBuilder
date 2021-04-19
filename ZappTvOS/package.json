@@ -1,28 +1,30 @@
 {
-  "name": "ZappAppleBuilder",
-  "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "private": true,
+  "version": "1.0.0",
   "author": "",
+  "resolutions": {
+    "lodash": "^4.17.19"
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/applicaster/ZappAppleBuilder/issues"
   },
+  "main": "index.js",
   "homepage": "https://github.com/applicaster/ZappAppleBuilder#readme",
   "keywords": [],
   "scripts": {
+    "reset": "rm -rf quick_brick/* quick_brick/.babelrc",
+    "copy:bundle:tvos": "cp ./quick_brick/ios/main.* ./ZappTvOS/Resources",
     "start": "cd quick_brick && yarn start",
     "run:ios": "node_modules/.bin/react-native run-ios --project-path . --scheme ZappTvOS --configuration Debug --simulator \"Apple TV\"",
     "postinstall": "yarn patch:react",
     "start:ios": "yarn run:ios & yarn start",
-    "quick-brick:build:tvos": "cd quick_brick && yarn build && cd .. && yarn copy:bundle:tvos",
-    "quick-brick:build:tvos:debug": "cd quick_brick && yarn build:debug && cd .. && yarn copy:bundle:tvos",
     "quick-brick:prepare": "node_modules/.bin/zapplicaster-cli prepare -y",
     "quick-brick:reset": "rm -rf quick_brick/*",
+    "quick-brick:build:tvos:debug": "cd quick_brick && yarn build:debug && cd .. && yarn copy:bundle:tvos",
     "patch:react": "node ./../Scripts/react-native-patch.js \"ZappTvOS\"",
-    "copy:bundle:tvos": "cp ./quick_brick/ios/main.* ./ZappTvOS/Resources",
-    "reset": "rm -rf quick_brick/* quick_brick/.babelrc"
+    "quick-brick:build:tvos": "cd quick_brick && yarn build && cd .. && yarn copy:bundle:tvos"
   },
   "dependencies": {
     "@applicaster/quick-brick-native-apple": "5.1.0",
@@ -30,6 +32,7 @@
     "@applicaster/zapp-analytics-plugins": "13.0.0",
     "@applicaster/zapp-apple": "1.7.2",
     "@applicaster/zapp-core": "1.4.5",
+    "@applicaster/zapp-react-native-default-player": "4.0.0",
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
     "@react-native-community/cli-platform-ios": "^4.7.0",
@@ -43,13 +46,11 @@
     "react-native-tvos": "0.62.2-0"
   },
   "devDependencies": {
-    "@applicaster/zapplicaster-cli": "5.0.0"
+    "@applicaster/zapplicaster-cli": "^5.1.0-alpha.c85b69de"
   },
+  "name": "ZappAppleBuilder",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/applicaster/ZappAppleBuilder.git"
-  },
-  "resolutions": {
-    "lodash": "^4.17.19"
   }
 }

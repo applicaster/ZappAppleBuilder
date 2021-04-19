@@ -1,6 +1,13 @@
 PODS:
   - boost-for-react-native (1.63.0)
-  - DeviceKit (4.2.1)
+  - BVLinearGradient (2.5.6):
+    - React
+    - React-Core
+  - DefaultPlayer (4.0.0):
+    - React
+    - XrayLogger
+    - ZappCore
+  - DeviceKit (4.3.0)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.62.2-0)
   - FBReactNativeSpec (0.62.2-0):
@@ -20,7 +27,7 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
-  - QuickBrickApple (5.0.0):
+  - QuickBrickApple (5.1.0):
     - React
     - React-RCTLinking
     - XrayLogger
@@ -187,6 +194,8 @@ PODS:
     - React-cxxreact (= 0.62.2-0)
     - React-jsi (= 0.62.2-0)
   - React-jsinspector (0.62.2-0)
+  - react-native-safe-area-context (3.2.0):
+    - React-Core
   - React-RCTActionSheet (0.62.2-0):
     - React-Core/RCTActionSheetHeaders (= 0.62.2-0)
   - React-RCTAnimation (0.62.2-0):
@@ -246,6 +255,8 @@ PODS:
     - React-cxxreact (= 0.62.2-0)
     - React-jsi (= 0.62.2-0)
     - ReactCommon/callinvoker (= 0.62.2-0)
+  - RNGestureHandler (1.10.3):
+    - React-Core
   - XrayLogger (0.0.1):
     - XrayLogger/Core (= 0.0.1)
   - XrayLogger/Core (0.0.1)
@@ -253,24 +264,26 @@ PODS:
   - ZappAnalyticsPluginsSDK (13.0.0):
     - ZappCore
     - ZappPlugins
-  - ZappApple (1.5.2):
+  - ZappApple (1.7.2):
     - AppCenter/Distribute (= 3.0.0)
-    - DeviceKit (= 4.2.1)
+    - DeviceKit (= 4.3.0)
     - ReachabilitySwift (= 5.0.0)
     - XrayLogger
     - ZappCore
-  - ZappCore (1.3.3):
+  - ZappCore (1.4.5):
     - XrayLogger
   - ZappPlugins (12.0.0):
     - ZappCore
 
 DEPENDENCIES:
+  - BVLinearGradient (from `./node_modules/react-native-linear-gradient/BVLinearGradient.podspec`)
+  - "DefaultPlayer (from `./node_modules/@applicaster/zapp-react-native-default-player/apple/DefaultPlayer.podspec`)"
   - DoubleConversion (from `./node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `./node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `./node_modules/react-native/Libraries/FBReactNativeSpec`)
   - Folly (from `./node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `./node_modules/react-native/third-party-podspecs/glog.podspec`)
-  - "QuickBrickApple (from `./node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec`)"
+  - "QuickBrickApple (from `./node_modules/@applicaster/quick-brick-native-apple/apple/QuickBrickApple.podspec`)"
   - RCTRequired (from `./node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `./node_modules/react-native/Libraries/TypeSafety`)
   - React (from `./node_modules/react-native/`)
@@ -282,6 +295,7 @@ DEPENDENCIES:
   - React-jsi (from `./node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `./node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `./node_modules/react-native/ReactCommon/jsinspector`)
+  - react-native-safe-area-context (from `./node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec`)
   - React-RCTActionSheet (from `./node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `./node_modules/react-native/Libraries/NativeAnimation`)
   - React-RCTBlob (from `./node_modules/react-native/Libraries/Blob`)
@@ -293,6 +307,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `./node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/callinvoker (from `./node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `./node_modules/react-native/ReactCommon`)
+  - RNGestureHandler (from `./node_modules/react-native-gesture-handler/RNGestureHandler.podspec`)
   - "XrayLogger (from `./node_modules/@applicaster/x-ray/apple/XrayLogger.podspec`)"
   - Yoga (from `./node_modules/react-native/ReactCommon/yoga`)
   - "ZappAnalyticsPluginsSDK (from `./node_modules/@applicaster/zapp-analytics-plugins/apple/ZappAnalyticsPluginsSDK.podspec`)"
@@ -309,6 +324,10 @@ SPEC REPOS:
     - ReachabilitySwift
 
 EXTERNAL SOURCES:
+  BVLinearGradient:
+    :path: "./node_modules/react-native-linear-gradient/BVLinearGradient.podspec"
+  DefaultPlayer:
+    :path: "./node_modules/@applicaster/zapp-react-native-default-player/apple/DefaultPlayer.podspec"
   DoubleConversion:
     :podspec: "./node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   FBLazyVector:
@@ -320,7 +339,7 @@ EXTERNAL SOURCES:
   glog:
     :podspec: "./node_modules/react-native/third-party-podspecs/glog.podspec"
   QuickBrickApple:
-    :path: "./node_modules/@applicaster/quick-brick-native-apple/QuickBrickApple.podspec"
+    :path: "./node_modules/@applicaster/quick-brick-native-apple/apple/QuickBrickApple.podspec"
   RCTRequired:
     :path: "./node_modules/react-native/Libraries/RCTRequired"
   RCTTypeSafety:
@@ -339,6 +358,8 @@ EXTERNAL SOURCES:
     :path: "./node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "./node_modules/react-native/ReactCommon/jsinspector"
+  react-native-safe-area-context:
+    :path: "./node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec"
   React-RCTActionSheet:
     :path: "./node_modules/react-native/Libraries/ActionSheetIOS"
   React-RCTAnimation:
@@ -359,6 +380,8 @@ EXTERNAL SOURCES:
     :path: "./node_modules/react-native/Libraries/Vibration"
   ReactCommon:
     :path: "./node_modules/react-native/ReactCommon"
+  RNGestureHandler:
+    :path: "./node_modules/react-native-gesture-handler/RNGestureHandler.podspec"
   XrayLogger:
     :path: "./node_modules/@applicaster/x-ray/apple/XrayLogger.podspec"
   Yoga:
@@ -372,13 +395,15 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
-  DeviceKit: cadb5ff25d45fe186778bf2d0fd2ea4750542189
+  BVLinearGradient: 41d43b16ec5f326d1dc122b5274fa5832545da1c
+  DefaultPlayer: 71848d9b6cb1a8b2e1c3b77221eaf1ff17dc2737
+  DeviceKit: 7decde449c308ac7e816e2184ded1c7c596fb885
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   FBLazyVector: 4b807f39fe540b3c6c463bf2c2a06061f8116976
   FBReactNativeSpec: 89412591bc63798fa9831e2886f50032b6b8da4e
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
-  QuickBrickApple: 4fe966af3bbc4889aba376990ac6aa8f75c58ea1
+  QuickBrickApple: 2aa72d590a923e52de5333dad4f4e05c60c5352c
   RCTRequired: 0fba962213efd60d69d2979b230ef07643e88942
   RCTTypeSafety: 975573b67a2f0b1a3dd9b7e0f8ac2e07924ba189
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
@@ -389,6 +414,7 @@ SPEC CHECKSUMS:
   React-jsi: 470c8bf5b53f87a4cb13614a1536b371b0aabfaa
   React-jsiexecutor: 7afe08fededb75be926060a1c6ca5f2403189a80
   React-jsinspector: 53ca541d6ca804a856c65e26728ca041b2d2ac41
+  react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
   React-RCTActionSheet: ed38e8910d33c1ecd6cb5ef292fea90d13874618
   React-RCTAnimation: 8a7c81cbdf581bbaff9bfe1ff1f69ed565892198
   React-RCTBlob: 76f8732a00509fd6c6d8484743650fae5c521b44
@@ -399,13 +425,14 @@ SPEC CHECKSUMS:
   React-RCTText: 97c0632cf8e200ba4dfface2e22dd372142858f1
   React-RCTVibration: 9297dbae8760f1f536ef29e71bfcff23c121e1b9
   ReactCommon: 4520755b5a8921156f0bca32157da837640c2ae6
+  RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   XrayLogger: 6c4d4c614b8e78d2e6f2f48ae9f78bbbf4011075
   Yoga: 2b7639f79fddf5026153af56851b832318942330
   ZappAnalyticsPluginsSDK: c1abb82d5a187e0f47b1a3004f7abd38ff4bafd6
-  ZappApple: 8cb7312b3019bfd0e0ed602bbcfe486f9ca53ee8
-  ZappCore: b5beae30e7b38ef773f1db69ad857cf1840e1332
+  ZappApple: 797b85bbbc51e2accf26c94f1edf6e9d4d745b26
+  ZappCore: 3dba6fe8a3a444d8da04174c6af26e4d69dfe85d
   ZappPlugins: 4c436796b3a9ac8b89cd46a8f42e58acb3fbafc3
 
-PODFILE CHECKSUM: 63294ccd6dab187e95d6673b1daa2c59a0662931
+PODFILE CHECKSUM: 69e2f8f129c9aed0568036f949b1d46fa7a7d83f
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.10.0
