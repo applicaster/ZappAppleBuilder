@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@applicaster/babel-preset-quick-brick@5.1.0-alpha.c85b69de":
-  version "5.1.0-alpha.c85b69de"
-  resolved "https://registry.yarnpkg.com/@applicaster/babel-preset-quick-brick/-/babel-preset-quick-brick-5.1.0-alpha.c85b69de.tgz#afb9df9332e4189538ea86bf954f4411627a2204"
-  integrity sha512-sJadqJSuC7fxCBYPTr0fRAlaH0zt+HGFQTuExUX8gkp0cdaB68kPgy1zUGSK5GplYUlcaIyKSKpE6SeNeO8dTA==
+"@applicaster/babel-preset-quick-brick@4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/babel-preset-quick-brick/-/babel-preset-quick-brick-4.1.5.tgz#f012afa725e5e6bda70925a17d3586f4ba4237e1"
+  integrity sha512-Y55svYSXKJ5vWkHsYuFzRPinKEsuLSnWuVEjI8FzWgKyxbQlc05EtdM5tSxiUsiW1Qrep49ADEeq29Kzwojmyw==
   dependencies:
     "@babel/core" "^7.6.2"
     "@babel/plugin-proposal-decorators" "^7.1.0"
@@ -112,7 +112,6 @@
     camelize "^1.0.0"
     query-string "^6.1.0"
     ramda "0.26.1"
-    react-native-gesture-handler "^1.10.3"
     react-redux "^7.2.0"
     redux "^4.0.5"
     reselect "^4.0.0"
@@ -454,6 +453,14 @@
     "@applicaster/zapp-react-native-app" "5.0.1"
     "@applicaster/zapp-react-native-bridge" "5.0.1"
     "@applicaster/zapp-react-native-ui-components" "5.0.1"
+
+"@applicaster/zapp-react-native-default-player@4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-default-player/-/zapp-react-native-default-player-4.0.0.tgz#54e09dcc98fd3f169e307fea66308de6bac2a8de"
+  integrity sha512-G15tbPkNUtscJC6EenIpH1LZ2RGgWcvud11yoqmduPVVp7ycwyo8A+9xwWaAXzGPBFgh5QWNm08+p8Rwg760ag==
+  dependencies:
+    "@applicaster/quick-brick-mobile-transport-controls" "1.1.2"
+    keymirror "^0.1.1"
 
 "@applicaster/zapp-react-native-redux@5.0.1":
   version "5.0.1"

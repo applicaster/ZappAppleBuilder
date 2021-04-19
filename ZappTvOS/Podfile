@@ -27,12 +27,10 @@ def shared_pods
     pod 'ZappCore', :path => './node_modules/@applicaster/zapp-core/apple/ZappCore.podspec'
     pod 'ZappApple', :path => './node_modules/@applicaster/zapp-apple/apple/ZappApple.podspec'
     pod 'XrayLogger', :path => './node_modules/@applicaster/x-ray/apple/XrayLogger.podspec'
-
-    # Zaptool pods - Do not remove or change.
-    pod 'DefaultPlayer', :path => './node_modules/@applicaster/zapp-react-native-default-player/apple/DefaultPlayer.podspec'
-    pod 'BVLinearGradient', :path => './node_modules/react-native-linear-gradient/BVLinearGradient.podspec'
     pod 'RNGestureHandler', :path => './node_modules/react-native-gesture-handler/RNGestureHandler.podspec'
     pod 'react-native-safe-area-context', :path => './node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec'
+
+    # Zaptool pods - Do not remove or change.
 end
 
 target 'ZappTvOS' do

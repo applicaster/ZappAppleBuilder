@@ -1,12 +1,5 @@
 PODS:
   - boost-for-react-native (1.63.0)
-  - BVLinearGradient (2.5.6):
-    - React
-    - React-Core
-  - DefaultPlayer (4.0.0):
-    - React
-    - XrayLogger
-    - ZappCore
   - DeviceKit (4.3.0)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.62.2-0)
@@ -276,8 +269,6 @@ PODS:
     - ZappCore
 
 DEPENDENCIES:
-  - BVLinearGradient (from `./node_modules/react-native-linear-gradient/BVLinearGradient.podspec`)
-  - "DefaultPlayer (from `./node_modules/@applicaster/zapp-react-native-default-player/apple/DefaultPlayer.podspec`)"
   - DoubleConversion (from `./node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `./node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `./node_modules/react-native/Libraries/FBReactNativeSpec`)
@@ -324,10 +315,6 @@ SPEC REPOS:
     - ReachabilitySwift
 
 EXTERNAL SOURCES:
-  BVLinearGradient:
-    :path: "./node_modules/react-native-linear-gradient/BVLinearGradient.podspec"
-  DefaultPlayer:
-    :path: "./node_modules/@applicaster/zapp-react-native-default-player/apple/DefaultPlayer.podspec"
   DoubleConversion:
     :podspec: "./node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   FBLazyVector:
@@ -395,8 +382,6 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
-  BVLinearGradient: 41d43b16ec5f326d1dc122b5274fa5832545da1c
-  DefaultPlayer: 71848d9b6cb1a8b2e1c3b77221eaf1ff17dc2737
   DeviceKit: 7decde449c308ac7e816e2184ded1c7c596fb885
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   FBLazyVector: 4b807f39fe540b3c6c463bf2c2a06061f8116976
@@ -433,6 +418,6 @@ SPEC CHECKSUMS:
   ZappCore: 3dba6fe8a3a444d8da04174c6af26e4d69dfe85d
   ZappPlugins: 4c436796b3a9ac8b89cd46a8f42e58acb3fbafc3
 
-PODFILE CHECKSUM: 69e2f8f129c9aed0568036f949b1d46fa7a7d83f
+PODFILE CHECKSUM: 12128124f82986c94d1d311eafe9b7b7e937d823
 
 COCOAPODS: 1.10.0
