@@ -42,7 +42,7 @@
     "react-native-tvos": "0.62.2-0"
   },
   "devDependencies": {
-    "@applicaster/zapplicaster-cli": "5.0.0"
+    "@applicaster/zapplicaster-cli": "5.0.1"
   },
   "repository": {
     "type": "git",
