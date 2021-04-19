@@ -46,7 +46,7 @@
     "react-native-tvos": "0.62.2-0"
   },
   "devDependencies": {
-    "@applicaster/zapplicaster-cli": "^5.1.0-alpha.c85b69de"
+    "@applicaster/zapplicaster-cli": "5.0.1"
   },
   "name": "ZappAppleBuilder",
   "repository": {

@@ -48,7 +48,7 @@
     "react-native-webview": "9.1.1"
   },
   "devDependencies": {
-    "@applicaster/zapplicaster-cli": "5.0.0",
+    "@applicaster/zapplicaster-cli": "5.0.1",
     "flipper-plugin-react-native-performance": "^0.4.3",
     "semver": "^7.3.5"
   },
