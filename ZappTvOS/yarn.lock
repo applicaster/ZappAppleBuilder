@@ -172,6 +172,14 @@
   dependencies:
     ramda "^0.27.0"
 
+"@applicaster/quick-brick-mobile-transport-controls@1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-mobile-transport-controls/-/quick-brick-mobile-transport-controls-1.1.2.tgz#09aa59a9ff05633f1f92d426edbaad1e4fcd0796"
+  integrity sha512-KpZiBvciDhjIHU9gVSaRO3QAh+QqPLQ8f+V4XwSDvYlrhEVLs5V2HaW3nMPIiOWuvXt7C3vAaRF/RHpSgvZEyg==
+  dependencies:
+    "@miblanchard/react-native-slider" "^1.5.0"
+    react-native-linear-gradient "2.5.6"
+
 "@applicaster/quick-brick-native-apple@5.1.0":
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-native-apple/-/quick-brick-native-apple-5.1.0.tgz#0ef27a00c8906390be730aa570be4bcdcd2563be"
@@ -445,6 +453,14 @@
     "@applicaster/zapp-react-native-app" "5.0.1"
     "@applicaster/zapp-react-native-bridge" "5.0.1"
     "@applicaster/zapp-react-native-ui-components" "5.0.1"
+
+"@applicaster/zapp-react-native-default-player@4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-default-player/-/zapp-react-native-default-player-4.0.0.tgz#54e09dcc98fd3f169e307fea66308de6bac2a8de"
+  integrity sha512-G15tbPkNUtscJC6EenIpH1LZ2RGgWcvud11yoqmduPVVp7ycwyo8A+9xwWaAXzGPBFgh5QWNm08+p8Rwg760ag==
+  dependencies:
+    "@applicaster/quick-brick-mobile-transport-controls" "1.1.2"
+    keymirror "^0.1.1"
 
 "@applicaster/zapp-react-native-redux@5.0.1":
   version "5.0.1"
@@ -2421,6 +2437,11 @@
     graceful-fs "^4.1.3"
     mkdirp "^0.5.1"
     rimraf "^2.5.2"
+
+"@miblanchard/react-native-slider@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@miblanchard/react-native-slider/-/react-native-slider-1.5.0.tgz#32d5c4f786c6a527b48f127c4d65ea366b2ae851"
+  integrity sha512-8Zguehw7u0cgzpc4F31QjmmaWH1lZAQGXX2b6S6Ck1ABKhBp+F7SD5qH8g8VEu2z9LnDWgOvXMM2Txzw4rYpyA==
 
 "@react-native-community/cli-debugger-ui@^4.9.0":
   version "4.9.0"
@@ -6354,6 +6375,11 @@ keycode@^2.2.0:
   resolved "https://registry.yarnpkg.com/keycode/-/keycode-2.2.0.tgz#3d0af56dc7b8b8e5cba8d0a97f107204eec22b04"
   integrity sha1-PQr1bce4uOXLqNCpfxByBO7CKwQ=
 
+keymirror@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/keymirror/-/keymirror-0.1.1.tgz#918889ea13f8d0a42e7c557250eee713adc95c35"
+  integrity sha1-kYiJ6hP40KQufFVyUO7nE63JXDU=
+
 kind-of@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-1.1.0.tgz#140a3d2d41a36d2efcfa9377b62c24f8495a5c44"
@@ -8086,6 +8112,11 @@ react-native-linear-gradient@2.5.6:
   version "2.5.6"
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
   integrity sha512-HDwEaXcQIuXXCV70O+bK1rizFong3wj+5Q/jSyifKFLg0VWF95xh8XQgfzXwtq0NggL9vNjPKXa016KuFu+VFg==
+
+react-native-safe-area-context@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.2.0.tgz#06113c6b208f982d68ab5c3cebd199ca93db6941"
+  integrity sha512-k2Nty4PwSnrg9HwrYeeE+EYqViYJoOFwEy9LxL5RIRfoqxAq/uQXNGwpUg2/u4gnKpBbEPa9eRh15KKMe/VHkA==
 
 react-native-snap-carousel@^3.9.0:
   version "3.9.0"
