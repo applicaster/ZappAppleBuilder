@@ -123,7 +123,7 @@ end
 def write_app_data_to_file(bundle_identifier, value, type)
   puts("--> Saving app data for bundle: #{bundle_identifier}, type: #{type}, value: #{value}")
 
-  folder_name = ".ms_app_center"
+  folder_name = ".build_params"
   Dir.mkdir(folder_name) unless File.exists?(folder_name)
   open("#{folder_name}/#{bundle_identifier}_#{type}", 'w') { |f|
     f.puts "#{value}"
@@ -131,7 +131,7 @@ def write_app_data_to_file(bundle_identifier, value, type)
 end
 
 def read_app_secret_from_file(bundle_identifier)
-  folder_name = ".ms_app_center"
+  folder_name = ".build_params"
   filename = "#{folder_name}/#{bundle_identifier}_appsecret"
   if File.exist? "#{filename}"
      File.read("#{filename}")
