@@ -519,6 +519,9 @@ jobs:
       - store_artifacts:
           name: Artifacts - yarn.lock - collecting from tvOS build
           path: ./ZappTvOS/yarn.lock
+      - store_artifacts:
+          name: Artifacts - Additional build params
+          path: ./.build_params
 
   create_ios_mobile_sdk:
     <<: *mac_config
