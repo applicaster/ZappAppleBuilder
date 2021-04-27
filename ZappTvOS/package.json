@@ -32,7 +32,6 @@
     "@applicaster/zapp-analytics-plugins": "13.0.0",
     "@applicaster/zapp-apple": "1.7.2",
     "@applicaster/zapp-core": "1.4.5",
-    "@applicaster/zapp-react-native-default-player": "4.0.0",
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
     "@react-native-community/cli-platform-ios": "^4.7.0",
