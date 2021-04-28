@@ -85,6 +85,10 @@ class AppDelegate: AppDelegateBase {
         logger?.debugLog(template: AppDelegateLogs.handleRemoteNotificaton,
                          data: ["user_info": userInfo])
 
+        guard handleSilentRemoteNotification(userInfo, fetchCompletionHandler: completionHandler) == false else {
+            return
+        }
+        
         if isApplicationReady {
             remoteUserInfo = nil
             logger?.debugLog(template: AppDelegateLogs.handleRemoteNotificatonDelegate,
