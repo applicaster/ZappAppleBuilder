@@ -101,12 +101,12 @@ extension AppDelegate {
             presentationDelay = presentationDelayInt
         }
         
-        // show this notification in 2 sec from now
+        // show this notification in presentationDelay seconds value from now
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: presentationDelay, repeats: false)
 
-        // choose a random identifier
+        // create new request
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
-        //log
+        //log event
         self.logger?.debugLog(template: AppDelegateLogs.handleSilentRemoteNotificationPresentLocalPush,
                               data: prepareUserInfoForLogger(userInfo))
 
@@ -123,6 +123,6 @@ extension AppDelegate {
     }
     
     fileprivate func string(for key: String, userInfo: [AnyHashable: Any]) -> String {
-        return userInfo[key] ?? ""
+        return userInfo[key] as? String ?? ""
     }
 }
