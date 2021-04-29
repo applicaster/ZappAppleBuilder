@@ -19,13 +19,14 @@ extension AppDelegate {
         static let title = "title"
         static let subtitle = "subtitle"
         static let image = "image"
-        static let presentLocalNotification = "show"
+        static let presentationDelay = "delay"
         static let storageKey = "SilentRemoteNotificationEventIds"
     }
 
     func handleSilentRemoteNotification(_ userInfo: [AnyHashable: Any],
                                         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) -> Bool {
-        self.logger?.debugLog(template: AppDelegateLogs.handleSilentRemoteNotification)
+        self.logger?.debugLog(template: AppDelegateLogs.handleSilentRemoteNotification,
+                              data: prepareUserInfoForLogger(userInfo))
 
         guard let aps = userInfo[Params.aps] as? [String: AnyObject],
               let contentAvailable = aps[Params.contentAvailable] as? String,
@@ -60,52 +61,68 @@ extension AppDelegate {
     }
 
     fileprivate func shouldPresentLocalNotification(for userInfo: [AnyHashable: Any]) -> Bool {
-        guard let show = userInfo[Params.presentLocalNotification] as? String,
-              show.boolValue else {
+        guard !string(for: Params.title, userInfo: userInfo).isEmpty else {
             return false
         }
         return true
     }
 
     fileprivate func presentLocalNotification(for userInfo: [AnyHashable: Any]) {
-        
-        guard let title = userInfo[Params.title] as? String else {
-            return
-        }
-
         let content = UNMutableNotificationContent()
-        content.title = title
-        content.subtitle = userInfo[Params.subtitle] as? String ?? ""
+        content.title = string(for: Params.title, userInfo: userInfo)
+        content.subtitle = string(for: Params.subtitle, userInfo: userInfo)
         content.sound = UNNotificationSound.default
         content.badge = 1
         content.userInfo = userInfo
 
-        if let imageUrlString = userInfo[Params.image] as? String,
+        let identifier = UUID().uuidString
+        let imageUrlString = string(for: Params.image, userInfo: userInfo)
+        if !imageUrlString.isEmpty,
            let imageUrl = URL(string: imageUrlString) {
             do {
                 if let data = try? Data(contentsOf: imageUrl),
                    let image = UIImage(data: data),
                    let url = image.getLocalUrl() {
-                    let attachment = try UNNotificationAttachment(identifier: UUID().uuidString,
+                    let attachment = try UNNotificationAttachment(identifier: identifier,
                                                                   url: url,
                                                                   options: nil)
                     content.attachments = [attachment]
                 }
 
             } catch {
-                self.logger?.debugLog(template: AppDelegateLogs.handleSilentRemoteNotificationFailedToAddAttachment)
+                self.logger?.debugLog(template: AppDelegateLogs.handleSilentRemoteNotificationFailedToAddAttachment,
+                                      data: prepareUserInfoForLogger(userInfo))
             }
         }
 
+        var presentationDelay:TimeInterval = 2
+        if let presentationDelayString = userInfo[Params.presentationDelay] as? String,
+           let presentationDelayInt = TimeInterval(presentationDelayString) {
+            presentationDelay = presentationDelayInt
+        }
+        
         // show this notification in 2 sec from now
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: presentationDelay, repeats: false)
 
         // choose a random identifier
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-        //lo
-        self.logger?.debugLog(template: AppDelegateLogs.handleSilentRemoteNotificationPresentLocalPush)
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        //log
+        self.logger?.debugLog(template: AppDelegateLogs.handleSilentRemoteNotificationPresentLocalPush,
+                              data: prepareUserInfoForLogger(userInfo))
 
         // add notification request
         UNUserNotificationCenter.current().add(request)
+    }
+    
+    fileprivate func prepareUserInfoForLogger(_ userInfo: [AnyHashable: Any]) -> [String:Any] {
+        var retValue: [String:Any] = [:]
+        for (key, value) in userInfo {
+            retValue["\(key)"] = value
+        }
+        return retValue
+    }
+    
+    fileprivate func string(for key: String, userInfo: [AnyHashable: Any]) -> String {
+        return userInfo[key] ?? ""
     }
 }
