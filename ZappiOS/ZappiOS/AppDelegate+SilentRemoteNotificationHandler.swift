@@ -26,7 +26,7 @@ extension AppDelegate {
     func handleSilentRemoteNotification(_ userInfo: [AnyHashable: Any],
                                         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) -> Bool {
         self.logger?.debugLog(template: AppDelegateLogs.handleSilentRemoteNotification,
-                              data: prepareUserInfoForLogger(userInfo))
+                              data: ["user_info": userInfo])
 
         guard let aps = userInfo[Params.aps] as? [String: AnyObject],
               let contentAvailable = aps[Params.contentAvailable] as? String,
@@ -91,7 +91,7 @@ extension AppDelegate {
 
             } catch {
                 self.logger?.debugLog(template: AppDelegateLogs.handleSilentRemoteNotificationFailedToAddAttachment,
-                                      data: prepareUserInfoForLogger(userInfo))
+                                      data: ["user_info": userInfo])
             }
         }
 
@@ -108,18 +108,10 @@ extension AppDelegate {
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
         //log event
         self.logger?.debugLog(template: AppDelegateLogs.handleSilentRemoteNotificationPresentLocalPush,
-                              data: prepareUserInfoForLogger(userInfo))
+                              data: ["user_info": userInfo])
 
         // add notification request
         UNUserNotificationCenter.current().add(request)
-    }
-    
-    fileprivate func prepareUserInfoForLogger(_ userInfo: [AnyHashable: Any]) -> [String:Any] {
-        var retValue: [String:Any] = [:]
-        for (key, value) in userInfo {
-            retValue["\(key)"] = value
-        }
-        return retValue
     }
     
     fileprivate func string(for key: String, userInfo: [AnyHashable: Any]) -> String {

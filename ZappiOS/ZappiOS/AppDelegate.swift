@@ -85,6 +85,7 @@ class AppDelegate: AppDelegateBase {
         logger?.debugLog(template: AppDelegateLogs.handleRemoteNotificaton,
                          data: ["user_info": userInfo])
 
+        // Skip app presentation for silent push notification
         guard handleSilentRemoteNotification(userInfo, fetchCompletionHandler: completionHandler) == false else {
             return
         }
