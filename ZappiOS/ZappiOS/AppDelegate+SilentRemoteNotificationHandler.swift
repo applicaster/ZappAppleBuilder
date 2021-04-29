@@ -72,7 +72,7 @@ extension AppDelegate {
         content.title = string(for: Params.title, userInfo: userInfo)
         content.subtitle = string(for: Params.subtitle, userInfo: userInfo)
         content.sound = UNNotificationSound.default
-        content.badge = 1
+        content.badge += 1
         content.userInfo = userInfo
 
         let identifier = UUID().uuidString
