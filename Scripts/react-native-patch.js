@@ -132,6 +132,24 @@ const IOS_FILES_TO_PATCH = [
         "  #if TARGET_OS_TV\n    shouldFallbackToBareTextComparison = YES;\n  #endif\n  if (shouldFallbackToBareTextComparison) {",
     },
   },
+  {
+    filePath: "./ReactCommon/turbomodule/core/platform/ios/RCTTurboModuleManager.mm",
+    operation: replaceStringInFile,
+    args: {
+      lookUpString: "RCTBridgeModuleNameForClass(strongModule));",
+      correctString:
+        "RCTBridgeModuleNameForClass(Class(strongModule)));",
+    },
+  },
+  {
+    filePath: "./React/CxxBridge/RCTCxxBridge.mm",
+    operation: replaceStringInFile,
+    args: {
+      lookUpString: "_initializeModules:(NSArray<id<RCTBridgeModule>> *)modules",
+      correctString:
+        "_initializeModules:(NSArray<Class> *)modules",
+    },
+  },
 ];
 
 const TVOS_FILES_TO_PATCH = [
@@ -197,6 +215,24 @@ const TVOS_FILES_TO_PATCH = [
       lookUpString: "  if (shouldFallbackToBareTextComparison) {",
       correctString:
         "  #if TARGET_OS_TV\n    shouldFallbackToBareTextComparison = YES;\n  #endif\n  if (shouldFallbackToBareTextComparison) {",
+    },
+  },
+  {
+    filePath: "./ReactCommon/turbomodule/core/platform/ios/RCTTurboModuleManager.mm",
+    operation: replaceStringInFile,
+    args: {
+      lookUpString: "RCTBridgeModuleNameForClass(strongModule));",
+      correctString:
+        "RCTBridgeModuleNameForClass(Class(strongModule)));",
+    },
+  },
+  {
+    filePath: "./React/CxxBridge/RCTCxxBridge.mm",
+    operation: replaceStringInFile,
+    args: {
+      lookUpString: "_initializeModules:(NSArray<id<RCTBridgeModule>> *)modules",
+      correctString:
+        "_initializeModules:(NSArray<Class> *)modules",
     },
   },
   {
