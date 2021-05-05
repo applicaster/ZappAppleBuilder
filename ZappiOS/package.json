@@ -30,7 +30,7 @@
     "@applicaster/quick-brick-native-apple": "5.2.0",
     "@applicaster/x-ray": "0.2.0",
     "@applicaster/zapp-analytics-plugins": "13.0.0",
-    "@applicaster/zapp-apple": "2.1.0",
+    "@applicaster/zapp-apple": "2.1.1",
     "@applicaster/zapp-core": "1.6.0",
     "@applicaster/zapp-push-plugins": "13.0.0",
     "@commitlint/cli": "^8.3.5",
