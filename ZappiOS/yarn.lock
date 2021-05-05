@@ -172,10 +172,10 @@
   dependencies:
     ramda "^0.27.0"
 
-"@applicaster/quick-brick-native-apple@5.1.0":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-native-apple/-/quick-brick-native-apple-5.1.0.tgz#0ef27a00c8906390be730aa570be4bcdcd2563be"
-  integrity sha512-/vFJeAUBJRMBvg2tUmWUnS38lir673awvnc/sMBAWj6bD9AWvbsbOjAkZlwA+HSQu2yapkFysUjAGdHm0iFAXA==
+"@applicaster/quick-brick-native-apple@5.2.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-native-apple/-/quick-brick-native-apple-5.2.0.tgz#ea3fd9b9a4267e8f464866013669ed3253675196"
+  integrity sha512-H5Xw1X9Igf1Nxtmc+hgrzTyb0Vg1zgPIkPwHuP25yBtEy9/t368qrSHyFpQuZk33i2m4UFeLTTzRzAWU6z4lJQ==
 
 "@applicaster/quick-brick-native-share-action@1.0.0":
   version "1.0.0"
@@ -265,17 +265,19 @@
   resolved "https://registry.yarnpkg.com/@applicaster/zapp-analytics-plugins/-/zapp-analytics-plugins-13.0.0.tgz#efe3fdb4a7646c6b115b70bed88f5351ee6d9457"
   integrity sha512-rpSheuIBUNdF9Jf9vFIXD5aQLfYfh5nhwKRNP5odw6Oxvj+41ooi/aVEZWJXLhyKohER4MOOdf3UfuQCoXhebw==
 
-"@applicaster/zapp-apple@1.7.2":
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-apple/-/zapp-apple-1.7.2.tgz#cb2be32b2ab871517a83b24977a41dce436fab98"
-  integrity sha512-iZU4fuT4lPJpy9BNCI3XTzHNpLDyppG3gmv5tB5WEJFp+zPr+KrKhAFTfQchUqd4NhyMmRDN168SCidyWIdCTg==
+"@applicaster/zapp-apple@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-apple/-/zapp-apple-2.1.0.tgz#710360dea8f7127a52a5f1d2dc40980724a4b71e"
+  integrity sha512-FDoa00QElB3PavZvqLRENkgRNtmFCSQfZYIPATjJB1hcuGkGL3xb8ri7hcDkXW6TD8cqswexPPprDCC1ShKGdA==
   dependencies:
     "@applicaster/x-ray" "0.2.0"
 
-"@applicaster/zapp-core@1.4.5":
-  version "1.4.5"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-core/-/zapp-core-1.4.5.tgz#1edb9ac8e3b07e296920f1108197f287fbeab8d8"
-  integrity sha512-lvMvwkrVxk23fgPkHdIJ/PNS5n/Nj79mbyz0TLVjQvDh8RaVdjYKoRqyp4Vv8Nx/Tq5XBeMEA4CJ5OAA8AwNag==
+"@applicaster/zapp-core@1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-core/-/zapp-core-1.5.1.tgz#deaad539719b424aff1007ef2ccdb11e1977a206"
+  integrity sha512-tWXW6eGgCbEwzCyRlsk0bjqSn0gTWNzOTL6GlJAAFZ8i/TTtWphurZNOzEAs2aWPEeKNZj91cVHMZRIsLc2igg==
+  dependencies:
+    "@applicaster/x-ray" "0.2.0"
 
 "@applicaster/zapp-pipes-dev-kit@^1.4.1":
   version "1.4.1"
