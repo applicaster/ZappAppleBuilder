@@ -29,8 +29,8 @@ extension AppDelegate {
                               data: ["user_info": userInfo])
 
         guard let aps = userInfo[Params.aps] as? [String: AnyObject],
-              let contentAvailable = aps[Params.contentAvailable] as? String,
-              contentAvailable.boolValue else {
+              let contentAvailable = aps[Params.contentAvailable] as? Int,
+              contentAvailable == 1 else {
             return false
         }
 
@@ -72,7 +72,7 @@ extension AppDelegate {
         content.title = string(for: Params.title, userInfo: userInfo)
         content.subtitle = string(for: Params.subtitle, userInfo: userInfo)
         content.sound = UNNotificationSound.default
-        content.badge += 1
+        content.badge = NSNumber(value: content.badge?.intValue ?? 0 + 1)
         content.userInfo = userInfo
 
         let identifier = UUID().uuidString
