@@ -57,6 +57,7 @@
 		1D30F6BD23CB2CE800DDD86F /* FeaturesCustomization.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D30F6B923CB2CE800DDD86F /* FeaturesCustomization.plist */; };
 		1D30F6BE23CB2CE800DDD86F /* ZappStyles.json in Resources */ = {isa = PBXBuildFile; fileRef = 1D30F6BA23CB2CE800DDD86F /* ZappStyles.json */; };
 		1D30F6BF23CB2CE800DDD86F /* AppDelegateBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30F6BB23CB2CE800DDD86F /* AppDelegateBase.swift */; };
+		1D5C34E3264447D6003550DA /* AppDelegate+SilentRemoteNotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5C34E2264447D6003550DA /* AppDelegate+SilentRemoteNotificationHandler.swift */; };
 		1D68DC3F2483B16000844CB3 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D68DC3E2483B16000844CB3 /* UserNotifications.framework */; };
 		1D68DC412483B16000844CB3 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D68DC402483B16000844CB3 /* UserNotificationsUI.framework */; };
 		1D68DC442483B16000844CB3 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D68DC432483B16000844CB3 /* NotificationViewController.swift */; };
@@ -176,6 +177,7 @@
 		1D30F6C123CB2D5F00DDD86F /* ZappiOS-Debug.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "ZappiOS-Debug.entitlements"; sourceTree = "<group>"; };
 		1D30F6C223CB2D5F00DDD86F /* ZappiOS-Release.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "ZappiOS-Release.entitlements"; sourceTree = "<group>"; };
 		1D30F71623CB4D5100DDD86F /* ZappiOS-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZappiOS-Bridging-Header.h"; sourceTree = "<group>"; };
+		1D5C34E2264447D6003550DA /* AppDelegate+SilentRemoteNotificationHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+SilentRemoteNotificationHandler.swift"; sourceTree = "<group>"; };
 		1D68DC3D2483B16000844CB3 /* NotificationContentExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationContentExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D68DC3E2483B16000844CB3 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		1D68DC402483B16000844CB3 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
@@ -359,6 +361,7 @@
 				1D30F71623CB4D5100DDD86F /* ZappiOS-Bridging-Header.h */,
 				1D30F68A23CB298000DDD86F /* Assets.xcassets */,
 				1D30F68123CB297F00DDD86F /* AppDelegate.swift */,
+				1D5C34E2264447D6003550DA /* AppDelegate+SilentRemoteNotificationHandler.swift */,
 				4054F78624291A0B00CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift */,
 				1D30F68723CB297F00DDD86F /* Main.storyboard */,
 				402134E62542334100080D25 /* LaunchScreen.storyboard */,
@@ -872,6 +875,7 @@
 				1DDDE56F258A008F00958764 /* AppDelegateBase+FacadeConnectorOfflineContentProtocol.swift in Sources */,
 				4054F78724291A0B00CAA312 /* AppDelegate+UNUserNotificationCenterDelegate.swift in Sources */,
 				40EE124F2409CEED00B052C2 /* FirebaseHandler.swift in Sources */,
+				1D5C34E3264447D6003550DA /* AppDelegate+SilentRemoteNotificationHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
