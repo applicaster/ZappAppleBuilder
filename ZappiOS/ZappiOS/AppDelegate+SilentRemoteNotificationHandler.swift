@@ -15,10 +15,12 @@ extension AppDelegate {
     fileprivate struct Params {
         static let aps = "aps"
         static let contentAvailable = "content-available"
-        static let eventId = "eid"
+        static let eventId = "groupid"
         static let title = "title"
         static let subtitle = "subtitle"
+        static let sound = "sound"
         static let image = "image"
+        static let url = "url"
         static let presentationDelay = "delay"
         static let storageKey = "SilentRemoteNotificationEventIds"
     }
@@ -71,8 +73,8 @@ extension AppDelegate {
         let content = UNMutableNotificationContent()
         content.title = string(for: Params.title, userInfo: userInfo)
         content.subtitle = string(for: Params.subtitle, userInfo: userInfo)
-        content.sound = UNNotificationSound.default
-        content.badge = NSNumber(value: content.badge?.intValue ?? 0 + 1)
+        content.sound = sound(for: Params.sound, userInfo: userInfo)
+        content.badge = NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1)
         content.userInfo = userInfo
 
         let identifier = UUID().uuidString
@@ -116,5 +118,14 @@ extension AppDelegate {
     
     fileprivate func string(for key: String, userInfo: [AnyHashable: Any]) -> String {
         return userInfo[key] as? String ?? ""
+    }
+    
+    fileprivate func sound(for key: String, userInfo: [AnyHashable: Any]) -> UNNotificationSound {
+        let value = string(for: key, userInfo: userInfo)
+        guard value.isEmpty == false else {
+            return UNNotificationSound.default
+        }
+        
+        return UNNotificationSound(named: UNNotificationSoundName(rawValue: value))
     }
 }
