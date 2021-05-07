@@ -272,10 +272,10 @@
   dependencies:
     "@applicaster/x-ray" "0.2.0"
 
-"@applicaster/zapp-core@1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-core/-/zapp-core-1.6.0.tgz#1f1663dd66a2fd8f7a2caf049c49c916e2cbb5b0"
-  integrity sha512-MYDyVxow4Je/R0rhhqJnKyNd56ooIQmDZL2A5gFidJ5zFuajR8d8UB7Sg3e97pfnZ+6UO4kVHPXsj3fA1UPJjQ==
+"@applicaster/zapp-core@1.6.1":
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-core/-/zapp-core-1.6.1.tgz#7111eb212dc2ef7bbcb08a82929b1f3bda719227"
+  integrity sha512-7cpfl5jDl8U8bzKPDTC9JCgvzxdpa3DABW/IE3/wqOdpVBUKEmQhwEMrrOW6yj/ezdGLd2S/s26905XpWorYcg==
   dependencies:
     "@applicaster/x-ray" "0.2.0"
 
