@@ -15,14 +15,14 @@ extension AppDelegate {
     fileprivate struct Params {
         static let aps = "aps"
         static let contentAvailable = "content-available"
-        static let eventId = "groupid"
+        static let tag = "tag"
         static let title = "title"
-        static let subtitle = "subtitle"
+        static let body = "body"
         static let sound = "sound"
         static let image = "image"
         static let url = "url"
         static let presentationDelay = "delay"
-        static let storageKey = "SilentRemoteNotificationEventIds"
+        static let proceededTagsStorageKey = "SilentRemoteNotificationTags"
     }
 
     func handleSilentRemoteNotification(_ userInfo: [AnyHashable: Any],
@@ -47,16 +47,16 @@ extension AppDelegate {
 
     fileprivate func isNewEvent(_ userInfo: [AnyHashable: Any]) -> Bool {
         var retValue = true
-        guard let eventId = userInfo[Params.eventId] as? String else {
+        guard let tag = userInfo[Params.tag] as? String else {
             return retValue
         }
 
-        var proceededEvents = UserDefaults.standard.array(forKey: Params.storageKey) as? [String] ?? []
-        if proceededEvents.contains(eventId) {
+        var proceededTags = UserDefaults.standard.array(forKey: Params.proceededTagsStorageKey) as? [String] ?? []
+        if proceededTags.contains(tag) {
             retValue = false
         } else {
-            proceededEvents.append(eventId)
-            UserDefaults.standard.setValue(proceededEvents, forKey: Params.storageKey)
+            proceededTags.append(tag)
+            UserDefaults.standard.setValue(proceededTags, forKey: Params.proceededTagsStorageKey)
         }
 
         return retValue
@@ -72,7 +72,7 @@ extension AppDelegate {
     fileprivate func presentLocalNotification(for userInfo: [AnyHashable: Any]) {
         let content = UNMutableNotificationContent()
         content.title = string(for: Params.title, userInfo: userInfo)
-        content.subtitle = string(for: Params.subtitle, userInfo: userInfo)
+        content.subtitle = string(for: Params.body, userInfo: userInfo)
         content.sound = sound(for: Params.sound, userInfo: userInfo)
         content.badge = NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1)
         content.userInfo = userInfo
