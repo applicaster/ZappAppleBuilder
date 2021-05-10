@@ -125,7 +125,7 @@ public class AppDelegateBase: AppDelegateExtandable, UIApplicationDelegate, Faca
         #if os(tvOS)
             platform = ZappStorageKeys.tvOS
         #endif
-        var retVal =  [ZappStorageKeys.bundleIdentifier: kBundleIdentifier,
+        let retVal =  [ZappStorageKeys.bundleIdentifier: kBundleIdentifier,
                        ZappStorageKeys.applicationName: kAppName,
                        ZappStorageKeys.versionId: kVersionId,
                        ZappStorageKeys.versionName: kVersionName,
