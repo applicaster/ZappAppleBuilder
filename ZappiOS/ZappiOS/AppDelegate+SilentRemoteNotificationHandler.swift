@@ -36,17 +36,23 @@ extension AppDelegate {
             return false
         }
 
-        if isNewEvent(userInfo),
-           shouldPresentLocalNotification(for: userInfo) {
-            presentLocalNotification(for: userInfo)
+        if shouldHandleEvent(for: userInfo) {
+            if shouldPresentLocalNotification(for: userInfo) {
+                presentLocalNotification(for: userInfo)
+            }
+            else {
+                handleSilentNotification(for: userInfo)
+            }
         }
-
+           
         completionHandler(UIBackgroundFetchResult.newData)
         return true
     }
 
-    fileprivate func isNewEvent(_ userInfo: [AnyHashable: Any]) -> Bool {
+    fileprivate func shouldHandleEvent(for userInfo: [AnyHashable: Any]) -> Bool {
         var retValue = true
+        // if there is a tag, indicating unique event, check if the event was already been handled.
+        // otherwise continue and handle the event
         guard let tag = userInfo[Params.tag] as? String else {
             return retValue
         }
@@ -62,6 +68,17 @@ extension AppDelegate {
         return retValue
     }
 
+    fileprivate func handleSilentNotification(for userInfo: [AnyHashable: Any]) {
+        guard let urlString = userInfo[Params.url] as? String,
+              let url = URL(string: urlString) else {
+            return
+        }
+        
+        _ = UrlSchemeHandler.handle(with: rootController,
+                                application: UIApplication.shared,
+                                open: url)
+    }
+    
     fileprivate func shouldPresentLocalNotification(for userInfo: [AnyHashable: Any]) -> Bool {
         guard !string(for: Params.title, userInfo: userInfo).isEmpty else {
             return false
