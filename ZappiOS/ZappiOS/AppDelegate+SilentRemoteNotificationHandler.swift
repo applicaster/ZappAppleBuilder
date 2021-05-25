@@ -23,6 +23,7 @@ extension AppDelegate {
         static let url = "url"
         static let presentationDelay = "delay"
         static let proceededTagsStorageKey = "SilentRemoteNotificationTags"
+        static let threadId = "thread-id"
     }
 
     func handleSilentRemoteNotification(_ userInfo: [AnyHashable: Any],
@@ -93,7 +94,9 @@ extension AppDelegate {
         content.sound = sound(for: Params.sound, userInfo: userInfo)
         content.badge = NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1)
         content.userInfo = userInfo
-
+        if let threadId = threadId(for: Params.threadId, userInfo: userInfo) {
+            content.threadIdentifier = threadId
+        }
         let identifier = UUID().uuidString
         let imageUrlString = string(for: Params.image, userInfo: userInfo)
         if !imageUrlString.isEmpty,
@@ -144,5 +147,13 @@ extension AppDelegate {
         }
         
         return UNNotificationSound(named: UNNotificationSoundName(rawValue: value))
+    }
+    
+    fileprivate func threadId(for key: String, userInfo: [AnyHashable: Any]) -> String? {
+        let threadId = string(for: Params.threadId, userInfo: userInfo)
+        guard threadId.isEmpty else {
+            return Bundle.main.bundleIdentifier
+        }
+        return threadId
     }
 }
