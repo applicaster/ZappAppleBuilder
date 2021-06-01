@@ -42,7 +42,8 @@
     "react-native-linear-gradient": "2.5.6",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-svg": "9.13.6",
-    "react-native-tvos": "0.62.2-0"
+    "react-native-tvos": "0.62.2-0",
+    "@react-native-community/netinfo": "^5.9.0"
   },
   "devDependencies": {
     "@applicaster/zapplicaster-cli": "5.0.1"
