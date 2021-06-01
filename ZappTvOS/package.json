@@ -45,6 +45,9 @@
     "react-native-tvos": "0.62.2-0",
     "@react-native-community/netinfo": "^5.9.0"
   },
+  "resolution": {
+    "react-native": "npm:react-native-tvos@0.62.2-0"
+  },
   "devDependencies": {
     "@applicaster/zapplicaster-cli": "5.0.1"
   },
