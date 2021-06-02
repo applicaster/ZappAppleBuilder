@@ -265,10 +265,10 @@
   resolved "https://registry.yarnpkg.com/@applicaster/zapp-analytics-plugins/-/zapp-analytics-plugins-13.0.0.tgz#efe3fdb4a7646c6b115b70bed88f5351ee6d9457"
   integrity sha512-rpSheuIBUNdF9Jf9vFIXD5aQLfYfh5nhwKRNP5odw6Oxvj+41ooi/aVEZWJXLhyKohER4MOOdf3UfuQCoXhebw==
 
-"@applicaster/zapp-apple@2.1.10":
-  version "2.1.10"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-apple/-/zapp-apple-2.1.10.tgz#43eca9e8131f07a47249472e3d4f63502ff5f1de"
-  integrity sha512-fYjYDfFYLypDIZ5Zan35T2TW3EcISN4kTg7tVrNX99tjC0IO6nWbMY6rvFG2tLDzRWtcIkIADYSfPd/2IwFXYw==
+"@applicaster/zapp-apple@2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-apple/-/zapp-apple-2.2.0.tgz#fc275fa5f2d0ae0509236daf7895fa6abd5b1f6d"
+  integrity sha512-xJ/NtH/2LdvYMSaWZMtNWplPJbizuYzjeO5K1OBTpqFrMtlpGTx3b9Q3gQfQydgWeRmNYPEpWRIDKiOJu2oh8g==
   dependencies:
     "@applicaster/x-ray" "0.2.0"
 
