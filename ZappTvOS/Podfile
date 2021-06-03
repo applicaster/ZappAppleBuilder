@@ -29,6 +29,7 @@ def shared_pods
     pod 'XrayLogger', :path => './node_modules/@applicaster/x-ray/apple/XrayLogger.podspec'
     pod 'RNGestureHandler', :path => './node_modules/react-native-gesture-handler/RNGestureHandler.podspec'
     pod 'react-native-safe-area-context', :path => './node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec'
+    pod 'react-native-netinfo', :path => './node_modules/@react-native-community/netinfo'
 
     # Zaptool pods - Do not remove or change.
 end
