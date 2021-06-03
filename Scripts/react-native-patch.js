@@ -78,16 +78,40 @@ async function processFile(
   }
 }
 
-const IOS_FILES_TO_PATCH = [
+const SHARED_PATCHES = [
+  // https://github.com/facebook/react-native/issues/28405#issuecomment-779382959
+  {
+    filePath: "./React/CxxBridge/RCTCxxBridge.mm",
+    operation: replaceStringInFile,
+    args: {
+      lookUpString:
+        "_initializeModules:(NSArray<id<RCTBridgeModule>> *)modules",
+      correctString: "_initializeModules:(NSArray<Class> *)modules",
+    },
+  },
+  // https://github.com/facebook/react-native/issues/28405#issuecomment-827353727
+  {
+    filePath:
+      "./ReactCommon/turbomodule/core/platform/ios/RCTTurboModuleManager.mm",
+    operation: replaceStringInFile,
+    args: {
+      lookUpString: "RCTBridgeModuleNameForClass(strongModule))",
+      correctString: "RCTBridgeModuleNameForClass(Class(strongModule)))",
+    },
+  },
   {
     filePath: "./Libraries/Image/RCTUIImageViewAnimated.m",
     operation: replaceStringInFile,
     args: {
-      lookUpString: "    layer.contents = (__bridge id)_currentFrame.CGImage;",
+      lookUpString: "layer.contents = (__bridge id)_currentFrame.CGImage;",
       correctString:
-        "    layer.contents = (__bridge id)_currentFrame.CGImage; } else { [super displayLayer:layer];",
+        "layer.contents = /* patched */ (__bridge id)_currentFrame.CGImage; } else { [super displayLayer:layer];",
     },
   },
+];
+
+const IOS_FILES_TO_PATCH = [
+  ...SHARED_PATCHES,
   {
     filePath: "./React/Base/RCTConvert.h",
     operation: replaceStringInFile,
@@ -135,15 +159,7 @@ const IOS_FILES_TO_PATCH = [
 ];
 
 const TVOS_FILES_TO_PATCH = [
-  {
-    filePath: "./Libraries/Image/RCTUIImageViewAnimated.m",
-    operation: replaceStringInFile,
-    args: {
-      lookUpString: "    layer.contents = (__bridge id)_currentFrame.CGImage;",
-      correctString:
-        "    layer.contents = (__bridge id)_currentFrame.CGImage; } else { [super displayLayer:layer];",
-    },
-  },
+  ...SHARED_PATCHES,
   {
     filePath: "./React/CoreModules/RCTDevMenu.h",
     operation: replaceStringInFile,
