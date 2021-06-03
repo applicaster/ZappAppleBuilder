@@ -44,13 +44,6 @@ references:
       command: |
         ssh-keyscan gitlab.p7s1.io >> ~/.ssh/known_hosts || exit 0
 
-  add_new_wwdr_intermediate_certificate: &add_new_wwdr_intermediate_certificate
-    run:
-      name: Add New WWDR Intermediate Certificate
-      command: |
-        curl https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer -o AppleWWDRCAG3.cer
-        sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain AppleWWDRCAG3.cer
-
   prepare_build_parameters: &prepare_build_parameters
     run:
       name: Prepare build parameters
@@ -423,7 +416,6 @@ jobs:
       - checkout
       - *configure_ssh_agents
       - *establishing_authenticity_ssh_host
-      - *add_new_wwdr_intermediate_certificate
       - *prepare_caching_file
       - *prepare_zapptool_version_file
       - *prepare_pods_cache_file
