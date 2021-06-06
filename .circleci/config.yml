@@ -49,7 +49,7 @@ references:
       name: Add New WWDR Intermediate Certificate
       command: |
         curl https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer -o AppleWWDRCAG3.cer
-        sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain AppleWWDRCAG3.cer & sleep 5; kill $!; exit 0
+        sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain AppleWWDRCAG3.cer & sleep 5; sudo kill $!
 
   prepare_build_parameters: &prepare_build_parameters
     run:
