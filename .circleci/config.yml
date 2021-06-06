@@ -51,7 +51,7 @@ references:
         function timeout() { perl -e 'alarm shift; exec @ARGV' "$@"; }
 
         curl https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer -o AppleWWDRCAG3.cer
-        timeout 5 sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain AppleWWDRCAG3.cer
+        timeout 5 sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain AppleWWDRCAG3.cer ; sleep 0.5; echo 0
 
   prepare_build_parameters: &prepare_build_parameters
     run:
