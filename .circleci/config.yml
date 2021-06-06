@@ -326,7 +326,6 @@ jobs:
     steps:
       - *stop_job_triggered_by_zapp
       - checkout
-      - *add_new_wwdr_intermediate_certificate
       - *prepare_caching_file
       - *prepare_zapptool_version_file
       - *prepare_pods_cache_file
