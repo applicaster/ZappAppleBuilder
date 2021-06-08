@@ -256,6 +256,8 @@ class BuildType < BaseHelper
     begin
       p12 = OpenSSL::PKCS12.new(File.read((options[:certificate_path]).to_s), (options[:certificate_password]).to_s)
       certificate_team_identifier = parse_certificate_subject_value(p12, 'OU')
+      puts(p12.certificate.subject)
+      puts(p12.certificate.issuer)
 
       raise error_message if certificate_team_identifier.empty?
 
