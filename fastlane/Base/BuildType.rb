@@ -256,6 +256,8 @@ class BuildType < BaseHelper
     begin
       p12 = OpenSSL::PKCS12.new(File.read((options[:certificate_path]).to_s), (options[:certificate_password]).to_s)
       certificate_team_identifier = parse_certificate_subject_value(p12, 'OU')
+      certificate_issuer_unit = parse_certificate_issuer_value(p12, 'OU', 'G3')
+
       puts(p12.certificate.subject)
       puts(p12.certificate.issuer)
 
@@ -270,10 +272,12 @@ class BuildType < BaseHelper
         hasCertificate = true if certificate.public_key.to_s == p12.certificate.public_key.to_s
       end
 
+      error_message = 'Certificate was creates with older or not valid WWDR intermediate certificate. Please revoke and create new p12 using Apple Developer Portal or Xcode'
+      raise error_message if certificate_issuer_unit.empty?
+
       error_message = 'Provisioning Profile is not signed with provided certificate'
       raise error_message unless hasCertificate == true
 
-      puts(p12.certificate.subject)
       puts("VALID: Provisioning Profile is signed with provided certificate\n".colorize(:green))
     rescue StandardError => e
       raise error_message
@@ -283,6 +287,12 @@ class BuildType < BaseHelper
   def parse_certificate_subject_value(certificate, key)
     content_array = certificate.certificate.subject.to_a.reject { |c| c.include?(key) == false }
     value = content_array.first.select { |c| c.to_s.length == 10 }
+    value.first
+  end
+
+  def parse_certificate_issuer_value(certificate, key, value)
+    content_array = certificate.certificate.issuer.to_a.reject { |c| c.include?(key) == false }
+    value = content_array.first.select { |c| c.to_s == value }
     value.first
   end
 
