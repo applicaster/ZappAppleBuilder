@@ -49,8 +49,11 @@ references:
       name: Add New WWDR Intermediate Certificate
       command: |
         curl https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer -o AppleWWDRCAG3.cer
+        curl https://developer.apple.com/certificationauthority/AppleWWDRCA.cer  -o AppleWWDRCA.cer
         sudo security find-certificate -c "Apple Worldwide Developer Relations Certification Authority" -a -Z | sudo awk '/SHA-1/{system("security delete-certificate -Z "$NF)}'
         sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain AppleWWDRCAG3.cer & sleep 5; sudo kill $!
+        sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain AppleWWDRCA.cer & sleep 5; sudo kill $!
+        security find-certificate -p -c "Apple Worldwide Developer Relations Certification Authority" | openssl x509 -text -noout
 
   prepare_build_parameters: &prepare_build_parameters
     run:
