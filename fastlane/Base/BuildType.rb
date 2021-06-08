@@ -107,14 +107,16 @@ class BuildType < BaseHelper
   end
 
   def validate(options)
-    validate_distribution_certificate_password(options)
-    validate_distribution_certificate_expiration(options)
+
+    certificate = load_certificate(options)
+    validate_distribution_certificate_password(certificate)
+    validate_distribution_certificate_expiration(certificate)
+    validate_distribution_certificate_wwdr(certificate)
 
     if options[:provisioning_profile_path]
-      options[:provisioning_profile] = get_provisioning_profile_content(options[:provisioning_profile_path])
-
-      validate_distribution_certificate_and_provisioning_profile(options)
-      validate_provisioning_profile(options)
+      profile = get_provisioning_profile_content(options[:provisioning_profile_path])
+      validate_distribution_certificate_and_provisioning_profile(profile, certificate)
+      validate_provisioning_profile(profile)
     end
 
     validate_app_version(options)
@@ -224,12 +226,11 @@ class BuildType < BaseHelper
     end
   end
 
-  def validate_distribution_certificate_expiration(options)
+  def validate_distribution_certificate_expiration(certificate)
     current(__callee__.to_s)
     error_message = 'Distrubution Certificate is expired'
     begin
-      p12 = OpenSSL::PKCS12.new(File.read((options[:certificate_path]).to_s), (options[:certificate_password]).to_s)
-      raise error_message unless p12.certificate.not_after > Time.new
+      raise error_message unless certificate.certificate.not_after > Time.new
 
       puts("VALID: Distrubution Certificate is not expired\n".colorize(:green))
     rescue StandardError => e
@@ -237,12 +238,11 @@ class BuildType < BaseHelper
     end
   end
 
-  def validate_distribution_certificate_password(options)
+  def validate_distribution_certificate_password(certificate)
     current(__callee__.to_s)
     error_message = 'Incorrect password for Distrubution Certificate'
     begin
-      p12 = OpenSSL::PKCS12.new(File.read((options[:certificate_path]).to_s), (options[:certificate_password]).to_s)
-      raise error_message unless p12.certificate.subject
+      raise error_message unless certificate.certificate.subject
 
       puts("VALID: Distrubution Certificate password is Ok\n".colorize(:green))
     rescue StandardError => e
@@ -250,30 +250,35 @@ class BuildType < BaseHelper
     end
   end
 
-  def validate_distribution_certificate_and_provisioning_profile(options)
+  def validate_distribution_certificate_wwdr(certificate)
+    current(__callee__.to_s)
+    error_message = 'Certificate was creates with older or not valid WWDR intermediate certificate. Please revoke and create new p12 using Apple Developer Portal or Xcode'
+    begin
+      puts(certificate.certificate.subject)
+      puts(certificate.certificate.issuer)
+      certificate_issuer_unit = parse_certificate_issuer_value(certificate, 'OU', 'G3')
+      raise error_message if certificate_issuer_unit.empty?
+
+      puts("VALID: Certificate was creates with valid WWDR\n".colorize(:green))
+    rescue StandardError => e
+      raise error_message
+    end
+  end
+
+  def validate_distribution_certificate_and_provisioning_profile(profile, certificate)
     current(__callee__.to_s)
     error_message = 'Unable to fetch Team ID from distribution certificate'
     begin
-      p12 = OpenSSL::PKCS12.new(File.read((options[:certificate_path]).to_s), (options[:certificate_password]).to_s)
-      certificate_team_identifier = parse_certificate_subject_value(p12, 'OU')
-      certificate_issuer_unit = parse_certificate_issuer_value(p12, 'OU', 'G3')
-
-      puts(p12.certificate.subject)
-      puts(p12.certificate.issuer)
-
+      certificate_team_identifier = parse_certificate_subject_value(certificate, 'OU')
       raise error_message if certificate_team_identifier.empty?
 
-      provisioning_profile = options[:provisioning_profile]
-      provisioning_profile_certificates = provisioning_profile['DeveloperCertificates']
+      provisioning_profile_certificates = profile['DeveloperCertificates']
 
       hasCertificate = false
       provisioning_profile_certificates.each do |raw|
-        certificate = OpenSSL::X509::Certificate.new(raw.string)
-        hasCertificate = true if certificate.public_key.to_s == p12.certificate.public_key.to_s
+        pp_cert = OpenSSL::X509::Certificate.new(raw.string)
+        hasCertificate = true if pp_cert.public_key.to_s == certificate.certificate.public_key.to_s
       end
-
-      error_message = 'Certificate was creates with older or not valid WWDR intermediate certificate. Please revoke and create new p12 using Apple Developer Portal or Xcode'
-      raise error_message if certificate_issuer_unit.empty?
 
       error_message = 'Provisioning Profile is not signed with provided certificate'
       raise error_message unless hasCertificate == true
@@ -283,6 +288,10 @@ class BuildType < BaseHelper
       raise error_message
     end
   end
+
+  def load_certificate(options)
+    OpenSSL::PKCS12.new(File.read((options[:certificate_path]).to_s), (options[:certificate_password]).to_s)
+  end 
 
   def parse_certificate_subject_value(certificate, key)
     content_array = certificate.certificate.subject.to_a.reject { |c| c.include?(key) == false }
@@ -296,19 +305,17 @@ class BuildType < BaseHelper
     value.first
   end
 
-  def validate_provisioning_profile(options)
-    validate_provisioning_profile_expiration(options)
-    validate_provisioning_profile_bundle_identifier(options)
-    validate_provisioning_profile_entitlements(options)
+  def validate_provisioning_profile(profile)
+    validate_provisioning_profile_expiration(profile)
+    validate_provisioning_profile_bundle_identifier(profile)
+    validate_provisioning_profile_entitlements(profile)
   end
 
-  def validate_provisioning_profile_expiration(options)
+  def validate_provisioning_profile_expiration(profile)
     current(__callee__.to_s)
     error_message = 'Provisioning Profile is expired'
     begin
-      provisioning_profile = options[:provisioning_profile]
-
-      expire_date = provisioning_profile['ExpirationDate']
+      expire_date = profile['ExpirationDate']
       raise error_message unless expire_date > Date.new
 
       puts("VALID: Provisioning Profile is not expired\n".colorize(:green))
@@ -317,13 +324,12 @@ class BuildType < BaseHelper
     end
   end
 
-  def validate_provisioning_profile_bundle_identifier(options)
+  def validate_provisioning_profile_bundle_identifier(profile)
     current(__callee__.to_s)
     error_message = 'Provisioning Profile bundle identifier does not match app required bundle identifier'
     begin
-      provisioning_profile = options[:provisioning_profile]
-      pp_bundle_identifier = provisioning_profile['Entitlements']['application-identifier']
-      prefix = provisioning_profile['ApplicationIdentifierPrefix']
+      pp_bundle_identifier = profile['Entitlements']['application-identifier']
+      prefix = profile['ApplicationIdentifierPrefix']
       pp_bundle_identifier["#{prefix.first}."] = ''
       unless pp_bundle_identifier == @@env_helper.bundle_identifier
         raise "#{error_message} (|#{pp_bundle_identifier}| != |#{@@env_helper.bundle_identifier}|)"
@@ -335,12 +341,10 @@ class BuildType < BaseHelper
     end
   end
 
-  def validate_provisioning_profile_entitlements(options)
+  def validate_provisioning_profile_entitlements(profile)
     current(__callee__.to_s)
     begin
-      provisioning_profile = options[:provisioning_profile]
-
-      pp_app_groups_entitlements = provisioning_profile['Entitlements']['com.apple.security.application-groups']
+      pp_app_groups_entitlements = profile['Entitlements']['com.apple.security.application-groups']
       if pp_app_groups_entitlements.nil?
         error_message = 'Provisioning Profile doesn\'t support the App Groups capability'
         raise error_message
