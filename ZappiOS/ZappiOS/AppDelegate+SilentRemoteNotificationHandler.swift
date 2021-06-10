@@ -37,13 +37,14 @@ extension AppDelegate {
             return false
         }
 
-        if shouldHandleEvent(for: userInfo) {
-            if shouldPresentLocalNotification(for: userInfo) {
-                presentLocalNotification(for: userInfo)
+        
+        if shouldPresentLocalNotification(for: userInfo) {
+            removePresentedNotificationIfNeeded(for: userInfo) {
+                self.presentLocalNotification(for: userInfo)
             }
-            else {
-                handleSilentNotification(for: userInfo)
-            }
+        }
+        else {
+            handleSilentNotification(for: userInfo)
         }
            
         completionHandler(UIBackgroundFetchResult.newData)
@@ -87,6 +88,28 @@ extension AppDelegate {
         return true
     }
 
+    fileprivate func removePresentedNotificationIfNeeded(for userInfo: [AnyHashable: Any], completion: (() -> Void)?) {
+        let tag = string(for: Params.tag, userInfo: userInfo)
+        guard !tag.isEmpty else {
+            return
+        }
+        
+        UNUserNotificationCenter.current().getDeliveredNotifications { notifications in
+            let identifiers = notifications.filter { notification in
+                let notificationTag = self.string(for: Params.tag, userInfo: notification.request.content.userInfo)
+                return notificationTag == tag
+            }.map { $0.request.identifier }
+            
+            guard identifiers.count > 0 else {
+                completion?()
+                return
+            }
+            
+            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: identifiers)
+            completion?()
+        }
+    }
+    
     fileprivate func presentLocalNotification(for userInfo: [AnyHashable: Any]) {
         let content = UNMutableNotificationContent()
         content.title = string(for: Params.title, userInfo: userInfo)
