@@ -16,20 +16,21 @@ extension AppDelegate {
         static let aps = "aps"
         static let contentAvailable = "content-available"
         static let tag = "tag"
+        static let messageId = "gcm.message_id"
         static let title = "title"
         static let body = "body"
         static let sound = "sound"
         static let image = "image"
         static let url = "url"
         static let presentationDelay = "delay"
-        static let proceededTagsStorageKey = "SilentRemoteNotificationTags"
+        static let proceededMessageIdsStorageKey = "SilentRemoteNotificationMessageIds"
         static let threadId = "thread-id"
     }
 
     func handleSilentRemoteNotification(_ userInfo: [AnyHashable: Any],
                                         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) -> Bool {
-        self.logger?.debugLog(template: AppDelegateLogs.handleSilentRemoteNotification,
-                              data: ["user_info": userInfo])
+        logger?.debugLog(template: AppDelegateLogs.handleSilentRemoteNotification,
+                         data: ["user_info": userInfo])
 
         guard let aps = userInfo[Params.aps] as? [String: AnyObject],
               let contentAvailable = aps[Params.contentAvailable] as? Int,
@@ -37,34 +38,33 @@ extension AppDelegate {
             return false
         }
 
-        
-        if shouldPresentLocalNotification(for: userInfo) {
-            removePresentedNotificationIfNeeded(for: userInfo) {
-                self.presentLocalNotification(for: userInfo)
+        if shouldHandleEvent(for: userInfo) {
+            if shouldPresentLocalNotification(for: userInfo) {
+                removePresentedNotificationIfNeeded(for: userInfo)
+                presentLocalNotification(for: userInfo)
+            } else {
+                handleSilentNotification(for: userInfo)
             }
         }
-        else {
-            handleSilentNotification(for: userInfo)
-        }
-           
+
         completionHandler(UIBackgroundFetchResult.newData)
         return true
     }
 
     fileprivate func shouldHandleEvent(for userInfo: [AnyHashable: Any]) -> Bool {
         var retValue = true
-        // if there is a tag, indicating unique event, check if the event was already been handled.
+        // if there is a message-id, indicating unique message sent, check if the id was already been handled.
         // otherwise continue and handle the event
-        guard let tag = userInfo[Params.tag] as? String else {
+        guard let messageId = userInfo[Params.messageId] as? String else {
             return retValue
         }
 
-        var proceededTags = UserDefaults.standard.array(forKey: Params.proceededTagsStorageKey) as? [String] ?? []
-        if proceededTags.contains(tag) {
+        var proceededTags = UserDefaults.standard.array(forKey: Params.proceededMessageIdsStorageKey) as? [String] ?? []
+        if proceededTags.contains(messageId) {
             retValue = false
         } else {
-            proceededTags.append(tag)
-            UserDefaults.standard.setValue(proceededTags, forKey: Params.proceededTagsStorageKey)
+            proceededTags.append(messageId)
+            UserDefaults.standard.setValue(proceededTags, forKey: Params.proceededMessageIdsStorageKey)
         }
 
         return retValue
@@ -75,12 +75,12 @@ extension AppDelegate {
               let url = URL(string: urlString) else {
             return
         }
-        
+
         _ = UrlSchemeHandler.handle(with: rootController,
-                                application: UIApplication.shared,
-                                open: url)
+                                    application: UIApplication.shared,
+                                    open: url)
     }
-    
+
     fileprivate func shouldPresentLocalNotification(for userInfo: [AnyHashable: Any]) -> Bool {
         guard !string(for: Params.title, userInfo: userInfo).isEmpty else {
             return false
@@ -88,28 +88,15 @@ extension AppDelegate {
         return true
     }
 
-    fileprivate func removePresentedNotificationIfNeeded(for userInfo: [AnyHashable: Any], completion: (() -> Void)?) {
+    fileprivate func removePresentedNotificationIfNeeded(for userInfo: [AnyHashable: Any]) {
         let tag = string(for: Params.tag, userInfo: userInfo)
         guard !tag.isEmpty else {
             return
         }
-        
-        UNUserNotificationCenter.current().getDeliveredNotifications { notifications in
-            let identifiers = notifications.filter { notification in
-                let notificationTag = self.string(for: Params.tag, userInfo: notification.request.content.userInfo)
-                return notificationTag == tag
-            }.map { $0.request.identifier }
-            
-            guard identifiers.count > 0 else {
-                completion?()
-                return
-            }
-            
-            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: identifiers)
-            completion?()
-        }
+
+        UNUserNotificationCenter.current().removeNotifications(whereKey: "tag", hasValue: tag)
     }
-    
+
     fileprivate func presentLocalNotification(for userInfo: [AnyHashable: Any]) {
         let content = UNMutableNotificationContent()
         content.title = string(for: Params.title, userInfo: userInfo)
@@ -135,48 +122,86 @@ extension AppDelegate {
                 }
 
             } catch {
-                self.logger?.debugLog(template: AppDelegateLogs.handleSilentRemoteNotificationFailedToAddAttachment,
-                                      data: ["user_info": userInfo])
+                logger?.debugLog(template: AppDelegateLogs.handleSilentRemoteNotificationFailedToAddAttachment,
+                                 data: ["user_info": userInfo])
             }
         }
 
-        var presentationDelay:TimeInterval = 2
+        var presentationDelay: TimeInterval = 0.5
         if let presentationDelayString = userInfo[Params.presentationDelay] as? String,
            let presentationDelayInt = TimeInterval(presentationDelayString) {
             presentationDelay = presentationDelayInt
         }
-        
+
         // show this notification in presentationDelay seconds value from now
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: presentationDelay, repeats: false)
 
         // create new request
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
-        //log event
-        self.logger?.debugLog(template: AppDelegateLogs.handleSilentRemoteNotificationPresentLocalPush,
-                              data: ["user_info": userInfo])
+        // log event
+        logger?.debugLog(template: AppDelegateLogs.handleSilentRemoteNotificationPresentLocalPush,
+                         data: ["user_info": userInfo])
 
         // add notification request
         UNUserNotificationCenter.current().add(request)
     }
-    
+
     fileprivate func string(for key: String, userInfo: [AnyHashable: Any]) -> String {
         return userInfo[key] as? String ?? ""
     }
-    
+
     fileprivate func sound(for key: String, userInfo: [AnyHashable: Any]) -> UNNotificationSound {
         let value = string(for: key, userInfo: userInfo)
         guard value.isEmpty == false else {
             return UNNotificationSound.default
         }
-        
+
         return UNNotificationSound(named: UNNotificationSoundName(rawValue: value))
     }
-    
+
     fileprivate func threadId(for key: String, userInfo: [AnyHashable: Any]) -> String? {
         let threadId = string(for: Params.threadId, userInfo: userInfo)
         guard threadId.isEmpty else {
             return Bundle.main.bundleIdentifier
         }
         return threadId
+    }
+}
+
+extension UNUserNotificationCenter {
+    func decreaseBadgeCount(by notificationsRemoved: Int? = nil) {
+        let notificationsRemoved = notificationsRemoved ?? 1
+        DispatchQueue.main.async {
+            UIApplication.shared.applicationIconBadgeNumber -= notificationsRemoved
+        }
+    }
+
+    func removeNotifications(_ notifications: [UNNotification], decreaseBadgeCount: Bool = false) {
+        let identifiers = notifications.map { $0.request.identifier }
+        UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: identifiers)
+        if decreaseBadgeCount {
+            self.decreaseBadgeCount(by: notifications.count)
+        }
+    }
+
+    func removeNotifications<T: Comparable>(whereKey key: AnyHashable, hasValue value: T, decreaseBadgeCount: Bool = false) {
+        UNUserNotificationCenter.current().getDeliveredNotifications { notifications in
+            let notificationsToRemove = notifications.filter {
+                guard let userInfoValue = $0.request.content.userInfo[key] as? T else { return false }
+                return userInfoValue == value
+            }
+            self.removeNotifications(notificationsToRemove, decreaseBadgeCount: decreaseBadgeCount)
+        }
+    }
+
+    func removeNotifications(withThreadIdentifier threadIdentifier: String, decreaseBadgeCount: Bool = false) {
+        UNUserNotificationCenter.current().getDeliveredNotifications { notifications in
+            let notificationsToRemove = notifications.filter { $0.request.content.threadIdentifier == threadIdentifier }
+            self.removeNotifications(notificationsToRemove, decreaseBadgeCount: decreaseBadgeCount)
+        }
+    }
+
+    func removeNotification(_ notification: UNNotification, decreaseBadgeCount: Bool = false) {
+        removeNotifications([notification], decreaseBadgeCount: decreaseBadgeCount)
     }
 }
