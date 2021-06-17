@@ -27,7 +27,7 @@
 
 ## [4.1.0](https://github.com/applicaster/ZappAppleBuilder/tree/4.1.0) (2021-06-17)
 
-**QB 5 Highlights:**
+**QB 5.1.0 Highlights:**
 
 - New features:
     - Favourite screen can now be styles and localized
