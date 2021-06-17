@@ -4,7 +4,7 @@
 
 ## SDK supports only UI Framework: QuickBrick
 
-### QuickBrick version: [`5.0.0`](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#v500-2021-02-22)
+### QuickBrick version: [`5.1.0`](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#v510-2021-06-16)
 
 #### React Native version: `0.62.2`
 
