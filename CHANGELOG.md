@@ -4,7 +4,7 @@
 
 ## SDK supports only UI Framework: QuickBrick
 
-### QuickBrick version: [`5.0.0`](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#v500-2021-02-22)
+### QuickBrick version: [`5.1.0`](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#v510-2021-06-16)
 
 #### React Native version: `0.62.2`
 
@@ -12,18 +12,106 @@
 
 ### Instruments
 
-- [Xcode](https://developer.apple.com): `12.4.0`
-- [Fastlane](https://fastlane.tools): `2.175.0`
+- [Xcode](https://developer.apple.com): `12.5.0`
+- [Fastlane](https://fastlane.tools): `2.185.1`
 - [CocoaPods](https://github.com/CocoaPods/CocoaPods): `1.10.1`
-- [ZappTool](https://github.com/applicaster/ZappTool): `4.1.7`
+- [ZappTool](https://github.com/applicaster/ZappTool): `4.2.2`
 
 ### Dependencies
 
-- [ZappCore](https://github.com/applicaster/ZappAppleBuilder): `1.3.3`
-- [ZappApple](https://github.com/applicaster/ZappAppleBuilder): `1.5.2`
+- [ZappCore](https://github.com/applicaster/ZappAppleBuilder): `1.6.2`
+- [ZappApple](https://github.com/applicaster/ZappAppleBuilder): `2.2.0`
 - [(iOS) ZappPlugins](https://github.com/applicaster/ZappPlugins.2.0-iOS): `12.0.0`
 - [(iOS) ZappPushPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): `13.0.0`
 - [(iOS) ZappAnalyticsPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): `13.0.0`
+
+## [5.0.0](https://github.com/applicaster/ZappAppleBuilder/tree/5.0.0) (2021-06-17)
+
+**Breaking changes**
+ - QuickBrick updated to 5.1.0 [#261](https://github.com/applicaster/ZappAppleBuilder/pull/261)
+
+**Features**
+
+- Add support for local push replace [\#260](https://github.com/applicaster/ZappAppleBuilder/pull/260) ([alexzchut](https://github.com/alexzchut))
+- Handle silent notification with url scheme by UrlSchemeHandler [\#254](https://github.com/applicaster/ZappAppleBuilder/pull/254) ([alexzchut](https://github.com/alexzchut))
+- Present local push on silent push receival [\#248](https://github.com/applicaster/ZappAppleBuilder/pull/248) ([alexzchut](https://github.com/alexzchut))
+- Add support extandable app delegate [\#202](https://github.com/applicaster/ZappAppleBuilder/pull/202) ([kononenkoAnton](https://github.com/kononenkoAnton))
+
+**Implemented enhancements:**
+
+- Adding WWDR certificate to circle build [\#259](https://github.com/applicaster/ZappAppleBuilder/pull/259) ([alexzchut](https://github.com/alexzchut))
+- Update for Network Request logging [\#256](https://github.com/applicaster/ZappAppleBuilder/pull/256) ([alexzchut](https://github.com/alexzchut))
+- Add netinfo on tvos [\#255](https://github.com/applicaster/ZappAppleBuilder/pull/255) ([f-roland](https://github.com/f-roland))
+- Disabling adding tag in pushes if user disable push notification [\#251](https://github.com/applicaster/ZappAppleBuilder/pull/251) ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Support Xcode 12.5 [\#249](https://github.com/applicaster/ZappAppleBuilder/pull/249) ([alexzchut](https://github.com/alexzchut))
+- Remove player from package.json on tvos [\#247](https://github.com/applicaster/ZappAppleBuilder/pull/247) ([f-roland](https://github.com/f-roland))
+- Add safe area lib [\#246](https://github.com/applicaster/ZappAppleBuilder/pull/246) ([f-roland](https://github.com/f-roland))
+- Add react-native-gesture-handler library [\#245](https://github.com/applicaster/ZappAppleBuilder/pull/245) ([f-roland](https://github.com/f-roland))
+- Add semver dev dependency to zappios [\#244](https://github.com/applicaster/ZappAppleBuilder/pull/244) ([f-roland](https://github.com/f-roland))
+- Ignore upload to appcenter for debug builds [\#241](https://github.com/applicaster/ZappAppleBuilder/pull/241) ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Add script to set up repo [\#240](https://github.com/applicaster/ZappAppleBuilder/pull/240) ([f-roland](https://github.com/f-roland))
+- Add countryCode and currencySymbol for local storage [\#239](https://github.com/applicaster/ZappAppleBuilder/pull/239) ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Update zapptool to support SKAdNetworks settings [\#236](https://github.com/applicaster/ZappAppleBuilder/pull/236) ([alexzchut](https://github.com/alexzchut))
+- Limit app version validation to new app versions only [\#235](https://github.com/applicaster/ZappAppleBuilder/pull/235) ([alexzchut](https://github.com/alexzchut))
+- Update api key settings + fastlane version bump [\#234](https://github.com/applicaster/ZappAppleBuilder/pull/234) ([alexzchut](https://github.com/alexzchut))
+- Update version of quick-brick-native-apple to be used from new location [\#233](https://github.com/applicaster/ZappAppleBuilder/pull/233) ([alexzchut](https://github.com/alexzchut))
+- Fastlane files optimizations [\#232](https://github.com/applicaster/ZappAppleBuilder/pull/232) ([alexzchut](https://github.com/alexzchut))
+- Add version validations [\#231](https://github.com/applicaster/ZappAppleBuilder/pull/231) ([alexzchut](https://github.com/alexzchut))
+- Resolve issue where zapptool can not find a path to push extensions [\#230](https://github.com/applicaster/ZappAppleBuilder/pull/230) ([kononenkoAnton](https://github.com/kononenkoAnton))
+- Add store current version validation [\#229](https://github.com/applicaster/ZappAppleBuilder/pull/229) ([alexzchut](https://github.com/alexzchut))
+- Update dependencies for Xray changes [\#228](https://github.com/applicaster/ZappAppleBuilder/pull/228) ([alexzchut](https://github.com/alexzchut))
+- Update fastlane version + print build params url [\#227](https://github.com/applicaster/ZappAppleBuilder/pull/227) ([alexzchut](https://github.com/alexzchut))
+- Update dependencies to add analytics connector with deprecation  message [\#223](https://github.com/applicaster/ZappAppleBuilder/pull/223) ([alexzchut](https://github.com/alexzchut))
+
+**QB 5.1.0**
+[Complete changelog](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#v510-2021-06-16)
+
+- New features:
+    - Favourite screen can now be styles and localized
+    - URL schemes now support `content_type` options for link URL schemes
+    - Now using React Native Safe Area Context library for screen sizing
+    - Added React Native Gesture Handler and infrastructure for modal bottom sheet
+    - Pipes URL can now be created in any component with useBuildPipesUrl hook
+    - Webview screen can now leverage pipes endpoints to add headers & query parameters to webview urls
+    - Plugins providing a datasource can now register listeners to notify components that the datasource has changed
+    - Plugins can now register hooks to run when connectivity status changes
+    - Plugins can now register their own url scheme handlers
+    - Zapp Pipes reducer now has a `clear` action to remove a datasource from the store
+    - New options for context keys in pipes endpoint: can now define values for headers, Bearer token, query parameter or base64 ctx
+    - Samsung, LG, and tvOS horizontal list now supports feed pagination
+    - tvOS Top menu bar now allows font family to be customised
+
+- Bug fixes:
+    - Side menu now scrolls properly
+    - Player controller properly dispatches `onEnd` event through the player manager
+    - When signed device token is set up on the native side, it is no longer overwritten on the react native side
+    - Restored link handler functionality in the webview screen plugin to open external url schemes from link entries as expected
+    - Nested screen in routes are now properly mapped in pipes v2 entry context
+    - Webview screen plugin now properly shows the background color from the configuration during page load
+    - Fixed an issue which could cause some cells to scale incorrectly after exiting the player
+    - Webview screen now shows proper back button on android
+    - ViewportAware component now keeps state properly, even on long lists
+    - Url schemes with `link_url` parameter now properly open the webview screen plugin on pipes v2 apps
+    - Player screens are now properly resolved on pipes v2
+    - Fix to webpack file loader configuration & font file sanitising 
+    - Fixed an issue when using connected screens on pipes v2
+    - Fix an issue which caused navigator.screenData to be stale
+    - Fix sizing of Group info cell on TV
+    - Properly hide app navbar in webview screen plugin when the option is selected
+    - Fixed an issue with type mapping for link type of entries
+    - Fixed an issue with rendering of empty group component on TV
+    - Fixed analytic events on Tabs screen plugin
+    - Fixed an issue with app launch analytic event
+    - Fixed a bug with Android TV menu item selection
+    - Fixed a bug which prevented localized strings to update properly when changed on Zapp
+    - Fixed an issue with scrolling and anchoring on Android TV Grid component
+    - Fixed analytic events properties on web based platforms
+    - Fixed default focus on Android TV top menu bar
+    - Fixed an issue with feed ids mutation on Android TV
+
+- Implemented enhancements:
+    - Removed moment dependency to reduce bundle size
+    - Refactored offline handler to typescript
 
 ## [4.0.0](https://github.com/applicaster/ZappAppleBuilder/tree/4.0.0) (2021-02-22)
 
