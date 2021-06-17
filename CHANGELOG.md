@@ -25,7 +25,7 @@
 - [(iOS) ZappPushPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): `13.0.0`
 - [(iOS) ZappAnalyticsPluginsSDK](https://github.com/applicaster/ZappAppleBuilder): `13.0.0`
 
-## [4.1.0](https://github.com/applicaster/ZappAppleBuilder/tree/4.1.0) (2021-06-17)
+## [5.0.0](https://github.com/applicaster/ZappAppleBuilder/tree/5.0.0) (2021-06-17)
 
 **Breaking changes**
  - QuickBrick updated to 5.1.0 [#261](https://github.com/applicaster/ZappAppleBuilder/pull/261)
