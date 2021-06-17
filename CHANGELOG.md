@@ -27,22 +27,8 @@
 
 ## [4.1.0](https://github.com/applicaster/ZappAppleBuilder/tree/4.1.0) (2021-06-17)
 
-**QB 5.1.0 Highlights:**
-
-- New features:
-    - Favourite screen can now be styles and localized
-    - URL schemes now support `content_type` options for link URL schemes
-    - Now using React Native Safe Area Context library for screen sizing
-    - Added React Native Gesture Handler and infrastructure for modal bottom sheet
-    - Pipes URL can now be created in any component with useBuildPipesUrl hook
-    - Webview screen can now leverage pipes endpoints to add headers & query parameters to webview urls
-    - Plugins providing a datasource can now register listeners to notify components that the datasource has changed
-    - Plugins can now register hooks to run when connectivity status changes
-    - Plugins can now register their own url scheme handlers
-    - Zapp Pipes reducer now has a `clear` action to remove a datasource from the store
-    - New options for context keys in pipes endpoint: can now define values for headers, Bearer token, query parameter or base64 ctx
-    - Samsung, LG, and tvOS horizontal list now supports feed pagination
-    - tvOS Top menu bar now allows font family to be customised
+**Breaking changes**
+ - QuickBrick updated to 5.1.0 [#261](https://github.com/applicaster/ZappAppleBuilder/pull/261)
 
 **Features**
 
@@ -76,6 +62,24 @@
 - Update dependencies for Xray changes [\#228](https://github.com/applicaster/ZappAppleBuilder/pull/228) ([alexzchut](https://github.com/alexzchut))
 - Update fastlane version + print build params url [\#227](https://github.com/applicaster/ZappAppleBuilder/pull/227) ([alexzchut](https://github.com/alexzchut))
 - Update dependencies to add analytics connector with deprecation  message [\#223](https://github.com/applicaster/ZappAppleBuilder/pull/223) ([alexzchut](https://github.com/alexzchut))
+
+**QB 5.1.0 Highlights:**
+[Complete changelog](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#v510-2021-06-16)
+
+- New features:
+    - Favourite screen can now be styles and localized
+    - URL schemes now support `content_type` options for link URL schemes
+    - Now using React Native Safe Area Context library for screen sizing
+    - Added React Native Gesture Handler and infrastructure for modal bottom sheet
+    - Pipes URL can now be created in any component with useBuildPipesUrl hook
+    - Webview screen can now leverage pipes endpoints to add headers & query parameters to webview urls
+    - Plugins providing a datasource can now register listeners to notify components that the datasource has changed
+    - Plugins can now register hooks to run when connectivity status changes
+    - Plugins can now register their own url scheme handlers
+    - Zapp Pipes reducer now has a `clear` action to remove a datasource from the store
+    - New options for context keys in pipes endpoint: can now define values for headers, Bearer token, query parameter or base64 ctx
+    - Samsung, LG, and tvOS horizontal list now supports feed pagination
+    - tvOS Top menu bar now allows font family to be customised
 
 ## [4.0.0](https://github.com/applicaster/ZappAppleBuilder/tree/4.0.0) (2021-02-22)
 
