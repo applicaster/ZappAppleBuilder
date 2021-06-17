@@ -20,7 +20,7 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
-  - QuickBrickApple (5.1.0):
+  - QuickBrickApple (5.2.0):
     - React
     - React-RCTLinking
     - XrayLogger
@@ -187,6 +187,8 @@ PODS:
     - React-cxxreact (= 0.62.2-0)
     - React-jsi (= 0.62.2-0)
   - React-jsinspector (0.62.2-0)
+  - react-native-netinfo (5.9.0):
+    - React
   - react-native-safe-area-context (3.2.0):
     - React-Core
   - React-RCTActionSheet (0.62.2-0):
@@ -257,13 +259,13 @@ PODS:
   - ZappAnalyticsPluginsSDK (13.0.0):
     - ZappCore
     - ZappPlugins
-  - ZappApple (1.7.2):
+  - ZappApple (2.2.0):
     - AppCenter/Distribute (= 3.0.0)
     - DeviceKit (= 4.3.0)
     - ReachabilitySwift (= 5.0.0)
     - XrayLogger
     - ZappCore
-  - ZappCore (1.4.5):
+  - ZappCore (1.6.2):
     - XrayLogger
   - ZappPlugins (12.0.0):
     - ZappCore
@@ -286,6 +288,7 @@ DEPENDENCIES:
   - React-jsi (from `./node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `./node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `./node_modules/react-native/ReactCommon/jsinspector`)
+  - "react-native-netinfo (from `./node_modules/@react-native-community/netinfo`)"
   - react-native-safe-area-context (from `./node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec`)
   - React-RCTActionSheet (from `./node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `./node_modules/react-native/Libraries/NativeAnimation`)
@@ -345,6 +348,8 @@ EXTERNAL SOURCES:
     :path: "./node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "./node_modules/react-native/ReactCommon/jsinspector"
+  react-native-netinfo:
+    :path: "./node_modules/@react-native-community/netinfo"
   react-native-safe-area-context:
     :path: "./node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec"
   React-RCTActionSheet:
@@ -388,7 +393,7 @@ SPEC CHECKSUMS:
   FBReactNativeSpec: 89412591bc63798fa9831e2886f50032b6b8da4e
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
-  QuickBrickApple: 2aa72d590a923e52de5333dad4f4e05c60c5352c
+  QuickBrickApple: 045315e532d27fa1792fc1a7403cfca37cb560a5
   RCTRequired: 0fba962213efd60d69d2979b230ef07643e88942
   RCTTypeSafety: 975573b67a2f0b1a3dd9b7e0f8ac2e07924ba189
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
@@ -399,6 +404,7 @@ SPEC CHECKSUMS:
   React-jsi: 470c8bf5b53f87a4cb13614a1536b371b0aabfaa
   React-jsiexecutor: 7afe08fededb75be926060a1c6ca5f2403189a80
   React-jsinspector: 53ca541d6ca804a856c65e26728ca041b2d2ac41
+  react-native-netinfo: 7b3c53674ea611b26a7788821f137c6d9d3a038b
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
   React-RCTActionSheet: ed38e8910d33c1ecd6cb5ef292fea90d13874618
   React-RCTAnimation: 8a7c81cbdf581bbaff9bfe1ff1f69ed565892198
@@ -414,10 +420,10 @@ SPEC CHECKSUMS:
   XrayLogger: 6c4d4c614b8e78d2e6f2f48ae9f78bbbf4011075
   Yoga: 2b7639f79fddf5026153af56851b832318942330
   ZappAnalyticsPluginsSDK: c1abb82d5a187e0f47b1a3004f7abd38ff4bafd6
-  ZappApple: 797b85bbbc51e2accf26c94f1edf6e9d4d745b26
-  ZappCore: 3dba6fe8a3a444d8da04174c6af26e4d69dfe85d
+  ZappApple: c4bc9f1a462889852f9d7fba22c6e27c993b2b0c
+  ZappCore: 22d17507b81151ce201eb76e7cce164fda7aafa3
   ZappPlugins: 4c436796b3a9ac8b89cd46a8f42e58acb3fbafc3
 
-PODFILE CHECKSUM: 12128124f82986c94d1d311eafe9b7b7e937d823
+PODFILE CHECKSUM: f20355d43ec6d15d45ae4481bfd82422669ff2f9
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1
