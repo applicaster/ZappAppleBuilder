@@ -75,7 +75,6 @@
 - Add store current version validation [\#229](https://github.com/applicaster/ZappAppleBuilder/pull/229) ([alexzchut](https://github.com/alexzchut))
 - Update dependencies for Xray changes [\#228](https://github.com/applicaster/ZappAppleBuilder/pull/228) ([alexzchut](https://github.com/alexzchut))
 - Update fastlane version + print build params url [\#227](https://github.com/applicaster/ZappAppleBuilder/pull/227) ([alexzchut](https://github.com/alexzchut))
-- Update QB 5.0.0 [\#226](https://github.com/applicaster/ZappAppleBuilder/pull/226) ([f-roland](https://github.com/f-roland))
 - Update dependencies to add analytics connector with deprecation  message [\#223](https://github.com/applicaster/ZappAppleBuilder/pull/223) ([alexzchut](https://github.com/alexzchut))
 
 ## [4.0.0](https://github.com/applicaster/ZappAppleBuilder/tree/4.0.0) (2021-02-22)
