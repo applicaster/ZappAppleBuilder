@@ -63,7 +63,7 @@
 - Update fastlane version + print build params url [\#227](https://github.com/applicaster/ZappAppleBuilder/pull/227) ([alexzchut](https://github.com/alexzchut))
 - Update dependencies to add analytics connector with deprecation  message [\#223](https://github.com/applicaster/ZappAppleBuilder/pull/223) ([alexzchut](https://github.com/alexzchut))
 
-**QB 5.1.0 Highlights:**
+**QB 5.1.0**
 [Complete changelog](https://github.com/applicaster/QuickBrick/blob/master/CHANGELOG.md#v510-2021-06-16)
 
 - New features:
@@ -80,6 +80,38 @@
     - New options for context keys in pipes endpoint: can now define values for headers, Bearer token, query parameter or base64 ctx
     - Samsung, LG, and tvOS horizontal list now supports feed pagination
     - tvOS Top menu bar now allows font family to be customised
+
+- Bug fixes:
+    - Side menu now scrolls properly
+    - Player controller properly dispatches `onEnd` event through the player manager
+    - When signed device token is set up on the native side, it is no longer overwritten on the react native side
+    - Restored link handler functionality in the webview screen plugin to open external url schemes from link entries as expected
+    - Nested screen in routes are now properly mapped in pipes v2 entry context
+    - Webview screen plugin now properly shows the background color from the configuration during page load
+    - Fixed an issue which could cause some cells to scale incorrectly after exiting the player
+    - Webview screen now shows proper back button on android
+    - ViewportAware component now keeps state properly, even on long lists
+    - Url schemes with `link_url` parameter now properly open the webview screen plugin on pipes v2 apps
+    - Player screens are now properly resolved on pipes v2
+    - Fix to webpack file loader configuration & font file sanitising 
+    - Fixed an issue when using connected screens on pipes v2
+    - Fix an issue which caused navigator.screenData to be stale
+    - Fix sizing of Group info cell on TV
+    - Properly hide app navbar in webview screen plugin when the option is selected
+    - Fixed an issue with type mapping for link type of entries
+    - Fixed an issue with rendering of empty group component on TV
+    - Fixed analytic events on Tabs screen plugin
+    - Fixed an issue with app launch analytic event
+    - Fixed a bug with Android TV menu item selection
+    - Fixed a bug which prevented localized strings to update properly when changed on Zapp
+    - Fixed an issue with scrolling and anchoring on Android TV Grid component
+    - Fixed analytic events properties on web based platforms
+    - Fixed default focus on Android TV top menu bar
+    - Fixed an issue with feed ids mutation on Android TV
+
+- Implemented enhancements:
+    - Removed moment dependency to reduce bundle size
+    - Refactored offline handler to typescript
 
 ## [4.0.0](https://github.com/applicaster/ZappAppleBuilder/tree/4.0.0) (2021-02-22)
 
