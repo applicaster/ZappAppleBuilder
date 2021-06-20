@@ -14,7 +14,7 @@ references:
   mac_config: &mac_config
     working_directory: *workspace_root
     macos:
-      xcode: "12.5.0" 
+      xcode: "12.5.0"
     resource_class: large
     shell: /bin/bash --login -eo pipefail
 
