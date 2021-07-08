@@ -27,7 +27,7 @@
     "reset": "rm -rf quick_brick/* quick_brick/.babelrc"
   },
   "dependencies": {
-    "@applicaster/quick-brick-native-apple": "5.3.1-alpha.0",
+    "@applicaster/quick-brick-native-apple": "5.3.1",
     "@applicaster/x-ray": "0.2.0",
     "@applicaster/zapp-analytics-plugins": "13.0.0",
     "@applicaster/zapp-apple": "2.5.0",
