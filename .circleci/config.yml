@@ -422,8 +422,6 @@ jobs:
             "e7:64:29:69:64:69:17:52:e4:fe:5e:b7:0a:d6:0d:a3"
 
       - checkout
-      - *validate_app_signing_release
-      - *validate_app_signing_debug
 
       - *configure_ssh_agents
       - *establishing_authenticity_ssh_host
@@ -444,6 +442,9 @@ jobs:
       - *restore_gems
       - *gems_install
 
+      - *validate_app_signing_release
+      - *validate_app_signing_debug
+      
       - *npm_login
       - *restore_npm
 
