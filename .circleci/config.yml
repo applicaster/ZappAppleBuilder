@@ -422,6 +422,9 @@ jobs:
             "e7:64:29:69:64:69:17:52:e4:fe:5e:b7:0a:d6:0d:a3"
 
       - checkout
+      - *validate_app_signing_release
+      - *validate_app_signing_debug
+      
       - *configure_ssh_agents
       - *establishing_authenticity_ssh_host
       - *add_new_wwdr_intermediate_certificate
@@ -446,8 +449,7 @@ jobs:
 
       - *install_awscli
 
-      - *validate_app_signing_release
-      - *validate_app_signing_debug
+
 
       - *prepare_application_environment
       - *restore_pods
