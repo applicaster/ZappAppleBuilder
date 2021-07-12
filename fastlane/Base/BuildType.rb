@@ -175,7 +175,7 @@ class BuildType < BaseHelper
 
       puts("VALID: App version '#{app_version}' is valid for AppStore submission\n".colorize(:green))
     rescue StandardError => e
-      sh("echo #{e.message} > ./validation_error.log")
+      validation_error_log(e)
       raise e.message
     end
   end
@@ -189,7 +189,7 @@ class BuildType < BaseHelper
 
       puts('VALID: New app version can be uploaded to the AppStoreConnect'.colorize(:green))
     rescue StandardError => e
-      sh("echo #{e.message} > ./validation_error.log")
+      validation_error_log(e)
       raise e.message
     end
   end
@@ -204,7 +204,7 @@ class BuildType < BaseHelper
 
       puts("VALID: New app version `#{app_version}` is higher than the latest approved/released version `#{latest_app_version_info.version_string}`".colorize(:green))
     rescue StandardError => e
-      sh("echo #{e.message} > ./validation_error.log")
+      validation_error_log(e)
       raise e.message
     end
   end
@@ -224,7 +224,7 @@ class BuildType < BaseHelper
 
         puts("VALID: AppStoreConnect credentials are Ok\n".colorize(:green))
       rescue StandardError => e
-        sh("echo #{e.message} > ./validation_error.log")
+        validation_error_log(e)
         raise "#{error_message} \n\n #{sh("cat #{filename} | jq .")}"
       end
     end
@@ -238,7 +238,7 @@ class BuildType < BaseHelper
 
       puts("VALID: Distrubution Certificate is not expired\n".colorize(:green))
     rescue StandardError => e
-      sh("echo #{e.message} > ./validation_error.log")
+      validation_error_log(e)
       raise error_message
     end
   end
@@ -251,7 +251,7 @@ class BuildType < BaseHelper
 
       puts("VALID: Distrubution Certificate password is Ok\n".colorize(:green))
     rescue StandardError => e
-      sh("echo #{e.message} > ./validation_error.log")
+      validation_error_log(e)
       raise error_message
     end
   end
@@ -267,7 +267,7 @@ class BuildType < BaseHelper
 
       puts("VALID: Certificate was creates with valid WWDR\n".colorize(:green))
     rescue StandardError => e
-      sh("echo #{e.message} > ./validation_error.log")
+      validation_error_log(e)
       raise error_message
     end
   end
@@ -295,7 +295,7 @@ class BuildType < BaseHelper
 
       puts("VALID: Provisioning Profile is signed with provided certificate\n".colorize(:green))
     rescue StandardError => e
-      sh("echo #{e.message} > ./validation_error.log")
+      validation_error_log(e)
       raise error_message
     end
   end
@@ -331,7 +331,7 @@ class BuildType < BaseHelper
 
       puts("VALID: Provisioning Profile is not expired\n".colorize(:green))
     rescue StandardError => e
-      sh("echo #{e.message} > ./validation_error.log")
+      validation_error_log(e)
       raise error_message
     end
   end
@@ -349,7 +349,7 @@ class BuildType < BaseHelper
 
       puts("VALID: Provisioning Profile bundle identifier matches app required bundle identifier\n".colorize(:green))
     rescue StandardError => e
-      sh("echo #{e.message} > ./validation_error.log")
+      validation_error_log(e)
       raise error_message
     end
   end
@@ -365,9 +365,13 @@ class BuildType < BaseHelper
 
       puts("VALID: Provisioning Profile has `application-groups` entitlement \n".colorize(:green))
     rescue StandardError => e
-      sh("echo #{e.message} > ./validation_error.log")
+      validation_error_log(e)
       raise e.message
     end
+  end
+
+  def validation_error_log(e)
+    sh("echo #{e.message} > ./validation_error.log")
   end
 
   def upload_application(options)
