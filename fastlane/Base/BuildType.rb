@@ -275,9 +275,12 @@ class BuildType < BaseHelper
       provisioning_profile_certificates = profile['DeveloperCertificates']
 
       hasCertificate = false
+      puts("Provided distibution certificate: #{certificate.certificate.subject}".colorize(:yellow))
+
       provisioning_profile_certificates.each do |raw|
         pp_cert = OpenSSL::X509::Certificate.new(raw.string)
-        hasCertificate = true if pp_cert.public_key.to_s == certificate.certificate.public_key.to_s
+        puts("Provisioning Profile signed certificate: #{pp_cert.subject}".colorize(:yellow))
+        hasCertificate = true if pp_cert.to_der == certificate.certificate.to_der
       end
 
       error_message = 'Provisioning Profile is not signed with provided certificate'
