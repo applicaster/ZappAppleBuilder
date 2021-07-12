@@ -424,7 +424,7 @@ jobs:
       - checkout
       - *validate_app_signing_release
       - *validate_app_signing_debug
-      
+
       - *configure_ssh_agents
       - *establishing_authenticity_ssh_host
       - *add_new_wwdr_intermediate_certificate
@@ -525,6 +525,10 @@ jobs:
       - store_artifacts:
           name: Artifacts - Additional build params
           path: ./.build_params
+      - store_artifacts:
+          name: Artifacts - Validation failure log if exists
+          path: ./validation_error.log
+          
 
   create_ios_mobile_sdk:
     <<: *mac_config
