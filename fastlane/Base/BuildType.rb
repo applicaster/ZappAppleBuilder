@@ -258,7 +258,7 @@ class BuildType < BaseHelper
 
   def validate_distribution_certificate_wwdr(certificate)
     current(__callee__.to_s)
-    error_message = 'Certificate was creates with older or not valid WWDR intermediate certificate. Please revoke and create new p12 using Apple Developer Portal or Xcode'
+    error_message = 'Certificate was created with older or not valid WWDR intermediate certificate. Please revoke and create new p12 using Apple Developer Portal or Xcode'
     begin
       puts(certificate.certificate.subject)
       puts(certificate.certificate.issuer)
