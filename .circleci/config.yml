@@ -349,8 +349,6 @@ jobs:
       - *install_npm_dependencies
       - *save_npm
 
-      - *install_awscli
-
       - *restore_pods
       - *vesion_pods
       - *install_pods
@@ -389,8 +387,6 @@ jobs:
       - *restore_npm
       - *install_npm_dependencies
       - *save_npm
-
-      - *install_awscli
 
       - *restore_pods
       - *vesion_pods
@@ -444,13 +440,11 @@ jobs:
 
       - *validate_app_signing_release
       - *validate_app_signing_debug
-      
+
       - *npm_login
       - *restore_npm
 
       - *install_awscli
-
-
 
       - *prepare_application_environment
       - *restore_pods
