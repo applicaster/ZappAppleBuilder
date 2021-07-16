@@ -28,7 +28,7 @@ references:
       #fastlane variables
       LC_ALL: "en_US.UTF-8"
       LANG: "en_US.UTF-8"
-  
+
   # https://circleci.com/docs/2.0/add-ssh-key/#adding-multiple-keys-with-blank-hostnames
   configure_ssh_agents: &configure_ssh_agents
     run:
@@ -246,9 +246,9 @@ references:
     run:
       name: AWSCLI - Installing S3 AWS
       command: |
-        curl 'https://s3.amazonaws.com/aws-cli/awscli-bundle.zip' -o 'awscli-bundle.zip'
-        unzip awscli-bundle.zip
-        sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+        curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
+        $ sudo installer -pkg AWSCLIV2.pkg -target /
+        /usr/local/bin/aws
         aws --version
 
   zapptool_cache_key: &zapptool_cache_key ZappTool-2.3-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
@@ -414,8 +414,7 @@ jobs:
       # https://blog.lelonek.me/private-dependencies-from-github-in-your-docker-container-92e3b8cbf677
       # https://circleci.com/docs/2.0/add-ssh-key/#adding-ssh-keys-to-a-job
       - add_ssh_keys:
-          fingerprints:
-            "e7:64:29:69:64:69:17:52:e4:fe:5e:b7:0a:d6:0d:a3"
+          fingerprints: "e7:64:29:69:64:69:17:52:e4:fe:5e:b7:0a:d6:0d:a3"
 
       - checkout
 
@@ -523,7 +522,6 @@ jobs:
       - store_artifacts:
           name: Artifacts - Validation failure log if exists
           path: ./validation_error.log
-          
 
   create_ios_mobile_sdk:
     <<: *mac_config
