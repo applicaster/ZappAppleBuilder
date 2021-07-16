@@ -248,7 +248,6 @@ references:
       command: |
         curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
         $ sudo installer -pkg AWSCLIV2.pkg -target /
-        /usr/local/bin/aws
         aws --version
 
   zapptool_cache_key: &zapptool_cache_key ZappTool-2.3-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
