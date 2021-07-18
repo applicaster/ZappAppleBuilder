@@ -246,9 +246,8 @@ references:
     run:
       name: AWSCLI - Installing S3 AWS
       command: |
-        curl 'https://s3.amazonaws.com/aws-cli/awscli-bundle.zip' -o 'awscli-bundle.zip'
-        unzip awscli-bundle.zip
-        sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+        curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
+        sudo installer -pkg ./AWSCLIV2.pkg -target /
         aws --version
 
   zapptool_cache_key: &zapptool_cache_key ZappTool-2.3-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
@@ -349,8 +348,6 @@ jobs:
       - *install_npm_dependencies
       - *save_npm
 
-      - *install_awscli
-
       - *restore_pods
       - *vesion_pods
       - *install_pods
@@ -389,8 +386,6 @@ jobs:
       - *restore_npm
       - *install_npm_dependencies
       - *save_npm
-
-      - *install_awscli
 
       - *restore_pods
       - *vesion_pods
