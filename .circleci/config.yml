@@ -246,9 +246,10 @@ references:
     run:
       name: AWSCLI - Installing S3 AWS
       command: |
-        curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
-        sudo installer -pkg ./AWSCLIV2.pkg -target /
-        aws --version
+        request_url="${BASE_REQUEST_URL}/${sdk_version}/awscli.json"
+        values=`curl -s -X GET $request_url`
+        lines=$(echo $values | jq -r "to_entries|map(\"\(.value|tostring);\")|@tsv"|tr -d '\t')
+        eval $lines
 
   zapptool_cache_key: &zapptool_cache_key ZappTool-2.3-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
 
