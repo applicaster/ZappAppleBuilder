@@ -24,7 +24,6 @@ references:
       BUILD_PATH: ~/build_debug
       HOMEBREW_NO_AUTO_UPDATE: "1"
       SPACESHIP_SKIP_2FA_UPGRADE: "1"
-      sdk_version: "5.1.0-alpha.2"
       
       #fastlane variables
       LC_ALL: "en_US.UTF-8"
@@ -49,7 +48,7 @@ references:
     run:
       name: Add New WWDR Intermediate Certificate
       command: |
-        request_url="${BASE_REQUEST_URL}/${sdk_version}/add-wwdr-intermediate-certificate.json"
+        request_url="${BASE_REQUEST_URL}/${TEMP_SDK_VERSION}/add-wwdr-intermediate-certificate.json"
         values=`curl -s -X GET $request_url`
         lines=$(echo $values | jq -r "to_entries|map(\"\(.value|tostring);\")|@tsv"|tr -d '\t')
         eval $lines
@@ -126,7 +125,7 @@ references:
     run:
       name: install node@12.0.0
       command: |
-        request_url="${BASE_REQUEST_URL}/${sdk_version}/install-node.json"
+        request_url="${BASE_REQUEST_URL}/${TEMP_SDK_VERSION}/install-node.json"
         values=`curl -s -X GET $request_url`
         lines=$(echo $values | jq -r "to_entries|map(\"\(.value|tostring);\")|@tsv"|tr -d '\t')
         eval $lines
@@ -245,7 +244,7 @@ references:
     run:
       name: AWSCLI - Installing S3 AWS
       command: |
-        request_url="${BASE_REQUEST_URL}/${sdk_version}/install-awscli.json"
+        request_url="${BASE_REQUEST_URL}/${TEMP_SDK_VERSION}/install-awscli.json"
         values=`curl -s -X GET $request_url`
         lines=$(echo $values | jq -r "to_entries|map(\"\(.value|tostring);\")|@tsv"|tr -d '\t')
         eval $lines
@@ -262,7 +261,7 @@ references:
       name: ZappTool - Download if needed
       command: |
         if [ ! -d "ZappTool" ]; then
-          request_url="${BASE_REQUEST_URL}/${sdk_version}/install-zapptool.json"
+          request_url="${BASE_REQUEST_URL}/${TEMP_SDK_VERSION}/install-zapptool.json"
           values=`curl -s -X GET $request_url`
           lines=$(echo $values | jq -r "to_entries|map(\"\(.value|tostring);\")|@tsv"|tr -d '\t')
           eval $lines
