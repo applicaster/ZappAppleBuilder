@@ -48,10 +48,9 @@ references:
     run:
       name: Add New WWDR Intermediate Certificate
       command: |
-        request_url="${BASE_REQUEST_URL}/${TEMP_SDK_VERSION}/add-wwdr-intermediate-certificate.json"
-        values=`curl -s -X GET $request_url`
-        lines=$(echo $values | jq -r "to_entries|map(\"\(.value|tostring);\")|@tsv"|tr -d '\t')
-        eval $lines
+        filename="add-wwdr-intermediate-certificate.txt"
+        curl -L "${BASE_REQUEST_URL}/${TEMP_SDK_VERSION}/${filename}" > "${filename}"
+        bash ./${filename}
 
   prepare_build_parameters: &prepare_build_parameters
     run:
@@ -125,8 +124,9 @@ references:
     run:
       name: install node@12.0.0
       command: |
-        curl -L "${BASE_REQUEST_URL}/${TEMP_SDK_VERSION}/install-node.txt" > "install-node.txt"
-        bash ./install-node.txt
+        filename="install-node.txt"
+        curl -L "${BASE_REQUEST_URL}/${TEMP_SDK_VERSION}/${filename}" > "${filename}"
+        bash ./${filename}
 
   which_ruby: &which_ruby
     run:
@@ -242,10 +242,9 @@ references:
     run:
       name: AWSCLI - Installing S3 AWS
       command: |
-        request_url="${BASE_REQUEST_URL}/${TEMP_SDK_VERSION}/install-awscli.json"
-        values=`curl -s -X GET $request_url`
-        lines=$(echo $values | jq -r "to_entries|map(\"\(.value|tostring);\")|@tsv"|tr -d '\t')
-        eval $lines
+        filename="install-awscli.txt"
+        curl -L "${BASE_REQUEST_URL}/${TEMP_SDK_VERSION}/${filename}" > "${filename}"
+        bash ./${filename}
 
   zapptool_cache_key: &zapptool_cache_key ZappTool-2.3-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
 
@@ -259,10 +258,9 @@ references:
       name: ZappTool - Download if needed
       command: |
         if [ ! -d "ZappTool" ]; then
-          request_url="${BASE_REQUEST_URL}/${TEMP_SDK_VERSION}/install-zapptool.json"
-          values=`curl -s -X GET $request_url`
-          lines=$(echo $values | jq -r "to_entries|map(\"\(.value|tostring);\")|@tsv"|tr -d '\t')
-          eval $lines
+          filename="install-zapptool.txt"
+          curl -L "${BASE_REQUEST_URL}/${TEMP_SDK_VERSION}/${filename}" > "${filename}"
+          bash ./${filename}
         else
           echo "ZappTool was cached"
         fi
