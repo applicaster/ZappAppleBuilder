@@ -325,10 +325,10 @@ jobs:
       - *prepare_pods_cache_file
       - *prepare_npm_cache_file
 
+      - *restore_zapptool
       - *zapptool_download
+      - *save_zapptool
       - *version_zapptool
-
-      - *install_awscli
 
       - *set_ruby_version
       - *which_ruby
