@@ -125,8 +125,8 @@ references:
     run:
       name: install node@12.0.0
       command: |
-      curl -L \"${BASE_REQUEST_URL}/${TEMP_SDK_VERSION}/install-node.txt" > "install-node.txt"
-      bash ./install-node.txt
+        curl -L "${BASE_REQUEST_URL}/${TEMP_SDK_VERSION}/install-node.txt" > "install-node.txt"
+        bash ./install-node.txt
 
   which_ruby: &which_ruby
     run:
