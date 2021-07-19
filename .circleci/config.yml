@@ -1,5 +1,8 @@
 version: 2.1
 parameters:
+  sdk-version:
+    type: string
+    default: "5.1.0-alpha.2"
   zapptool-version:
     type: string
     default: "4.2.2"
@@ -49,7 +52,8 @@ references:
       name: Add New WWDR Intermediate Certificate
       command: |
         filename="add-wwdr-intermediate-certificate.txt"
-        curl -L "${BASE_REQUEST_URL}/${TEMP_SDK_VERSION}/${filename}" > "${filename}"
+        sdk="<< pipeline.parameters.sdk-version >>"
+        curl -L "${BASE_REQUEST_URL}/${sdk}/${filename}" > "${filename}"
         bash ./${filename}
 
   prepare_build_parameters: &prepare_build_parameters
@@ -125,7 +129,8 @@ references:
       name: install node@12.0.0
       command: |
         filename="install-node.txt"
-        curl -L "${BASE_REQUEST_URL}/${TEMP_SDK_VERSION}/${filename}" > "${filename}"
+        sdk="<< pipeline.parameters.sdk-version >>"
+        curl -L "${BASE_REQUEST_URL}/${sdk}/${filename}" > "${filename}"
         bash ./${filename}
 
   which_ruby: &which_ruby
@@ -243,7 +248,8 @@ references:
       name: AWSCLI - Installing S3 AWS
       command: |
         filename="install-awscli.txt"
-        curl -L "${BASE_REQUEST_URL}/${TEMP_SDK_VERSION}/${filename}" > "${filename}"
+        sdk="<< pipeline.parameters.sdk-version >>"
+        curl -L "${BASE_REQUEST_URL}/${sdk}/${filename}" > "${filename}"
         bash ./${filename}
 
   zapptool_cache_key: &zapptool_cache_key ZappTool-2.3-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
@@ -258,8 +264,10 @@ references:
       name: ZappTool - Download if needed
       command: |
         if [ ! -d "ZappTool" ]; then
-          filename="install-zapptool.txt"
-          curl -L "${BASE_REQUEST_URL}/${TEMP_SDK_VERSION}/${filename}" > "${filename}"
+          sdk="<< pipeline.parameters.sdk-version >>"
+          version="<< pipeline.parameters.zapptool-version >>"
+          filename="install-zapptool-${version}.txt"
+          curl -L "${BASE_REQUEST_URL}/${sdk}/${filename}" > "${filename}"
           bash ./${filename}
         else
           echo "ZappTool was cached"
@@ -325,10 +333,10 @@ jobs:
       - *prepare_pods_cache_file
       - *prepare_npm_cache_file
 
-      - *restore_zapptool
       - *zapptool_download
-      - *save_zapptool
       - *version_zapptool
+
+      - *install_awscli
 
       - *set_ruby_version
       - *which_ruby
