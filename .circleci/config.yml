@@ -1,5 +1,8 @@
 version: 2.1
 parameters:
+  sdk-version:
+    type: string
+    default: "latest"
   zapptool-version:
     type: string
     default: "4.2.2"
@@ -24,7 +27,7 @@ references:
       BUILD_PATH: ~/build_debug
       HOMEBREW_NO_AUTO_UPDATE: "1"
       SPACESHIP_SKIP_2FA_UPGRADE: "1"
-
+      
       #fastlane variables
       LC_ALL: "en_US.UTF-8"
       LANG: "en_US.UTF-8"
@@ -48,9 +51,9 @@ references:
     run:
       name: Add New WWDR Intermediate Certificate
       command: |
-        curl https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer -o AppleWWDRCAG3.cer
-        sudo security find-certificate -c "Apple Worldwide Developer Relations Certification Authority" -a -Z | sudo awk '/SHA-1/{system("security delete-certificate -Z "$NF)}'
-        sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain AppleWWDRCAG3.cer & sleep 5; sudo kill $!
+        filename="add-wwdr-intermediate-certificate.txt"
+        curl -L "${BASE_REQUEST_URL}/${sdk_version}/${filename}" > "${filename}"
+        bash ./${filename}
 
   prepare_build_parameters: &prepare_build_parameters
     run:
@@ -124,13 +127,14 @@ references:
     run:
       name: install node@12.0.0
       command: |
-        set +e
-        touch $BASH_ENV
-        curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash
-        echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
-        echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-        echo nvm install 12.0.0 >> $BASH_ENV
-        echo nvm alias default 12.0.0 >> $BASH_ENV
+        use_sdk_version="<< pipeline.parameters.sdk-version >>"
+        if [ "$sdk_version" ];
+        then
+          use_sdk_version=$sdk_version
+        fi
+        filename="install-node.txt"
+        curl -L "${BASE_REQUEST_URL}/${use_sdk_version}/${filename}" > "${filename}"
+        bash ./${filename}
 
   which_ruby: &which_ruby
     run:
@@ -246,9 +250,9 @@ references:
     run:
       name: AWSCLI - Installing S3 AWS
       command: |
-        curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
-        sudo installer -pkg ./AWSCLIV2.pkg -target /
-        aws --version
+        filename="install-awscli.txt"
+        curl -L "${BASE_REQUEST_URL}/${sdk_version}/${filename}" > "${filename}"
+        bash ./${filename}
 
   zapptool_cache_key: &zapptool_cache_key ZappTool-2.3-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
 
@@ -261,12 +265,17 @@ references:
     run:
       name: ZappTool - Download if needed
       command: |
+        use_sdk_version="<< pipeline.parameters.sdk-version >>"
+        if [ "$sdk_version" ];
+        then
+          use_sdk_version=$sdk_version
+        fi
+
         if [ ! -d "ZappTool" ]; then
-          echo "Installing ZappTool"
-          curl -L "https://assets-production.applicaster.com/zapp/helpers/zapptool/<< pipeline.parameters.zapptool-version >>/zapptool.zip" > "ZappTool.zip"
-          mkdir ZappTool
-          unzip -o "ZappTool.zip" -d "ZappTool"
-          rm -rf "ZappTool.zip"
+          version="<< pipeline.parameters.zapptool-version >>"
+          filename="install-zapptool-${version}.txt"
+          curl -L "${BASE_REQUEST_URL}/${use_sdk_version}/${filename}" > "${filename}"
+          bash ./${filename}
         else
           echo "ZappTool was cached"
         fi
