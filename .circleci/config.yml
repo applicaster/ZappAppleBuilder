@@ -2,7 +2,7 @@ version: 2.1
 parameters:
   sdk-version:
     type: string
-    default: "5.1.0-alpha.2"
+    default: "latest"
   zapptool-version:
     type: string
     default: "4.2.2"
@@ -52,7 +52,7 @@ references:
       name: Add New WWDR Intermediate Certificate
       command: |
         filename="add-wwdr-intermediate-certificate.txt"
-        curl -L "${BASE_REQUEST_URL}/<< pipeline.parameters.sdk-version >>/${filename}" > "${filename}"
+        curl -L "${BASE_REQUEST_URL}/${sdk_version}/${filename}" > "${filename}"
         bash ./${filename}
 
   prepare_build_parameters: &prepare_build_parameters
@@ -127,8 +127,13 @@ references:
     run:
       name: install node@12.0.0
       command: |
+        use_sdk_version="<< pipeline.parameters.sdk-version >>"
+        if [ "$sdk_version" ];
+        then
+          use_sdk_version=$sdk_version
+        fi
         filename="install-node.txt"
-        curl -L "${BASE_REQUEST_URL}/<< pipeline.parameters.sdk-version >>/${filename}" > "${filename}"
+        curl -L "${BASE_REQUEST_URL}/${use_sdk_version}/${filename}" > "${filename}"
         bash ./${filename}
 
   which_ruby: &which_ruby
@@ -246,7 +251,7 @@ references:
       name: AWSCLI - Installing S3 AWS
       command: |
         filename="install-awscli.txt"
-        curl -L "${BASE_REQUEST_URL}/<< pipeline.parameters.sdk-version >>/${filename}" > "${filename}"
+        curl -L "${BASE_REQUEST_URL}/${sdk_version}/${filename}" > "${filename}"
         bash ./${filename}
 
   zapptool_cache_key: &zapptool_cache_key ZappTool-2.3-{{ checksum "~/_caching_file" }}-{{ checksum "~/_zappToolVersion" }}
@@ -260,10 +265,16 @@ references:
     run:
       name: ZappTool - Download if needed
       command: |
+        use_sdk_version="<< pipeline.parameters.sdk-version >>"
+        if [ "$sdk_version" ];
+        then
+          use_sdk_version=$sdk_version
+        fi
+
         if [ ! -d "ZappTool" ]; then
           version="<< pipeline.parameters.zapptool-version >>"
           filename="install-zapptool-${version}.txt"
-          curl -L "${BASE_REQUEST_URL}/<< pipeline.parameters.sdk-version >>/${filename}" > "${filename}"
+          curl -L "${BASE_REQUEST_URL}/${use_sdk_version}/${filename}" > "${filename}"
           bash ./${filename}
         else
           echo "ZappTool was cached"
@@ -329,10 +340,10 @@ jobs:
       - *prepare_pods_cache_file
       - *prepare_npm_cache_file
 
+      - *restore_zapptool
       - *zapptool_download
+      - *save_zapptool
       - *version_zapptool
-
-      - *install_awscli
 
       - *set_ruby_version
       - *which_ruby
