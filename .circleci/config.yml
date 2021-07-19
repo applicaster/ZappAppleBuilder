@@ -259,8 +259,8 @@ references:
       command: |
         if [ ! -d "ZappTool" ]; then
           filename="install-zapptool.txt"
+          version=<< pipeline.parameters.zapptool-version >>
           curl -L "${BASE_REQUEST_URL}/${TEMP_SDK_VERSION}/${filename}" > "${filename}"
-          cat ./${filename}
           bash ./${filename}
         else
           echo "ZappTool was cached"
