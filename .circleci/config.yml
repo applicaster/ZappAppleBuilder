@@ -48,9 +48,10 @@ references:
     run:
       name: Add New WWDR Intermediate Certificate
       command: |
-        curl https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer -o AppleWWDRCAG3.cer
-        sudo security find-certificate -c "Apple Worldwide Developer Relations Certification Authority" -a -Z | sudo awk '/SHA-1/{system("security delete-certificate -Z "$NF)}'
-        sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain AppleWWDRCAG3.cer & sleep 5; sudo kill $!
+        request_url="${BASE_REQUEST_URL}/${sdk_version}/add-wwdr-intermediate-certificate.json"
+        values=`curl -s -X GET $request_url`
+        lines=$(echo $values | jq -r "to_entries|map(\"\(.value|tostring);\")|@tsv"|tr -d '\t')
+        eval $lines
 
   prepare_build_parameters: &prepare_build_parameters
     run:
@@ -124,13 +125,10 @@ references:
     run:
       name: install node@12.0.0
       command: |
-        set +e
-        touch $BASH_ENV
-        curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash
-        echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
-        echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-        echo nvm install 12.0.0 >> $BASH_ENV
-        echo nvm alias default 12.0.0 >> $BASH_ENV
+        request_url="${BASE_REQUEST_URL}/${sdk_version}/install-node.json"
+        values=`curl -s -X GET $request_url`
+        lines=$(echo $values | jq -r "to_entries|map(\"\(.value|tostring);\")|@tsv"|tr -d '\t')
+        eval $lines
 
   which_ruby: &which_ruby
     run:
@@ -246,7 +244,7 @@ references:
     run:
       name: AWSCLI - Installing S3 AWS
       command: |
-        request_url="${BASE_REQUEST_URL}/${sdk_version}/awscli.json"
+        request_url="${BASE_REQUEST_URL}/${sdk_version}/install-awscli.json"
         values=`curl -s -X GET $request_url`
         lines=$(echo $values | jq -r "to_entries|map(\"\(.value|tostring);\")|@tsv"|tr -d '\t')
         eval $lines
@@ -263,11 +261,10 @@ references:
       name: ZappTool - Download if needed
       command: |
         if [ ! -d "ZappTool" ]; then
-          echo "Installing ZappTool"
-          curl -L "https://assets-production.applicaster.com/zapp/helpers/zapptool/<< pipeline.parameters.zapptool-version >>/zapptool.zip" > "ZappTool.zip"
-          mkdir ZappTool
-          unzip -o "ZappTool.zip" -d "ZappTool"
-          rm -rf "ZappTool.zip"
+          request_url="${BASE_REQUEST_URL}/${sdk_version}/install-zapptool.json"
+          values=`curl -s -X GET $request_url`
+          lines=$(echo $values | jq -r "to_entries|map(\"\(.value|tostring);\")|@tsv"|tr -d '\t')
+          eval $lines
         else
           echo "ZappTool was cached"
         fi
