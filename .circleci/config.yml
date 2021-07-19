@@ -125,10 +125,8 @@ references:
     run:
       name: install node@12.0.0
       command: |
-        request_url="${BASE_REQUEST_URL}/${TEMP_SDK_VERSION}/install-node.json"
-        values=`curl -s -X GET $request_url`
-        lines=$(echo $values | jq -r "to_entries|map(\"\(.value|tostring);\")|@tsv"|tr -d '\t')
-        eval $lines
+      curl -L \"${BASE_REQUEST_URL}/${TEMP_SDK_VERSION}/install-node.txt" > "install-node.txt"
+      bash ./install-node.txt
 
   which_ruby: &which_ruby
     run:
