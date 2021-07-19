@@ -24,7 +24,8 @@ references:
       BUILD_PATH: ~/build_debug
       HOMEBREW_NO_AUTO_UPDATE: "1"
       SPACESHIP_SKIP_2FA_UPGRADE: "1"
-
+      sdk_version: "5.1.0-alpha.2"
+      
       #fastlane variables
       LC_ALL: "en_US.UTF-8"
       LANG: "en_US.UTF-8"
